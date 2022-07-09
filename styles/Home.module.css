@@ -1,0 +1,16 @@
+.inputBox {
+  width: 200px;
+  height: 30px;
+}
+
+.button {
+  width: 100px;
+  height: 30px;
+}
+
+@media (max-width: 600px) {
+  .grid {
+    width: 100%;
+    flex-direction: column;
+  }
+}

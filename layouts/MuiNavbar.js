@@ -46,7 +46,7 @@ export const MuiNavbar = () => {
   };
 
   return (
-    <AppBar position="static" color="transparent" className="w-full">
+    <AppBar position="static" color="transparent" className="w-full m-0">
       <Toolbar>
         <IconButton
           size="large"
@@ -71,9 +71,9 @@ export const MuiNavbar = () => {
               ログアウト
             </Button>
           )}
-          <Button color="inherit" onClick={logout}>
+          {/* <Button color="inherit" onClick={logout}>
             お問い合わせ
-          </Button>
+          </Button> */}
           {/* <Button
             color="inherit"
             id="resources-button"

@@ -95,6 +95,7 @@ export default function Register() {
               onChange={(event) => setPassword(event.target.value)}
             />
             <br></br>
+            <br></br>
             <Button
               variant="outlined"
               onClick={SignUp}
@@ -103,6 +104,7 @@ export default function Register() {
               新規登録
             </Button>
             <br></br>
+            <br></br>
             <Button
               variant="outlined"
               onClick={SignUpWithGoogle}
@@ -110,6 +112,7 @@ export default function Register() {
             >
               Googleで新規登録
             </Button>
+            <br></br>
             <br></br>
             <Button variant="outlined" className="m-auto w-80 my-8">
               <Link href="/login">ログインはこちら</Link>

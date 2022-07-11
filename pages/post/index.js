@@ -57,6 +57,7 @@ export default function Post() {
   const auth = getAuth();
   const user = auth.currentUser;
 
+  console.log(setContext);
   const addDate = async () => {
     const result = await postImage(image);
     const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
@@ -64,9 +65,10 @@ export default function Post() {
     // console.log(downloadURL);
     addDoc(databaseRef, {
       title: title,
-      context: context,
+      context: context.replace(/\r?\n/g, "\n"),
       downloadURL: result,
       email: user.email,
+      displayname: user.displayName,
       categori: categori,
       createtime: newdate,
     })

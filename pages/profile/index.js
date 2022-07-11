@@ -25,6 +25,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
+import Image from "react-image-resizer";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function Profile() {
@@ -43,6 +44,7 @@ export default function Profile() {
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
   const [email, setEmail] = useState("");
+  const styles = { whiteSpace: "pre-line" };
 
   console.log(user);
   useEffect(() => {
@@ -55,53 +57,20 @@ export default function Profile() {
       router.push("/register");
     }
   }, []);
-
-  useEffect(() => {
-    const uploadFile = () => {
-      // file && uploadFile;
-      const name = new Date().getTime() + file.name;
-      const storageRef = ref(storage, file.name);
-      const uploadTask = uploadBytesResumable(storageRef, file);
-
-      if (user !== null) {
-        user.providerData.forEach((profile) => {
-          console.log("Sign-in provider: " + profile.providerId);
-          console.log("  Provider-specific UID: " + profile.uid);
-          console.log("  Name: " + profile.displayName);
-          console.log("  Email: " + profile.email);
-          console.log("  Photo URL: " + profile.photoURL);
-        });
-      }
-
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          const progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log("Upload is " + progress + "% done");
-          switch (snapshot.state) {
-            case "paused":
-              console.log("Upload is paused");
-              break;
-            case "running":
-              console.log("Upload is running");
-              break;
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          // Handle successful uploads on complete
-          // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at", downloadURL);
-          });
-        }
-      );
-    };
-    file && uploadFile();
-  }, [file]);
+  const updatename = async () => {
+    updateProfile(auth.currentUser, {
+      // displayName: "Jane Q. User",
+      displayName: displayName,
+    })
+      .then(() => {
+        alert("名前を更新しました。");
+        getData();
+      })
+      .catch((error) => {
+        // An error occurred
+        // ...
+      });
+  };
 
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
@@ -122,7 +91,8 @@ export default function Profile() {
     context,
     downloadURL,
     categori,
-    cratetime
+    cratetime,
+    displayname
   ) => {
     setID(id);
     setContext(context);
@@ -171,68 +141,90 @@ export default function Profile() {
         </p>
 
         <p className="m-5">過去の投稿</p>
+        {/* <p className="text-1xl text-center">投稿数　{firedata.length}件</p> */}
 
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
           {firedata.map((data) => {
             return (
-              <Grid item xs={4} key={data.id} className="">
-                <Card sx={{ maxWidth: 400 }} className="">
-                  <CardMedia
-                    component="img"
-                    // height="140"
-                    className="w-100 h-100"
-                    image={data.downloadURL}
-                    alt=""
-                  />
-                  {/* <img src={data.downloadURL} /> */}
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {data.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                        {data.categori}
-                      </p>
-                      <br></br>
-                      {data.context}
-                      <br></br>
-                      {data.name}
-                      <br></br>
-                      {data.createtime}
-                      {data.email}
-                    </Typography>
-                  </CardContent>
-                  {user.email == data.email && (
-                    <CardActions>
-                      <Button
-                        variant="outlined"
-                        onClick={() =>
-                          getID(
-                            data.id,
-                            data.name,
-                            data.age,
-                            data.title,
-                            data.context
-                          )
-                        }
-                      >
-                        更新する
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        onClick={() => deleteDocument(data.id)}
-                      >
-                        削除する
-                      </Button>
-                    </CardActions>
-                  )}
-                </Card>
+              <Grid key={data.id} className="flex m-auto">
+                {data.email == user.email && (
+                  <Card className="lg:w-full my-4">
+                    <p className="m-auto text-center">
+                      <Image
+                        className="m-auto text-center max-w-sm"
+                        height={300}
+                        width={300}
+                        src={data.downloadURL}
+                      />
+                    </p>
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {data.title}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {data.categori == "ONE PIECE" && (
+                          <p className="bg-blue-500 p-2 inline-block text-white text-center">
+                            {data.categori}
+                          </p>
+                        )}
+                        {data.categori == "呪術廻戦" && (
+                          <p className="bg-purple-500 p-2 inline-block text-white text-center">
+                            {data.categori}
+                          </p>
+                        )}
+                        {data.categori == "東京リベンジャーズ" && (
+                          <p className="bg-rose-500 p-2 inline-block text-white text-center">
+                            {data.categori}
+                          </p>
+                        )}
+                        {data.categori == "キングダム" && (
+                          <p className="bg-yellow-500 p-2 inline-block text-white text-center">
+                            {data.categori}
+                          </p>
+                        )}
+                        <br></br>
+                        <br></br>
+                        <div className="w-80 m-auto" style={styles}>
+                          {data.context}
+                        </div>
+                        <br></br>
+                        {data.name}
+                        <br></br>
+                        {data.createtime}
+                      </Typography>
+                    </CardContent>
+                    {/* {user.email == data.email && (
+                      <CardActions>
+                        <Button
+                          variant="outlined"
+                          onClick={() =>
+                            getID(
+                              data.id,
+                              data.name,
+                              data.age,
+                              data.title,
+                              data.context
+                            )
+                          }
+                        >
+                          更新する
+                        </Button>
+                        <Button
+                          variant="outlined"
+                          onClick={() => deleteDocument(data.id)}
+                        >
+                          削除する
+                        </Button>
+                      </CardActions>
+                    )} */}
+                  </Card>
+                )}
               </Grid>
             );
           })}
         </Grid>
 
-        <p className="m-5">いいねした投稿：</p>
+        {/* <p className="m-5">いいねした投稿：</p> */}
 
         <Box
           component="form"
@@ -246,24 +238,23 @@ export default function Profile() {
             id="outlined-basic"
             label="名前"
             variant="outlined"
-            value={displayName || ""}
+            // value={displayName}
             onChange={(event) => setDisplayName(event.target.value)}
           />
-
-          {/* <input type="file"></input> */}
+          <br></br>
+          <input type="file" />
         </Box>
-
-        <Button variant="outlined" className="m-5" onClick={updateProfile}>
+        <Button variant="outlined" className="m-5" onClick={updatename}>
           更新する
         </Button>
 
-        <Button variant="outlined" className="m-5" href="">
+        {/* <Button variant="outlined" className="m-5" href="">
           <Link href="/profile/edit">更新</Link>
+        </Button> */}
+        <Button variant="outlined" className="m-5">
+          <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </Button>
         {/* <Button variant="outlined" className="m-5" href="/profile/edit">
-          メールアドレスを変更する
-        </Button>
-        <Button variant="outlined" className="m-5" href="/profile/edit">
           パスワードを変更する
         </Button> */}
       </div>

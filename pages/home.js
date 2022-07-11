@@ -28,6 +28,7 @@ import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
+// import { Search } from "./Search";
 
 export default function Home() {
   const [ID, setID] = useState(null);
@@ -40,10 +41,12 @@ export default function Home() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
+  const [displayName, setDisplayName] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [downloadURL, setDownloadURL] = useState(null);
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
+  const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
 
   const auth = getAuth();
@@ -64,12 +67,10 @@ export default function Home() {
     addDoc(databaseRef, {
       title: title,
       context: context,
-      // name: name,
       email: user.email,
       downloadURL: result,
       email: user.email,
       categori: categori,
-      // age: Number(age),
     })
       .then(() => {
         alert("データ送った");
@@ -102,13 +103,15 @@ export default function Home() {
     context,
     downloadURL,
     categori,
-    cratetime
+    cratetime,
+    displayname
   ) => {
     setID(id);
     setContext(context);
     setTitle(title);
     setName(name);
     setAge(age);
+    setDisplayname(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
@@ -171,11 +174,12 @@ export default function Home() {
           <Button variant="outlined" className="">
             <Link href="/post">新規投稿をする</Link>
           </Button>
+          {/* <Search /> */}
         </div>
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           投稿一覧
         </h2>
-        {/* <p className="">投稿数　</p> */}
+        <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
 
         <Grid container spacing={1}>
           {firedata.map((data) => {
@@ -217,9 +221,11 @@ export default function Home() {
                       )}
                       <br></br>
                       <br></br>
-                      <p className="w-80 m-auto">{data.context}</p>
+                      <div className="w-80 m-auto" style={styles}>
+                        {data.context}
+                      </div>
                       <br></br>
-                      {data.name}
+                      投稿者名：{data.displayname}
                       <br></br>
                       {data.createtime}
                     </Typography>
@@ -231,8 +237,7 @@ export default function Home() {
                         onClick={() =>
                           getID(
                             data.id,
-                            data.name,
-                            data.age,
+                            data.displayname,
                             data.title,
                             data.context
                           )
@@ -275,22 +280,24 @@ export default function Home() {
             />
             <br></br>
             <TextField
-              id="outlined-basic"
               label="内容(最大500文字）"
-              variant="outlined"
+              className="m-auto w-full"
+              id="filled-multiline-static"
+              multiline
+              rows={14}
               type="text"
               value={context}
               onChange={(event) => setContext(event.target.value)}
             />
             <br></br>
-            <TextField
+            {/* <TextField
               id="outlined-basic"
               label="名前(最大20文字）"
               variant="outlined"
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
-            />
+            /> */}
             <br></br>
             <Button variant="outlined" onClick={updatefields}>
               更新する

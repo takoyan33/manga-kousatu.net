@@ -2,18 +2,9 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { database } from "../../firebaseConfig";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  Firestore,
-} from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { updatePassword } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -42,7 +33,10 @@ export default function Post() {
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [downloadURL, setDownloadURL] = useState(null);
   const [uploadResult, setUploadResultL] = useState(null);
+  const [userid, setUserid] = useState(null);
   const [result, setResult] = useState("");
+  const [netabare, setNetabare] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -58,32 +52,41 @@ export default function Post() {
   const user = auth.currentUser;
 
   console.log(setContext);
+
   const addDate = async () => {
-    const result = await postImage(image);
-    const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
-    setResult(result);
-    // console.log(downloadURL);
-    addDoc(databaseRef, {
-      title: title,
-      context: context.replace(/\r?\n/g, "\n"),
-      downloadURL: result,
-      email: user.email,
-      displayname: user.displayName,
-      categori: categori,
-      createtime: newdate,
-    })
-      .then(() => {
-        alert("投稿できました。");
-        setTitle("");
-        setContext("");
-        setCategori("");
-        // console.log(result);
-        router.push("/home");
-        getData();
+    if (image == null) {
+      alert("サムネイルを選んでください");
+    } else {
+      const result = await postImage(image);
+      const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
+      setResult(result);
+      // console.log(downloadURL);
+      addDoc(databaseRef, {
+        title: title,
+        context: context.replace(/\r?\n/g, "\n"),
+        downloadURL: result,
+        email: user.email,
+        displayname: user.displayName,
+        categori: categori,
+        createtime: newdate,
+        netabare: netabare,
+        photoURL: user.photoURL,
+        userid: user.uid,
       })
-      .catch((err) => {
-        console.error(err);
-      });
+        .then(() => {
+          alert("記事投稿ができました。");
+          setTitle("");
+          setContext("");
+          setCategori("");
+          setNetabare("");
+          setPhotoURL("");
+          setUserid(Null);
+          router.push("/home");
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
   };
 
   return (
@@ -96,7 +99,7 @@ export default function Post() {
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          記事投稿
+          考察記事の投稿
         </h2>
         <Box
           component="form"
@@ -145,6 +148,7 @@ export default function Post() {
               label="タイトル*（最大20文字)"
               variant="outlined"
               value={title}
+              helperText="タイトルを入力してください"
               className="m-auto w-full"
               onChange={(event) => {
                 if (event.target.value.length <= 20) {
@@ -183,6 +187,28 @@ export default function Post() {
                 onChange={(event) => setCategori(event.target.value)}
               />
             </RadioGroup>
+            <FormLabel id="demo-radio-buttons-group-label">
+              ネタバレについて*
+            </FormLabel>
+
+            <RadioGroup
+              aria-labelledby="demo-radio-buttons-group-label"
+              name="radio-buttons-group"
+            >
+              <FormControlLabel
+                value="ネタバレ有"
+                control={<Radio />}
+                label="ネタバレ有(漫画・アニメよりも先行している内容の場合）"
+                onChange={(event) => setNetabare(event.target.value)}
+              />
+              <FormControlLabel
+                value="ネタバレ無"
+                control={<Radio />}
+                label="ネタバレ無"
+                onChange={(event) => setNetabare(event.target.value)}
+              />
+            </RadioGroup>
+            {}
             <TextField
               label="内容*(最大500文字）"
               className="m-auto w-full"
@@ -196,6 +222,7 @@ export default function Post() {
                 }
               }}
             />
+            <br></br>
             <br></br>
             <div className="text-center">
               <Button

@@ -12,16 +12,16 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth, updateProfile, onAuthStateChanged } from "firebase/auth";
+import { getAuth, updateProfile, deleteUser } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/MuiNavbar";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
+import { postImage } from "../api/upload";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
@@ -33,17 +33,24 @@ export default function Profile() {
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [file, setFile] = useState("");
+  const [categori, setCategori] = useState("");
   const auth = getAuth();
   const user = auth.currentUser;
   const [photoURL, setPhotoURL] = useState();
   const [displayName, setDisplayName] = useState("");
   let router = useRouter();
+  const [createtime, setCreatetime] = useState("");
+  const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
+  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState(null);
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
   const [email, setEmail] = useState("");
+  const [userid, setUserid] = useState(null);
+  const [netabare, setNetabare] = useState("");
+  const [opentext, setOpentext] = useState(false);
   const styles = { whiteSpace: "pre-line" };
 
   console.log(user);
@@ -57,18 +64,50 @@ export default function Profile() {
       router.push("/register");
     }
   }, []);
+
+  // useEffect(() => {
+  //   if (user.photoURL == null) {
+  //     updateProfile(auth.currentUser, {
+  //       photoURL:
+  //         "https://firebasestorage.googleapis.com/v0/b/next-auth-app-2aa40.appspot.com/o/images%2F0oglm23o.jpg?alt=media&token=a5d8cdcd-ceca-4852-ba3c-0ca40308a4b8",
+  //     })
+  //       .then(() => {
+  //         setPhotoURL("");
+  //         getData();
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   } else {
+  //   }
+  // }, []);
+
+  const uploadToClient = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      setImage(file);
+      setCreateObjectURL(URL.createObjectURL(file));
+    }
+  };
+
   const updatename = async () => {
+    const result = await postImage(image);
+    setResult(result);
+
     updateProfile(auth.currentUser, {
-      // displayName: "Jane Q. User",
       displayName: displayName,
+      // photoURL: result,
     })
       .then(() => {
-        alert("名前を更新しました。");
+        alert("プロフィールを更新しました。");
+        setDisplayName("");
+        setResult("");
         getData();
+        router.push("/profile");
       })
       .catch((error) => {
-        // An error occurred
-        // ...
+        console.error(error);
       });
   };
 
@@ -85,8 +124,6 @@ export default function Profile() {
 
   const getID = (
     id,
-    name,
-    age,
     title,
     context,
     downloadURL,
@@ -97,29 +134,42 @@ export default function Profile() {
     setID(id);
     setContext(context);
     setTitle(title);
-    setName(name);
-    setAge(age);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
     setCreatetime(cratetime);
+    setDisplayName(displayname);
   };
 
-  onAuthStateChanged(auth, (user) => {
+  // onAuthStateChanged(auth, (user) => {
+  //   if (user) {
+  //     updateProfile({
+  //       displayName: displayName,
+  //       // setPhotoURL: photoURL,
+  //     })
+  //       .then(() => {
+  //         setDisplayName("");
+  //         // setPhotoURL("");
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //       });
+  //   }
+  // });
+
+  const deleteuser = async () => {
     if (user) {
-      updateProfile({
-        displayName: displayName,
-        // setPhotoURL: photoURL,
-      })
+      deleteUser(user)
         .then(() => {
-          setDisplayName("");
-          // setPhotoURL("");
+          sessionStorage.removeItem("Token");
+          alert("退会しました。TOP画面に戻ります。");
+          router.push("/");
         })
         .catch((error) => {
-          console.error(error);
+          console.log(error);
         });
     }
-  });
+  };
 
   return (
     <div>
@@ -133,7 +183,17 @@ export default function Profile() {
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           プロフィール
         </h2>
-        <p className="m-5">ユーザー画像{user && <img src={user.photoURL} />}</p>
+        <p className="m-5">
+          ユーザー画像
+          {user && (
+            <Image
+              className="m-auto text-center max-w-sm"
+              height={100}
+              width={100}
+              src={user.photoURL}
+            />
+          )}
+        </p>
         <p className="m-5">名前： {user && <span>{user.displayName}</span>}</p>
         {/* <p className="m-5">自己紹介：</p> */}
         <p className="m-5">
@@ -141,14 +201,14 @@ export default function Profile() {
         </p>
 
         <p className="m-5">過去の投稿</p>
-        {/* <p className="text-1xl text-center">投稿数　{firedata.length}件</p> */}
+        {/* <p className="text-1xl text-center">投稿数　  {data.email == user.email && (<p>{firedata.length}</p>)}件</p> */}
 
         <Grid container spacing={1}>
           {firedata.map((data) => {
             return (
               <Grid key={data.id} className="flex m-auto">
                 {data.email == user.email && (
-                  <Card className="lg:w-full my-4">
+                  <Card className="lg:w-full w-4/5 my-4">
                     <p className="m-auto text-center">
                       <Image
                         className="m-auto text-center max-w-sm"
@@ -184,9 +244,7 @@ export default function Profile() {
                         )}
                         <br></br>
                         <br></br>
-                        <div className="w-80 m-auto" style={styles}>
-                          {data.context}
-                        </div>
+                        <div className="w-80 m-auto">{data.context}</div>
                         <br></br>
                         {data.name}
                         <br></br>
@@ -234,6 +292,8 @@ export default function Profile() {
           noValidate
           autoComplete="off"
         >
+          <p>名前の更新</p>
+
           <TextField
             id="outlined-basic"
             label="名前"
@@ -242,21 +302,60 @@ export default function Profile() {
             onChange={(event) => setDisplayName(event.target.value)}
           />
           <br></br>
-          <input type="file" />
+          {/* <img
+            className="flex justify-center items-center m-auto  w-full"
+            src={createObjectURL}
+          />
+          <label
+            htmlFor="file-input"
+            className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+          </label>
+          <input
+            id="file-input"
+            className="hidden"
+            type="file"
+            accept="image/*"
+            name="myImage"
+            onChange={uploadToClient}
+          /> */}
         </Box>
+        <br></br>
         <Button variant="outlined" className="m-5" onClick={updatename}>
-          更新する
+          名前を更新する
         </Button>
-
-        {/* <Button variant="outlined" className="m-5" href="">
-          <Link href="/profile/edit">更新</Link>
-        </Button> */}
-        <Button variant="outlined" className="m-5">
+        {/* <Button variant="outlined" className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
-        </Button>
-        {/* <Button variant="outlined" className="m-5" href="/profile/edit">
-          パスワードを変更する
         </Button> */}
+        <br></br>
+        <br></br>
+        <Button variant="outlined" className="m-5">
+          <Link href="/profile/passwordedit">パスワードを変更する</Link>
+        </Button>
+        <br></br>
+        <br></br>
+        <Button variant="outlined" className="m-5">
+          <Link href="/profile/photoedit"> プロフィール画像を更新する</Link>
+        </Button>
+        <br></br>
+        <br></br>
+        <Button variant="outlined" className="m-5" onClick={deleteuser}>
+          アカウントを退会する
+        </Button>
       </div>
     </div>
   );

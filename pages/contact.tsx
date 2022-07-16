@@ -13,14 +13,8 @@ function Contact() {
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">About</h2>
-        <p>
-          漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
-        </p>
+        <p className="">お問合せ</p>
         <br></br>
-        <ul>
-          <li>運営者　　　　　阿部　舜平</li>
-          <li> メールアドレス　harrier2070@gmail.com</li>
-        </ul>
       </div>
     </div>
   );

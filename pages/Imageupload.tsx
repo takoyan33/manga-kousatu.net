@@ -15,16 +15,11 @@ import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { updatePassword } from "firebase/auth";
 import { MuiNavbar } from "../layouts/MuiNavbar";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import { postImage } from "./api/upload";
 
 export default function UploadImage() {
   const [image, setImage] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState(null);
-
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {

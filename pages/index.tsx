@@ -20,7 +20,7 @@ export default function Index() {
     let token = sessionStorage.getItem("Token");
 
     if (token) {
-      router.push("/home");
+      // router.push("/home");
     }
     if (!token) {
     }

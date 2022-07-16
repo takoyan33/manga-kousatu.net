@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import { app, database, ref } from "../firebaseConfig";
 import {
   collection,
-  addDoc,
   getDocs,
   doc,
   updateDoc,
   deleteDoc,
-  Firestore,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
@@ -29,29 +27,36 @@ import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 // import { Search } from "./Search";
+import { Cardpost } from "../layouts/Cardpost";
+import Avatar from "@mui/material/Avatar";
 
 export default function Home() {
   const [ID, setID] = useState(null);
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [age, setAge] = useState(null);
   const [categori, setCategori] = useState("");
   const [firedata, setFiredata] = useState([]);
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
-  const [displayName, setDisplayName] = useState("");
+  const [displayname, setDisplayName] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [downloadURL, setDownloadURL] = useState(null);
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  const [userid, setUserid] = useState(null);
+  const [netabare, setNetabare] = useState("");
+  const [opentext, setOpentext] = useState(false);
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
 
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
+  // console.log(user);
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
 
@@ -62,28 +67,6 @@ export default function Home() {
       router.push("/register");
     }
   }, []);
-
-  const addDate = () => {
-    addDoc(databaseRef, {
-      title: title,
-      context: context,
-      email: user.email,
-      downloadURL: result,
-      email: user.email,
-      categori: categori,
-    })
-      .then(() => {
-        alert("データ送った");
-        setContext("");
-        setTitle("");
-        setCategori("");
-        // setName("");
-        getData();
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  };
 
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
@@ -104,36 +87,61 @@ export default function Home() {
     downloadURL,
     categori,
     cratetime,
-    displayname
+    displayname,
+    netabare,
+    photoURL,
+    userid
   ) => {
     setID(id);
     setContext(context);
     setTitle(title);
     setName(name);
     setAge(age);
-    setDisplayname(displayname);
+    setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
     setCreatetime(cratetime);
+    setNetabare(netabare);
+    setPhotoURL(photoURL);
+    setUserid(userid);
+    console.log(title);
   };
+
+  // const updatefields = () => {
+  //   let fieldToEdit = doc(database, "CRUD DATA", ID);
+
+  //   updateDoc(fieldToEdit, {
+  //     title: title,
+  //     context: context,
+  //     // email: user.email,
+  //     // downloadURL: result,
+  //     // categori: categori,
+  //   })
+  //     .then(() => {
+  //       alert("更新したよ");
+  //       setContext("");
+  //       setTitle("");
+  //       // setName("");
+  //       // setAge(null);
+  //       setIsUpdate(false);
+  //       getData();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const updatefields = () => {
     let fieldToEdit = doc(database, "CRUD DATA", ID);
     updateDoc(fieldToEdit, {
       title: title,
-      context: context,
-      email: user.email,
-      downloadURL: result,
-      categori: categori,
-      // name: name,
+      context: context.replace(/\r?\n/g, "\n"),
     })
       .then(() => {
-        alert("更新したよ");
+        alert("記事を更新しました");
         setContext("");
         setTitle("");
-        setName("");
-        setAge(null);
         setIsUpdate(false);
         getData();
       })
@@ -149,14 +157,22 @@ export default function Home() {
     if (checkSaveFlg) {
       deleteDoc(fieldToEdit)
         .then(() => {
-          alert("削除しました");
+          alert("記事を削除しました");
           getData();
         })
         .catch((err) => {
-          alert("削除に失敗しました");
+          alert("記事の削除に失敗しました");
         });
     } else {
       router.push("/home");
+    }
+  };
+
+  const Opentext = () => {
+    if (opentext == false) {
+      setOpentext(true);
+    } else {
+      setOpentext(false);
     }
   };
 
@@ -184,18 +200,32 @@ export default function Home() {
         <Grid container spacing={1}>
           {firedata.map((data) => {
             return (
+              // <Cardpost
+              //   key={data.id}
+              //   downloadURL={data.downloadURL}
+              //   title={data.title}
+              //   categori={data.categori}
+              //   context={data.context}
+              //   createtime={data.createtime}
+              //   displayname={data.displayname}
+              //   email={data.email}
+              // />
               <Grid key={data.id} className="flex m-auto">
-                <Card className="lg:w-full my-4">
-                  <p className="m-auto text-center">
+                <Card className="lg:w-full w-4/5 my-4 m-auto">
+                  <p className="m-auto text-center ">
                     <Image
                       className="m-auto text-center max-w-sm"
-                      height={300}
-                      width={300}
+                      height={250}
+                      width={250}
                       src={data.downloadURL}
                     />
                   </p>
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
+                    <Typography
+                      gutterBottom
+                      component="div"
+                      className="w-3/5 text-xl "
+                    >
                       {data.title}
                     </Typography>
                     <Typography variant="body2" color="text.secondary">
@@ -220,39 +250,62 @@ export default function Home() {
                         </p>
                       )}
                       <br></br>
+
+                      {data.netabare == "ネタバレ有" && (
+                        <div>
+                          <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                            {data.netabare}
+                          </p>
+                          <br></br>
+                          <button
+                            onClick={Opentext}
+                            className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center"
+                          >
+                            表示する
+                          </button>
+                          {opentext == true && (
+                            <p className="">{data.context}</p>
+                          )}
+                        </div>
+                      )}
+
+                      {data.netabare == "ネタバレ無" && (
+                        <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+                          {data.netabare}
+                        </p>
+                      )}
+
                       <br></br>
                       <div className="w-80 m-auto" style={styles}>
-                        {data.context}
+                        {data.netabare == "ネタバレ無" && (
+                          <p className="">{data.context}</p>
+                        )}
                       </div>
+
                       <br></br>
-                      投稿者名：{data.displayname}
+                      <Avatar alt="Remy Sharp" src={data.photoURL} />
+                      <p>{data.displayname}</p>
                       <br></br>
                       {data.createtime}
                     </Typography>
                   </CardContent>
-                  {user.email == data.email && (
-                    <CardActions>
-                      <Button
-                        variant="outlined"
-                        onClick={() =>
-                          getID(
-                            data.id,
-                            data.displayname,
-                            data.title,
-                            data.context
-                          )
-                        }
-                      >
-                        更新する
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        onClick={() => deleteDocument(data.id)}
-                      >
-                        削除する
-                      </Button>
-                    </CardActions>
-                  )}
+                  {/* {user.email == data.email && ( */}
+                  <CardActions>
+                    <Button
+                      variant="outlined"
+                      onClick={() => getID(data.id, data.name, data.context)}
+                    >
+                      更新する
+                    </Button>
+
+                    <Button
+                      variant="outlined"
+                      onClick={() => deleteDocument(data.id)}
+                    >
+                      削除する
+                    </Button>
+                  </CardActions>
+                  {/* )} */}
                 </Card>
               </Grid>
             );
@@ -278,7 +331,9 @@ export default function Home() {
               value={title}
               onChange={(event) => setTitle(event.target.value)}
             />
+
             <br></br>
+
             <TextField
               label="内容(最大500文字）"
               className="m-auto w-full"
@@ -289,6 +344,10 @@ export default function Home() {
               value={context}
               onChange={(event) => setContext(event.target.value)}
             />
+            <Button variant="outlined" onClick={updatefields}>
+              更新する
+            </Button>
+
             <br></br>
             {/* <TextField
               id="outlined-basic"
@@ -299,9 +358,6 @@ export default function Home() {
               onChange={(event) => setName(event.target.value)}
             /> */}
             <br></br>
-            <Button variant="outlined" onClick={updatefields}>
-              更新する
-            </Button>
           </Box>
 
           // {isUpdate ? (

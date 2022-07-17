@@ -53,12 +53,21 @@ export default function Post() {
 
   console.log(setContext);
 
+  type addDate = {
+    toLocaleString(timeZone): string;
+  };
+
+  // interface DateTimeFormatOptions {
+  //   timeZone?: string[] = [];
+  // }
+
   const addDate = async () => {
     if (image == null) {
       alert("サムネイルを選んでください");
     } else {
       const result = await postImage(image);
-      const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
+      // const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
+      const newdate = new Date().toLocaleString("ja-JP");
       setResult(result);
       // console.log(downloadURL);
       addDoc(databaseRef, {
@@ -80,7 +89,7 @@ export default function Post() {
           setCategori("");
           setNetabare("");
           setPhotoURL("");
-          setUserid(Null);
+          setUserid("");
           router.push("/home");
         })
         .catch((err) => {
@@ -107,7 +116,7 @@ export default function Post() {
             "& > :not(style)": { m: 1, width: "50ch" },
           }}
           className="flex justify-center max-w-7xl "
-          Validate
+          // Validate
           autoComplete="off"
         >
           <div>
@@ -166,25 +175,25 @@ export default function Post() {
                 value="ONE PIECE"
                 control={<Radio />}
                 label="ONE PIECE"
-                onChange={(event) => setCategori(event.target.value)}
+                onChange={(event: any) => setCategori(event.target.value)}
               />
               <FormControlLabel
                 value="呪術廻戦"
                 control={<Radio />}
                 label="呪術廻戦"
-                onChange={(event) => setCategori(event.target.value)}
+                onChange={(event: any) => setCategori(event.target.value)}
               />
               <FormControlLabel
                 value="東京リベンジャーズ"
                 control={<Radio />}
                 label="東京リベンジャーズ"
-                onChange={(event) => setCategori(event.target.value)}
+                onChange={(event: any) => setCategori(event.target.value)}
               />
               <FormControlLabel
                 value="キングダム"
                 control={<Radio />}
                 label="キングダム"
-                onChange={(event) => setCategori(event.target.value)}
+                onChange={(event: any) => setCategori(event.target.value)}
               />
             </RadioGroup>
             <FormLabel id="demo-radio-buttons-group-label">
@@ -199,13 +208,13 @@ export default function Post() {
                 value="ネタバレ有"
                 control={<Radio />}
                 label="ネタバレ有(漫画・アニメよりも先行している内容の場合）"
-                onChange={(event) => setNetabare(event.target.value)}
+                onChange={(event: any) => setNetabare(event.target.value)}
               />
               <FormControlLabel
                 value="ネタバレ無"
                 control={<Radio />}
                 label="ネタバレ無"
-                onChange={(event) => setNetabare(event.target.value)}
+                onChange={(event: any) => setNetabare(event.target.value)}
               />
             </RadioGroup>
             {}

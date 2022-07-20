@@ -1,17 +1,14 @@
 import { app } from "../firebaseConfig";
-import styles from "../styles/Home.module.css";
 import {
   getAuth,
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import { MuiNavbar } from "../layouts/MuiNavbar";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Head from "next/head";
@@ -25,19 +22,24 @@ export default function Register() {
   const [password, setPassword] = useState("");
 
   const SignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        sessionStorage.setItem("Token", response.user.accessToken);
-        console.log(response.user);
-        router.push("/home");
-      })
-      .catch((err) => {
-        alert("emailが既にあります");
-      });
+    let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
+
+    if (checkSaveFlg) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((response: any) => {
+          sessionStorage.setItem("Token", response.user.accessToken);
+          console.log(response.user.accessToken);
+          router.push("/home");
+        })
+        .catch((err) => {
+          alert("emailが既にあります");
+        });
+    } else {
+    }
   };
 
   const SignUpWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((response) => {
+    signInWithPopup(auth, googleProvider).then((response: any) => {
       console.log(response.user);
       sessionStorage.setItem("Token", response.user.accessToken);
       router.push("/home");
@@ -84,7 +86,23 @@ export default function Register() {
             />
             <br></br>
             <br></br>
+
             <label className="text-center my-4">パスワード（8文字以上)*</label>
+            <br></br>
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              type="password"
+              variant="outlined"
+              className="m-auto w-80"
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <br></br>
+            <br></br>
+
+            <label className="text-center my-4">
+              確認用パスワード（8文字以上)*
+            </label>
             <br></br>
             <TextField
               id="outlined-basic"

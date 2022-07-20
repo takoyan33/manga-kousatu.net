@@ -23,9 +23,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/register.js",
-    "pages/login.js"
-, "pages/post/index.tsx"  ],
+    "pages/register.tsx",
+    "pages/login.tsx"
+, "pages/post/index.tsx", "pages/home.jsx"  ],
   "exclude": [
     "node_modules"
   ]

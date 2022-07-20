@@ -1,5 +1,4 @@
 import { app } from "../firebaseConfig";
-import styles from "../styles/Home.module.css";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -12,7 +11,6 @@ import { useEffect } from "react";
 import { MuiNavbar } from "../layouts/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -27,7 +25,7 @@ export default function Login() {
 
   const SignUp = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((response) => {
+      .then((response:any) => {
         sessionStorage.setItem("Token", response.user.accessToken);
         console.log(response.user);
         router.push("/home");
@@ -38,7 +36,7 @@ export default function Login() {
   };
 
   const SignUpWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((response) => {
+    signInWithPopup(auth, googleProvider).then((response:any) => {
       console.log(response.user);
       sessionStorage.setItem("Token", response.user.accessToken);
       router.push("/home");
@@ -88,6 +86,7 @@ export default function Login() {
             />
             <br></br>
             <br></br>
+            
             <label className="text-center my-4">パスワード（8文字以上)*</label>
             <br></br>
             <br></br>

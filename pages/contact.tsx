@@ -1,5 +1,5 @@
 import React from "react";
-import { MuiNavbar } from "../layouts/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Head from "next/head";
 
 function Contact() {

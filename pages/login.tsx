@@ -8,7 +8,7 @@ import {
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { MuiNavbar } from "../layouts/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";

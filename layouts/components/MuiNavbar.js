@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { app, database } from "../firebaseConfig";
+import { app, database } from "../../firebaseConfig";
 import {
   collection,
   addDoc,

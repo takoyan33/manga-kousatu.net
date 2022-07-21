@@ -7,7 +7,7 @@ import {
 } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { MuiNavbar } from "../layouts/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";

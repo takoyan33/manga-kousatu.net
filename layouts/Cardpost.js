@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import styles from "../styles/Home.module.css";
 import { updatePassword } from "firebase/auth";
-import { MuiNavbar } from "./MuiNavbar";
+import { MuiNavbar } from "./components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";

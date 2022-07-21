@@ -5,7 +5,7 @@ import { app, database } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, updatePassword } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/MuiNavbar";
+import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";

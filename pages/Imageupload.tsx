@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { updatePassword } from "firebase/auth";
-import { MuiNavbar } from "../layouts/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { postImage } from "./api/upload";
 
 export default function UploadImage() {

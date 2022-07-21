@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/MuiNavbar";
+import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";

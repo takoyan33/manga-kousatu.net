@@ -1,21 +1,22 @@
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import Button from "@mui/material/Button";
 import * as React from "react";
 import Stack from "@mui/material/Stack";
-import { MuiNavbar } from "../layouts/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { useEffect, useState } from "react";
 import { app, database } from "../firebaseConfig";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
+import { Loginbutton } from "../layouts/components/button/loginbutton";
+import { Registerbutton } from "../layouts/components/button/registerbutton";
 
 export default function Index() {
   let router = useRouter();
-
   const auth = getAuth();
   const user = auth.currentUser;
   console.log(user);
+
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
 
@@ -37,6 +38,7 @@ export default function Index() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
         <br></br>
@@ -50,19 +52,9 @@ export default function Index() {
         </p>
         <br></br>
         <Stack className="text-center m-auto w-full ">
-          <button className=" text-center m-auto my-2 border-solid  hover:border-dotted">
-            <Link href="/register" className=" text-center m-auto my-2">
-              新規登録はこちら
-            </Link>
-          </button>
-          <button className=" text-center m-auto  my-2 ">
-            <Link
-              href="/login"
-              className=" text-center m-auto my-2 border-solid  hover:border-dotted"
-            >
-              ログインはこちら
-            </Link>
-          </button>
+          <Registerbutton />
+
+          <Loginbutton />
         </Stack>
       </div>
     </div>

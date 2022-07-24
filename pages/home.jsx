@@ -150,23 +150,23 @@ export default function Home() {
       });
   };
 
-  const deleteDocument = (id) => {
-    let fieldToEdit = doc(database, "CRUD DATA", id);
-    let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+  // const deleteDocument = (id) => {
+  //   let fieldToEdit = doc(database, "CRUD DATA", id);
+  //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
 
-    if (checkSaveFlg) {
-      deleteDoc(fieldToEdit)
-        .then(() => {
-          alert("記事を削除しました");
-          getData();
-        })
-        .catch((err) => {
-          alert("記事の削除に失敗しました");
-        });
-    } else {
-      router.push("/home");
-    }
-  };
+  //   if (checkSaveFlg) {
+  //     deleteDoc(fieldToEdit)
+  //       .then(() => {
+  //         alert("記事を削除しました");
+  //         getData();
+  //       })
+  //       .catch((err) => {
+  //         alert("記事の削除に失敗しました");
+  //       });
+  //   } else {
+  //     router.push("/home");
+  //   }
+  // };
 
   const Opentext = () => {
     if (opentext == false) {
@@ -200,114 +200,100 @@ export default function Home() {
         <Grid container spacing={1}>
           {firedata.map((data) => {
             return (
-              // <Cardpost
-              //   key={data.id}
-              //   downloadURL={data.downloadURL}
-              //   title={data.title}
-              //   categori={data.categori}
-              //   context={data.context}
-              //   createtime={data.createtime}
-              //   displayname={data.displayname}
-              //   email={data.email}
-              // />
-              <Grid key={data.id} className="flex m-auto">
-                <Card className="lg:w-full w-4/5 my-4 m-auto">
-                  <p className="m-auto text-center ">
-                    <Image
-                      className="m-auto text-center max-w-sm"
-                      height={250}
-                      width={250}
-                      src={data.downloadURL}
-                    />
-                  </p>
-                  <CardContent>
-                    <Typography
-                      gutterBottom
-                      component="div"
-                      className="w-3/5 text-xl "
-                    >
-                      {data.title}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {data.categori == "ONE PIECE" && (
-                        <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                          {data.categori}
-                        </p>
-                      )}
-                      {data.categori == "呪術廻戦" && (
-                        <p className="bg-purple-500 p-2 inline-block text-white text-center">
-                          {data.categori}
-                        </p>
-                      )}
-                      {data.categori == "東京リベンジャーズ" && (
-                        <p className="bg-rose-500 p-2 inline-block text-white text-center">
-                          {data.categori}
-                        </p>
-                      )}
-                      {data.categori == "キングダム" && (
-                        <p className="bg-yellow-500 p-2 inline-block text-white text-center">
-                          {data.categori}
-                        </p>
-                      )}
-                      <br></br>
+              <Cardpost
+                key={data.id}
+                downloadURL={data.downloadURL}
+                title={data.title}
+                categori={data.categori}
+                netabare={data.netabare}
+                context={data.context}
+                createtime={data.createtime}
+                displayname={data.displayname}
+                email={data.email}
+                className="lg:w-full m-8"
+              />
 
-                      {data.netabare == "ネタバレ有" && (
-                        <div>
-                          <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
-                            {data.netabare}
-                          </p>
-                          <br></br>
-                          <button
-                            onClick={Opentext}
-                            className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center"
-                          >
-                            表示する
-                          </button>
-                          {opentext == true && (
-                            <p className="">{data.context}</p>
-                          )}
-                        </div>
-                      )}
+              // <Grid key={data.id} className="flex m-auto">
+              //   <Card className="lg:w-full w-4/5 my-4 m-auto">
+              //     <p className="m-auto text-center ">
+              //       <Image
+              //         className="m-auto text-center max-w-sm"
+              //         height={250}
+              //         width={250}
+              //         src={data.downloadURL}
+              //       />
+              //     </p>
+              //     <CardContent>
+              //       <Typography
+              //         gutterBottom
+              //         component="div"
+              //         className="w-3/5 text-xl "
+              //       >
+              //         {data.title}
+              //       </Typography>
+              //       <Typography variant="body2" color="text.secondary">
+              //         {data.categori == "ONE PIECE" && (
+              //           <p className="bg-blue-500 p-2 inline-block text-white text-center">
+              //             {data.categori}
+              //           </p>
+              //         )}
+              //         {data.categori == "呪術廻戦" && (
+              //           <p className="bg-purple-500 p-2 inline-block text-white text-center">
+              //             {data.categori}
+              //           </p>
+              //         )}
+              //         {data.categori == "東京リベンジャーズ" && (
+              //           <p className="bg-rose-500 p-2 inline-block text-white text-center">
+              //             {data.categori}
+              //           </p>
+              //         )}
+              //         {data.categori == "キングダム" && (
+              //           <p className="bg-yellow-500 p-2 inline-block text-white text-center">
+              //             {data.categori}
+              //           </p>
+              //         )}
+              //         <br></br>
 
-                      {data.netabare == "ネタバレ無" && (
-                        <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
-                          {data.netabare}
-                        </p>
-                      )}
+              //         {data.netabare == "ネタバレ有" && (
+              //           <div>
+              //             <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+              //               {data.netabare}
+              //             </p>
+              //             <br></br>
+              //             <button
+              //               onClick={Opentext}
+              //               className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center"
+              //             >
+              //               表示する
+              //             </button>
+              //             {opentext == true && (
+              //               <p className="">{data.context}</p>
+              //             )}
+              //           </div>
+              //         )}
 
-                      <br></br>
-                      <div className="w-80 m-auto" style={styles}>
-                        {data.netabare == "ネタバレ無" && (
-                          <p className="">{data.context}</p>
-                        )}
-                      </div>
+              //         {data.netabare == "ネタバレ無" && (
+              //           <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+              //             {data.netabare}
+              //           </p>
+              //         )}
 
-                      <br></br>
-                      <Avatar alt="Remy Sharp" src={data.photoURL} />
-                      <p>{data.displayname}</p>
-                      <br></br>
-                      {data.createtime}
-                    </Typography>
-                  </CardContent>
-                  {/* {user.email == data.email && ( */}
-                  <CardActions>
-                    <Button
-                      variant="outlined"
-                      onClick={() => getID(data.id, data.name, data.context)}
-                    >
-                      更新する
-                    </Button>
+              //         <br></br>
+              //         <div className="w-80 m-auto" style={styles}>
+              //           {data.netabare == "ネタバレ無" && (
+              //             <p className="">{data.context}</p>
+              //           )}
+              //         </div>
 
-                    <Button
-                      variant="outlined"
-                      onClick={() => deleteDocument(data.id)}
-                    >
-                      削除する
-                    </Button>
-                  </CardActions>
-                  {/* )} */}
-                </Card>
-              </Grid>
+              //         <br></br>
+              //         <Avatar alt="Remy Sharp" src={data.photoURL} />
+              //         <p>{data.displayname}</p>
+              //         <br></br>
+              //         {data.createtime}
+              //       </Typography>
+              //     </CardContent>
+              //   </Card>
+              // </Grid>
             );
           })}
         </Grid>
@@ -347,8 +333,9 @@ export default function Home() {
             <Button variant="outlined" onClick={updatefields}>
               更新する
             </Button>
-
             <br></br>
+          </Box>
+                    )}
             {/* <TextField
               id="outlined-basic"
               label="名前(最大20文字）"
@@ -357,8 +344,7 @@ export default function Home() {
               value={name}
               onChange={(event) => setName(event.target.value)}
             /> */}
-            <br></br>
-          </Box>
+
 
           // {isUpdate ? (
           //   <Button variant="outlined" onClick={updatefields}>
@@ -369,7 +355,7 @@ export default function Home() {
           //     投稿する
           //   </Button>
           // )}
-        )}
+
       </div>
     </div>
   );

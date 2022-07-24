@@ -53,7 +53,7 @@ export default function Index() {
         <br></br>
         <Stack className="text-center m-auto w-full ">
           <Registerbutton />
-
+          <br></br>
           <Loginbutton />
         </Stack>
       </div>

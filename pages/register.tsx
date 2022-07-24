@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Head from "next/head";
 import Link from "next/link";
+// import useSignUp from "./api/auth/signup";
 
 export default function Register() {
   const auth = getAuth();
@@ -20,6 +21,7 @@ export default function Register() {
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  // const singup = useSignUp();
 
   const SignUp = () => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");

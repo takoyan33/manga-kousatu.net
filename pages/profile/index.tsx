@@ -27,6 +27,7 @@ import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import { Cardpost } from "../../layouts/Cardpost";
 
 export default function Profile() {
   const [ID, setID] = useState(null);
@@ -64,23 +65,6 @@ export default function Profile() {
       router.push("/register");
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (user.photoURL == null) {
-  //     updateProfile(auth.currentUser, {
-  //       photoURL:
-  //         "https://firebasestorage.googleapis.com/v0/b/next-auth-app-2aa40.appspot.com/o/images%2F0oglm23o.jpg?alt=media&token=a5d8cdcd-ceca-4852-ba3c-0ca40308a4b8",
-  //     })
-  //       .then(() => {
-  //         setPhotoURL("");
-  //         getData();
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   } else {
-  //   }
-  // }, []);
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -129,7 +113,8 @@ export default function Profile() {
     downloadURL,
     categori,
     cratetime,
-    displayname
+    displayname,
+    createtime
   ) => {
     setID(id);
     setContext(context);
@@ -168,6 +153,42 @@ export default function Profile() {
         .catch((error) => {
           console.log(error);
         });
+    }
+  };
+
+  const updatefields = () => {
+    let fieldToEdit = doc(database, "CRUD DATA", ID);
+    updateDoc(fieldToEdit, {
+      title: title,
+      context: context.replace(/\r?\n/g, "\n"),
+    })
+      .then(() => {
+        alert("記事を更新しました");
+        setContext("");
+        setTitle("");
+        setIsUpdate(false);
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteDocument = (id) => {
+    let fieldToEdit = doc(database, "CRUD DATA", id);
+    let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+
+    if (checkSaveFlg) {
+      deleteDoc(fieldToEdit)
+        .then(() => {
+          alert("記事を削除しました");
+          getData();
+        })
+        .catch((err) => {
+          alert("記事の削除に失敗しました");
+        });
+    } else {
+      router.push("/home");
     }
   };
 
@@ -251,16 +272,18 @@ export default function Profile() {
                         {data.createtime}
                       </Typography>
                     </CardContent>
-                    {/* {user.email == data.email && (
+                    {user.email == data.email && (
                       <CardActions>
                         <Button
                           variant="outlined"
                           onClick={() =>
                             getID(
                               data.id,
-                              data.name,
-                              data.age,
+                              data.categori,
+                              data.createtime,
                               data.title,
+                              data.downloadURL,
+                              data.email,
                               data.context
                             )
                           }
@@ -269,20 +292,58 @@ export default function Profile() {
                         </Button>
                         <Button
                           variant="outlined"
+                          key={data.id}
                           onClick={() => deleteDocument(data.id)}
                         >
                           削除する
                         </Button>
                       </CardActions>
-                    )} */}
+                    )}
                   </Card>
                 )}
               </Grid>
             );
           })}
         </Grid>
+        <br></br>
+        <br></br>
 
-        {/* <p className="m-5">いいねした投稿：</p> */}
+        {isUpdate && (
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="outlined-basic"
+              label="タイトル（最大20文字)"
+              variant="outlined"
+              type="text"
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+            />
+
+            <br></br>
+
+            <TextField
+              label="内容(最大500文字）"
+              className="m-auto w-full"
+              id="filled-multiline-static"
+              multiline
+              rows={14}
+              type="text"
+              value={context}
+              onChange={(event) => setContext(event.target.value)}
+            />
+            <Button variant="outlined" onClick={updatefields}>
+              更新する
+            </Button>
+            <br></br>
+          </Box>
+        )}
 
         <Box
           component="form"
@@ -302,37 +363,6 @@ export default function Profile() {
             onChange={(event) => setDisplayName(event.target.value)}
           />
           <br></br>
-          {/* <img
-            className="flex justify-center items-center m-auto  w-full"
-            src={createObjectURL}
-          />
-          <label
-            htmlFor="file-input"
-            className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
-            </svg>
-          </label>
-          <input
-            id="file-input"
-            className="hidden"
-            type="file"
-            accept="image/*"
-            name="myImage"
-            onChange={uploadToClient}
-          /> */}
         </Box>
         <br></br>
         <Button variant="outlined" className="m-5" onClick={updatename}>

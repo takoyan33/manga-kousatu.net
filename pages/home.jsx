@@ -335,27 +335,7 @@ export default function Home() {
             </Button>
             <br></br>
           </Box>
-                    )}
-            {/* <TextField
-              id="outlined-basic"
-              label="名前(最大20文字）"
-              variant="outlined"
-              type="text"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            /> */}
-
-
-          // {isUpdate ? (
-          //   <Button variant="outlined" onClick={updatefields}>
-          //     更新する
-          //   </Button>
-          // ) : (
-          //   <Button variant="outlined" onClick={addDate}>
-          //     投稿する
-          //   </Button>
-          // )}
-
+        )}
       </div>
     </div>
   );

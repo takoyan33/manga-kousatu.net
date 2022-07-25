@@ -207,19 +207,19 @@ export const Cardpost = ({
 
           {user.email == email && (
             <CardActions>
-              {/* <Button
+              <Button
                 variant="outlined"
                 onClick={() => getID(id, name, age, title, context)}
               >
                 更新する
-              </Button> */}
-              {/* <Button
+              </Button>
+              <Button
                 variant="outlined"
                 key={id}
                 onClick={() => deleteDocument(id)}
               >
                 削除する
-              </Button> */}
+              </Button>
             </CardActions>
           )}
         </Card>

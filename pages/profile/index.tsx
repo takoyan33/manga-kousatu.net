@@ -284,6 +284,7 @@ export default function Profile() {
                               data.title,
                               data.downloadURL,
                               data.email,
+                              data.displayname,
                               data.context
                             )
                           }

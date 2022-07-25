@@ -211,6 +211,8 @@ export default function Home() {
                 createtime={data.createtime}
                 displayname={data.displayname}
                 email={data.email}
+                id={data.id}
+                photoURL={data.photoURL}
               />
 
               // <Grid key={data.id} className="flex m-auto">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { app, database, ref } from "../firebaseConfig";
+import { app, database } from "../firebaseConfig";
 import {
   collection,
   getDocs,
@@ -201,6 +201,7 @@ export default function Home() {
           {firedata.map((data) => {
             return (
               <Cardpost
+                className="lg:w-full m-8"
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}
@@ -210,7 +211,6 @@ export default function Home() {
                 createtime={data.createtime}
                 displayname={data.displayname}
                 email={data.email}
-                className="lg:w-full m-8"
               />
 
               // <Grid key={data.id} className="flex m-auto">

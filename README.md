@@ -14,11 +14,15 @@ https://next-auth-app-2aa40.web.app/
 
 ## 使用言語、環境
 
-使用言語：React,TypeScript
+使用言語：TypeScript
 
-フレームワーク：Next.js
+フレームワーク：React,Next.js
 
-データベース：Firestore
+認証：Firebase Authentication
+
+サーバー：Vercel
+
+データベース：Firestore(NoSQL)
 
 ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer
 
@@ -32,9 +36,9 @@ yarn dev
 
 ## デプロイ方法
 
-npm run build
-
-firebase deploy --only hosting
+git add .
+git commit -m " "
+git push
 
 ### こだわりポイント
 

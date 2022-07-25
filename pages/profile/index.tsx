@@ -222,7 +222,9 @@ export default function Profile() {
         </p>
 
         <p className="m-5">過去の投稿</p>
-        {/* <p className="text-1xl text-center">投稿数　  {data.email == user.email && (<p>{firedata.length}</p>)}件</p> */}
+        {/* <p className="text-1xl text-center">
+          投稿数　 <p>{firedata.length}</p>件
+        </p> */}
 
         <Grid container spacing={1}>
           {firedata.map((data) => {

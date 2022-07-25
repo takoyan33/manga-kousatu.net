@@ -207,7 +207,7 @@ export const Cardpost = ({
 
           {user.email == email && (
             <CardActions>
-              <Button
+              {/* <Button
                 variant="outlined"
                 onClick={() => getID(id, name, age, title, context)}
               >
@@ -219,7 +219,7 @@ export const Cardpost = ({
                 onClick={() => deleteDocument(id)}
               >
                 削除する
-              </Button>
+              </Button> */}
             </CardActions>
           )}
         </Card>

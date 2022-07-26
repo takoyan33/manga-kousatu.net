@@ -77,8 +77,6 @@ export const Cardpost = ({
 
   const getID = (
     id,
-    name,
-    age,
     title,
     context,
     downloadURL,
@@ -196,7 +194,7 @@ export const Cardpost = ({
 
               <br></br>
               <Avatar alt="Remy Sharp" src={photoURL} />
-              <p>{displayname}</p>
+              <span>{displayname}</span>
               <br></br>
               {createtime}
             </Typography>

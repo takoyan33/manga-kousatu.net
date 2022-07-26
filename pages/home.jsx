@@ -177,6 +177,7 @@ export default function Home() {
           {firedata.map((data) => {
             return (
               <Cardpost
+                className="lg:w-full m-8"
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}

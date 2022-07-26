@@ -108,30 +108,6 @@ export default function Home() {
     console.log(title);
   };
 
-  // const updatefields = () => {
-  //   let fieldToEdit = doc(database, "CRUD DATA", ID);
-
-  //   updateDoc(fieldToEdit, {
-  //     title: title,
-  //     context: context,
-  //     // email: user.email,
-  //     // downloadURL: result,
-  //     // categori: categori,
-  //   })
-  //     .then(() => {
-  //       alert("更新したよ");
-  //       setContext("");
-  //       setTitle("");
-  //       // setName("");
-  //       // setAge(null);
-  //       setIsUpdate(false);
-  //       getData();
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
-
   const updatefields = () => {
     let fieldToEdit = doc(database, "CRUD DATA", ID);
     updateDoc(fieldToEdit, {
@@ -201,7 +177,6 @@ export default function Home() {
           {firedata.map((data) => {
             return (
               <Cardpost
-                className="lg:w-full m-8"
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}

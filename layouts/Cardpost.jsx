@@ -49,7 +49,7 @@ export const Cardpost = ({
   const [name, setName] = useState("");
   const [age, setAge] = useState(null);
   // const [categori, setCategori] = useState("");
-  // const [firedata, setFiredata] = useState([]);
+  const [firedata, setFiredata] = useState([]);
   // const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [opentext, setOpentext] = useState(false);
@@ -92,8 +92,6 @@ export const Cardpost = ({
     setID(id);
     setContext(context);
     setTitle(title);
-    setName(name);
-    setAge(age);
     setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
@@ -102,7 +100,6 @@ export const Cardpost = ({
     setNetabare(netabare);
     setPhotoURL(photoURL);
     setUserid(userid);
-    console.log(title);
   };
 
   const deleteDocument = (id) => {

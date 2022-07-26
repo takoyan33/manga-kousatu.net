@@ -30,6 +30,11 @@ import Image from "react-image-resizer";
 import { Cardpost } from "../layouts/Cardpost";
 import Avatar from "@mui/material/Avatar";
 
+// type Posts = {
+//   title: string;
+//   name: string;
+// };
+
 export default function Home() {
   const [ID, setID] = useState(null);
   const [title, setTitle] = useState("");
@@ -53,10 +58,9 @@ export default function Home() {
   const [opentext, setOpentext] = useState(false);
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
-
   const auth = getAuth();
   const user = auth.currentUser;
-  // console.log(user);
+
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
 
@@ -126,24 +130,6 @@ export default function Home() {
       });
   };
 
-  // const deleteDocument = (id) => {
-  //   let fieldToEdit = doc(database, "CRUD DATA", id);
-  //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
-
-  //   if (checkSaveFlg) {
-  //     deleteDoc(fieldToEdit)
-  //       .then(() => {
-  //         alert("記事を削除しました");
-  //         getData();
-  //       })
-  //       .catch((err) => {
-  //         alert("記事の削除に失敗しました");
-  //       });
-  //   } else {
-  //     router.push("/home");
-  //   }
-  // };
-
   const Opentext = () => {
     if (opentext == false) {
       setOpentext(true);
@@ -177,7 +163,6 @@ export default function Home() {
           {firedata.map((data) => {
             return (
               <Cardpost
-                className="lg:w-full m-8"
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}
@@ -293,7 +278,9 @@ export default function Home() {
               variant="outlined"
               type="text"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(event.target.value)
+              }
             />
 
             <br></br>
@@ -306,7 +293,9 @@ export default function Home() {
               rows={14}
               type="text"
               value={context}
-              onChange={(event) => setContext(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setContext(event.target.value)
+              }
             />
             <Button variant="outlined" onClick={updatefields}>
               更新する

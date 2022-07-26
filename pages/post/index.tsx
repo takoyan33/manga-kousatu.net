@@ -175,25 +175,33 @@ export default function Post() {
                 value="ONE PIECE"
                 control={<Radio />}
                 label="ONE PIECE"
-                onChange={(event: any) => setCategori(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setCategori(event.target.value)
+                }
               />
               <FormControlLabel
                 value="呪術廻戦"
                 control={<Radio />}
                 label="呪術廻戦"
-                onChange={(event: any) => setCategori(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setCategori(event.target.value)
+                }
               />
               <FormControlLabel
                 value="東京リベンジャーズ"
                 control={<Radio />}
                 label="東京リベンジャーズ"
-                onChange={(event: any) => setCategori(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setCategori(event.target.value)
+                }
               />
               <FormControlLabel
                 value="キングダム"
                 control={<Radio />}
                 label="キングダム"
-                onChange={(event: any) => setCategori(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setCategori(event.target.value)
+                }
               />
             </RadioGroup>
             <FormLabel id="demo-radio-buttons-group-label">
@@ -208,13 +216,17 @@ export default function Post() {
                 value="ネタバレ有"
                 control={<Radio />}
                 label="ネタバレ有(漫画・アニメよりも先行している内容の場合）"
-                onChange={(event: any) => setNetabare(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setNetabare(event.target.value)
+                }
               />
               <FormControlLabel
                 value="ネタバレ無"
                 control={<Radio />}
                 label="ネタバレ無"
-                onChange={(event: any) => setNetabare(event.target.value)}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                  setNetabare(event.target.value)
+                }
               />
             </RadioGroup>
             {}
@@ -225,7 +237,7 @@ export default function Post() {
               multiline
               rows={14}
               value={context}
-              onChange={(event) => {
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 if (event.target.value.length <= 500) {
                   setContext(event.target.value);
                 }

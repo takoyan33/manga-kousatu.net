@@ -326,7 +326,9 @@ export default function Profile() {
               variant="outlined"
               type="text"
               value={title}
-              onChange={(event) => setTitle(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(event.target.value)
+              }
             />
 
             <br></br>
@@ -339,7 +341,9 @@ export default function Profile() {
               rows={14}
               type="text"
               value={context}
-              onChange={(event) => setContext(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setContext(event.target.value)
+              }
             />
             <Button variant="outlined" onClick={updatefields}>
               更新する

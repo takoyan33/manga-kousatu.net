@@ -25,7 +25,7 @@
     "**/*.tsx",
     "pages/register.tsx",
     "pages/login.tsx"
-, "pages/post/index.tsx", "pages/home.jsx", "layouts/Cardpost.jsx", "pages/api/auth/signup.jsx", "pages/profile/index.tsx"  ],
+, "pages/post/index.tsx", "pages/home.tsx", "layouts/Cardpost.tsx", "pages/api/auth/signup.jsx", "pages/profile/index.tsx", "pages/post/[postId].jsx"  ],
   "exclude": [
     "node_modules"
   ]

@@ -84,7 +84,9 @@ export default function Register() {
               label="sample@gmail.com"
               className="m-auto w-80"
               variant="outlined"
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
             />
             <br></br>
             <br></br>
@@ -97,7 +99,9 @@ export default function Register() {
               type="password"
               variant="outlined"
               className="m-auto w-80"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
             />
             <br></br>
             <br></br>
@@ -112,7 +116,9 @@ export default function Register() {
               type="password"
               variant="outlined"
               className="m-auto w-80"
-              onChange={(event) => setPassword(event.target.value)}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
             />
             <br></br>
             <br></br>

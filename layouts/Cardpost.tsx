@@ -31,7 +31,6 @@ import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
 
-
 export const Cardpost = ({
   downloadURL,
   id,
@@ -60,46 +59,51 @@ export const Cardpost = ({
   // const [downloadURL, setDownloadURL] = useState(null);
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
-  const styles = { whiteSpace: "pre-line" };
+  const style: React.CSSProperties = {
+    whiteSpace: "pre-line",
+  };
+  const cardstyles: React.CSSProperties = {
+    margin: "15px",
+  };
 
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
-      setFiredata(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id };
-        })
-      );
-    });
-  };
+  // const getData = async () => {
+  //   await getDocs(databaseRef).then((response) => {
+  //     setFiredata(
+  //       response.docs.map((data) => {
+  //         return { ...data.data(), id: data.id };
+  //       })
+  //     );
+  //   });
+  // };
 
-  const getID = (
-    id,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    displayname,
-    netabare,
-    photoURL,
-    userid
-  ) => {
-    setID(id);
-    setContext(context);
-    setTitle(title);
-    setDisplayName(displayname);
-    setDownloadURL(downloadURL);
-    setIsUpdate(true);
-    setCategori(categori);
-    setCreatetime(cratetime);
-    setNetabare(netabare);
-    setPhotoURL(photoURL);
-    setUserid(userid);
-  };
+  // const getID = (
+  //   id,
+  //   title,
+  //   context,
+  //   downloadURL,
+  //   categori,
+  //   cratetime,
+  //   displayname,
+  //   netabare,
+  //   photoURL,
+  //   userid
+  // ) => {
+  //   setID(id);
+  //   setContext(context);
+  //   setTitle(title);
+  //   setDisplayName(displayname);
+  //   setDownloadURL(downloadURL);
+  //   setIsUpdate(true);
+  //   setCategori(categori);
+  //   setCreatetime(cratetime);
+  //   setNetabare(netabare);
+  //   setPhotoURL(photoURL);
+  //   setUserid(userid);
+  // };
 
   const deleteDocument = (id) => {
     let fieldToEdit = doc(database, "CRUD DATA", id);
@@ -109,7 +113,6 @@ export const Cardpost = ({
       deleteDoc(fieldToEdit)
         .then(() => {
           alert("記事を削除しました");
-          getData();
         })
         .catch((err) => {
           alert("記事の削除に失敗しました");
@@ -130,7 +133,7 @@ export const Cardpost = ({
   return (
     <div>
       <Grid key={id} className="flex m-auto">
-        <Card className="lg:w-full m-8">
+        <Card className="m-8" style={cardstyles}>
           <p className="m-auto text-center">
             <Image
               className="m-auto text-center max-w-sm"

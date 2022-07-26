@@ -20,12 +20,12 @@ export default function Login() {
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   const SignUp = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((response:any) => {
+      .then((response: any) => {
         sessionStorage.setItem("Token", response.user.accessToken);
         console.log(response.user);
         router.push("/home");
@@ -36,7 +36,7 @@ export default function Login() {
   };
 
   const SignUpWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((response:any) => {
+    signInWithPopup(auth, googleProvider).then((response: any) => {
       console.log(response.user);
       sessionStorage.setItem("Token", response.user.accessToken);
       router.push("/home");
@@ -86,7 +86,7 @@ export default function Login() {
             />
             <br></br>
             <br></br>
-            
+
             <label className="text-center my-4">パスワード（8文字以上)*</label>
             <br></br>
             <br></br>

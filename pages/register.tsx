@@ -19,8 +19,8 @@ export default function Register() {
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   // const singup = useSignUp();
 
   const SignUp = () => {

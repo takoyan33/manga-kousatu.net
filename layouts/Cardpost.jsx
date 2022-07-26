@@ -31,6 +31,7 @@ import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
 
+
 export const Cardpost = ({
   downloadURL,
   id,

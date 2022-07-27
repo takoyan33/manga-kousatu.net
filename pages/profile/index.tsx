@@ -27,53 +27,43 @@ import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import Nameauth from "../api/auth/Nameauth";
 // import { Cardpost } from "../../layouts/Cardpost";
 
 export default function Profile() {
   const [ID, setID] = useState(null);
-  const [title, setTitle] = useState("");
-  const [context, setContext] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [context, setContext] = useState<string>("");
   const [file, setFile] = useState("");
-  const [categori, setCategori] = useState("");
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const [photoURL, setPhotoURL] = useState();
-  const [displayName, setDisplayName] = useState("");
+  const [categori, setCategori] = useState<string>("");
+  const [photoURL, setPhotoURL] = useState<string>();
+  const [displayName, setDisplayName] = useState<string>("");
   let router = useRouter();
-  const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState(false);
+  const [createtime, setCreatetime] = useState<string>("");
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
-  const [downloadURL, setDownloadURL] = useState(null);
+  const [downloadURL, setDownloadURL] = useState<string>(null);
   const [image, setImage] = useState("");
-  const [result, setResult] = useState("");
-  const [email, setEmail] = useState("");
-  const [userid, setUserid] = useState(null);
-  const [netabare, setNetabare] = useState("");
-  const [opentext, setOpentext] = useState(false);
+  const [result, setResult] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [userid, setUserid] = useState<string>(null);
+  const [netabare, setNetabare] = useState<string>("");
+  const [opentext, setOpentext] = useState<boolean>(false);
   const styles = { whiteSpace: "pre-line" };
+  
+  const auth = getAuth();
+  const user = auth.currentUser;
 
-  console.log(user);
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-
-    if (token) {
+    if (user) {
       getData();
     }
-    if (!token) {
+    if (!user) {
       router.push("/register");
     }
   }, []);
-
-  const uploadToClient = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
-      setImage(file);
-      setCreateObjectURL(URL.createObjectURL(file));
-    }
-  };
 
   const updatename = async () => {
     const result = await postImage(image);
@@ -81,7 +71,6 @@ export default function Profile() {
 
     updateProfile(auth.currentUser, {
       displayName: displayName,
-      // photoURL: result,
     })
       .then(() => {
         alert("プロフィールを更新しました。");
@@ -125,22 +114,6 @@ export default function Profile() {
     setCreatetime(cratetime);
     setDisplayName(displayname);
   };
-
-  // onAuthStateChanged(auth, (user) => {
-  //   if (user) {
-  //     updateProfile({
-  //       displayName: displayName,
-  //       // setPhotoURL: photoURL,
-  //     })
-  //       .then(() => {
-  //         setDisplayName("");
-  //         // setPhotoURL("");
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //       });
-  //   }
-  // });
 
   const deleteuser = async () => {
     if (user) {
@@ -216,15 +189,11 @@ export default function Profile() {
           )}
         </p>
         <p className="m-5">名前： {user && <span>{user.displayName}</span>}</p>
-        {/* <p className="m-5">自己紹介：</p> */}
         <p className="m-5">
           メールアドレス： {user && <span>{user.email}</span>}
         </p>
 
         <p className="m-5">過去の投稿</p>
-        {/* <p className="text-1xl text-center">
-          投稿数　 <p>{firedata.length}</p>件
-        </p> */}
 
         <Grid container spacing={1}>
           {firedata.map((data) => {
@@ -351,33 +320,11 @@ export default function Profile() {
             <br></br>
           </Box>
         )}
-
-        <Box
-          component="form"
-          sx={{
-            "& > :not(style)": { m: 1, width: "25ch" },
-          }}
-          noValidate
-          autoComplete="off"
-        >
-          <p>名前の更新</p>
-
-          <TextField
-            id="outlined-basic"
-            label="名前"
-            variant="outlined"
-            // value={displayName}
-            onChange={(event) => setDisplayName(event.target.value)}
-          />
-          <br></br>
-        </Box>
-        <br></br>
-        <Button variant="outlined" className="m-5" onClick={updatename}>
-          名前を更新する
-        </Button>
+        <Nameauth />
         {/* <Button variant="outlined" className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </Button> */}
+
         <br></br>
         <br></br>
         <Button variant="outlined" className="m-5">

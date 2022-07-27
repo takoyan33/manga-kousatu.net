@@ -16,16 +16,12 @@ import Head from "next/head";
 import Image from "react-image-resizer";
 
 export default function Photoedit() {
-  const [image, setImage] = useState();
-  const [email, setEmail] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(null);
+  const [image, setImage] = useState<string>();
   const [result, setResult] = useState("");
   let router = useRouter();
   const databaseRef = collection(database, "CRUD DATA");
-  const [createObjectURL, setCreateObjectURL] = useState(null);
-  const [downloadURL, setDownloadURL] = useState(null);
+  const [createObjectURL, setCreateObjectURL] = useState<string>(null);
+  const [downloadURL, setDownloadURL] = useState<string>(null);
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;

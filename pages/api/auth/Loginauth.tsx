@@ -7,13 +7,9 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Head from "next/head";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 export default function Loginauth() {
   const auth = getAuth();

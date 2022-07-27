@@ -6,68 +6,51 @@ import {
   getDocs,
   doc,
   updateDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import styles from "../styles/Home.module.css";
-import { updatePassword } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
-import { getStorage } from "firebase/storage";
-import Image from "react-image-resizer";
 // import { Search } from "./Search";
 import { Cardpost } from "../layouts/Cardpost";
 import Avatar from "@mui/material/Avatar";
 
-// type Posts = {
-//   title: string;
-//   name: string;
-// };
-
 export default function Home() {
   const [ID, setID] = useState(null);
-  const [title, setTitle] = useState("");
-  const [context, setContext] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [age, setAge] = useState(null);
-  const [categori, setCategori] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [context, setContext] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [categori, setCategori] = useState<string>("");
   const [firedata, setFiredata] = useState([]);
   const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState(false);
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
-  const [displayname, setDisplayName] = useState("");
-  const [createObjectURL, setCreateObjectURL] = useState(null);
-  const [downloadURL, setDownloadURL] = useState(null);
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState("");
-  const [photoURL, setPhotoURL] = useState("");
-  const [userid, setUserid] = useState(null);
-  const [netabare, setNetabare] = useState("");
-  const [opentext, setOpentext] = useState(false);
+  const [displayname, setDisplayName] = useState<string>("");
+  const [createObjectURL, setCreateObjectURL] = useState<string>(null);
+  const [downloadURL, setDownloadURL] = useState<string>(null);
+  const [image, setImage] = useState<string>("");
+  const [result, setResult] = useState<string>("");
+  const [photoURL, setPhotoURL] = useState<string>("");
+  const [userid, setUserid] = useState<string>(null);
+  const [netabare, setNetabare] = useState<string>("");
+  const [opentext, setOpentext] = useState<boolean>(false);
   const styles = { whiteSpace: "pre-line" };
+
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-
-    if (token) {
+    if (user) {
       getData();
     }
-    if (!token) {
+    if (!user) {
       router.push("/register");
     }
   }, []);
@@ -85,7 +68,6 @@ export default function Home() {
   const getID = (
     id,
     name,
-    age,
     title,
     context,
     downloadURL,
@@ -100,7 +82,6 @@ export default function Home() {
     setContext(context);
     setTitle(title);
     setName(name);
-    setAge(age);
     setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);

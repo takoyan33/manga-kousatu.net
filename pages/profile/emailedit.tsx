@@ -4,28 +4,18 @@ import Link from "next/link";
 import { app, database } from "../../firebaseConfig";
 import {
   collection,
-  addDoc,
   getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  Firestore,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Head from "next/head";
 
 export default function Emaildedit() {
-  const [image, setImage] = useState();
-  const [email, setEmail] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(null);
+  const [email, setEmail] = useState<string>("");
   let router = useRouter();
   const databaseRef = collection(database, "CRUD DATA");
   const [firedata, setFiredata] = useState([]);

@@ -2,18 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { app, database } from "../firebaseConfig";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  Firestore,
-} from "firebase/firestore";
-import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
-import { updatePassword } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { postImage } from "./api/upload";
 

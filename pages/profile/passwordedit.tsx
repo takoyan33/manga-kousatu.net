@@ -12,11 +12,7 @@ import TextField from "@mui/material/TextField";
 import Head from "next/head";
 
 export default function Passworddedit() {
-  const [image, setImage] = useState();
-  const [password, setPassword] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(null);
+  const [password, setPassword] = useState<string>("");
   let router = useRouter();
   const databaseRef = collection(database, "CRUD DATA");
   const [firedata, setFiredata] = useState([]);

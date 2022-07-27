@@ -1,30 +1,21 @@
 import { app } from "../firebaseConfig";
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
-import { useState } from "react";
+import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import Head from "next/head";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import Loginauth from "./api/auth/Loginauth";
 
 export default function Login() {
   const router = useRouter();
+  // const auth = getAuth();
+  // const user = auth.currentUser;
 
   // useEffect(() => {
-  //   let token = sessionStorage.getItem("Token");
-
-  //   if (token) {
+  //   if (user) {
   //     router.push("/home");
+  //   }
+  //   if (!user) {
   //   }
   // }, []);
 

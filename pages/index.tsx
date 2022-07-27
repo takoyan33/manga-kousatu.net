@@ -1,10 +1,9 @@
 import Head from "next/head";
-import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import * as React from "react";
 import Stack from "@mui/material/Stack";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { app, database } from "../firebaseConfig";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
@@ -13,17 +12,15 @@ import { Registerbutton } from "../layouts/components/button/registerbutton";
 
 export default function Index() {
   let router = useRouter();
+
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-
-    if (token) {
-      // router.push("/home");
+    if (user) {
+      router.push("/home");
     }
-    if (!token) {
+    if (!user) {
     }
   }, []);
 

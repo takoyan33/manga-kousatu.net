@@ -1,5 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { app, database, storage } from "../../firebaseConfig";
 import {
@@ -52,7 +52,7 @@ export default function Profile() {
   const [netabare, setNetabare] = useState<string>("");
   const [opentext, setOpentext] = useState<boolean>(false);
   const styles = { whiteSpace: "pre-line" };
-  
+
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -65,24 +65,24 @@ export default function Profile() {
     }
   }, []);
 
-  const updatename = async () => {
-    const result = await postImage(image);
-    setResult(result);
+  // const updatename = async () => {
+  //   const result = await postImage(image);
+  //   setResult(result);
 
-    updateProfile(auth.currentUser, {
-      displayName: displayName,
-    })
-      .then(() => {
-        alert("プロフィールを更新しました。");
-        setDisplayName("");
-        setResult("");
-        getData();
-        router.push("/profile");
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  };
+  //   updateProfile(auth.currentUser, {
+  //     displayName: displayName,
+  //   })
+  //     .then(() => {
+  //       alert("プロフィールを更新しました。");
+  //       setDisplayName("");
+  //       setResult("");
+  //       getData();
+  //       router.push("/profile");
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // };
 
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {

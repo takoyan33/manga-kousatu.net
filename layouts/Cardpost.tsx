@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { app, database } from "../firebaseConfig";
 import {
   collection,

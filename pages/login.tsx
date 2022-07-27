@@ -8,16 +8,6 @@ import Loginauth from "./api/auth/Loginauth";
 
 export default function Login() {
   const router = useRouter();
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/home");
-  //   }
-  //   if (!user) {
-  //   }
-  // }, []);
 
   return (
     <div>

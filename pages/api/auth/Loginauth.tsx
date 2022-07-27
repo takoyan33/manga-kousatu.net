@@ -24,9 +24,8 @@ export default function Loginauth() {
 
   const SignIn = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((response: any) => {
-        sessionStorage.setItem("Token", response.user.accessToken);
-        console.log(response.user);
+      .then((userCredential) => {
+        const user = userCredential.user;
         router.push("/home");
       })
       .catch((err) => {
@@ -35,9 +34,10 @@ export default function Loginauth() {
   };
 
   const SignInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((response: any) => {
-      console.log(response.user);
-      sessionStorage.setItem("Token", response.user.accessToken);
+    signInWithPopup(auth, googleProvider).then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
       router.push("/home");
     });
   };

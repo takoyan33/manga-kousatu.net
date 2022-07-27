@@ -20,13 +20,13 @@ import Loginauth from "./api/auth/Loginauth";
 export default function Login() {
   const router = useRouter();
 
-  useEffect(() => {
-    let token = sessionStorage.getItem("Token");
+  // useEffect(() => {
+  //   let token = sessionStorage.getItem("Token");
 
-    if (token) {
-      router.push("/home");
-    }
-  }, []);
+  //   if (token) {
+  //     router.push("/home");
+  //   }
+  // }, []);
 
   return (
     <div>

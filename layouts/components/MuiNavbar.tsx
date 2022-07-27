@@ -21,7 +21,7 @@ import {
   Firestore,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 
 export const MuiNavbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -41,8 +41,15 @@ export const MuiNavbar = () => {
   console.log(user);
 
   const logout = () => {
-    sessionStorage.removeItem("Token");
-    router.push("/");
+    // sessionStorage.removeItem("Token");
+
+    signOut(auth)
+      .then(() => {
+        router.push("/");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
   };
 
   return (
@@ -85,7 +92,6 @@ export const MuiNavbar = () => {
             Resources
           </Button> */}
         </Stack>
-        {/* <Button color="inherit">{user && <p>{user.displayName}さん</p>}</Button> */}
         {/* <Menu
           id="resources-menu"
           anchorEl={anchorEl}

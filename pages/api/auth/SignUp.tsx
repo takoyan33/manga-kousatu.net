@@ -20,15 +20,14 @@ export default function SignUp() {
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  
+
   const SignUp = () => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
 
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((response: any) => {
-          sessionStorage.setItem("Token", response.user.accessToken);
-          console.log(response.user.accessToken);
+        .then((userCredential) => {
+          const user = userCredential.user;
           router.push("/home");
         })
         .catch((err) => {
@@ -39,9 +38,10 @@ export default function SignUp() {
   };
 
   const SignUpWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((response: any) => {
-      console.log(response.user);
-      sessionStorage.setItem("Token", response.user.accessToken);
+    signInWithPopup(auth, googleProvider).then((result) => {
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      const user = result.user;
       router.push("/home");
     });
   };

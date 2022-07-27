@@ -18,14 +18,6 @@ import SignUp from "./api/auth/SignUp";
 export default function Register() {
   const router = useRouter();
 
-  useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-
-    if (token) {
-      router.push("/home");
-    }
-  }, []);
-
   return (
     <div>
       <Head>

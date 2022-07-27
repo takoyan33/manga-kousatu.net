@@ -70,41 +70,6 @@ export const Cardpost = ({
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // const getData = async () => {
-  //   await getDocs(databaseRef).then((response) => {
-  //     setFiredata(
-  //       response.docs.map((data) => {
-  //         return { ...data.data(), id: data.id };
-  //       })
-  //     );
-  //   });
-  // };
-
-  // const getID = (
-  //   id,
-  //   title,
-  //   context,
-  //   downloadURL,
-  //   categori,
-  //   cratetime,
-  //   displayname,
-  //   netabare,
-  //   photoURL,
-  //   userid
-  // ) => {
-  //   setID(id);
-  //   setContext(context);
-  //   setTitle(title);
-  //   setDisplayName(displayname);
-  //   setDownloadURL(downloadURL);
-  //   setIsUpdate(true);
-  //   setCategori(categori);
-  //   setCreatetime(cratetime);
-  //   setNetabare(netabare);
-  //   setPhotoURL(photoURL);
-  //   setUserid(userid);
-  // };
-
   const deleteDocument = (id) => {
     let fieldToEdit = doc(database, "CRUD DATA", id);
     let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
@@ -203,24 +168,6 @@ export const Cardpost = ({
               {createtime}
             </Typography>
           </CardContent>
-
-          {user.email == email && (
-            <CardActions>
-              {/* <Button
-                variant="outlined"
-                onClick={() => getID(id, name, age, title, context)}
-              >
-                更新する
-              </Button>
-              <Button
-                variant="outlined"
-                key={id}
-                onClick={() => deleteDocument(id)}
-              >
-                削除する
-              </Button> */}
-            </CardActions>
-          )}
         </Card>
       </Grid>
     </div>

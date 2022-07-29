@@ -22,7 +22,7 @@ https://next-auth-app-2aa40.web.app/
 
 サーバー：Vercel
 
-データベース：Firestore(NoSQL)
+データベース：Cloud Firestore (NoSQL)
 
 ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer
 

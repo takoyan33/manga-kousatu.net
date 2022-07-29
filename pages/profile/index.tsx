@@ -65,6 +65,8 @@ export default function Profile() {
     }
   }, []);
 
+  console.log(user);
+
   // const updatename = async () => {
   //   const result = await postImage(image);
   //   setResult(result);
@@ -114,6 +116,8 @@ export default function Profile() {
     setCreatetime(cratetime);
     setDisplayName(displayname);
   };
+
+  console.log(downloadURL);
 
   const deleteuser = async () => {
     if (user) {

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { app, database } from "../firebaseConfig";
 import {
   collection,
@@ -29,7 +29,9 @@ import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
-import Avatar from "@mui/material/Avatar";
+import Categori from "./components/text/Categori";
+import Avater from "./components/text/Avater";
+import Openbutton from "./components/button/Openbutton";
 
 export const Cardpost = ({
   downloadURL,
@@ -44,19 +46,15 @@ export const Cardpost = ({
   createtime,
 }) => {
   const [ID, setID] = useState(null);
-  // const [title, setTitle] = useState("");
-  // const [context, setContext] = useState("");
   const [name, setName] = useState("");
   const [age, setAge] = useState(null);
-  // const [categori, setCategori] = useState("");
   const [firedata, setFiredata] = useState([]);
-  // const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [opentext, setOpentext] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
   const [displayName, setDisplayName] = useState("");
   const [createObjectURL, setCreateObjectURL] = useState(null);
-  // const [downloadURL, setDownloadURL] = useState(null);
+
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
   const style: React.CSSProperties = {
@@ -95,6 +93,23 @@ export const Cardpost = ({
     }
   };
 
+  // const Opentext = useCallback(() => {
+  //   if (opentext == false) {
+  //     setOpentext(true);
+  //   } else {
+  //     setOpentext(false);
+  //   }
+  // }, [opentext]);
+
+
+
+  console.log(displayname);
+  console.log(photoURL);
+  console.log(categori);
+  console.log(user);
+  console.log(id);
+  console.log(title);
+
   return (
     <div>
       <Grid key={id} className="flex m-auto">
@@ -107,66 +122,35 @@ export const Cardpost = ({
               src={downloadURL}
             />
           </p>
+
           <CardContent>
-            <Typography gutterBottom component="div" className="w-3/5 text-xl ">
+            <Typography gutterBottom component="div" className="w-3/5 text-xl">
               {title}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {categori == "ONE PIECE" && (
-                <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                  {categori}
-                </p>
-              )}
-              {categori == "呪術廻戦" && (
-                <p className="bg-purple-500 p-2 inline-block text-white text-center">
-                  {categori}
-                </p>
-              )}
-              {categori == "東京リベンジャーズ" && (
-                <p className="bg-rose-500 p-2 inline-block text-white text-center">
-                  {categori}
-                </p>
-              )}
-              {categori == "キングダム" && (
-                <p className="bg-yellow-500 p-2 inline-block text-white text-center">
-                  {categori}
-                </p>
-              )}
-              <br></br>
-
-              {netabare == "ネタバレ有" && (
-                <div>
-                  <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
-                    {netabare}
-                  </p>
-                  <br></br>
-                  <button
-                    onClick={Opentext}
-                    className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center"
-                  >
-                    表示する
-                  </button>
-                  {opentext == true && <p className="">{context}</p>}
-                </div>
-              )}
-
-              {netabare == "ネタバレ無" && (
-                <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+            <Categori categori={categori} />
+            {netabare == "ネタバレ有" && (
+              <div>
+                <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
                   {netabare}
                 </p>
-              )}
+                <br></br>
 
-              <br></br>
-              <div className="w-80 m-auto" style={styles}>
-                {netabare == "ネタバレ無" && <p className="">{context}</p>}
+                <Openbutton text="表示します" onClick={Opentext} />
+
+                {opentext == true && <p className="">{context}</p>}
               </div>
-
-              <br></br>
-              <Avatar alt="Remy Sharp" src={photoURL} />
-              <span>{displayname}</span>
-              <br></br>
-              {createtime}
-            </Typography>
+            )}
+            {netabare == "ネタバレ無" && (
+              <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+                {netabare}
+              </p>
+            )}
+            <br></br>
+            <div className="w-80 m-auto" style={styles}>
+              {netabare == "ネタバレ無" && <p className="">{context}</p>}
+            </div>
+            <Avater photoURL={photoURL} displayname={displayname} />
+            投稿日時：{createtime}
           </CardContent>
         </Card>
       </Grid>

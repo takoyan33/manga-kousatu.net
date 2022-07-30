@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
+import { createContext } from "react";
+
+export const LoginContext = createContext({});
 
 export default function Index() {
   let router = useRouter();
@@ -49,9 +52,11 @@ export default function Index() {
         </p>
         <br></br>
         <Stack className="text-center m-auto w-full ">
-          <Registerbutton />
+          <Registerbutton text="新規登録はこちら" />
           <br></br>
-          <Loginbutton />
+          <LoginContext.Provider value={{ text: "ログインはこちらです" }}>
+            <Loginbutton />
+          </LoginContext.Provider>
         </Stack>
       </div>
     </div>

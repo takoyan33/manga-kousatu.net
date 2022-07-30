@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { app, database } from "../firebaseConfig";
-import {
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
@@ -37,6 +32,7 @@ export default function Home() {
   const [image, setImage] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [photoURL, setPhotoURL] = useState<string>("");
+  const [likecount, setLikecount] = useState<number>(null);
   const [userid, setUserid] = useState<string>(null);
   const [netabare, setNetabare] = useState<string>("");
   const [opentext, setOpentext] = useState<boolean>(false);
@@ -76,7 +72,8 @@ export default function Home() {
     displayname,
     netabare,
     photoURL,
-    userid
+    userid,
+    likecount
   ) => {
     setID(id);
     setContext(context);
@@ -119,6 +116,20 @@ export default function Home() {
     }
   };
 
+  // const likecount = (setLikecount) => {
+  //   let fieldToEdit = doc(database, "CRUD DATA", ID);
+  //   updateDoc(fieldToEdit, {
+  //     likecount: setLikecount,
+  //   })
+  //     .then(() => {
+  //       alert("いいねしました");
+  //       getData();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
   return (
     <div>
       <Head>
@@ -155,6 +166,7 @@ export default function Home() {
                 email={data.email}
                 id={data.id}
                 photoURL={data.photoURL}
+                likecount={likecount}
               />
             );
           })}

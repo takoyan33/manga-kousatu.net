@@ -33,127 +33,135 @@ import Categori from "./components/text/Categori";
 import Avater from "./components/text/Avater";
 import Openbutton from "./components/button/Openbutton";
 
-export const Cardpost = ({
-  downloadURL,
-  id,
-  title,
-  categori,
-  netabare,
-  displayname,
-  context,
-  email,
-  photoURL,
-  createtime,
-}) => {
-  const [ID, setID] = useState(null);
-  const [name, setName] = useState("");
-  const [age, setAge] = useState(null);
-  const [firedata, setFiredata] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [opentext, setOpentext] = useState(false);
-  const databaseRef = collection(database, "CRUD DATA");
-  const [displayName, setDisplayName] = useState("");
-  const [createObjectURL, setCreateObjectURL] = useState(null);
+type Props = {
+  downloadURL: string;
+  id: number;
+  title: string;
+  categori: string;
+  netabare: string;
+  context: string;
+  email: string;
+  photoURL: string;
+  displayname: string;
+  createtime: string;
+  likecount: number;
+};
 
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState("");
-  const style: React.CSSProperties = {
-    whiteSpace: "pre-line",
-  };
-  const cardstyles: React.CSSProperties = {
-    margin: "15px",
-  };
+// eslint-disable-next-line react/display-name
+export const Cardpost: React.VFC<Props> = React.memo(
+  ({
+    downloadURL,
+    id,
+    title,
+    categori,
+    netabare,
+    displayname,
+    context,
+    email,
+    photoURL,
+    createtime,
+    likecount,
+  }) => {
+    const [opentext, setOpentext] = useState<boolean>(false);
+    const databaseRef = collection(database, "CRUD DATA");
+    const style: React.CSSProperties = {
+      whiteSpace: "pre-line",
+    };
+    const cardstyles: React.CSSProperties = {
+      margin: "15px",
+    };
 
-  let router = useRouter();
-  const auth = getAuth();
-  const user = auth.currentUser;
+    let router = useRouter();
+    const auth = getAuth();
+    const user = auth.currentUser;
 
-  const deleteDocument = (id) => {
-    let fieldToEdit = doc(database, "CRUD DATA", id);
-    let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+    const deleteDocument = useCallback((id) => {
+      let fieldToEdit = doc(database, "CRUD DATA", id);
+      let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
 
-    if (checkSaveFlg) {
-      deleteDoc(fieldToEdit)
-        .then(() => {
-          alert("記事を削除しました");
-        })
-        .catch((err) => {
-          alert("記事の削除に失敗しました");
-        });
-    } else {
-      router.push("/home");
-    }
-  };
+      if (checkSaveFlg) {
+        deleteDoc(fieldToEdit)
+          .then(() => {
+            alert("記事を削除しました");
+          })
+          .catch((err) => {
+            alert("記事の削除に失敗しました");
+          });
+      } else {
+        router.push("/home");
+      }
+    }, []);
 
-  const Opentext = () => {
-    if (opentext == false) {
-      setOpentext(true);
-    } else {
-      setOpentext(false);
-    }
-  };
+    const Opentext = () => {
+      if (opentext == false) {
+        setOpentext(true);
+      } else {
+        setOpentext(false);
+      }
+    };
 
-  // const Opentext = useCallback(() => {
-  //   if (opentext == false) {
-  //     setOpentext(true);
-  //   } else {
-  //     setOpentext(false);
-  //   }
-  // }, [opentext]);
+    // const Opentext = useCallback(() => {
+    //   if (opentext == false) {
+    //     setOpentext(true);
+    //   } else {
+    //     setOpentext(false);
+    //   }
+    // }, []);
 
+    console.log(displayname);
+    console.log(photoURL);
+    console.log(categori);
+    console.log(user);
+    console.log(id);
+    console.log(title);
 
+    return (
+      <div>
+        <Grid key={id} className="flex m-auto">
+          <Card className="m-8" style={cardstyles}>
+            <p className="m-auto text-center">
+              <Image
+                className="m-auto text-center max-w-sm"
+                height={300}
+                width={300}
+                src={downloadURL}
+              />
+            </p>
 
-  console.log(displayname);
-  console.log(photoURL);
-  console.log(categori);
-  console.log(user);
-  console.log(id);
-  console.log(title);
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="div">
+                {title}
+              </Typography>
+              <Categori categori={categori} />
+              {netabare == "ネタバレ有" && (
+                <div>
+                  <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                    {netabare}
+                  </p>
+                  <br></br>
 
-  return (
-    <div>
-      <Grid key={id} className="flex m-auto">
-        <Card className="m-8" style={cardstyles}>
-          <p className="m-auto text-center">
-            <Image
-              className="m-auto text-center max-w-sm"
-              height={300}
-              width={300}
-              src={downloadURL}
-            />
-          </p>
+                  <Openbutton text="表示します" onClick={Opentext} />
 
-          <CardContent>
-            <Typography gutterBottom component="div" className="w-3/5 text-xl">
-              {title}
-            </Typography>
-            <Categori categori={categori} />
-            {netabare == "ネタバレ有" && (
-              <div>
-                <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                  {opentext == true && <p className="">{context}</p>}
+                </div>
+              )}
+              {netabare == "ネタバレ無" && (
+                <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
                   {netabare}
                 </p>
-                <br></br>
-
-                <Openbutton text="表示します" onClick={Opentext} />
-
-                {opentext == true && <p className="">{context}</p>}
+              )}
+              <br></br>
+              <div className="w-80 m-auto" style={styles}>
+                {netabare == "ネタバレ無" && <p className="">{context}</p>}
               </div>
-            )}
-            {netabare == "ネタバレ無" && (
-              <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
-                {netabare}
-              </p>
-            )}
-            <br></br>
-            <div className="w-80 m-auto" style={styles}>
-              {netabare == "ネタバレ無" && <p className="">{context}</p>}
-            </div>
-            <Avater photoURL={photoURL} displayname={displayname} />
-            投稿日時：{createtime}
-          </CardContent>
-        </Card>
-      </Grid>
-    </div>
-  );
-};
+              <Avater photoURL={photoURL} displayname={displayname} />
+              投稿日時：{createtime}
+              {likecount}
+              {/* <button onClick={() => setcount(count + 1)}>いいねする</button> */}
+            </CardContent>
+          </Card>
+        </Grid>
+      </div>
+    );
+  }
+);

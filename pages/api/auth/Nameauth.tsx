@@ -32,9 +32,6 @@ export default function Nameauth() {
   const [netabare, setNetabare] = useState<string>("");
 
   const updatename = async () => {
-    const result = await postImage(image);
-    setResult(result);
-
     updateProfile(auth.currentUser, {
       displayName: displayName,
     })

@@ -1,14 +1,18 @@
 import React from "react";
 import Link from "next/link";
+import Button from "@mui/material/Button";
 
-export const Registerbutton = () => {
+type Props = {
+  text: string;
+};
+
+// eslint-disable-next-line react/display-name
+export const Registerbutton: React.VFC<Props> = React.memo(({ text }) => {
   return (
     <div>
-      <button className="text-center m-auto my-2 border-solid  hover:border-dotted">
-        <Link href="/register" className=" text-center m-auto my-2">
-          新規登録はこちら
-        </Link>
-      </button>
+      <Button variant="outlined" className="m-auto w-50 my-2">
+        <Link href="/register">{text}</Link>
+      </Button>
     </div>
   );
-};
+});

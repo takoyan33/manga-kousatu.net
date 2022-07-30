@@ -44,6 +44,9 @@ export default function SignUp() {
     });
   };
 
+  console.log(setEmail);
+  console.log(password);
+
   return (
     <>
       <Box

@@ -11,7 +11,11 @@ import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
 
-export const LoginContext = createContext({});
+export const LoginContext = createContext(
+  {} as {
+    text: string;
+  }
+);
 
 export default function Index() {
   let router = useRouter();

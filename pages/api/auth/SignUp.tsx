@@ -5,7 +5,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";

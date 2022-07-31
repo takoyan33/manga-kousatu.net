@@ -156,8 +156,8 @@ export const Cardpost: React.VFC<Props> = React.memo(
               </div>
               <Avater photoURL={photoURL} displayname={displayname} />
               投稿日時：{createtime}
-              {likecount}
-              {/* <button onClick={() => setcount(count + 1)}>いいねする</button> */}
+              {/* {likecount}
+              <button onClick={() => setcount(count + 1)}>いいねする</button> */}
             </CardContent>
           </Card>
         </Grid>

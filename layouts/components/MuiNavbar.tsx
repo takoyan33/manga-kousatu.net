@@ -69,14 +69,24 @@ export const MuiNavbar = () => {
         </Button>
         <Stack direction="row" spacing={2}>
           {user && (
-            <Button color="inherit">
-              <Link href="/profile">プロフィール</Link>
-            </Button>
+            <>
+              <Button color="inherit">
+                <Link href="/profile">プロフィール</Link>
+              </Button>
+              <Button color="inherit" onClick={logout}>
+                ログアウト
+              </Button>
+            </>
           )}
-          {user && (
-            <Button color="inherit" onClick={logout}>
-              ログアウト
-            </Button>
+          {!user && (
+            <>
+              <Button color="inherit">
+                <Link href="/login">ログイン</Link>
+              </Button>
+              <Button color="inherit">
+                <Link href="/register">新規登録</Link>
+              </Button>
+            </>
           )}
           {/* <Button color="inherit" onClick={logout}>
             お問い合わせ

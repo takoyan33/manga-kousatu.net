@@ -119,6 +119,7 @@ export default function SignUp() {
           </Button>
           <br></br>
           <br></br>
+          
           <Button variant="outlined" className="m-auto w-80 my-8">
             <Link href="/login">ログインはこちら</Link>
           </Button>

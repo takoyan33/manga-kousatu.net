@@ -18,8 +18,8 @@ function About() {
         </p>
         <br></br>
         <ul>
-          <li>運営者　　　　　阿部　舜平</li>
-          <li> メールアドレス　harrier2070@gmail.com</li>
+          <li>運営者　　　　　　阿部　舜平</li>
+          <li>メールアドレス　　harrier2070@gmail.com</li>
         </ul>
       </div>
     </div>

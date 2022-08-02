@@ -341,12 +341,12 @@ export default function Profile() {
         <br></br>
         <br></br>
         <Button variant="outlined" className="m-5">
-          <Link href="/profile/passwordedit">パスワードを変更する</Link>
+          <Link href="/profile/edit/passwordedit">パスワードを変更する</Link>
         </Button>
         <br></br>
         <br></br>
         <Button variant="outlined" className="m-5">
-          <Link href="/profile/photoedit"> プロフィール画像を更新する</Link>
+          <Link href="/profile/edit/photoedit"> プロフィール画像を更新する</Link>
         </Button>
         <br></br>
         <br></br>

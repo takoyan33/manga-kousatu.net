@@ -26,7 +26,7 @@ https://next-auth-app-2aa40.web.app/
 
 データベース：Cloud Firestore (NoSQL)
 
-ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer
+ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer,react-spinners
 
 ## 使い方
 

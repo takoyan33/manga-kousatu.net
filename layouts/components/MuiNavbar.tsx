@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { app, database } from "../../firebaseConfig";
+import { app, database } from "../../firebaseConfig.js";
 import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";

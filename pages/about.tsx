@@ -4,6 +4,8 @@ import Head from "next/head";
 
 function About() {
   return (
+
+    
     <div>
       <Head>
         <title>漫画考察.net/About</title>

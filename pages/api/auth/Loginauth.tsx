@@ -1,4 +1,4 @@
-import { app } from "../../../firebaseConfig";
+import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -10,6 +10,26 @@ import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// フォームの型
+interface SampleFormInput {
+  email: string;
+  name: string;
+  password: string;
+}
+
+// バリデーションルール
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("必須です")
+    .email("正しいメールアドレス入力してください"),
+  name: yup.string().required("必須です"),
+  password: yup.string().required("必須です").min(8, "文字数が足りません"),
+});
 
 export default function Loginauth() {
   const auth = getAuth();
@@ -18,10 +38,19 @@ export default function Loginauth() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  const SignIn = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SampleFormInput>({
+    resolver: yupResolver(schema),
+  });
+
+  const SignIn: SubmitHandler<SampleFormInput> = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then((userCredential: any) => {
         const user = userCredential.user;
+        sessionStorage.setItem("Token", user.accessToken);
         router.push("/home");
       })
       .catch((err) => {
@@ -33,6 +62,7 @@ export default function Loginauth() {
     signInWithPopup(auth, googleProvider).then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
+      sessionStorage.setItem("Token", token);
       const user = result.user;
       router.push("/home");
     });
@@ -55,6 +85,9 @@ export default function Loginauth() {
             className="m-auto w-80"
             variant="outlined"
             onChange={(event) => setEmail(event.target.value)}
+            {...register("email")}
+            error={"email" in errors}
+            helperText={errors.email?.message}
           />
           <br></br>
           <br></br>
@@ -69,12 +102,15 @@ export default function Loginauth() {
             type="password"
             className="m-auto w-80"
             onChange={(event) => setPassword(event.target.value)}
+            {...register("password")}
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
           <Button
             variant="outlined"
-            onClick={SignIn}
+            onClick={handleSubmit(SignIn)}
             className="m-auto w-80 my-8"
           >
             ログイン

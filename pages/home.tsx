@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { app, database } from "../firebaseConfig";
+import { app, database } from "../firebaseConfig.js";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
@@ -43,14 +43,15 @@ export default function Home() {
   const user = auth.currentUser;
 
   useEffect(() => {
-    if (user) {
+    let token = sessionStorage.getItem("Token");
+
+    if (token) {
       getData();
     }
-    if (!user) {
+    if (!token) {
       router.push("/register");
     }
   }, []);
-
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(

@@ -4,6 +4,13 @@ const createJestConfig = nextJest({
   dir: "./",
 });
 
+ // esmが使われているパッケージを宣言
+ const esmPackages = [
+   "esm-package1",
+   "esm-package2",
+ ];
+ 
+
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
@@ -13,6 +20,9 @@ const customJestConfig = {
     "jsx": "react-jsx"
   },
   testEnvironment: "jest-environment-jsdom",
+     transformIgnorePatterns: [
+     `node_modules/(?!(${esmPackages.join("|")})/)`,
+   ],
 };
 
 module.exports = createJestConfig(customJestConfig);

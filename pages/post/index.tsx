@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";

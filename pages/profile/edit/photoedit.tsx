@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { app, database } from "../../../firebaseConfig";
+import { app, database } from "../../../firebaseConfig.js";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
+import { getAuth, updateProfile } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";

@@ -1,5 +1,5 @@
-import "@testing-library/jest-dom";
+// import "@testing-library/jest-dom";
 
-module.exports = {
-  setupFilesAfterEnv: ["./jest.setup.js"],
-};
+// module.exports = {
+//   setupFilesAfterEnv: ["./jest.setup.js"],
+// };

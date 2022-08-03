@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { app, database } from "../firebaseConfig";
+import { app, database } from "../firebaseConfig.js";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { postImage } from "./api/upload";
 

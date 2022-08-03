@@ -1,4 +1,4 @@
-import { app } from "../firebaseConfig";
+import { app } from "../firebaseConfig.js";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";

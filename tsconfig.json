@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -13,8 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,
-    "target": "esnext",
-    "module": "commonjs",
+    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -26,8 +25,15 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/register.tsx",
-    "pages/login.tsx"
-, "pages/post/index.tsx", "pages/home.tsx", "layouts/Cardpost.tsx", "pages/api/auth/SignUp.tsx", "pages/profile/index.tsx", "pages/post/[postId].jsx", "layouts/components/button/loginbutton.tsx"  ],
+    "pages/login.tsx",
+    "pages/post/index.tsx",
+    "pages/home.tsx",
+    "layouts/Cardpost.tsx",
+    "pages/api/auth/SignUp.tsx",
+    "pages/profile/index.tsx",
+    "pages/post/[postId].jsx",
+    "layouts/components/button/loginbutton.tsx"
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -24,6 +24,8 @@ https://next-auth-app-2aa40.web.app/
 
 テスト：Jest
 
+コード管理：Sourcetree
+
 データベース：Cloud Firestore (NoSQL)
 
 ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer,react-spinners

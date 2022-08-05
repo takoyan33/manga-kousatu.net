@@ -5,12 +5,10 @@ import {
   Typography,
   Button,
   Stack,
-  Menu,
-  MenuItem,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { app, database } from "../../firebaseConfig.js";
+import { database } from "../../firebaseConfig.js";
 import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
@@ -33,7 +31,7 @@ export const MuiNavbar = () => {
   console.log(user);
 
   const logout = () => {
-    // sessionStorage.removeItem("Token");
+    sessionStorage.removeItem("Token");
 
     signOut(auth)
       .then(() => {

@@ -1,4 +1,7 @@
+import type {Config} from '@jest/types';wq
+
 const nextJest = require("next/jest");
+
 
 const createJestConfig = nextJest({
   dir: "./",
@@ -12,6 +15,8 @@ const createJestConfig = nextJest({
  
 
 const customJestConfig = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom'
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   moduleDirectories: ['node_modules', '<rootDir>/'],
   moduleNameMapper: {
@@ -23,6 +28,9 @@ const customJestConfig = {
      transformIgnorePatterns: [
      `node_modules/(?!(${esmPackages.join("|")})/)`,
    ],
+  transform: {
+    "^.+\\.(t|j)sx?$": "ts-jest",
+  }
 };
 
 module.exports = createJestConfig(customJestConfig);

@@ -11,7 +11,7 @@ const firebaseConfig = {
   storageBucket: "next-auth-app-2aa40.appspot.com",
   messagingSenderId: "169902391099",
   appId: "1:169902391099:web:686cd1adf94cc44653011e",
-  databaseURL: "<your-database-url>",
+  // databaseURL: "<your-database-url>",
 };
 
 export const app = initializeApp(firebaseConfig);

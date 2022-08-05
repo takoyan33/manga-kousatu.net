@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-
+import React from "react";
 import { Cardpost } from "../../Cardpost";
 import { render } from "@testing-library/react";
 

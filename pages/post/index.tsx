@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../packages/components/MuiNavbar";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { postImage } from "../api/upload";
@@ -19,6 +18,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
 import moment from "moment";
 import "moment/locale/ja";
+import Imageupload from "../../packages/utils/Imageupload";
 
 export default function Post() {
   const [ID, setID] = useState(null);
@@ -56,10 +56,6 @@ export default function Post() {
   type addDate = {
     toLocaleString(timeZone): string;
   };
-
-  // interface DateTimeFormatOptions {
-  //   timeZone?: string[] = [];
-  // }
 
   const addDate = async () => {
     if (image == null) {
@@ -120,41 +116,13 @@ export default function Post() {
           autoComplete="off"
         >
           <div>
-
-            <p>サムネイル*</p>
-            <img
-              className="flex justify-center items-center m-auto  w-full"
-              src={createObjectURL}
-            />
-            <label
-              htmlFor="file-input"
-              className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </label>
-            <input
-              id="file-input"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              name="myImage"
+            <Imageupload
               onChange={uploadToClient}
+              createObjectURL={createObjectURL}
+              text={""}
+              event={undefined}
             />
 
-            
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"

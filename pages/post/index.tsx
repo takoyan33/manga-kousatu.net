@@ -5,7 +5,7 @@ import { database } from "../../firebaseConfig.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../../packages/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -120,6 +120,7 @@ export default function Post() {
           autoComplete="off"
         >
           <div>
+
             <p>サムネイル*</p>
             <img
               className="flex justify-center items-center m-auto  w-full"
@@ -152,6 +153,8 @@ export default function Post() {
               name="myImage"
               onChange={uploadToClient}
             />
+
+            
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"

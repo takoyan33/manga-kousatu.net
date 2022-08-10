@@ -4,7 +4,7 @@ import { app, database } from "../firebaseConfig.js";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../packages/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -12,7 +12,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 // import { Search } from "./Search";
-import { Cardpost } from "../layouts/Cardpost";
+import { Cardpost } from "../packages/Cardpost";
 import Avatar from "@mui/material/Avatar";
 
 export default function Home() {
@@ -52,6 +52,8 @@ export default function Home() {
       router.push("/register");
     }
   }, []);
+
+  
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(

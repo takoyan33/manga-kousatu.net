@@ -28,11 +28,11 @@
     "pages/login.tsx",
     "pages/post/index.tsx",
     "pages/home.tsx",
-    "layouts/Cardpost.tsx",
+    "packages/Cardpost.tsx",
     "pages/api/auth/SignUp.tsx",
     "pages/profile/index.tsx",
     "pages/post/[postId].jsx",
-    "layouts/components/button/loginbutton.tsx"
+    "packages/components/button/loginbutton.tsx"
   ],
   "exclude": [
     "node_modules"

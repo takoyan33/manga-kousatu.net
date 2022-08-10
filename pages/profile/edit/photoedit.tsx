@@ -31,22 +31,11 @@ export default function Photoedit() {
     let token = sessionStorage.getItem("Token");
 
     if (token) {
-      getData();
     }
     if (!token) {
       router.push("/register");
     }
   }, []);
-
-  const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
-      setFiredata(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id };
-        })
-      );
-    });
-  };
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {

@@ -67,8 +67,8 @@ export default function Profile() {
     }
   }, []);
 
-  const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
+  const getData = () => {
+    getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id };
@@ -100,7 +100,7 @@ export default function Profile() {
 
   console.log(downloadURL);
 
-  const deleteuser = async () => {
+  const deleteuser = () => {
     if (user) {
       deleteUser(user)
         .then(() => {

@@ -61,10 +61,10 @@ export default function Post() {
     if (image == null) {
       alert("サムネイルを選んでください");
     } else {
-      const result = await postImage(image);
+      const result = postImage(image);
       // const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
       const newdate = new Date().toLocaleString("ja-JP");
-      setResult(result);
+      setResult(await result);
       // console.log(downloadURL);
       addDoc(databaseRef, {
         title: title,

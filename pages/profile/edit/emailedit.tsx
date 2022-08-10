@@ -2,10 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { app, database } from "../../../firebaseConfig.js";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 import { MuiNavbar } from "../../../packages/components/MuiNavbar";
@@ -34,8 +31,8 @@ export default function Emaildedit() {
     }
   }, []);
 
-  const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
+  const getData = () => {
+    getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id };
@@ -44,7 +41,7 @@ export default function Emaildedit() {
     });
   };
 
-  const updateemail = async () => {
+  const updateemail = () => {
     sendEmailVerification(auth.currentUser).then(() => {
       alert("確認メールを送信しました。");
     });

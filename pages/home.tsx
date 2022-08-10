@@ -53,9 +53,8 @@ export default function Home() {
     }
   }, []);
 
-  
-  const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
+  const getData = () => {
+    getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id };

@@ -130,7 +130,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
               {netabare == "ネタバレ有" && (
                 <div>
                   <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
-                    {netabare}
+                    {netabare}aa
                   </p>
                   <br></br>
 

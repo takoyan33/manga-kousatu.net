@@ -2,7 +2,7 @@ import { app } from "../firebaseConfig.js";
 import { getAuth } from "firebase/auth";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../packages/layouts/components/MuiNavbar";
 import Head from "next/head";
 import Loginauth from "./api/auth/Loginauth";
 

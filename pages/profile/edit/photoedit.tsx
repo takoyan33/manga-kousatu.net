@@ -5,7 +5,7 @@ import { app, database } from "../../../firebaseConfig.js";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, updateProfile } from "firebase/auth";
-import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../../../packages/layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { postImage } from "../../api/upload";

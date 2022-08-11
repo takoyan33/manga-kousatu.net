@@ -1,12 +1,12 @@
 import Head from "next/head";
 import * as React from "react";
 import Stack from "@mui/material/Stack";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../packages/layouts/components/MuiNavbar";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { Loginbutton } from "../layouts/components/button/loginbutton";
-import { Registerbutton } from "../layouts/components/button/registerbutton";
+import { Loginbutton } from "../packages/layouts/components/button/loginbutton";
+import { Registerbutton } from "../packages/layouts/components/button/registerbutton";
 import { createContext } from "react";
 
 export const LoginContext = createContext(

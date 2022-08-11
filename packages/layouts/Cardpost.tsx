@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useMemo, useCallback } from "react";
-import { database } from "../firebaseConfig.js";
+import { database } from "../../firebaseConfig.js";
 import {
   collection,
   doc,
@@ -130,7 +130,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
               {netabare == "ネタバレ有" && (
                 <div>
                   <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
-                    {netabare}aa
+                    {netabare}
                   </p>
                   <br></br>
 

@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../packages/layouts/components/MuiNavbar";
 import Head from "next/head";
 import SignUp from "./api/auth/SignUp";
 

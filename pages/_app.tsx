@@ -6,6 +6,10 @@ import { useEffect, useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import { textAlign } from "@mui/system";
 
+/**
+ * @jest-environment jsdom
+ */
+
 function MyApp({ Component, pageProps }) {
   const router = useRouter();
   const [pageLoading, setPageLoading] = useState(false);
@@ -25,16 +29,15 @@ function MyApp({ Component, pageProps }) {
     };
   });
 
-  const style: React.CSSProperties = {
+  let style = {
     fontSize: "20px",
-    // display: "table-cell",
     verticalAlign: "middle",
     margin: "auto",
     position: "absolute",
     top: "300px",
   };
 
-  const loadingbg: React.CSSProperties = {
+  const loadingbg = {
     fontSize: "20px",
     position: "absolute",
     top: "0px",
@@ -46,7 +49,6 @@ function MyApp({ Component, pageProps }) {
     height: "100%",
     zIndex: "200",
     textAlign: "center",
-    // display: "table",
   };
 
   // TODO 正式なローディングコンポーネントにする

@@ -52,7 +52,7 @@ export default function Index() {
         </p>
         <h2 className="m-5 text-2xl font-semibold text-center">漫画考察.net</h2>
         <p className="m-5 text-center">
-          漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
+          漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです
         </p>
         <br></br>
         <Stack className="text-center m-auto w-full ">

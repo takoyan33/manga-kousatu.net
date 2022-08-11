@@ -57,9 +57,6 @@ export default function Post() {
     toLocaleString(timeZone): string;
   };
 
-  // interface DateTimeFormatOptions {
-  //   timeZone?: string[] = [];
-  // }
 
   const addDate = async () => {
     if (image == null) {

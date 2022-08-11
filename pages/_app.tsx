@@ -23,18 +23,9 @@ function MyApp({ Component, pageProps }) {
       router.events.off("routeChangeComplete", handleComplete);
       router.events.off("routeChangeError", handleComplete);
     };
-  });
+  }, []);
 
-  const style: React.CSSProperties = {
-    fontSize: "20px",
-    // display: "table-cell",
-    verticalAlign: "middle",
-    margin: "auto",
-    position: "absolute",
-    top: "300px",
-  };
-
-  const loadingbg: React.CSSProperties = {
+  const loadingbg: any = {
     fontSize: "20px",
     position: "absolute",
     top: "0px",
@@ -46,13 +37,20 @@ function MyApp({ Component, pageProps }) {
     height: "100%",
     zIndex: "200",
     textAlign: "center",
-    // display: "table",
+  };
+
+  const textstyle: any = {
+    fontSize: "20px",
+    verticalAlign: "middle",
+    margin: "auto",
+    position: "absolute",
+    top: "300px",
   };
 
   // TODO 正式なローディングコンポーネントにする
   const loadingComponent = (
     <div style={loadingbg}>
-      <span style={style}>
+      <span style={textstyle}>
         <ClipLoader color={"#FFBB7A"} size={80} />
       </span>
     </div>

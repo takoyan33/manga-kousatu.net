@@ -15,11 +15,11 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // フォームの型
-interface SampleFormInput {
+type SampleFormInput = {
   email: string;
   name: string;
   password: string;
-}
+};
 
 // バリデーションルール
 const schema = yup.object({

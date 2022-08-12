@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Stack } from "@mui/material";
 import { useState } from "react";
 import Link from "next/link";
 import { database } from "../../firebaseConfig.js";

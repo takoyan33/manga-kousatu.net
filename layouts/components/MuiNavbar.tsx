@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button, Stack } from "@mui/material";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import { useState } from "react";
 import Link from "next/link";
 import { database } from "../../firebaseConfig.js";
@@ -13,7 +13,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import PersonAdd from "@mui/icons-material/PersonAdd";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import React from "react";

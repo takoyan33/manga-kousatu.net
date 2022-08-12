@@ -18,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
 import moment from "moment";
+import Imageupload from "../../packages/utils/Imageupload";
 import "moment/locale/ja";
 
 export default function Post() {
@@ -56,10 +57,6 @@ export default function Post() {
   type addDate = {
     toLocaleString(timeZone): string;
   };
-
-  // interface DateTimeFormatOptions {
-  //   timeZone?: string[] = [];
-  // }
 
   const addDate = async () => {
     if (image == null) {
@@ -120,7 +117,14 @@ export default function Post() {
           autoComplete="off"
         >
           <div>
-            <p>サムネイル*</p>
+            <Imageupload
+              onChange={uploadToClient}
+              createObjectURL={createObjectURL}
+              text={""}
+              event={undefined}
+            />
+
+            {/*  <p>サムネイル*</p>
             <img
               className="flex justify-center items-center m-auto  w-full"
               src={createObjectURL}
@@ -151,7 +155,7 @@ export default function Post() {
               accept="image/*"
               name="myImage"
               onChange={uploadToClient}
-            />
+            /> */}
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"

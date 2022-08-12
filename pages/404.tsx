@@ -10,7 +10,7 @@ export default function Custom404() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MuiNavbar />
-      <h1 className="text-center m-10">ページが見つかりませんでした。</h1>
+      <h1 className="text-center m-10">ページが見つかりませんでした</h1>
     </>
   );
 }

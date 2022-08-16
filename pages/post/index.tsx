@@ -20,6 +20,7 @@ import Head from "next/head";
 import moment from "moment";
 import Imageupload from "../../packages/utils/Imageupload";
 import "moment/locale/ja";
+import Imageupload from "../../packages/utils/Imageupload";
 
 export default function Post() {
   const [ID, setID] = useState(null);
@@ -124,38 +125,6 @@ export default function Post() {
               event={undefined}
             />
 
-            {/*  <p>サムネイル*</p>
-            <img
-              className="flex justify-center items-center m-auto  w-full"
-              src={createObjectURL}
-            />
-            <label
-              htmlFor="file-input"
-              className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                />
-              </svg>
-            </label>
-            <input
-              id="file-input"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              name="myImage"
-              onChange={uploadToClient}
-            /> */}
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"

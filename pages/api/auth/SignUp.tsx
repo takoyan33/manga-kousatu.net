@@ -1,4 +1,4 @@
-import { app } from "../../../firebaseConfig";
+import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -11,6 +11,33 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Link from "next/link";
+import { SubmitHandler, useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+// フォームの型
+interface SampleFormInput {
+  email: string;
+  name: string;
+  password: string;
+}
+
+// バリデーションルール
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("必須です")
+    .email("正しいメールアドレス入力してください"),
+  name: yup.string().required("必須です"),
+  password: yup
+    .string()
+    .required("必須です")
+    .min(8, "文字数が足りません")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&].*$/,
+      "パスワードが弱いです"
+    ),
+});
 
 export default function SignUp() {
   const auth = getAuth();
@@ -18,14 +45,22 @@ export default function SignUp() {
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SampleFormInput>({
+    resolver: yupResolver(schema),
+  });
 
-  const SignUp = () => {
+  const SignUp: SubmitHandler<SampleFormInput> = () => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
 
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
+        .then((userCredential: any) => {
           const user = userCredential.user;
+          sessionStorage.setItem("Token", user.accessToken);
           router.push("/home");
         })
         .catch((err) => {
@@ -39,6 +74,7 @@ export default function SignUp() {
     signInWithPopup(auth, googleProvider).then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
+      sessionStorage.setItem("Token", token);
       const user = result.user;
       router.push("/home");
     });
@@ -66,6 +102,9 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(event.target.value)
             }
+            {...register("email")}
+            error={"email" in errors}
+            helperText={errors.email?.message}
           />
           <br></br>
           <br></br>
@@ -81,6 +120,9 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
+            {...register("password")}
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
@@ -98,12 +140,14 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
           <Button
             variant="outlined"
-            onClick={SignUp}
+            onClick={handleSubmit(SignUp)}
             className="m-auto w-80 my-8"
           >
             新規登録
@@ -119,6 +163,7 @@ export default function SignUp() {
           </Button>
           <br></br>
           <br></br>
+
           <Button variant="outlined" className="m-auto w-80 my-8">
             <Link href="/login">ログインはこちら</Link>
           </Button>

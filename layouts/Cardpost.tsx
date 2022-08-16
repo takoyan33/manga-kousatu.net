@@ -1,11 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { app, database } from "../firebaseConfig";
+import { useState, useMemo, useCallback } from "react";
+import { database } from "../firebaseConfig.js";
 import {
   collection,
-  addDoc,
-  getDocs,
   doc,
   updateDoc,
   deleteDoc,
@@ -13,9 +10,7 @@ import {
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import styles from "../styles/Home.module.css";
-import { updatePassword } from "firebase/auth";
-import { MuiNavbar } from "./components/MuiNavbar";
+// import styles from "../styles/Home.module.css";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -26,7 +21,6 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
-import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 import Categori from "./components/text/Categori";
@@ -75,22 +69,22 @@ export const Cardpost: React.VFC<Props> = React.memo(
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const deleteDocument = useCallback((id) => {
-      let fieldToEdit = doc(database, "CRUD DATA", id);
-      let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+    // const deleteDocument = useCallback((id): void => {
+    //   let fieldToEdit = doc(database, "CRUD DATA", id);
+    //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
 
-      if (checkSaveFlg) {
-        deleteDoc(fieldToEdit)
-          .then(() => {
-            alert("記事を削除しました");
-          })
-          .catch((err) => {
-            alert("記事の削除に失敗しました");
-          });
-      } else {
-        router.push("/home");
-      }
-    }, []);
+    //   if (checkSaveFlg) {
+    //     deleteDoc(fieldToEdit)
+    //       .then(() => {
+    //         alert("記事を削除しました");
+    //       })
+    //       .catch((err) => {
+    //         alert("記事の削除に失敗しました");
+    //       });
+    //   } else {
+    //     router.push("/home");
+    //   }
+    // }, []);
 
     const Opentext = () => {
       if (opentext == false) {
@@ -151,7 +145,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 </p>
               )}
               <br></br>
-              <div className="w-80 m-auto" style={styles}>
+              <div className="w-80 m-auto">
                 {netabare == "ネタバレ無" && <p className="">{context}</p>}
               </div>
               <Avater photoURL={photoURL} displayname={displayname} />

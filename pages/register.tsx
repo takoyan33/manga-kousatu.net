@@ -1,6 +1,3 @@
-import { app } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
-import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Head from "next/head";
@@ -8,17 +5,6 @@ import SignUp from "./api/auth/SignUp";
 
 export default function Register() {
   const router = useRouter();
-
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/home");
-  //   }
-  //   if (!user) {
-  //   }
-  // }, []);
 
   return (
     <div>

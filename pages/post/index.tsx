@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { database } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig.js";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
@@ -18,6 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
 import moment from "moment";
+import Imageupload from "../../packages/utils/Imageupload";
 import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
 
@@ -124,14 +125,6 @@ export default function Post() {
               event={undefined}
             />
 
-            <input
-              id="file-input"
-              className="hidden"
-              type="file"
-              accept="image/*"
-              name="myImage"
-              onChange={uploadToClient}
-            />
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"

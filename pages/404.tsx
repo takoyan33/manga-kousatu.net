@@ -1,4 +1,6 @@
+
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
+
 import Head from "next/head";
 
 export default function Custom404() {

@@ -1,0 +1,37 @@
+import type {Config} from '@jest/types';wq
+
+const nextJest = require("next/jest");
+
+
+const createJestConfig = nextJest({
+  dir: "./",
+});
+
+ // esmが使われているパッケージを宣言
+ const esmPackages = [
+   "esm-package1",
+   "esm-package2",
+ ];
+ 
+
+const customJestConfig = {
+  preset: 'ts-jest',
+  testEnvironment: 'jsdom'
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  moduleDirectories: ['node_modules', '<rootDir>/'],
+  moduleNameMapper: {
+    "^@/components/(.*)$": "<rootDir>/components/$1",
+    "^@/pages/(.*)$": "<rootDir>/pages/$1",
+    "jsx": "react-jsx"
+  },
+  testEnvironment: "jest-environment-jsdom",
+     transformIgnorePatterns: [
+     `node_modules/(?!(${esmPackages.join("|")})/)`,
+   ],
+  transform: {
+    "^.+\\.(t|j)sx?$": "ts-jest",
+  }
+};
+
+module.exports = createJestConfig(customJestConfig);
+

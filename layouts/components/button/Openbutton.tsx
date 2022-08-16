@@ -1,7 +1,5 @@
 /* eslint-disable react/display-name */
 import React from "react";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import Avatar from "@mui/material/Avatar";
 
 type Props = {
   text: string;

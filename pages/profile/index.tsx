@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { app, database, storage } from "../../firebaseConfig";
+import { app, database, storage } from "../../firebaseConfig.js";
 import {
   collection,
   addDoc,
@@ -28,7 +28,6 @@ import Head from "next/head";
 import Image from "react-image-resizer";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Nameauth from "../api/auth/Nameauth";
-
 
 export default function Profile() {
   const [ID, setID] = useState(null);
@@ -58,15 +57,15 @@ export default function Profile() {
   const user = auth.currentUser;
 
   useEffect(() => {
-    if (user) {
+    let token = sessionStorage.getItem("Token");
+
+    if (token) {
       getData();
     }
-    if (!user) {
+    if (!token) {
       router.push("/register");
     }
   }, []);
-
-  console.log(user);
 
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
@@ -133,7 +132,7 @@ export default function Profile() {
       });
   };
 
-  const deleteDocument = (id) => {
+  const deleteDocument = (id): void => {
     let fieldToEdit = doc(database, "CRUD DATA", id);
     let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
 
@@ -340,13 +339,13 @@ export default function Profile() {
 
         <br></br>
         <br></br>
-        <Button variant="outlined" className="m-5">
-          <Link href="/profile/passwordedit">パスワードを変更する</Link>
-        </Button>
+        {/* <Button variant="outlined" className="m-5">
+          <Link href="/profile/edit/passwordedit">パスワードを変更する</Link>
+        </Button> */}
         <br></br>
         <br></br>
         <Button variant="outlined" className="m-5">
-          <Link href="/profile/photoedit"> プロフィール画像を更新する</Link>
+          <Link href="/profile/edit/photoedit">プロフィール画像を更新する</Link>
         </Button>
         <br></br>
         <br></br>

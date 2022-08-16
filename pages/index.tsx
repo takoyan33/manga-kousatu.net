@@ -1,10 +1,8 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
 import * as React from "react";
 import Stack from "@mui/material/Stack";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { useEffect } from "react";
-import { app, database } from "../firebaseConfig";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
@@ -24,15 +22,17 @@ export default function Index() {
   const user = auth.currentUser;
 
   useEffect(() => {
-    if (user) {
+    let token = sessionStorage.getItem("Token");
+
+    if (token) {
       router.push("/home");
     }
-    if (!user) {
+    if (!token) {
     }
   }, []);
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>漫画考察.net</title>
         <meta name="description" content="漫画考察.net" />

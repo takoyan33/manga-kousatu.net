@@ -14,7 +14,6 @@ export default function Nameauth() {
   const [ID, setID] = useState(null);
   const [title, setTitle] = useState<string>("");
   const [context, setContext] = useState<string>("");
-  const [file, setFile] = useState("");
   const [categori, setCategori] = useState<string>("");
   const auth = getAuth();
   const [displayName, setDisplayName] = useState<string>("");
@@ -25,11 +24,7 @@ export default function Nameauth() {
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState<string>(null);
-  const [image, setImage] = useState("");
   const [result, setResult] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [userid, setUserid] = useState<string>(null);
-  const [netabare, setNetabare] = useState<string>("");
 
   const updatename = async () => {
     updateProfile(auth.currentUser, {

@@ -9,17 +9,6 @@ import SignUp from "./api/auth/SignUp";
 export default function Register() {
   const router = useRouter();
 
-  // const auth = getAuth();
-  // const user = auth.currentUser;
-
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/home");
-  //   }
-  //   if (!user) {
-  //   }
-  // }, []);
-
   return (
     <div>
       <Head>

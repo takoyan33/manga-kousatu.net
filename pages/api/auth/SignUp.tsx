@@ -72,9 +72,11 @@ export default function SignUp() {
 
   const SignUpWithGoogle = () => {
     signInWithPopup(auth, googleProvider).then((result) => {
+      //googleで登録する
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
       sessionStorage.setItem("Token", token);
+      //tokenをセットする
       const user = result.user;
       router.push("/home");
     });

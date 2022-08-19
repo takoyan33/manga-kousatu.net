@@ -4,12 +4,10 @@ import Link from "next/link";
 import { app, database, storage } from "../../firebaseConfig";
 import {
   collection,
-  addDoc,
   getDocs,
   doc,
   updateDoc,
   deleteDoc,
-  Firestore,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, updateProfile, deleteUser } from "firebase/auth";
@@ -29,7 +27,6 @@ import Image from "react-image-resizer";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Nameauth from "../api/auth/Nameauth";
 
-
 export default function Profile() {
   const [ID, setID] = useState(null);
   const [title, setTitle] = useState<string>("");
@@ -42,6 +39,7 @@ export default function Profile() {
   const [createtime, setCreatetime] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
+  //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState<string>(null);
@@ -69,16 +67,21 @@ export default function Profile() {
   console.log(user);
 
   const getData = async () => {
+    //firestoreからデータ取得
     await getDocs(databaseRef).then((response) => {
+      //コレクションのドキュメントを取得
       setFiredata(
         response.docs.map((data) => {
+          //配列なので、mapで展開する
           return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
         })
       );
     });
   };
 
   const getID = (
+    //セットする
     id,
     title,
     context,
@@ -102,10 +105,13 @@ export default function Profile() {
   console.log(downloadURL);
 
   const deleteuser = async () => {
+    //userを削除する
     if (user) {
       deleteUser(user)
+        //user削除
         .then(() => {
           sessionStorage.removeItem("Token");
+          //tokenを削除
           alert("退会しました。TOP画面に戻ります。");
           router.push("/");
         })
@@ -116,10 +122,13 @@ export default function Profile() {
   };
 
   const updatefields = () => {
+    //更新する
     let fieldToEdit = doc(database, "CRUD DATA", ID);
+    //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: title,
       context: context.replace(/\r?\n/g, "\n"),
+      //改行を保存する
     })
       .then(() => {
         alert("記事を更新しました");
@@ -134,11 +143,14 @@ export default function Profile() {
   };
 
   const deleteDocument = (id) => {
+    //data.idを送っているのでidを受け取る
     let fieldToEdit = doc(database, "CRUD DATA", id);
     let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+    //確認画面を出す
 
     if (checkSaveFlg) {
       deleteDoc(fieldToEdit)
+        //記事を削除する
         .then(() => {
           alert("記事を削除しました");
           getData();
@@ -168,9 +180,6 @@ export default function Profile() {
   //     router.push("/profile");
   //   }
   // }, []);
-
-  console.log(downloadURL);
-  console.log(categori);
 
   return (
     <>

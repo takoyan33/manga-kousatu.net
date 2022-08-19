@@ -11,12 +11,16 @@ function MyApp({ Component, pageProps }) {
   const [pageLoading, setPageLoading] = useState(false);
 
   useEffect(() => {
-    const handleStart = (url) => url !== router.asPath && setPageLoading(true);
+    const handleStart = (url) => url !== router.asPath && setPageLoading(true); //urlはbasepathが入る
     const handleComplete = () => setPageLoading(false);
+    //読み込み完了するとローディングがfalseになる
 
     router.events.on("routeChangeStart", handleStart);
+    //ページ移動すると発火する　 ルーティング開始はrouteChangeStart
     router.events.on("routeChangeComplete", handleComplete);
+    //ページ移動すると発火する　 完了はrouteChangeComplete
     router.events.on("routeChangeError", handleComplete);
+    //ページ移動すると発火する　 エラー時はrouteChangeError
 
     return () => {
       router.events.off("routeChangeStart", handleStart);

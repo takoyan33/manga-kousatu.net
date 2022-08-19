@@ -58,7 +58,9 @@ export default function Index() {
         <Stack className="text-center m-auto w-full ">
           <Registerbutton text="新規登録はこちら" />
           <br></br>
+          {/* usecontextを使用 valueを送る*/}
           <LoginContext.Provider value={{ text: "ログインはこちらです" }}>
+            {/* loginbuttonに向けて*/}
             <Loginbutton />
           </LoginContext.Provider>
         </Stack>

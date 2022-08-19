@@ -11,15 +11,18 @@ export default function UploadImage() {
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
+      //fileが１つセットされていたら
       const file = event.target.files[0];
-
       setImage(file);
+      //fileを入れる
       setCreateObjectURL(URL.createObjectURL(file));
+      //URLをセット
       console.log(file);
     }
   };
 
   const uploadToServer = async () => {
+    //非同期処理
     const result = await postImage(image);
     console.log(result);
     alert("データを送りました");

@@ -1,23 +1,19 @@
 import React from "react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { database } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { postImage } from "../api/upload";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
-import moment from "moment";
 import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
 
@@ -65,8 +61,9 @@ export default function Post() {
       const result = await postImage(image);
       // const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
       const newdate = new Date().toLocaleString("ja-JP");
+      //日本時間を代入
       setResult(result);
-      // console.log(downloadURL);
+      //写真のurlをセットする
       addDoc(databaseRef, {
         title: title,
         context: context.replace(/\r?\n/g, "\n"),

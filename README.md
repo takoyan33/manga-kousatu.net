@@ -2,7 +2,7 @@
 
 漫画考察.net
 
-https://next-auth-app-2aa40.web.app/
+https://manga-kousatu-net-takoyan33.vercel.app/
 
 ## プロジェクトの概要説明
 

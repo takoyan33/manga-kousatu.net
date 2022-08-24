@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { database } from "../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
@@ -34,6 +34,13 @@ export default function Post() {
   const [result, setResult] = useState("");
   const [netabare, setNetabare] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+
+  useEffect(() => {
+    let token = sessionStorage.getItem("Token");
+    if (!token) {
+      router.push("/register");
+    }
+  }, []);
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {

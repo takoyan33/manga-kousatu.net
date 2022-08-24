@@ -23,14 +23,6 @@ export default function Index() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  useEffect(() => {
-    if (user) {
-      router.push("/home");
-    }
-    if (!user) {
-    }
-  }, []);
-
   return (
     <div className={styles.container}>
       <Head>

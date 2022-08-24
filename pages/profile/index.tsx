@@ -35,7 +35,6 @@ export default function Profile() {
   const [categori, setCategori] = useState<string>("");
   const [photoURL, setPhotoURL] = useState<string>();
   const [displayName, setDisplayName] = useState<string>("");
-  let router = useRouter();
   const [createtime, setCreatetime] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
@@ -50,21 +49,29 @@ export default function Profile() {
   const [userid, setUserid] = useState<string>(null);
   const [netabare, setNetabare] = useState<string>("");
   const [opentext, setOpentext] = useState<boolean>(false);
-  const styles = { whiteSpace: "pre-line" };
 
+  const styles = { whiteSpace: "pre-line" };
+  let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 
+  // useEffect(() => {
+  //   if (user) {
+  //     getData();
+  //   }
+  //   if (!user) {
+  //     router.push("/register");
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (user) {
+    let token = sessionStorage.getItem("Token");
+    if (!token) {
+      router.push("/register");
+    } else {
       getData();
     }
-    if (!user) {
-      router.push("/register");
-    }
   }, []);
-
-  console.log(user);
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -90,7 +97,7 @@ export default function Profile() {
     cratetime,
     displayname,
     createtime,
-    likecount
+    likes
   ) => {
     setID(id);
     setContext(context);
@@ -100,6 +107,7 @@ export default function Profile() {
     setCategori(categori);
     setCreatetime(cratetime);
     setDisplayName(displayname);
+    setLikecount(likes);
   };
 
   console.log(downloadURL);
@@ -129,12 +137,14 @@ export default function Profile() {
       title: title,
       context: context.replace(/\r?\n/g, "\n"),
       //改行を保存する
+      likes: likecount,
     })
       .then(() => {
         alert("記事を更新しました");
         setContext("");
         setTitle("");
         setIsUpdate(false);
+        setLikecount("");
         getData();
       })
       .catch((err) => {
@@ -262,6 +272,8 @@ export default function Profile() {
                         {data.name}
                         <br></br>
                         投稿日時：{data.createtime}
+                        <br></br>
+                        いいね数：{data.likecount}
                       </Typography>
                     </CardContent>
 
@@ -336,6 +348,10 @@ export default function Profile() {
                 setContext(event.target.value)
               }
             />
+            {/* <button onChange={() => setLikecount(likecount + 1)}>
+              いいねする
+            </button> */}
+            <br></br>
             <Button variant="outlined" onClick={updatefields}>
               更新する
             </Button>
@@ -343,6 +359,7 @@ export default function Profile() {
           </Box>
         )}
         <Nameauth />
+
         {/* <Button variant="outlined" className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </Button> */}

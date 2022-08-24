@@ -44,7 +44,6 @@ type Props = {
   photoURL: string;
   displayname: string;
   createtime: string;
-  likecount: number;
 };
 
 // eslint-disable-next-line react/display-name
@@ -60,7 +59,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
     email,
     photoURL,
     createtime,
-    likecount,
   }) => {
     const [opentext, setOpentext] = useState<boolean>(false);
     const databaseRef = collection(database, "CRUD DATA");
@@ -156,8 +154,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
               </div>
               <Avater photoURL={photoURL} displayname={displayname} />
               投稿日時：{createtime}
-              {/* {likecount}
-              <button onClick={() => setcount(count + 1)}>いいねする</button> */}
             </CardContent>
           </Card>
         </Grid>

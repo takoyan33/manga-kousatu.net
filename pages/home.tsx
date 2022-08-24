@@ -42,15 +42,23 @@ export default function Home() {
   const auth = getAuth();
   const user = auth.currentUser;
 
+  // useEffect(() => {
+  //   if (user) {
+  //     getData();
+  //   }
+  //   if (!user) {
+  //     router.push("/register");
+  //   }
+  // }, []);
+
   useEffect(() => {
-    if (user) {
+    let token = sessionStorage.getItem("Token");
+    if (!token) {
+      router.push("/register");
+    } else {
       getData();
     }
-    if (!user) {
-      router.push("/register");
-    }
   }, []);
-
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
@@ -166,7 +174,7 @@ export default function Home() {
                 email={data.email}
                 id={data.id}
                 photoURL={data.photoURL}
-                likecount={likecount}
+                // likecount={likecount}
               />
             );
           })}

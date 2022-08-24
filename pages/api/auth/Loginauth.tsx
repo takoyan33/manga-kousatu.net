@@ -62,8 +62,8 @@ export default function Loginauth() {
     signInWithPopup(auth, googleProvider).then((result) => {
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      sessionStorage.setItem("Token", token);
       const user = result.user;
+      sessionStorage.setItem("Token", token);
       router.push("/home");
     });
   };

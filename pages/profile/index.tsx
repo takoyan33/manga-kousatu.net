@@ -42,7 +42,7 @@ export default function Profile() {
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState<string>(null);
-  const [likecount, setLikecount] = useState("");
+  const [likecount, setLikecount] = useState(0);
   const [image, setImage] = useState("");
   const [result, setResult] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -54,15 +54,6 @@ export default function Profile() {
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
-
-  // useEffect(() => {
-  //   if (user) {
-  //     getData();
-  //   }
-  //   if (!user) {
-  //     router.push("/register");
-  //   }
-  // }, []);
 
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
@@ -110,8 +101,6 @@ export default function Profile() {
     setLikecount(likes);
   };
 
-  console.log(downloadURL);
-
   const deleteuser = async () => {
     //userを削除する
     if (user) {
@@ -129,6 +118,25 @@ export default function Profile() {
     }
   };
 
+  const handleClick = (id, likes) => {
+    setLikecount(likes + 1);
+    console.log(likecount);
+
+    let fieldToEdit = doc(database, "CRUD DATA", id);
+    updateDoc(fieldToEdit, {
+      likes: likecount,
+    })
+      .then(() => {
+        alert("いいねしました");
+        setLikecount(0);
+        getData();
+      })
+      .catch((err) => {
+        alert("失敗しました");
+        console.log(err);
+      });
+  };
+
   const updatefields = () => {
     //更新する
     let fieldToEdit = doc(database, "CRUD DATA", ID);
@@ -137,14 +145,12 @@ export default function Profile() {
       title: title,
       context: context.replace(/\r?\n/g, "\n"),
       //改行を保存する
-      likes: likecount,
     })
       .then(() => {
         alert("記事を更新しました");
         setContext("");
         setTitle("");
         setIsUpdate(false);
-        setLikecount("");
         getData();
       })
       .catch((err) => {
@@ -273,7 +279,14 @@ export default function Profile() {
                         <br></br>
                         投稿日時：{data.createtime}
                         <br></br>
-                        いいね数：{data.likecount}
+                        いいね数：{data.likes}
+                        <br></br>
+                        <button
+                          onClick={() => handleClick(data.id, data.likes)}
+                          className=""
+                        >
+                          いいねする
+                        </button>
                       </Typography>
                     </CardContent>
 
@@ -291,7 +304,7 @@ export default function Profile() {
                               data.email,
                               data.displayname,
                               data.context,
-                              data.likecount
+                              data.likes
                             )
                           }
                         >
@@ -348,9 +361,6 @@ export default function Profile() {
                 setContext(event.target.value)
               }
             />
-            {/* <button onChange={() => setLikecount(likecount + 1)}>
-              いいねする
-            </button> */}
             <br></br>
             <Button variant="outlined" onClick={updatefields}>
               更新する

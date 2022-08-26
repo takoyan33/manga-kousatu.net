@@ -82,6 +82,7 @@ export default function Post() {
         netabare: netabare,
         photoURL: user.photoURL,
         userid: user.uid,
+        likes: 0,
       })
         .then(() => {
           alert("記事投稿ができました。");

@@ -120,15 +120,16 @@ export default function Profile() {
   };
 
   const handleClick = (id, likes) => {
-    setLikecount(likes + 1);
-    console.log(likecount);
+    // setLikecount(likes + 1);
+    console.log(likes);
 
     let fieldToEdit = doc(database, "CRUD DATA", id);
     updateDoc(fieldToEdit, {
-      likes: likecount,
+      likes: likes + 1,
     })
       .then(() => {
         alert("いいねしました");
+        console.log(likecount);
         setLikecount(0);
         getData();
       })
@@ -263,7 +264,7 @@ export default function Profile() {
                       </p>
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
-                          {data.title}
+                          <Link href={`/post/${data.title}`}>{data.title}</Link>
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           {data.categori == "ONE PIECE" && (

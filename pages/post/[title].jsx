@@ -24,6 +24,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
+import Openbutton from "../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 const Post = () => {
@@ -57,12 +58,7 @@ const Post = () => {
   const [searchName, setSearchName] = useState("");
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-    if (!token) {
-      router.push("/register");
-    } else {
-      getData();
-    }
+    getData();
   }, []);
 
   const getData = async () => {
@@ -126,7 +122,7 @@ const Post = () => {
             })
             .map((data) => {
               return (
-                <Grid key={data.id} className="flex m-auto">
+                <Grid key={data.id}>
                   <Card className="lg:w-full w-4/5 my-4">
                     <p className="m-auto text-center">
                       <Image
@@ -163,12 +159,24 @@ const Post = () => {
                         )}
                         <br></br>
                         <br></br>
+                        {netabare == "ネタバレ有" && (
+                          <div>
+                            <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                              {netabare}
+                            </p>
+                            <br></br>
+
+                            <Openbutton text="表示します" onClick={Opentext} />
+
+                            {opentext == true && <p className="">{context}</p>}
+                          </div>
+                        )}
                         {netabare == "ネタバレ無" && (
                           <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
                             {netabare}
                           </p>
                         )}
-                        <div className="w-80 m-auto">{data.context}</div>
+                        <div className="text-left">{data.context}</div>
                         <br></br>
                         {data.name}
                         <br></br>
@@ -184,8 +192,6 @@ const Post = () => {
                         </button> */}
                       </Typography>
                     </CardContent>
-
-                    {user.email == data.email && <CardActions></CardActions>}
                   </Card>
                 </Grid>
               );

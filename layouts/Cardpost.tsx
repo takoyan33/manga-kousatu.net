@@ -115,48 +115,50 @@ export const Cardpost: React.VFC<Props> = React.memo(
 
     return (
       <div>
-        <Grid key={id} className="flex m-auto">
-          <Card className="m-8" style={cardstyles}>
-            <p className="m-auto text-center">
-              <Image
-                className="m-auto text-center max-w-sm"
-                height={300}
-                width={300}
-                src={downloadURL}
-              />
-            </p>
+        <Link href={`/post/${title}`}>
+          <Grid key={id} className="flex m-auto">
+            <Card className="m-8" style={cardstyles}>
+              <p className="m-auto text-center">
+                <Image
+                  className="m-auto text-center max-w-sm"
+                  height={300}
+                  width={300}
+                  src={downloadURL}
+                />
+              </p>
 
-            <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {title}
-              </Typography>
-              <Categori categori={categori} />
-              {netabare == "ネタバレ有" && (
-                <div>
-                  <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+              <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                  {title}
+                </Typography>
+                <Categori categori={categori} />
+                {netabare == "ネタバレ有" && (
+                  <div>
+                    <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                      {netabare}
+                    </p>
+                    <br></br>
+
+                    <Openbutton text="表示します" onClick={Opentext} />
+
+                    {opentext == true && <p className="">{context}</p>}
+                  </div>
+                )}
+                {netabare == "ネタバレ無" && (
+                  <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
                     {netabare}
                   </p>
-                  <br></br>
-
-                  <Openbutton text="表示します" onClick={Opentext} />
-
-                  {opentext == true && <p className="">{context}</p>}
+                )}
+                <br></br>
+                <div className="w-80 m-auto" style={styles}>
+                  {netabare == "ネタバレ無" && <p className="">{context}</p>}
                 </div>
-              )}
-              {netabare == "ネタバレ無" && (
-                <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
-                  {netabare}
-                </p>
-              )}
-              <br></br>
-              <div className="w-80 m-auto" style={styles}>
-                {netabare == "ネタバレ無" && <p className="">{context}</p>}
-              </div>
-              <Avater photoURL={photoURL} displayname={displayname} />
-              投稿日時：{createtime}
-            </CardContent>
-          </Card>
-        </Grid>
+                <Avater photoURL={photoURL} displayname={displayname} />
+                投稿日時：{createtime}
+              </CardContent>
+            </Card>
+          </Grid>
+        </Link>
       </div>
     );
   }

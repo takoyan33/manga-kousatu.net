@@ -42,23 +42,10 @@ export default function Home() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // useEffect(() => {
-  //   if (user) {
-  //     getData();
-  //   }
-  //   if (!user) {
-  //     router.push("/register");
-  //   }
-  // }, []);
-
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
-    if (!token) {
-      router.push("/register");
-    } else {
-      getData();
-    }
+    getData();
   }, []);
+
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(

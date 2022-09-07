@@ -10,6 +10,8 @@ import { getAuth } from "firebase/auth";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
+import Link from "next/link";
+import Button from "@mui/material/Button";
 
 export const LoginContext = createContext(
   {} as {
@@ -55,6 +57,10 @@ export default function Index() {
             {/* loginbuttonに向けて*/}
             <Loginbutton />
           </LoginContext.Provider>
+          <br></br>
+          <Button variant="outlined" className="m-auto w-50 my-2">
+            <Link href="/home">投稿を見てみる</Link>
+          </Button>
         </Stack>
       </div>
     </div>

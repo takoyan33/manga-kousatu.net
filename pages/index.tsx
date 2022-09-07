@@ -58,9 +58,11 @@ export default function Index() {
             <Loginbutton />
           </LoginContext.Provider>
           <br></br>
-          <Button variant="outlined" className="m-auto w-50 my-2">
-            <Link href="/home">投稿を見てみる</Link>
-          </Button>
+          <div>
+            <Button variant="outlined" className="m-auto w-50 my-2">
+              <Link href="/home">投稿を見てみる</Link>
+            </Button>
+          </div>
         </Stack>
       </div>
     </div>

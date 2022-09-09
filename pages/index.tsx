@@ -1,17 +1,21 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import * as React from "react";
-import Stack from "@mui/material/Stack";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import { useEffect } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { app, database } from "../firebaseConfig";
+import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
+import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import Grid from "@material-ui/core/Grid";
+import Head from "next/head";
+import { Cardpost } from "../layouts/Cardpost";
+import Avatar from "@mui/material/Avatar";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
-import Link from "next/link";
-import Button from "@mui/material/Button";
 
 export const LoginContext = createContext(
   {} as {
@@ -20,13 +24,104 @@ export const LoginContext = createContext(
 );
 
 export default function Index() {
-  let router = useRouter();
+  const [ID, setID] = useState(null);
+  const [title, setTitle] = useState<string>("");
+  const [context, setContext] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [categori, setCategori] = useState<string>("");
+  const [firedata, setFiredata] = useState([]);
+  const [createtime, setCreatetime] = useState("");
+  const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  const databaseRef = collection(database, "CRUD DATA");
+  const [displayname, setDisplayName] = useState<string>("");
+  const [createObjectURL, setCreateObjectURL] = useState<string>(null);
+  const [downloadURL, setDownloadURL] = useState<string>(null);
+  const [image, setImage] = useState<string>("");
+  const [result, setResult] = useState<string>("");
+  const [photoURL, setPhotoURL] = useState<string>("");
+  const [likecount, setLikecount] = useState<number>(null);
+  const [userid, setUserid] = useState<string>(null);
+  const [netabare, setNetabare] = useState<string>("");
+  const [opentext, setOpentext] = useState<boolean>(false);
+  const styles = { whiteSpace: "pre-line" };
+  const [searchName, setSearchName] = useState("");
 
+  let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    await getDocs(databaseRef).then((response) => {
+      setFiredata(
+        response.docs.map((data) => {
+          return { ...data.data(), id: data.id };
+        })
+      );
+    });
+  };
+
+  const getID = (
+    id,
+    name,
+    title,
+    context,
+    downloadURL,
+    categori,
+    cratetime,
+    displayname,
+    netabare,
+    photoURL,
+    userid,
+    likecount
+  ) => {
+    setID(id);
+    setContext(context);
+    setTitle(title);
+    setName(name);
+    setDisplayName(displayname);
+    setDownloadURL(downloadURL);
+    setIsUpdate(true);
+    setCategori(categori);
+    setCreatetime(cratetime);
+    setNetabare(netabare);
+    setPhotoURL(photoURL);
+    setUserid(userid);
+    console.log(title);
+  };
+
+  const updatefields = () => {
+    let fieldToEdit = doc(database, "CRUD DATA", ID);
+    updateDoc(fieldToEdit, {
+      title: title,
+      context: context.replace(/\r?\n/g, "\n"),
+    })
+      .then(() => {
+        alert("記事を更新しました");
+        setContext("");
+        setTitle("");
+        setIsUpdate(false);
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const Opentext = () => {
+    if (opentext == false) {
+      setOpentext(true);
+    } else {
+      setOpentext(false);
+    }
+  };
+
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
         <title>漫画考察.net</title>
         <meta name="description" content="漫画考察.net" />
@@ -49,21 +144,132 @@ export default function Index() {
           漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
         </p>
         <br></br>
-        <Stack className="text-center m-auto w-full ">
-          <Registerbutton text="新規登録はこちら" />
-          <br></br>
-          {/* usecontextを使用 valueを送る*/}
-          <LoginContext.Provider value={{ text: "ログインはこちらです" }}>
-            {/* loginbuttonに向けて*/}
-            <Loginbutton />
-          </LoginContext.Provider>
-          <br></br>
-          <div>
-            <Button variant="outlined" className="m-auto w-50 my-2">
-              <Link href="/home">投稿を見てみる</Link>
+
+        {!user && (
+          <>
+            <Stack className="text-center m-auto w-full ">
+              <Registerbutton text="新規登録はこちら" />
+              <br></br>
+              {/* usecontextを使用 valueを送る*/}
+              <LoginContext.Provider value={{ text: "ログインはこちらです" }}>
+                {/* loginbuttonに向けて*/}
+                <Loginbutton />
+              </LoginContext.Provider>
+              <br></br>
+              <div></div>
+            </Stack>
+
+            <div className="lg:text-right text-center">
+              <Button variant="outlined" className="">
+                <Link href="/post">新規投稿をする</Link>
+              </Button>
+            </div>
+          </>
+        )}
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          新規投稿
+        </h2>
+        <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
+
+        <input
+          type="text"
+          placeholder="todoを探す"
+          onChange={(event) => {
+            setSearchName(event.target.value);
+          }}
+        />
+
+        <Grid container spacing={1}>
+          {firedata
+            .filter((data) => {
+              if (searchName === "") {
+                return data;
+                //そのまま返す
+              } else if (
+                data.title.toLowerCase().includes(searchName.toLowerCase())
+                //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              ) {
+                return data;
+              }
+            })
+            .map((data) => {
+              return (
+                <Cardpost
+                  key={data.id}
+                  downloadURL={data.downloadURL}
+                  title={data.title}
+                  categori={data.categori}
+                  netabare={data.netabare}
+                  context={data.context}
+                  createtime={data.createtime}
+                  displayname={data.displayname}
+                  email={data.email}
+                  id={data.id}
+                  photoURL={data.photoURL}
+                  // likecount={likecount}
+                />
+              );
+            })}
+        </Grid>
+
+        <br></br>
+        <br></br>
+        {isUpdate && (
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <TextField
+              id="outlined-basic"
+              label="タイトル（最大20文字)"
+              variant="outlined"
+              type="text"
+              value={title}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setTitle(event.target.value)
+              }
+            />
+
+            <br></br>
+
+            <TextField
+              label="内容(最大500文字）"
+              className="m-auto w-full"
+              id="filled-multiline-static"
+              multiline
+              rows={14}
+              type="text"
+              value={context}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setContext(event.target.value)
+              }
+            />
+            <Button variant="outlined" onClick={updatefields}>
+              更新する
             </Button>
-          </div>
-        </Stack>
+            <br></br>
+          </Box>
+        )}
+
+        {/* <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          カテゴリから選ぶ
+        </h2>
+        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/ONE PIECE">ONE PIECE</Link>
+        </p>
+        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/呪術廻戦">呪術廻戦</Link>
+        </p>
+        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
+          東京リベンジャーズ
+        </p>
+        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
+          キングダム
+        </p> */}
       </div>
     </div>
   );

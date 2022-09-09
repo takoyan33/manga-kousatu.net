@@ -135,14 +135,24 @@ export default function Home() {
       <MuiNavbar />
       <br></br>
       <div className="max-w-7xl m-auto">
+        <br></br>
+        <br></br>
+        <p className="text-center">
+          <img src="./images/book-reading.png" className="w-40 m-auto my-6" />
+        </p>
+        <h2 className="m-5 text-2xl font-semibold text-center">漫画考察.net</h2>
+        <p className="m-5 text-center">
+          漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
+        </p>
+        <br></br>
+
         <div className="lg:text-right text-center">
           <Button variant="outlined" className="">
             <Link href="/post">新規投稿をする</Link>
           </Button>
-          {/* <Search /> */}
         </div>
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          投稿一覧
+          新規投稿
         </h2>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
 

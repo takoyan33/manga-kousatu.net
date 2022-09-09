@@ -92,7 +92,7 @@ export default function Post() {
           setNetabare("");
           setPhotoURL("");
           setUserid("");
-          router.push("/home");
+          router.push("/");
         })
         .catch((err) => {
           console.error(err);

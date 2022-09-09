@@ -54,7 +54,7 @@ export default function SignUp() {
         .then((userCredential: any) => {
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
-          router.push("/home");
+          router.push("/");
         })
         .catch((err) => {
           alert("emailが既にあります");
@@ -71,7 +71,7 @@ export default function SignUp() {
       sessionStorage.setItem("Token", token);
       //tokenをセットする
       const user = result.user;
-      router.push("/home");
+      router.push("/");
     });
   };
 

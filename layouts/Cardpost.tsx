@@ -86,7 +86,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
             alert("記事の削除に失敗しました");
           });
       } else {
-        router.push("/home");
+        router.push("/");
       }
     }, []);
 

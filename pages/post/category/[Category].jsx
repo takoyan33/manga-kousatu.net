@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { app, database, storage } from "../../firebaseConfig";
+import { app, database, storage } from "../../../firebaseConfig";
 import {
   collection,
   getDocs,
@@ -11,7 +11,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { getAuth, updateProfile, deleteUser } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -19,17 +19,16 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import { postImage } from "../api/upload";
+import { postImage } from "../../api/upload";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
-import Openbutton from "../../layouts/components/button/Openbutton";
+import Openbutton from "../../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
-const Post = () => {
+const Category = () => {
   const [ID, setID] = useState(null);
-  // const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [file, setFile] = useState("");
   const [categori, setCategori] = useState("");
@@ -52,12 +51,12 @@ const Post = () => {
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
-  const { title } = router.query;
+  const { Category } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
 
-  console.log({ title });
+  console.log({ Category });
 
   useEffect(() => {
     getData();
@@ -112,11 +111,11 @@ const Post = () => {
         <Grid>
           {firedata
             .filter((data) => {
-              if (data.title === { title }) {
+              if (data.title === { Category }) {
                 return data;
                 //そのまま返す
               } else if (
-                data.title.toLowerCase().includes(title.toLowerCase())
+                data.Category.toLowerCase().includes(Category.toLowerCase())
                 //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
               ) {
                 return data;
@@ -206,4 +205,4 @@ const Post = () => {
   );
 };
 
-export default Post;
+export default Category;

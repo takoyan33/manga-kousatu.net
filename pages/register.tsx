@@ -24,6 +24,8 @@ export default function Register() {
           新規登録
         </h2>
         <SignUp />
+
+        
       </div>
     </div>
   );

@@ -60,7 +60,7 @@ export const MuiNavbar = () => {
             component="div"
             sx={{ flexGrow: 1, textAlign: "left" }}
           >
-            <Link href="/home">漫画考察.net</Link>
+            <Link href="/">漫画考察.net</Link>
           </Typography>
           <Tooltip title="Account settings">
             <IconButton

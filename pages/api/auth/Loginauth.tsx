@@ -51,7 +51,7 @@ export default function Loginauth() {
       .then((userCredential: any) => {
         const user = userCredential.user;
         sessionStorage.setItem("Token", user.accessToken);
-        router.push("/home");
+        router.push("/");
       })
       .catch((err) => {
         alert("ログインできません");
@@ -64,7 +64,7 @@ export default function Loginauth() {
       const token = credential.accessToken;
       const user = result.user;
       sessionStorage.setItem("Token", token);
-      router.push("/home");
+      router.push("/");
     });
   };
 

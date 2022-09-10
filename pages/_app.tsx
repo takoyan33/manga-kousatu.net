@@ -53,7 +53,7 @@ function MyApp({ Component, pageProps }) {
     // display: "table",
   };
 
-  // TODO 正式なローディングコンポーネントにする
+  // 正式なローディングコンポーネントにする
   const loadingComponent = (
     <div style={loadingbg}>
       <span style={style}>

@@ -146,24 +146,6 @@ export default function Index() {
         </p>
         <br></br>
 
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          カテゴリから選ぶ
-        </h2>
-        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/ONE PIECE">ONE PIECE</Link>
-        </p>
-        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/呪術廻戦">呪術廻戦</Link>
-        </p>
-        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/東京リベンジャーズ">
-            東京リベンジャーズ
-          </Link>
-        </p>
-        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/キングダム">キングダム</Link>
-        </p>
-
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
@@ -188,7 +170,25 @@ export default function Index() {
           </div>
         )}
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          新規投稿
+          カテゴリから選ぶ
+        </h2>
+        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/ONE PIECE">ONE PIECE</Link>
+        </p>
+        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/呪術廻戦">呪術廻戦</Link>
+        </p>
+        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/東京リベンジャーズ">
+            東京リベンジャーズ
+          </Link>
+        </p>
+        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/キングダム">キングダム</Link>
+        </p>
+
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          新規投稿一覧
         </h2>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
 

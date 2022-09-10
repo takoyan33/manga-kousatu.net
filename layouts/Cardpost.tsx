@@ -151,6 +151,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     {netabare}
                   </p>
                 )}
+                
                 <br></br>
                 <div className="w-80 m-auto" style={styles}>
                   {netabare == "ネタバレ無" && <p className="">{context}</p>}

@@ -45,16 +45,17 @@ export default function Profile() {
   const [likecount, setLikecount] = useState(0);
   const [image, setImage] = useState("");
   const [result, setResult] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
+  const [email, setEmail] = useState("");
   const [userid, setUserid] = useState<string>(null);
   const [netabare, setNetabare] = useState<string>("");
   const [opentext, setOpentext] = useState<boolean>(false);
+  const [searchName, setSearchName] = useState("");
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
-  const [searchName, setSearchName] = useState("");
+
 
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
@@ -70,11 +71,12 @@ export default function Profile() {
     await getDocs(databaseRef).then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
+        response.docs
+          .map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
       );
     });
   };
@@ -82,6 +84,7 @@ export default function Profile() {
   const getID = (
     //セットする
     id,
+    email,
     title,
     context,
     downloadURL,
@@ -92,6 +95,7 @@ export default function Profile() {
     likes
   ) => {
     setID(id);
+    setEmail(email);
     setContext(context);
     setTitle(title);
     setDownloadURL(downloadURL);
@@ -326,7 +330,8 @@ export default function Profile() {
                                   data.email,
                                   data.displayname,
                                   data.context,
-                                  data.likes
+                                  data.likes,
+                                  data.email
                                 )
                               }
                             >

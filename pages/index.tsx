@@ -40,7 +40,7 @@ export default function Index() {
   const [image, setImage] = useState<string>("");
   const [result, setResult] = useState<string>("");
   const [photoURL, setPhotoURL] = useState<string>("");
-  const [likecount, setLikecount] = useState<number>(null);
+  const [likes, setLikes] = useState<number>(null);
   const [userid, setUserid] = useState<string>(null);
   const [netabare, setNetabare] = useState<string>("");
   const [opentext, setOpentext] = useState<boolean>(false);
@@ -77,7 +77,7 @@ export default function Index() {
     netabare,
     photoURL,
     userid,
-    likecount
+    likes
   ) => {
     setID(id);
     setContext(context);
@@ -91,6 +91,7 @@ export default function Index() {
     setNetabare(netabare);
     setPhotoURL(photoURL);
     setUserid(userid);
+    setLikes(likes);
     console.log(title);
   };
 
@@ -145,6 +146,24 @@ export default function Index() {
         </p>
         <br></br>
 
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          カテゴリから選ぶ
+        </h2>
+        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/ONE PIECE">ONE PIECE</Link>
+        </p>
+        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/呪術廻戦">呪術廻戦</Link>
+        </p>
+        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/東京リベンジャーズ">
+            東京リベンジャーズ
+          </Link>
+        </p>
+        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
+          <Link href="/post/category/キングダム">キングダム</Link>
+        </p>
+
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
@@ -158,13 +177,15 @@ export default function Index() {
               <br></br>
               <div></div>
             </Stack>
-
-            <div className="lg:text-right text-center">
-              <Button variant="outlined" className="">
-                <Link href="/post">新規投稿をする</Link>
-              </Button>
-            </div>
           </>
+        )}
+
+        {user && (
+          <div className="lg:text-right text-center">
+            <Button variant="outlined" className="">
+              <Link href="/post">新規投稿をする</Link>
+            </Button>
+          </div>
         )}
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           新規投稿
@@ -206,7 +227,7 @@ export default function Index() {
                   email={data.email}
                   id={data.id}
                   photoURL={data.photoURL}
-                  // likecount={likecount}
+                  likes={data.likes}
                 />
               );
             })}
@@ -214,7 +235,8 @@ export default function Index() {
 
         <br></br>
         <br></br>
-        {isUpdate && (
+
+        {/* {isUpdate && (
           <Box
             component="form"
             sx={{
@@ -253,23 +275,7 @@ export default function Index() {
             </Button>
             <br></br>
           </Box>
-        )}
-
-        {/* <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          カテゴリから選ぶ
-        </h2>
-        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/ONE PIECE">ONE PIECE</Link>
-        </p>
-        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/呪術廻戦">呪術廻戦</Link>
-        </p>
-        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
-          東京リベンジャーズ
-        </p>
-        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
-          キングダム
-        </p> */}
+        )} */}
       </div>
     </div>
   );

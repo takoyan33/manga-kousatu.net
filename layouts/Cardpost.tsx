@@ -44,6 +44,7 @@ type Props = {
   photoURL: string;
   displayname: string;
   createtime: string;
+  likes: string;
 };
 
 // eslint-disable-next-line react/display-name
@@ -51,6 +52,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
   ({
     downloadURL,
     id,
+    likes,
     title,
     categori,
     netabare,
@@ -155,6 +157,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 </div>
                 <Avater photoURL={photoURL} displayname={displayname} />
                 投稿日時：{createtime}
+                いいね数：{likes}
               </CardContent>
             </Card>
           </Grid>

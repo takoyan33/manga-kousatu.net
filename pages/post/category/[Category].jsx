@@ -26,6 +26,7 @@ import Head from "next/head";
 import Image from "react-image-resizer";
 import Openbutton from "../../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { Cardpost } from  "../../../layouts/Cardpost"
 
 const Category = () => {
   const [ID, setID] = useState(null);
@@ -67,11 +68,23 @@ const Category = () => {
     await getDocs(databaseRef).then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
+        response.docs
+          .map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+          .filter((data) => {
+            if (data.categori === Category) {
+              return data;
+              //そのまま返す
+            } else if (
+              data.categori.toLowerCase().includes(Category.toLowerCase())
+              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+            ) {
+              return data;
+            }
+          })
       );
     });
   };
@@ -106,100 +119,40 @@ const Category = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MuiNavbar />
-
       <div className="max-w-7xl m-auto">
-        <Grid>
-          {firedata
-            .filter((data) => {
-              if (data.title === { Category }) {
-                return data;
-                //そのまま返す
-              } else if (
-                data.Category.toLowerCase().includes(Category.toLowerCase())
-                //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-              ) {
-                return data;
-              }
-            })
-            .map((data) => {
+        <br></br>
+        <p>
+          <Link href="/">トップ</Link>　＞　投稿記事　＞　{Category}
+        </p>
+        <br></br>
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          {Category}の考察記事一覧
+        </h2>
+        <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
+        <div className="max-w-7xl m-auto">
+          <Grid container spacing={1}>
+            {firedata.map((data) => {
               return (
-                <Grid key={data.id}>
-                  <Card className="lg:w-full w-4/5 my-4">
-                    <p className="m-auto text-center">
-                      <Image
-                        className="m-auto text-center max-w-sm"
-                        height={500}
-                        width={500}
-                        src={data.downloadURL}
-                      />
-                    </p>
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {data.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {data.categori == "ONE PIECE" && (
-                          <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                            {data.categori}
-                          </p>
-                        )}
-                        {data.categori == "呪術廻戦" && (
-                          <p className="bg-purple-500 p-2 inline-block text-white text-center">
-                            {data.categori}
-                          </p>
-                        )}
-                        {data.categori == "東京リベンジャーズ" && (
-                          <p className="bg-rose-500 p-2 inline-block text-white text-center">
-                            {data.categori}
-                          </p>
-                        )}
-                        {data.categori == "キングダム" && (
-                          <p className="bg-yellow-500 p-2 inline-block text-white text-center">
-                            {data.categori}
-                          </p>
-                        )}
-                        <br></br>
-                        <br></br>
-                        {netabare == "ネタバレ有" && (
-                          <div>
-                            <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
-                              {netabare}
-                            </p>
-                            <br></br>
-
-                            <Openbutton text="表示します" onClick={Opentext} />
-
-                            {opentext == true && <p className="">{context}</p>}
-                          </div>
-                        )}
-                        {netabare == "ネタバレ無" && (
-                          <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
-                            {netabare}
-                          </p>
-                        )}
-                        <div className="text-left">{data.context}</div>
-                        <br></br>
-                        {data.name}
-                        <br></br>
-                        投稿日時：{data.createtime}
-                        <br></br>
-                        いいね数：{data.likes}
-                        <br></br>
-                        {/* <button
-                          onClick={() => handleClick(data.id, data.likes)}
-                          className=""
-                        >
-                          いいねする
-                        </button> */}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
+                <Cardpost
+                  key={data.id}
+                  downloadURL={data.downloadURL}
+                  title={data.title}
+                  categori={data.categori}
+                  netabare={data.netabare}
+                  context={data.context}
+                  createtime={data.createtime}
+                  displayname={data.displayname}
+                  email={data.email}
+                  id={data.id}
+                  photoURL={data.photoURL}
+                  // likecount={likecount}
+                />
               );
             })}
-        </Grid>
-        <br></br>
-        <br></br>
+          </Grid>
+          <br></br>
+          <br></br>
+        </div>
       </div>
     </>
   );

@@ -235,47 +235,6 @@ export default function Index() {
 
         <br></br>
         <br></br>
-
-        {/* {isUpdate && (
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "25ch" },
-            }}
-            noValidate
-            autoComplete="off"
-          >
-            <TextField
-              id="outlined-basic"
-              label="タイトル（最大20文字)"
-              variant="outlined"
-              type="text"
-              value={title}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setTitle(event.target.value)
-              }
-            />
-
-            <br></br>
-
-            <TextField
-              label="内容(最大500文字）"
-              className="m-auto w-full"
-              id="filled-multiline-static"
-              multiline
-              rows={14}
-              type="text"
-              value={context}
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setContext(event.target.value)
-              }
-            />
-            <Button variant="outlined" onClick={updatefields}>
-              更新する
-            </Button>
-            <br></br>
-          </Box>
-        )} */}
       </div>
     </div>
   );

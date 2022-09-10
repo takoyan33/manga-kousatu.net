@@ -194,7 +194,7 @@ export default function Index() {
 
         <input
           type="text"
-          placeholder="todoを探す"
+          placeholder="考察記事を探す"
           onChange={(event) => {
             setSearchName(event.target.value);
           }}

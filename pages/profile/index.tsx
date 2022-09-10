@@ -234,7 +234,7 @@ export default function Profile() {
         <p className="m-5">過去の投稿</p>
         <input
           type="text"
-          placeholder="todoを探す"
+          placeholder="考察記事を探す"
           onChange={(event) => {
             setSearchName(event.target.value);
           }}

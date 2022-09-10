@@ -68,7 +68,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
       whiteSpace: "pre-line",
     };
     const cardstyles: React.CSSProperties = {
-      margin: "15px",
+      margin: "10px",
     };
 
     let router = useRouter();
@@ -118,9 +118,9 @@ export const Cardpost: React.VFC<Props> = React.memo(
     return (
       <div>
         <Link href={`/post/${title}`}>
-          <Grid key={id} className="flex m-auto">
-            <Card className="m-8" style={cardstyles}>
-              <p className="m-auto text-center">
+          <Grid key={id} className="flex  m-auto">
+            <Card className="my-8 m-auto" style={cardstyles}>
+              <p className="flex justify-center m-auto">
                 <Image
                   className="m-auto text-center max-w-sm"
                   height={300}
@@ -141,7 +141,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     </p>
                     <br></br>
 
-                    <Openbutton text="表示します" onClick={Opentext} />
+                    {/* <Openbutton text="表示します" onClick={Opentext} /> */}
 
                     {opentext == true && <p className="">{context}</p>}
                   </div>
@@ -151,10 +151,11 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     {netabare}
                   </p>
                 )}
-
                 <br></br>
                 <div className="w-80 m-auto" style={styles}>
-                  {netabare == "ネタバレ無" && <p className="text-left">{context}</p>}
+                  {netabare == "ネタバレ無" && (
+                    <p className="text-left">{context}</p>
+                  )}
                 </div>
                 <Avater photoURL={photoURL} displayname={displayname} />
                 投稿日時：{createtime}

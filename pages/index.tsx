@@ -140,9 +140,9 @@ export default function Index() {
         <p className="text-center">
           <img src="./images/book-reading.png" className="w-40 m-auto my-6" />
         </p>
-        <h2 className="m-5 text-2xl font-semibold text-center">漫画考察.net</h2>
-        <p className="m-5 text-center">
-          漫画考察.netでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
+        <h2 className="my-5 text-2xl font-semibold text-center">漫画考察.net</h2>
+        <p className="my-5 text-center">
+          漫画考察.netでは、漫画の考察などを<br></br>自由に投稿・閲覧できるwebサイトです。
         </p>
         <br></br>
 
@@ -169,7 +169,7 @@ export default function Index() {
             </Button>
           </div>
         )}
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+        <h2 className="my-12 text-center text-2xl font-semibold">
           カテゴリから選ぶ
         </h2>
         <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
@@ -187,7 +187,7 @@ export default function Index() {
           <Link href="/post/category/キングダム">キングダム</Link>
         </p>
 
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+        <h2 className="my-12 text-center text-2xl font-semibold">
           新規投稿一覧
         </h2>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
@@ -200,7 +200,7 @@ export default function Index() {
           }}
         />
 
-        <Grid container spacing={1}>
+        <Grid container className="m-auto">
           {firedata
             .filter((data) => {
               if (searchName === "") {

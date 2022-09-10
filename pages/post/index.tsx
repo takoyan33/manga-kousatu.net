@@ -109,7 +109,7 @@ export default function Post() {
       </Head>
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+        <h2 className="my-12 text-center text-2xl font-semibold">
           考察記事の投稿
         </h2>
         <Box

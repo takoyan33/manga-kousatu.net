@@ -62,7 +62,7 @@ export default function Passworddedit() {
       </Head>
       <MuiNavbar />
 
-      <h2 className="m-5">パスワードの編集</h2>
+      <h2 className="my-5">パスワードの編集</h2>
 
       <Box
         component="form"

@@ -76,7 +76,7 @@ const Post = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.title === { title }) {
+            if (data.title === title) {
               return data;
               //そのまま返す
             } else if (
@@ -138,12 +138,12 @@ const Post = () => {
           {firedata.map((data) => {
             return (
               <Grid key={data.id}>
-                <Card className="lg:w-full my-4">
-                  <p className="m-auto text-center">
+                <Card className="lg:w-full my-4 ">
+                  <p className="flex justify-center">
                     <Image
                       className="m-auto text-center max-w-sm"
-                      height={600}
-                      width={600}
+                      height={500}
+                      width={500}
                       src={data.downloadURL}
                     />
                   </p>
@@ -151,6 +151,10 @@ const Post = () => {
                     <Typography gutterBottom variant="h5" component="div">
                       {data.title}
                     </Typography>
+                    <br></br>
+                    投稿日時：{data.createtime}
+                    <br></br>
+                    <br></br>
                     <Typography variant="body2" color="text.secondary">
                       {data.categori == "ONE PIECE" && (
                         <p className="bg-blue-500 p-2 inline-block text-white text-center">
@@ -194,14 +198,8 @@ const Post = () => {
                         </p>
                       )}
                       <br></br>
-                      <Avater
-                        photoURL={data.photoURL}
-                        displayname={data.displayname}
-                      />
                       <br></br>
-                      投稿日時：{data.createtime}
-                      <br></br>
-                      いいね数：{data.likes}
+                      <p>いいね数：{data.likes}</p>
                       <br></br>
                       {/* <button
                           onClick={() => handleClick(data.id, data.likes)}
@@ -209,6 +207,12 @@ const Post = () => {
                         >
                           いいねする
                         </button> */}
+                      <div className="bg-slate-300">
+                        <Avater
+                          photoURL={data.photoURL}
+                          displayname={data.displayname}
+                        />
+                      </div>
                     </Typography>
                   </CardContent>
                 </Card>

@@ -59,9 +59,9 @@ export default function Emaildedit() {
       </Head>
       <MuiNavbar />
 
-      <h2 className="m-5">メールアドレスの編集</h2>
+      <h2 className="my-5">メールアドレスの編集</h2>
 
-      <p className="m-5">
+      <p className="my-5">
         メールアドレス： {user && <span>{user.email}</span>}
       </p>
 

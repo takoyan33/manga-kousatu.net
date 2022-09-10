@@ -404,17 +404,17 @@ export default function Profile() {
 
         <br></br>
         <br></br>
-        <Button variant="outlined" className="m-5">
+        <Button variant="outlined" className="myy-5">
           <Link href="/profile/passwordedit">パスワードを変更する</Link>
         </Button>
         <br></br>
         <br></br>
-        <Button variant="outlined" className="m-5">
+        <Button variant="outlined" className="my-5">
           <Link href="/profile/photoedit"> プロフィール画像を更新する</Link>
         </Button>
         <br></br>
         <br></br>
-        <Button variant="outlined" className="m-5" onClick={deleteuser}>
+        <Button variant="outlined" className="my-5" onClick={deleteuser}>
           アカウントを退会する
         </Button>
       </div>

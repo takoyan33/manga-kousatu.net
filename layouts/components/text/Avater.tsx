@@ -13,7 +13,7 @@ const Avater: React.VFC<Props> = React.memo(({ photoURL, displayname }) => {
     <div>
       <br></br>
       <Avatar alt="Remy Sharp" src={photoURL} />
-      <span>{displayname}</span>
+      <span className="text-xl">{displayname}</span>
       <br></br>
     </div>
   );

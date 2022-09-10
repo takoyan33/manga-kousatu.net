@@ -82,9 +82,9 @@ export default function Photoedit() {
       </Head>
       <MuiNavbar />
 
-      <h2 className="m-5">プロフィール画像の編集</h2>
+      <h2 className="my-5">プロフィール画像の編集</h2>
 
-      <p className="m-5">
+      <p className="my-5">
         現在のユーザー画像
         {user && (
           <Image

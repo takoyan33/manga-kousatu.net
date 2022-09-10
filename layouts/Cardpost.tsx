@@ -157,6 +157,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 </div>
                 <Avater photoURL={photoURL} displayname={displayname} />
                 投稿日時：{createtime}
+                <br></br>
                 いいね数：{likes}
               </CardContent>
             </Card>

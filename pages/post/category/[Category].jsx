@@ -88,6 +88,7 @@ const Category = () => {
       );
     });
   };
+  
 
   const getID = (
     //セットする

@@ -83,16 +83,15 @@ export default function Profile() {
 
   const getID = (
     //セットする
-    id,
-    email,
     title,
     context,
-    downloadURL,
     categori,
-    cratetime,
-    displayname,
     createtime,
-    likes
+    id,
+    downloadURL,
+    email,
+    displayname,
+    likes,
   ) => {
     setID(id);
     setEmail(email);
@@ -101,9 +100,11 @@ export default function Profile() {
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
-    setCreatetime(cratetime);
+    setCreatetime(createtime);
     setDisplayName(displayname);
     setLikecount(likes);
+    console.log(title);
+    console.log(context);
   };
 
   const deleteuser = async () => {
@@ -257,97 +258,96 @@ export default function Profile() {
               return (
                 <Grid key={data.id} className="flex m-auto">
                   {data.email == user.email && (
-                    <Link href={`/post/${data.title}`}>
-                      <Card className="lg:w-full w-4/5 my-4">
-                        <p className="m-auto text-center">
-                          <Image
-                            className="m-auto text-center max-w-sm"
-                            height={300}
-                            width={300}
-                            src={data.downloadURL}
-                          />
-                        </p>
-                        <CardContent>
-                          <Typography gutterBottom variant="h5" component="div">
-                            {data.title}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {data.categori == "ONE PIECE" && (
-                              <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                                {data.categori}
-                              </p>
-                            )}
-                            {data.categori == "呪術廻戦" && (
-                              <p className="bg-purple-500 p-2 inline-block text-white text-center">
-                                {data.categori}
-                              </p>
-                            )}
-                            {data.categori == "東京リベンジャーズ" && (
-                              <p className="bg-rose-500 p-2 inline-block text-white text-center">
-                                {data.categori}
-                              </p>
-                            )}
-                            {data.categori == "キングダム" && (
-                              <p className="bg-yellow-500 p-2 inline-block text-white text-center">
-                                {data.categori}
-                              </p>
-                            )}
-                            <br></br>
-                            <br></br>
-                            {netabare == "ネタバレ無" && (
-                              <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
-                                {netabare}
-                              </p>
-                            )}
-                            <div className="w-80 m-auto">{data.context}</div>
-                            <br></br>
-                            {data.name}
-                            <br></br>
-                            投稿日時：{data.createtime}
-                            <br></br>
-                            いいね数：{data.likes}
-                            <br></br>
-                            <button
-                              onClick={() => handleClick(data.id, data.likes)}
-                              className=""
-                            >
-                              いいねする
-                            </button>
-                          </Typography>
-                        </CardContent>
+                    // <Link href={`/post/${data.title}`}>
+                    <Card className="lg:w-full w-4/5 my-4">
+                      <p className="m-auto text-center">
+                        <Image
+                          className="m-auto text-center max-w-sm"
+                          height={300}
+                          width={300}
+                          src={data.downloadURL}
+                        />
+                      </p>
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          {data.title}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {data.categori == "ONE PIECE" && (
+                            <p className="bg-blue-500 p-2 inline-block text-white text-center">
+                              {data.categori}
+                            </p>
+                          )}
+                          {data.categori == "呪術廻戦" && (
+                            <p className="bg-purple-500 p-2 inline-block text-white text-center">
+                              {data.categori}
+                            </p>
+                          )}
+                          {data.categori == "東京リベンジャーズ" && (
+                            <p className="bg-rose-500 p-2 inline-block text-white text-center">
+                              {data.categori}
+                            </p>
+                          )}
+                          {data.categori == "キングダム" && (
+                            <p className="bg-yellow-500 p-2 inline-block text-white text-center">
+                              {data.categori}
+                            </p>
+                          )}
+                          <br></br>
+                          <br></br>
+                          {netabare == "ネタバレ無" && (
+                            <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+                              {netabare}
+                            </p>
+                          )}
+                          <div className="w-80 m-auto">{data.context}</div>
+                          <br></br>
+                          {data.name}
+                          <br></br>
+                          投稿日時：{data.createtime}
+                          <br></br>
+                          いいね数：{data.likes}
+                          <br></br>
+                          <button
+                            onClick={() => handleClick(data.id, data.likes)}
+                            className=""
+                          >
+                            いいねする
+                          </button>
+                        </Typography>
+                      </CardContent>
 
-                        {user.email == data.email && (
-                          <CardActions>
-                            <Button
-                              variant="outlined"
-                              onClick={() =>
-                                getID(
-                                  data.id,
-                                  data.categori,
-                                  data.createtime,
-                                  data.title,
-                                  data.downloadURL,
-                                  data.email,
-                                  data.displayname,
-                                  data.context,
-                                  data.likes,
-                                  data.email
-                                )
-                              }
-                            >
-                              更新する
-                            </Button>
-                            <Button
-                              variant="outlined"
-                              key={data.id}
-                              onClick={() => deleteDocument(data.id)}
-                            >
-                              削除する
-                            </Button>
-                          </CardActions>
-                        )}
-                      </Card>
-                    </Link>
+                      {user.email == data.email && (
+                        <CardActions>
+                          <Button
+                            variant="outlined"
+                            onClick={() =>
+                              getID(
+                                data.title,
+                                data.context,
+                                data.categori,
+                                data.createtime,
+                                data.id,
+                                data.downloadURL,
+                                data.email,
+                                data.displayname,
+                                data.likes,
+                              )
+                            }
+                          >
+                            更新する
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            key={data.id}
+                            onClick={() => deleteDocument(data.id)}
+                          >
+                            削除する
+                          </Button>
+                        </CardActions>
+                      )}
+                    </Card>
+                    // </Link>
                   )}
                 </Grid>
               );

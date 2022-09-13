@@ -28,10 +28,8 @@ import Openbutton from "../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 
-
 const Post = () => {
   const [ID, setID] = useState(null);
-  // const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [file, setFile] = useState("");
   const [categori, setCategori] = useState("");
@@ -39,6 +37,7 @@ const Post = () => {
   const [displayName, setDisplayName] = useState("");
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
+  const [posttitle, setPostTitle] = useState("");
   const databaseRef = collection(database, "CRUD DATA");
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -50,6 +49,7 @@ const Post = () => {
   const [email, setEmail] = useState("");
   const [userid, setUserid] = useState(null);
   const [netabare, setNetabare] = useState("");
+    const [likes, setLikes] = useState(null);
   const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
@@ -91,34 +91,81 @@ const Post = () => {
     });
   };
 
-  const getID = (
-    //セットする
-    id,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    displayname,
-    createtime,
-    likes
-  ) => {
-    setID(id);
-    setContext(context);
-    // setTitle(title);
-    setDownloadURL(downloadURL);
-    setIsUpdate(true);
-    setCategori(categori);
-    setCreatetime(cratetime);
-    setDisplayName(displayname);
-    setLikecount(likes);
-  };
+  // const getID = (
+  //   id,
+  //   title,
+  //   context,
+  //   downloadURL,
+  //   categori,
+  //   cratetime,
+  //   displayname,
+  //   netabare,
+  //   photoURL,
+  //   userid,
+  //   likes
+  // ) => {
+  //   setID(id);
+  //   setContext(context);
+  //   setPostTitle(title);
+  //   setDisplayName(displayname);
+  //   setDownloadURL(downloadURL);
+  //   setIsUpdate(true);
+  //   setCategori(categori);
+  //   setCreatetime(cratetime);
+  //   setNetabare(netabare);
+  //   setPhotoURL(photoURL);
+  //   setUserid(userid);
+  //   setLikes(likes);
+  //   console.log(posttitle);
+  // };
 
   const Opentext = () => {
     if (opentext == false) {
       setOpentext(true);
     } else {
       setOpentext(false);
+    }
+  };
+
+  const updatefields = () => {
+    //更新する
+    let fieldToEdit = doc(database, "CRUD DATA", ID);
+    //セットしたIDをセットする
+    updateDoc(fieldToEdit, {
+      title: posttitle,
+      context: context.replace(/\r?\n/g, "\n"),
+      //改行を保存する
+    })
+      .then(() => {
+        alert("記事を更新しました");
+        setPostTitle("");
+        setContext("");
+        setIsUpdate(false);
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const deleteDocument = (id) => {
+    //data.idを送っているのでidを受け取る
+    let fieldToEdit = doc(database, "CRUD DATA", id);
+    let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
+    //確認画面を出す
+
+    if (checkSaveFlg) {
+      deleteDoc(fieldToEdit)
+        //記事を削除する
+        .then(() => {
+          alert("記事を削除しました");
+          getData();
+        })
+        .catch((err) => {
+          alert("記事の削除に失敗しました");
+        });
+    } else {
+      router.push("/");
     }
   };
   return (
@@ -140,6 +187,36 @@ const Post = () => {
             return (
               <Grid key={data.id}>
                 <Card className="lg:w-full my-4 ">
+                  {/* {user.email == data.email && (
+                    <CardActions>
+                      <Button
+                        variant="outlined"
+                        onClick={() =>
+                          getID(
+                            data.id,
+                            data.categori,
+                            data.createtime,
+                            data.title,
+                            data.downloadURL,
+                            data.email,
+                            data.displayname,
+                            data.context,
+                            data.likes,
+                            data.email
+                          )
+                        }
+                      >
+                        更新する
+                      </Button>
+                      <Button
+                        variant="outlined"
+                        key={data.id}
+                        onClick={() => deleteDocument(data.id)}
+                      >
+                        削除する
+                      </Button>
+                    </CardActions>
+                  )} */}
                   <p className="flex justify-center">
                     <Image
                       className="m-auto text-center max-w-sm"
@@ -190,7 +267,7 @@ const Post = () => {
 
                           {opentext == true && (
                             <>
-                            <br></br>
+                              <br></br>
                               <p className="text-left">{data.context}</p>
                             </>
                           )}
@@ -222,6 +299,43 @@ const Post = () => {
                       </div>
                     </Typography>
                   </CardContent>
+                  {/* {isUpdate && (
+                    <Box
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { m: 1, width: "25ch" },
+                      }}
+                      noValidate
+                      autoComplete="off"
+                    >
+                      <TextField
+                        id="outlined-basic"
+                        label="タイトル（最大20文字)"
+                        variant="outlined"
+                        type="text"
+                        value={posttitle}
+                        onChange={(event) => setPostTitle(event.target.value)}
+                      />
+
+                      <br></br>
+
+                      <TextField
+                        label="内容(最大500文字）"
+                        className="m-auto w-full"
+                        id="filled-multiline-static"
+                        multiline
+                        rows={14}
+                        type="text"
+                        value={context}
+                        onChange={(event) => setContext(event.target.value)}
+                      />
+                      <br></br>
+                      <Button variant="outlined" onClick={updatefields}>
+                        更新する
+                      </Button>
+                      <br></br>
+                    </Box>
+                  )} */}
                 </Card>
               </Grid>
             );

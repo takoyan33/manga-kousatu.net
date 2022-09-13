@@ -26,7 +26,8 @@ import Head from "next/head";
 import Image from "react-image-resizer";
 import Openbutton from "../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import Avater from "../../layouts/components/text/Avater";
+import Avatar from "@mui/material/Avatar";
+
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -188,7 +189,10 @@ const Post = () => {
                           <Openbutton text="表示します" onClick={Opentext} />
 
                           {opentext == true && (
-                            <p className="text-left">{data.context}</p>
+                            <>
+                            <br></br>
+                              <p className="text-left">{data.context}</p>
+                            </>
                           )}
                         </div>
                       )}
@@ -207,11 +211,14 @@ const Post = () => {
                         >
                           いいねする
                         </button> */}
-                      <div className="bg-slate-300">
-                        <Avater
-                          photoURL={data.photoURL}
-                          displayname={data.displayname}
-                        />
+                      <div className="bg-slate-200 my-8 py-8">
+                        <br></br>
+                        <Avatar alt="Remy Sharp" src={data.photoURL} />
+                        <br></br>
+                        <span className="text-xl">
+                          投稿者名：{data.displayname}
+                        </span>
+                        <br></br>
                       </div>
                     </Typography>
                   </CardContent>

@@ -46,6 +46,7 @@ export default function Index() {
   const [opentext, setOpentext] = useState<boolean>(false);
   const styles = { whiteSpace: "pre-line" };
   const [searchName, setSearchName] = useState("");
+  const [selected, setSelected] = useState(["最終回"]);
 
   let router = useRouter();
   const auth = getAuth();
@@ -77,7 +78,8 @@ export default function Index() {
     netabare,
     photoURL,
     userid,
-    likes
+    likes,
+    selected
   ) => {
     setID(id);
     setContext(context);
@@ -92,6 +94,7 @@ export default function Index() {
     setPhotoURL(photoURL);
     setUserid(userid);
     setLikes(likes);
+    setSelected(selected);
     console.log(title);
   };
 
@@ -140,9 +143,12 @@ export default function Index() {
         <p className="text-center">
           <img src="./images/book-reading.png" className="w-40 m-auto my-6" />
         </p>
-        <h2 className="my-5 text-2xl font-semibold text-center">漫画考察.net</h2>
+        <h2 className="my-5 text-2xl font-semibold text-center">
+          漫画考察.net
+        </h2>
         <p className="my-5 text-center">
-          漫画考察.netでは、漫画の考察などを<br></br>自由に投稿・閲覧できるwebサイトです。
+          漫画考察.netでは、漫画の考察などを<br></br>
+          自由に投稿・閲覧できるwebサイトです。
         </p>
         <br></br>
 
@@ -228,6 +234,7 @@ export default function Index() {
                   id={data.id}
                   photoURL={data.photoURL}
                   likes={data.likes}
+                  selected={data.selected}
                 />
               );
             })}

@@ -45,6 +45,7 @@ type Props = {
   displayname: string;
   createtime: string;
   likes: string;
+  selected: string[];
 };
 
 // eslint-disable-next-line react/display-name
@@ -61,6 +62,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
     email,
     photoURL,
     createtime,
+    selected,
   }) => {
     const [opentext, setOpentext] = useState<boolean>(false);
     const databaseRef = collection(database, "CRUD DATA");
@@ -113,7 +115,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
     console.log(categori);
     console.log(user);
     console.log(id);
-    console.log(title);
+    console.log(selected);
 
     return (
       <div>
@@ -157,6 +159,12 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     <p className="text-left">{context}</p>
                   )}
                 </div>
+                <p>タグ</p>
+                <p>
+                  {/* {selected.map((tag, i) => (
+                    <li key={i}>{tag}</li>
+                  ))} */}
+                </p>
                 <Avater photoURL={photoURL} displayname={displayname} />
                 投稿日時：{createtime}
                 <br></br>

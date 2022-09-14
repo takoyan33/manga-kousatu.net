@@ -16,9 +16,11 @@ import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
 import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
+import { TagsInput } from "react-tag-input-component";
 
 export default function Post() {
   const [ID, setID] = useState(null);
+  const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [name, setName] = useState("");
@@ -82,6 +84,7 @@ export default function Post() {
         netabare: netabare,
         photoURL: user.photoURL,
         userid: user.uid,
+        selected: selected,
         likes: 0,
       })
         .then(() => {
@@ -91,6 +94,7 @@ export default function Post() {
           setCategori("");
           setNetabare("");
           setPhotoURL("");
+          setSelected([]);
           setUserid("");
           router.push("/");
         })
@@ -189,6 +193,15 @@ export default function Post() {
                 }
               />
             </RadioGroup>
+            <FormLabel id="demo-radio-buttons-group-label">タグ</FormLabel>
+
+            <TagsInput
+              value={selected}
+              onChange={setSelected}
+              name="selected"
+              placeHolder="タグを追加してください"
+            />
+
             <FormLabel id="demo-radio-buttons-group-label">
               ネタバレについて*
             </FormLabel>

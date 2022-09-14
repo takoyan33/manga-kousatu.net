@@ -26,7 +26,7 @@ import Head from "next/head";
 import Image from "react-image-resizer";
 import Openbutton from "../../../layouts/components/button/Openbutton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { Cardpost } from  "../../../layouts/Cardpost"
+import { Cardpost } from "../../../layouts/Cardpost";
 
 const Category = () => {
   const [ID, setID] = useState(null);
@@ -59,10 +59,6 @@ const Category = () => {
 
   console.log({ Category });
 
-  useEffect(() => {
-    getData();
-  }, []);
-
   const getData = async () => {
     //firestoreからデータ取得
     await getDocs(databaseRef).then((response) => {
@@ -88,7 +84,8 @@ const Category = () => {
       );
     });
   };
-  
+
+  getData();
 
   const getID = (
     //セットする

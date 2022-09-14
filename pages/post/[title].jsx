@@ -49,7 +49,7 @@ const Post = () => {
   const [email, setEmail] = useState("");
   const [userid, setUserid] = useState(null);
   const [netabare, setNetabare] = useState("");
-    const [likes, setLikes] = useState(null);
+  const [likes, setLikes] = useState(null);
   const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
@@ -60,10 +60,6 @@ const Post = () => {
   const [searchName, setSearchName] = useState("");
 
   console.log({ title });
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -81,7 +77,7 @@ const Post = () => {
               return data;
               //そのまま返す
             } else if (
-              data.title.toLowerCase().includes(title.toLowerCase())
+              data.title.toLowerCase().includes(title)
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -90,6 +86,8 @@ const Post = () => {
       );
     });
   };
+
+  getData();
 
   // const getID = (
   //   id,

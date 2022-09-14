@@ -159,11 +159,13 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     <p className="text-left">{context}</p>
                   )}
                 </div>
-                <p>タグ</p>
                 <p>
-                  {/* {selected.map((tag, i) => (
-                    <li key={i}>{tag}</li>
-                  ))} */}
+                  {selected &&
+                    selected.map((tag, i) => (
+                      <span className="text-cyan-700" key={i}>
+                        #{tag}　
+                      </span>
+                    ))}
                 </p>
                 <Avater photoURL={photoURL} displayname={displayname} />
                 投稿日時：{createtime}

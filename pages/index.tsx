@@ -197,15 +197,16 @@ export default function Index() {
           新規投稿一覧
         </h2>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
-
+        <br></br>
         <input
           type="text"
-          placeholder="考察記事を探す"
+          placeholder="🔍考察記事を検索する"
           onChange={(event) => {
             setSearchName(event.target.value);
           }}
         />
-
+        <br></br>
+        <br></br>
         <Grid container className="m-auto">
           {firedata
             .filter((data) => {

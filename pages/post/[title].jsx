@@ -89,34 +89,6 @@ const Post = () => {
 
   getData();
 
-  // const getID = (
-  //   id,
-  //   title,
-  //   context,
-  //   downloadURL,
-  //   categori,
-  //   cratetime,
-  //   displayname,
-  //   netabare,
-  //   photoURL,
-  //   userid,
-  //   likes
-  // ) => {
-  //   setID(id);
-  //   setContext(context);
-  //   setPostTitle(title);
-  //   setDisplayName(displayname);
-  //   setDownloadURL(downloadURL);
-  //   setIsUpdate(true);
-  //   setCategori(categori);
-  //   setCreatetime(cratetime);
-  //   setNetabare(netabare);
-  //   setPhotoURL(photoURL);
-  //   setUserid(userid);
-  //   setLikes(likes);
-  //   console.log(posttitle);
-  // };
-
   const Opentext = () => {
     if (opentext == false) {
       setOpentext(true);
@@ -229,6 +201,14 @@ const Post = () => {
                     </Typography>
                     <br></br>
                     投稿日時：{data.createtime}
+                    <br></br>
+                    <br></br>
+                    {data.selected &&
+                      data.selected.map((tag, i) => (
+                        <span className="text-cyan-700" key={i}>
+                          #{tag}　
+                        </span>
+                      ))}
                     <br></br>
                     <br></br>
                     <Typography variant="body2" color="text.secondary">

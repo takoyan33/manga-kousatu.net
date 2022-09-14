@@ -88,26 +88,35 @@ const Category = () => {
   getData();
 
   const getID = (
-    //セットする
     id,
+    name,
     title,
     context,
     downloadURL,
     categori,
     cratetime,
     displayname,
-    createtime,
-    likes
+    netabare,
+    photoURL,
+    userid,
+    likes,
+    selected
   ) => {
     setID(id);
     setContext(context);
-    // setTitle(title);
+    setTitle(title);
+    setName(name);
+    setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
     setCreatetime(cratetime);
-    setDisplayName(displayname);
-    setLikecount(likes);
+    setNetabare(netabare);
+    setPhotoURL(photoURL);
+    setUserid(userid);
+    setLikes(likes);
+    setSelected(selected);
+    console.log(title);
   };
   return (
     <>
@@ -143,7 +152,7 @@ const Category = () => {
                   email={data.email}
                   id={data.id}
                   photoURL={data.photoURL}
-                  // likecount={likecount}
+                  selected={data.selected}
                 />
               );
             })}

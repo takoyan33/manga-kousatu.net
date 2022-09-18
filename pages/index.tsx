@@ -141,11 +141,15 @@ export default function Index() {
         <br></br>
         <br></br>
         <p className="text-center">
-          <img src="./images/book-reading.png" className="w-40  my-6 m-auto" alt="漫画のイラスト" />
+          <img
+            src="./images/book-reading.png"
+            className="w-40  my-6 m-auto"
+            alt="漫画のイラスト"
+          />
         </p>
         <h2 className="my-5 text-center">
           <img
-            src="./images/magastudylogo.png"
+            src="./magastudylogo.png"
             className="w-80 my-12 m-auto"
             alt="ロゴ"
           />

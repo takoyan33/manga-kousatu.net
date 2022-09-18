@@ -17,8 +17,7 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import React from "react";
 import Tooltip from "@mui/material/Tooltip";
-import Image from "react-image-resizer";
-
+import Image from "next/image";
 
 export const MuiNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -62,9 +61,10 @@ export const MuiNavbar = () => {
             sx={{ flexGrow: 1, textAlign: "left" }}
           >
             <Link href="/">
-              <img
-                src="./images/magastudylogo.png"
-                className="my-4 w-60"
+              <Image
+                src="/magastudylogo.png"
+                width="200"
+                height="30"
                 alt="ロゴ"
               />
             </Link>

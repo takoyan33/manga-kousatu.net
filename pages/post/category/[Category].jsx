@@ -135,6 +135,7 @@ const Category = () => {
         <h2 className="my-12 text-center text-2xl font-semibold">
           {Category}の考察記事一覧
         </h2>
+        
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
         <div className="max-w-7xl m-auto">
           <Grid container spacing={1}>

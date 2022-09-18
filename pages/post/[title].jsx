@@ -214,22 +214,30 @@ const Post = () => {
                     <Typography variant="body2" color="text.secondary">
                       {data.categori == "ONE PIECE" && (
                         <p className="bg-blue-500 p-2 inline-block text-white text-center">
-                          {data.categori}
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
                         </p>
                       )}
                       {data.categori == "呪術廻戦" && (
                         <p className="bg-purple-500 p-2 inline-block text-white text-center">
-                          {data.categori}
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
                         </p>
                       )}
                       {data.categori == "東京リベンジャーズ" && (
                         <p className="bg-rose-500 p-2 inline-block text-white text-center">
-                          {data.categori}
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
                         </p>
                       )}
                       {data.categori == "キングダム" && (
                         <p className="bg-yellow-500 p-2 inline-block text-white text-center">
-                          {data.categori}
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
                         </p>
                       )}
                       <br></br>

@@ -12,7 +12,7 @@ export default function Login() {
   return (
     <div>
       <Head>
-        <title>漫画考察.net/ログイン</title>
+        <title>Manga Study/ログイン</title>
         <meta name="description" content="漫画考察.net" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

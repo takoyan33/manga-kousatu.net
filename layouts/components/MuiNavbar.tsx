@@ -19,6 +19,7 @@ import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Image from "react-image-resizer";
 
+
 export const MuiNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -60,7 +61,13 @@ export const MuiNavbar = () => {
             component="div"
             sx={{ flexGrow: 1, textAlign: "left" }}
           >
-            <Link href="/">漫画考察.net</Link>
+            <Link href="/">
+              <img
+                src="./images/magastudylogo.png"
+                className="my-4 w-60"
+                alt="ロゴ"
+              />
+            </Link>
           </Typography>
           <Tooltip title="Account settings">
             <IconButton

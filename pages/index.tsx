@@ -127,7 +127,7 @@ export default function Index() {
   return (
     <div>
       <Head>
-        <title>漫画考察.net</title>
+        <title>Manga Study</title>
         <meta name="description" content="漫画考察.net" />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap"
@@ -141,14 +141,19 @@ export default function Index() {
         <br></br>
         <br></br>
         <p className="text-center">
-          <img src="./images/book-reading.png" className="w-40 m-auto my-6" />
+          <img src="./images/book-reading.png" className="w-40  my-6 m-auto" alt="漫画のイラスト" />
         </p>
-        <h2 className="my-5 text-2xl font-semibold text-center">
-          漫画考察.net
+        <h2 className="my-5 text-center">
+          <img
+            src="./images/magastudylogo.png"
+            className="w-80 my-12 m-auto"
+            alt="ロゴ"
+          />
         </h2>
         <p className="my-5 text-center">
-          漫画考察.netでは、漫画の考察などを<br></br>
+          Manga Studyでは、人気漫画の考察を<br></br>
           自由に投稿・閲覧できるwebサイトです。
+          <br></br> ※非収益サイトです
         </p>
         <br></br>
 
@@ -243,6 +248,12 @@ export default function Index() {
 
         <br></br>
         <br></br>
+        <div>
+          <p>© 尾田栄一郎／集英社・フジテレビ・東映アニメーション</p>
+          <p>© 和久井健・講談社／アニメ「東京リベンジャーズ」</p>
+          <p>©原泰久／集英社・キングダム製作委員会</p>
+          <p>©芥見下々／集英社・呪術廻戦製作委員会</p>
+        </div>
       </div>
     </div>
   );

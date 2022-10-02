@@ -138,6 +138,26 @@ const Post = () => {
       router.push("/");
     }
   };
+
+  const handleClick = (id, likes) => {
+    // setLikecount(likes + 1);
+    console.log(likes);
+
+    let fieldToEdit = doc(database, "CRUD DATA", id);
+    updateDoc(fieldToEdit, {
+      likes: likes + 1,
+    })
+      .then(() => {
+        alert("いいねしました");
+        console.log(likecount);
+        setLikecount(0);
+        getData();
+      })
+      .catch((err) => {
+        alert("失敗しました");
+        console.log(err);
+      });
+  };
   return (
     <>
       <Head>
@@ -268,12 +288,20 @@ const Post = () => {
                       <br></br>
                       <p>いいね数：{data.likes}</p>
                       <br></br>
-                      {/* <button
-                          onClick={() => handleClick(data.id, data.likes)}
-                          className=""
-                        >
-                          いいねする
-                        </button> */}
+                      <button
+                        onClick={() => handleClick(data.id, data.likes)}
+                        className=""
+                      >
+                        いいねする
+                      </button>
+                      <p className="flex justify-center">
+                        <Image
+                          className="m-auto text-center max-w-sm"
+                          height={500}
+                          width={500}
+                          src={data.contextimage}
+                        />
+                      </p>
                       <div className="bg-slate-200 my-8 py-8">
                         <br></br>
                         <Avatar alt="Remy Sharp" src={data.photoURL} />

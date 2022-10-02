@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { postImage } from "../api/upload";
+import { postContextImage } from "../api/uploadcontext";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -16,6 +17,7 @@ import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
 import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
+import Imageuploadcontext from "../../packages/utils/Imageuploadcontext";
 import { TagsInput } from "react-tag-input-component";
 
 export default function Post() {
@@ -29,7 +31,9 @@ export default function Post() {
   const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
   const [image, setImage] = useState(null);
-  const [createObjectURL, setCreateObjectURL] = useState(null);
+  const [contextimage, setContextImage] = useState<File[]>([]);
+  const [createObjectURL, setCreateObjectURL] = useState<string>("");
+  const [createcontextObjectURL, setCreatecontexObjectURL] = useState("");
   const [downloadURL, setDownloadURL] = useState(null);
   const [uploadResult, setUploadResultL] = useState(null);
   const [userid, setUserid] = useState(null);
@@ -50,6 +54,16 @@ export default function Post() {
 
       setImage(file);
       setCreateObjectURL(URL.createObjectURL(file));
+      console.log(image);
+    }
+  };
+
+  const uploadToClientcontext = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      console.log(contextimage);
+      setContextImage(file);
+      setCreatecontexObjectURL(URL.createObjectURL(file));
     }
   };
 
@@ -68,6 +82,7 @@ export default function Post() {
       alert("サムネイルを選んでください");
     } else {
       const result = await postImage(image);
+      const contextresult = await postContextImage(contextimage);
       // const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
       const newdate = new Date().toLocaleString("ja-JP");
       //日本時間を代入
@@ -77,6 +92,7 @@ export default function Post() {
         title: title,
         context: context.replace(/\r?\n/g, "\n"),
         downloadURL: result,
+        contextimage: contextresult,
         email: user.email,
         displayname: user.displayName,
         categori: categori,
@@ -137,10 +153,11 @@ export default function Post() {
               id="file-input"
               className="hidden"
               type="file"
-              accept="image/*"
+              accept="image/*,.png,.jpg,.jpeg,.gif"
               name="myImage"
               onChange={uploadToClient}
             />
+
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"
@@ -243,6 +260,23 @@ export default function Post() {
             />
             <br></br>
             <br></br>
+            <p>写真（最大1枚）</p>
+            <Imageuploadcontext
+              onChange={uploadToClientcontext}
+              createcontextObjectURL={createcontextObjectURL}
+              text={""}
+              event={undefined}
+            />
+
+            <input
+              id="file-input"
+              className="hidden"
+              type="file"
+              multiple
+              accept="image/*,.png,.jpg,.jpeg,.gif"
+              name="myImage"
+              onChange={uploadToClientcontext}
+            />
             <div className="text-center">
               <Button
                 variant="outlined"

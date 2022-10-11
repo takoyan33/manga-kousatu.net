@@ -85,7 +85,9 @@ const Category = () => {
     });
   };
 
-  getData();
+  useEffect(() => {
+    getData();
+  }, [likecount]);
 
   const getID = (
     id,

@@ -15,21 +15,19 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // フォームの型
-// interface SampleFormInput {
-//   email: string;
-//   name: string;
-//   password: string;
-// }
+interface SampleFormInput {
+  email: string;
+  password: string;
+}
 
-// // バリデーションルール
-// const schema = yup.object({
-//   email: yup
-//     .string()
-//     .required("必須です")
-//     .email("正しいメールアドレス入力してください"),
-//   name: yup.string().required("必須です"),
-//   password: yup.string().required("必須です").min(8, "文字数が足りません"),
-// });
+// バリデーションルール
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("必須です")
+    .email("正しいメールアドレス入力してください"),
+  password: yup.string().required("必須です").min(8, "文字数が足りません"),
+});
 
 export default function Loginauth() {
   const auth = getAuth();
@@ -38,16 +36,18 @@ export default function Loginauth() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<SampleFormInput>({
-  //   resolver: yupResolver(schema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SampleFormInput>({
+    resolver: yupResolver(schema),
+  });
 
-  const SignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
+  const SignIn: SubmitHandler<SampleFormInput> = (email: any) => {
+    alert("ログインしました");
+    console.log(email.email);
+    signInWithEmailAndPassword(auth, email.email, password)
       .then((userCredential: any) => {
         const user = userCredential.user;
         sessionStorage.setItem("Token", user.accessToken);
@@ -55,17 +55,24 @@ export default function Loginauth() {
       })
       .catch((err) => {
         alert("ログインできません");
+        console.log(err);
       });
   };
 
   const SignInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider).then((result) => {
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      const user = result.user;
-      sessionStorage.setItem("Token", token);
-      router.push("/");
-    });
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        sessionStorage.setItem("Token", token);
+        alert("ログインしました");
+        router.push("/");
+      })
+      .catch((err) => {
+        alert("登録できませんでした");
+        console.log(err);
+      });
   };
 
   return (
@@ -85,9 +92,9 @@ export default function Loginauth() {
             className="m-auto w-80"
             variant="outlined"
             onChange={(event) => setEmail(event.target.value)}
-            // {...register("email")}
-            // error={"email" in errors}
-            // helperText={errors.email?.message}
+            {...register("email")}
+            error={"email" in errors}
+            helperText={errors.email?.message}
           />
           <br></br>
           <br></br>
@@ -102,15 +109,16 @@ export default function Loginauth() {
             type="password"
             className="m-auto w-80"
             onChange={(event) => setPassword(event.target.value)}
-            // {...register("password")}
-            // error={"password" in errors}
-            // helperText={errors.password?.message}
+            {...register("password")}
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
           <Button
             variant="outlined"
-            onClick={SignIn}
+            // onClick={SignIn}
+            onClick={handleSubmit(SignIn)}
             className="m-auto w-80 my-8"
           >
             ログイン

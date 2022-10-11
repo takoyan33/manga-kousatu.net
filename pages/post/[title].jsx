@@ -87,7 +87,9 @@ const Post = () => {
     });
   };
 
-  getData();
+  useEffect(() => {
+    getData();
+  }, [likes]);
 
   const Opentext = () => {
     if (opentext == false) {
@@ -177,7 +179,7 @@ const Post = () => {
             return (
               <Grid key={data.id}>
                 <Card className="lg:w-full my-4 ">
-                  {/* {user.email == data.email && (
+                  {user.email == data.email && (
                     <CardActions>
                       <Button
                         variant="outlined"
@@ -206,7 +208,7 @@ const Post = () => {
                         削除する
                       </Button>
                     </CardActions>
-                  )} */}
+                  )}
                   <p className="flex justify-center">
                     <Image
                       className="m-auto text-center max-w-sm"
@@ -288,12 +290,15 @@ const Post = () => {
                       <br></br>
                       <p>いいね数：{data.likes}</p>
                       <br></br>
-                      <button
-                        onClick={() => handleClick(data.id, data.likes)}
-                        className=""
-                      >
-                        いいねする
-                      </button>
+                      {user && (
+                        <button
+                          onClick={() => handleClick(data.id, data.likes)}
+                          className=""
+                        >
+                          いいねする
+                        </button>
+                      )}
+                      
                       <p className="flex justify-center">
                         <Image
                           className="m-auto text-center max-w-sm"

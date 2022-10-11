@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { app, database } from "../firebaseConfig";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
@@ -51,11 +51,6 @@ export default function Index() {
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
-
-  useEffect(() => {
-    getData();
-  }, []);
-
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
@@ -98,6 +93,10 @@ export default function Index() {
     console.log(title);
   };
 
+  useEffect(() => {
+    getData();
+  }, [ID]);
+
   const updatefields = () => {
     let fieldToEdit = doc(database, "CRUD DATA", ID);
     updateDoc(fieldToEdit, {
@@ -124,6 +123,19 @@ export default function Index() {
     }
   };
 
+  const logout = () => {
+    sessionStorage.removeItem("Token");
+
+    signOut(auth)
+      .then(() => {
+        alert("ログアウトしました");
+        router.push("/");
+      })
+      .catch((error) => {
+        alert("ログアウトに失敗しました");
+      });
+  };
+
   return (
     <div>
       <Head>
@@ -137,6 +149,11 @@ export default function Index() {
       </Head>
 
       <MuiNavbar />
+
+      <Button color="inherit" onClick={logout}>
+        ログアウト
+      </Button>
+
       <div className="max-w-7xl m-auto">
         <br></br>
         <br></br>
@@ -207,9 +224,10 @@ export default function Index() {
         </h2>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
         <br></br>
-        <input
-          type="text"
-          placeholder="🔍考察記事を検索する"
+        <TextField
+          id="outlined-basic"
+          label="考察記事を検索する"
+          variant="outlined"
           onChange={(event) => {
             setSearchName(event.target.value);
           }}

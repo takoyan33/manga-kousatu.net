@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Button, Stack } from "@mui/material";
 import { useState } from "react";
 import Link from "next/link";
-import { database } from "../../firebaseConfig.js";
+import { database, app } from "../../firebaseConfig.js";
 import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
@@ -30,8 +30,6 @@ export const MuiNavbar = () => {
   };
 
   let router = useRouter();
-  const databaseRef = collection(database, "CRUD DATA");
-  const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
   console.log(user);
@@ -41,10 +39,11 @@ export const MuiNavbar = () => {
 
     signOut(auth)
       .then(() => {
+        alert("ログアウトしました");
         router.push("/");
       })
       .catch((error) => {
-        // An error happened.
+        alert("ログアウトに失敗しました");
       });
   };
 
@@ -78,7 +77,7 @@ export const MuiNavbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>三</Avatar>
             </IconButton>
           </Tooltip>
         </Toolbar>
@@ -129,12 +128,15 @@ export const MuiNavbar = () => {
         {user && (
           <>
             <MenuItem>
-              <Image
-                className="m-auto text-center max-w-sm"
-                height={30}
-                width={30}
-                src={user.photoURL}
-              />
+              {user.photoURL && (
+                <Image
+                  className="m-auto text-center max-w-sm"
+                  height={30}
+                  width={30}
+                  src={user.photoURL}
+                />
+              )}
+
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>

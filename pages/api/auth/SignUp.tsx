@@ -33,7 +33,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 // });
 
 export default function SignUp() {
-  const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
@@ -48,6 +47,7 @@ export default function SignUp() {
 
   const SignUp = () => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
+    const auth = getAuth();
 
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, email, password)
@@ -64,6 +64,7 @@ export default function SignUp() {
   };
 
   const SignUpWithGoogle = () => {
+    const auth = getAuth();
     signInWithPopup(auth, googleProvider).then((result) => {
       //googleで登録する
       const credential = GoogleAuthProvider.credentialFromResult(result);

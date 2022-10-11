@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { app, database, auth } from "../../../firebaseConfig";
+import { app, database } from "../../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
@@ -15,16 +15,16 @@ import Head from "next/head";
 
 import Image from "react-image-resizer";
 
-export default function Photoedit() {
+export default function Edit() {
   const [image, setImage] = useState<string>();
   const [result, setResult] = useState("");
+  const [displayName, setDisplayName] = useState<string>();
   let router = useRouter();
   const databaseRef = collection(database, "CRUD DATA");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);
-  const [firedata, setFiredata] = useState([]);
+  const auth = getAuth();
   const user = auth.currentUser;
-
   console.log(user);
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
@@ -37,27 +37,63 @@ export default function Photoedit() {
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
-      setImage(file);
-      setCreateObjectURL(URL.createObjectURL(file));
+      if (event == "") {
+        setImage("");
+        setCreateObjectURL("");
+      } else {
+        const file = event.target.files[0];
+        setImage(file);
+        setCreateObjectURL(URL.createObjectURL(file));
+      }
+    } else {
+      setImage("");
+      setCreateObjectURL("");
     }
   };
 
+  // const uploadToClient = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const file = event.target.files[0];
+  //     setImage(file);
+  //     setCreateObjectURL(URL.createObjectURL(file));
+  //   } else {
+  //     setImage("");
+  //     setCreateObjectURL("");
+  //   }
+  // };
+
   const updatename = async () => {
-    const result = await postImage(image);
-    setResult(result);
-    updateProfile(auth.currentUser, {
-      photoURL: result,
-    })
-      .then(() => {
-        alert("プロフィールを更新しました。");
-        setResult("");
-        router.push("/profile");
+    if (image == "" || createObjectURL == "") {
+      updateProfile(auth.currentUser, {
+        photoURL: user.photoURL,
+        displayName: displayName,
       })
-      .catch((error) => {
-        console.log(error);
-      });
+        .then(() => {
+          alert("プロフィールを更新しました。");
+          setResult("");
+          setDisplayName("");
+          router.push("/profile");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      const result = await postImage(image);
+      setResult(result);
+      updateProfile(auth.currentUser, {
+        photoURL: result,
+        displayName: displayName,
+      })
+        .then(() => {
+          alert("プロフィールを更新しました。");
+          setResult("");
+          setDisplayName("");
+          router.push("/profile");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   return (
@@ -73,15 +109,17 @@ export default function Photoedit() {
         プロフィール画像の編集
       </h2>
 
-      <p className="my-5">
+      <p className="my-12 text-center font-semib">
         現在のユーザー画像
         {user && (
-          <Image
-            className="m-auto text-center max-w-sm"
-            height={100}
-            width={100}
-            src={user.photoURL}
-          />
+          <p className="text-center m-auto">
+            <Image
+              className="m-auto text-center max-w-sm"
+              height={100}
+              width={100}
+              src={user.photoURL}
+            />
+          </p>
         )}
       </p>
 
@@ -125,10 +163,22 @@ export default function Photoedit() {
           name="myImage"
           onChange={uploadToClient}
         />
+
+        <p>名前： {user && <span>{user.displayName}</span>}</p>
+
+        <TextField
+          id="outlined-basic"
+          label="名前"
+          variant="outlined"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setDisplayName(event.target.value)
+          }
+        />
+        <br></br>
       </Box>
       <br></br>
       <Button variant="outlined" className="m-5" onClick={updatename}>
-        画像を更新する
+        プロフィールを更新する
       </Button>
       <br></br>
       <Button variant="outlined" className="m-5">

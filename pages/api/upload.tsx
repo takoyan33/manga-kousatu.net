@@ -2,10 +2,12 @@ import { app, database, storage } from "../../firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 //single image file upload
-export const postImage = async (image = null) => {
+export const postImage = async (image = null, name) => {
   let uploadResult = "";
 
-  if (image.name) {
+  if (image === "") {
+    return uploadResult;
+  } else {
     const storageRef = ref(storage);
     const ext = image.name.split(".").pop();
     const hashName = Math.random().toString(36).slice(-8);

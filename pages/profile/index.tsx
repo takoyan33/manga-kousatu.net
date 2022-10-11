@@ -56,7 +56,6 @@ export default function Profile() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
     if (!token) {
@@ -71,12 +70,11 @@ export default function Profile() {
     await getDocs(databaseRef).then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
-        response.docs
-          .map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
+        response.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
       );
     });
   };
@@ -91,7 +89,7 @@ export default function Profile() {
     downloadURL,
     email,
     displayname,
-    likes,
+    likes
   ) => {
     setID(id);
     setEmail(email);
@@ -217,7 +215,6 @@ export default function Profile() {
           プロフィール
         </h2>
         <p className="m-5">
-          ユーザー画像
           {user && (
             <Image
               className="m-auto text-center max-w-sm"
@@ -231,11 +228,16 @@ export default function Profile() {
         <p className="m-5">
           メールアドレス： {user && <span>{user.email}</span>}
         </p>
+        <Button variant="outlined" className="my-5">
+          <Link href="/profile/edit"> プロフィールを変更する</Link>
+        </Button>
 
-        <p className="m-5">過去の投稿</p>
-        <input
+        <p className="my-12 text-center text-2xl font-semibold">過去の投稿</p>
+        <TextField
           type="text"
-          placeholder="考察記事を探す"
+          id="outlined-basic"
+          label="考察記事を検索する"
+          variant="outlined"
           onChange={(event) => {
             setSearchName(event.target.value);
           }}
@@ -331,7 +333,7 @@ export default function Profile() {
                                 data.downloadURL,
                                 data.email,
                                 data.displayname,
-                                data.likes,
+                                data.likes
                               )
                             }
                           >
@@ -396,22 +398,15 @@ export default function Profile() {
             <br></br>
           </Box>
         )}
-        <Nameauth />
 
         {/* <Button variant="outlined" className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </Button> */}
-
-        <br></br>
-        <br></br>
-        <Button variant="outlined" className="myy-5">
+        {/* <Button variant="outlined" className="myy-5">
           <Link href="/profile/passwordedit">パスワードを変更する</Link>
-        </Button>
+        </Button> */}
         <br></br>
         <br></br>
-        <Button variant="outlined" className="my-5">
-          <Link href="/profile/photoedit"> プロフィール画像を更新する</Link>
-        </Button>
         <br></br>
         <br></br>
         <Button variant="outlined" className="my-5" onClick={deleteuser}>

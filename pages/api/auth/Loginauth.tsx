@@ -47,7 +47,8 @@ export default function Loginauth() {
   const SignIn: SubmitHandler<SampleFormInput> = (email: any) => {
     alert("ログインしました");
     console.log(email.email);
-    signInWithEmailAndPassword(auth, email.email, password)
+    console.log(email.password);
+    signInWithEmailAndPassword(auth, email.email, email.password)
       .then((userCredential: any) => {
         const user = userCredential.user;
         sessionStorage.setItem("Token", user.accessToken);
@@ -91,7 +92,9 @@ export default function Loginauth() {
             label="sample@gmail.com"
             className="m-auto w-80"
             variant="outlined"
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(event.target.value)
+            }
             {...register("email")}
             error={"email" in errors}
             helperText={errors.email?.message}
@@ -108,7 +111,9 @@ export default function Loginauth() {
             variant="outlined"
             type="password"
             className="m-auto w-80"
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(event.target.value)
+            }
             {...register("password")}
             error={"password" in errors}
             helperText={errors.password?.message}

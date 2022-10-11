@@ -16,48 +16,48 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 // フォームの型
-// interface SampleFormInput {
-//   email: string;
-//   name: string;
-//   password: string;
-// }
+interface SampleFormInput {
+  email: string;
+  password: string;
+}
 
-// // バリデーションルール
-// const schema = yup.object({
-//   email: yup
-//     .string()
-//     .required("必須です")
-//     .email("正しいメールアドレス入力してください"),
-//   name: yup.string().required("必須です"),
-//   password: yup.string().required("必須です").min(8, "文字数が足りません"),
-// });
+// バリデーションルール
+const schema = yup.object({
+  email: yup
+    .string()
+    .required("必須です")
+    .email("正しいメールアドレス入力してください"),
+  password: yup.string().required("必須です").min(8, "文字数が足りません"),
+});
 
 export default function SignUp() {
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<SampleFormInput>({
-  //   resolver: yupResolver(schema),
-  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SampleFormInput>({
+    resolver: yupResolver(schema),
+  });
 
-  const SignUp = () => {
+  const SignUp = (email: any) => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
     const auth = getAuth();
-
+    console.log(email.email);
+    console.log(email.password);
     if (checkSaveFlg) {
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, email.email, email.password)
         .then((userCredential: any) => {
+          console.log("登録完了しました！");
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
           router.push("/");
         })
         .catch((err) => {
-          alert("emailが既にあります");
+          alert("登録できませんでした");
         });
     } else {
     }
@@ -95,9 +95,9 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(event.target.value)
             }
-            // {...register("email")}
-            // error={"email" in errors}
-            // helperText={errors.email?.message}
+            {...register("email")}
+            error={"email" in errors}
+            helperText={errors.email?.message}
           />
           <br></br>
           <br></br>
@@ -113,9 +113,9 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
-            // {...register("password")}
-            // error={"password" in errors}
-            // helperText={errors.password?.message}
+            {...register("password")}
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
@@ -133,14 +133,15 @@ export default function SignUp() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
-            // error={"password" in errors}
-            // helperText={errors.password?.message}
+            error={"password" in errors}
+            helperText={errors.password?.message}
           />
           <br></br>
           <br></br>
           <Button
             variant="outlined"
-            onClick={SignUp}
+            // onClick={SignUp}
+            onClick={handleSubmit(SignUp)}
             className="m-auto w-80 my-8"
           >
             新規登録

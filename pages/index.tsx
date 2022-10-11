@@ -149,10 +149,10 @@ export default function Index() {
       </Head>
 
       <MuiNavbar />
-
+      {/* 
       <Button color="inherit" onClick={logout}>
         ログアウト
-      </Button>
+      </Button> */}
 
       <div className="max-w-7xl m-auto">
         <br></br>

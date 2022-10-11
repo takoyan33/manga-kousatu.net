@@ -5,7 +5,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export const postImage = async (image = null) => {
   let uploadResult = "";
 
-  if (image === "") {
+  if (image === "" || image === null) {
     return uploadResult;
   } else {
     const storageRef = ref(storage);

@@ -63,7 +63,7 @@ export default function Edit() {
   // };
 
   const updatename = async () => {
-    if (image == "" || createObjectURL == "") {
+    if (image == "" || image == null) {
       updateProfile(auth.currentUser, {
         photoURL: user.photoURL,
         displayName: displayName,
@@ -111,8 +111,10 @@ export default function Edit() {
 
       <p className="my-12 text-center font-semib">
         現在のユーザー画像
+        <br></br>
+        <br></br>
         {user && (
-          <p className="text-center m-auto">
+          <p className="flex justify-center">
             <Image
               className="m-auto text-center max-w-sm"
               height={100}
@@ -123,67 +125,80 @@ export default function Edit() {
         )}
       </p>
 
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <br></br>
-        <img
-          className="flex justify-center items-center m-auto  w-full"
-          src={createObjectURL}
-        />
-        <label
-          htmlFor="file-input"
-          className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+      <Box component="form" className="" noValidate autoComplete="off">
+        <>
+          <br></br>
+          <div className="">
+            <img
+              className="flex justify-center items-center m-auto  w-full"
+              src={createObjectURL}
             />
-          </svg>
-        </label>
-        <input
-          id="file-input"
-          className="hidden"
-          type="file"
-          accept="image/*"
-          name="myImage"
-          onChange={uploadToClient}
-        />
+          </div>
+          <div className="text-center m-auto my-4">
+            <label
+              htmlFor="file-input"
+              className="bg-primary-900 text-white-900 text-center m-auto dark:bg-dark-900 px-4 py-2 rounded mb-6 w-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700 text-center m-auto"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </label>
+            <input
+              id="file-input"
+              className="hidden text-center m-auto"
+              type="file"
+              accept="image/*"
+              name="myImage"
+              onChange={uploadToClient}
+            />
+          </div>
 
-        <p>名前： {user && <span>{user.displayName}</span>}</p>
+          <p className="text-center my-4">
+            現在の名前： {user && <span>{user.displayName}</span>}
+          </p>
 
-        <TextField
-          id="outlined-basic"
-          label="名前"
-          variant="outlined"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setDisplayName(event.target.value)
-          }
-        />
-        <br></br>
+          <div className="text-center">
+            <TextField
+              id="outlined-basic"
+              label="名前"
+              variant="outlined"
+              className="m-auto w-80"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setDisplayName(event.target.value)
+              }
+            />
+          </div>
+          <br></br>
+          <br></br>
+          <div className="text-center">
+            <Button
+              variant="outlined"
+              className="m-auto w-80 text-center"
+              onClick={updatename}
+            >
+              プロフィールを更新する
+            </Button>
+          </div>
+          <br></br>
+          <br></br>
+          <div className="text-center">
+            <Button variant="outlined" className="m-auto w-80 ">
+              <Link href="/profile">戻る</Link>
+            </Button>
+          </div>
+        </>
       </Box>
-      <br></br>
-      <Button variant="outlined" className="m-5" onClick={updatename}>
-        プロフィールを更新する
-      </Button>
-      <br></br>
-      <Button variant="outlined" className="m-5">
-        <Link href="/profile">戻る</Link>
-      </Button>
     </div>
   );
 }

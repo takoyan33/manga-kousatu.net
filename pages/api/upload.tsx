@@ -2,7 +2,7 @@ import { app, database, storage } from "../../firebaseConfig";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 //single image file upload
-export const postImage = async (image = null, name) => {
+export const postImage = async (image = null) => {
   let uploadResult = "";
 
   if (image === "") {

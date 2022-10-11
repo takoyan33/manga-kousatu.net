@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { app, database } from "../firebaseConfig";
 import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
@@ -47,6 +47,7 @@ export default function Index() {
   const styles = { whiteSpace: "pre-line" };
   const [searchName, setSearchName] = useState("");
   const [selected, setSelected] = useState(["最終回"]);
+  const [sort, setSort] = useState({});
 
   let router = useRouter();
   const auth = getAuth();
@@ -60,6 +61,40 @@ export default function Index() {
       );
     });
   };
+
+  // const KEYS = Object.keys(data.movies[0]);
+
+  // const sortedMovies = useMemo(() => {
+  //   let _sortedMovies = data.movies;
+  //   if (sort.key) {
+  //     _sortedMovies = _sortedMovies.sort((a, b) => {
+  //       a = a[sort.key];
+  //       b = b[sort.key];
+
+  //       if (a === b) {
+  //         return 0;
+  //       }
+  //       if (a > b) {
+  //         return 1 * sort.order;
+  //       }
+  //       if (a < b) {
+  //         return -1 * sort.order;
+  //       }
+  //     });
+  //   }
+  //   return _sortedMovies;
+  // }, [sort]);
+
+  // const handleSort = (key) => {
+  //   if (sort.key === key) {
+  //     setSort({ ...sort, order: -sort.order });
+  //   } else {
+  //     setSort({
+  //       key: key,
+  //       order: 1,
+  //     });
+  //   }
+  // };
 
   const getID = (
     id,
@@ -177,7 +212,6 @@ export default function Index() {
           <br></br> ※非収益サイトです
         </p>
         <br></br>
-
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
@@ -193,7 +227,6 @@ export default function Index() {
             </Stack>
           </>
         )}
-
         {user && (
           <div className="lg:text-right text-center">
             <Button variant="outlined" className="">
@@ -218,10 +251,10 @@ export default function Index() {
         <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
           <Link href="/post/category/キングダム">キングダム</Link>
         </p>
-
         <h2 className="my-12 text-center text-2xl font-semibold">
           新規投稿一覧
         </h2>
+
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
         <br></br>
         <TextField
@@ -232,6 +265,11 @@ export default function Index() {
             setSearchName(event.target.value);
           }}
         />
+        {/* <span className="m-4 ">
+          <button onClick={() => handleSort(button)}>昇順</button>
+        </span>
+        <span className="m-4">降順</span>
+        <span className="m-4">いいね順</span> */}
         <br></br>
         <br></br>
         <Grid container className="m-auto">
@@ -267,7 +305,6 @@ export default function Index() {
               );
             })}
         </Grid>
-
         <br></br>
         <br></br>
         <div>

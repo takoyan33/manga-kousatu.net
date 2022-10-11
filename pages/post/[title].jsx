@@ -179,35 +179,39 @@ const Post = () => {
             return (
               <Grid key={data.id}>
                 <Card className="lg:w-full my-4 ">
-                  {user.email == data.email && (
-                    <CardActions>
-                      <Button
-                        variant="outlined"
-                        onClick={() =>
-                          getID(
-                            data.id,
-                            data.categori,
-                            data.createtime,
-                            data.title,
-                            data.downloadURL,
-                            data.email,
-                            data.displayname,
-                            data.context,
-                            data.likes,
-                            data.email
-                          )
-                        }
-                      >
-                        更新する
-                      </Button>
-                      <Button
-                        variant="outlined"
-                        key={data.id}
-                        onClick={() => deleteDocument(data.id)}
-                      >
-                        削除する
-                      </Button>
-                    </CardActions>
+                  {user && (
+                    <>
+                      {user.email == data.email && (
+                        <CardActions>
+                          <Button
+                            variant="outlined"
+                            onClick={() =>
+                              getID(
+                                data.id,
+                                data.categori,
+                                data.createtime,
+                                data.title,
+                                data.downloadURL,
+                                data.email,
+                                data.displayname,
+                                data.context,
+                                data.likes,
+                                data.email
+                              )
+                            }
+                          >
+                            更新する
+                          </Button>
+                          <Button
+                            variant="outlined"
+                            key={data.id}
+                            onClick={() => deleteDocument(data.id)}
+                          >
+                            削除する
+                          </Button>
+                        </CardActions>
+                      )}
+                    </>
                   )}
                   <p className="flex justify-center">
                     <Image
@@ -298,7 +302,7 @@ const Post = () => {
                           いいねする
                         </button>
                       )}
-                      
+
                       <p className="flex justify-center">
                         <Image
                           className="m-auto text-center max-w-sm"

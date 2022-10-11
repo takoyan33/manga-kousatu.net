@@ -77,7 +77,7 @@ export const MuiNavbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>三</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>=</Avatar>
             </IconButton>
           </Tooltip>
         </Toolbar>

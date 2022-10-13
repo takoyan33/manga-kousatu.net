@@ -110,18 +110,21 @@ export const Cardpost: React.VFC<Props> = React.memo(
     //   }
     // }, []);
 
-    console.log(displayname);
-    console.log(photoURL);
-    console.log(categori);
-    console.log(user);
-    console.log(id);
-    console.log(selected);
+    // console.log(displayname);
+    // console.log(photoURL);
+    // console.log(categori);
+    // console.log(user);
+    // console.log(id);
+    // console.log(selected);
 
     return (
-      <div>
-        <Link href={`/post/${title}`}>
+      <div className="">
+        <Link href={`/post/${id}`}>
           <Grid key={id} className="flex  m-auto">
-            <Card className="my-8 m-auto" style={cardstyles}>
+            <Card
+              className="my-8 m-auto hover:shadow-2xl border"
+              style={cardstyles}
+            >
               <p className="flex justify-center m-auto">
                 <Image
                   className="m-auto text-center max-w-sm"

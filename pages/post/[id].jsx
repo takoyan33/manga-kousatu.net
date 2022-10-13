@@ -56,12 +56,12 @@ const Post = () => {
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
-  const { title } = router.query;
+  const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
 
-  console.log({ title });
+  console.log({ id });
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -75,11 +75,11 @@ const Post = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.title === title) {
+            if (data.id === id) {
               return data;
               //そのまま返す
             } else if (
-              data.title.toLowerCase().includes(title)
+              data.id.toLowerCase().includes(id)
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -203,10 +203,6 @@ const Post = () => {
       <MuiNavbar />
 
       <div className="max-w-5xl m-auto">
-        <br></br>
-        <p>
-          <Link href="/">トップ</Link>　＞　投稿記事　＞　{title}
-        </p>
         <div>
           {firedata.map((data) => {
             return (
@@ -275,6 +271,11 @@ const Post = () => {
                       <br></br>
                     </Box>
                   )}
+                  <br></br>
+                  <p>
+                    <Link href="/">トップ</Link>　＞　投稿記事　＞　
+                    {data.title}
+                  </p>
                   <p className="flex justify-center">
                     <Image
                       className="m-auto text-center max-w-sm"

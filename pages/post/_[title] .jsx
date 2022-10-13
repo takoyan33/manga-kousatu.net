@@ -34,7 +34,6 @@ const Post = () => {
   const [file, setFile] = useState("");
   const [categori, setCategori] = useState("");
   const [photoURL, setPhotoURL] = useState();
-  const [title1, setTitle1] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -51,7 +50,6 @@ const Post = () => {
   const [userid, setUserid] = useState(null);
   const [netabare, setNetabare] = useState("");
   const [likes, setLikes] = useState(null);
-  const [selected, setSelected] = useState(["最終回"]);
   const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
@@ -89,48 +87,17 @@ const Post = () => {
     });
   };
 
-  const getID = (
-    id,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    displayname,
-    netabare,
-    photoURL,
-    userid,
-    likes,
-    selected
-  ) => {
-    setID(id);
-    setContext(context);
-    setTitle1(title);
-    setDisplayName(displayname);
-    setDownloadURL(downloadURL);
-    setIsUpdate(true);
-    setCategori(categori);
-    setCreatetime(cratetime);
-    setNetabare(netabare);
-    setPhotoURL(photoURL);
-    setUserid(userid);
-    setLikes(likes);
-    setSelected(selected);
-    console.log(title);
-    console.log(context);
-  };
-
   useEffect(() => {
     getData();
   }, [likes]);
 
-  // const Opentext = () => {
-  //   if (opentext == false) {
-  //     setOpentext(true);
-  //   } else {
-  //     setOpentext(false);
-  //   }
-  // };
+  const Opentext = () => {
+    if (opentext == false) {
+      setOpentext(true);
+    } else {
+      setOpentext(false);
+    }
+  };
 
   const updatefields = () => {
     //更新する
@@ -202,26 +169,36 @@ const Post = () => {
       </Head>
       <MuiNavbar />
 
-      <div className="max-w-5xl m-auto">
+      <div className="max-w-7xl m-auto">
         <br></br>
         <p>
           <Link href="/">トップ</Link>　＞　投稿記事　＞　{title}
         </p>
-        <div>
+        <Grid>
           {firedata.map((data) => {
             return (
-              <div key={data.id}>
-                <div className="lg:w-full my-4 ">
+              <Grid key={data.id}>
+                <Card className="lg:w-full my-4 ">
                   {user && (
                     <>
                       {user.email == data.email && (
-                        <div>
+                        <CardActions>
                           <Button
                             variant="outlined"
                             onClick={() =>
-                              getID(data.id, data.title, data.context)
+                              getID(
+                                data.id,
+                                data.categori,
+                                data.createtime,
+                                data.title,
+                                data.downloadURL,
+                                data.email,
+                                data.displayname,
+                                data.context,
+                                data.likes,
+                                data.email
+                              )
                             }
-                            className="m-4"
                           >
                             更新する
                           </Button>
@@ -229,16 +206,123 @@ const Post = () => {
                             variant="outlined"
                             key={data.id}
                             onClick={() => deleteDocument(data.id)}
-                            className="m-4"
                           >
                             削除する
                           </Button>
-                        </div>
+                        </CardActions>
                       )}
                     </>
                   )}
+                  <p className="flex justify-center">
+                    <Image
+                      className="m-auto text-center max-w-sm"
+                      height={500}
+                      width={500}
+                      src={data.downloadURL}
+                    />
+                  </p>
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div">
+                      {data.title}
+                    </Typography>
+                    <br></br>
+                    投稿日時：{data.createtime}
+                    <br></br>
+                    <br></br>
+                    {data.selected &&
+                      data.selected.map((tag, i) => (
+                        <span className="text-cyan-700" key={i}>
+                          #{tag}　
+                        </span>
+                      ))}
+                    <br></br>
+                    <br></br>
+                    <Typography variant="body2" color="text.secondary">
+                      {data.categori == "ONE PIECE" && (
+                        <p className="bg-blue-500 p-2 inline-block text-white text-center">
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
+                        </p>
+                      )}
+                      {data.categori == "呪術廻戦" && (
+                        <p className="bg-purple-500 p-2 inline-block text-white text-center">
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
+                        </p>
+                      )}
+                      {data.categori == "東京リベンジャーズ" && (
+                        <p className="bg-rose-500 p-2 inline-block text-white text-center">
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
+                        </p>
+                      )}
+                      {data.categori == "キングダム" && (
+                        <p className="bg-yellow-500 p-2 inline-block text-white text-center">
+                          <Link href={`/post/category/${data.categori}`}>
+                            {data.categori}
+                          </Link>
+                        </p>
+                      )}
+                      <br></br>
+                      <br></br>
+                      {data.netabare == "ネタバレ有" && (
+                        <div>
+                          <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                            {data.netabare}
+                          </p>
+                          <br></br>
 
-                  {isUpdate && (
+                          <Openbutton text="表示します" onClick={Opentext} />
+
+                          {opentext == true && (
+                            <>
+                              <br></br>
+                              <p className="text-left">{data.context}</p>
+                            </>
+                          )}
+                        </div>
+                      )}
+                      {data.netabare == "ネタバレ無" && (
+                        <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+                          {data.netabare}
+                        </p>
+                      )}
+                      <br></br>
+                      <br></br>
+                      <p>いいね数：{data.likes}</p>
+                      <br></br>
+                      {user && (
+                        <button
+                          onClick={() => handleClick(data.id, data.likes)}
+                          className=""
+                        >
+                          いいねする
+                        </button>
+                      )}
+
+                      <p className="flex justify-center">
+                        <Image
+                          className="m-auto text-center max-w-sm"
+                          height={500}
+                          width={500}
+                          src={data.contextimage}
+                        />
+                      </p>
+                      <div className="bg-slate-200 my-8 py-8">
+                        <br></br>
+                        <Avatar alt="Remy Sharp" src={data.photoURL} />
+                        <br></br>
+                        <span className="text-xl">
+                          投稿者名：{data.displayname}
+                        </span>
+                        <br></br>
+                      </div>
+                    </Typography>
+                  </CardContent>
+                  {/* {isUpdate && (
                     <Box
                       component="form"
                       sx={{
@@ -252,7 +336,7 @@ const Post = () => {
                         label="タイトル（最大20文字)"
                         variant="outlined"
                         type="text"
-                        value={title1}
+                        value={posttitle}
                         onChange={(event) => setPostTitle(event.target.value)}
                       />
 
@@ -274,109 +358,12 @@ const Post = () => {
                       </Button>
                       <br></br>
                     </Box>
-                  )}
-                  <p className="flex justify-center">
-                    <Image
-                      className="m-auto text-center max-w-sm"
-                      height={500}
-                      width={500}
-                      src={data.downloadURL}
-                    />
-                  </p>
-                  <div>
-                    <div gutterBottom variant="h5" component="div">
-                      {data.title}
-                    </div>
-                    <br></br>
-                    投稿日時：{data.createtime}
-                    <br></br>
-                    <br></br>
-                    {data.selected &&
-                      data.selected.map((tag, i) => (
-                        <span className="text-cyan-700" key={i}>
-                          #{tag}　
-                        </span>
-                      ))}
-                    <br></br>
-                    <br></br>
-                    <div variant="body2" color="text.secondary">
-                      {data.categori == "ONE PIECE" && (
-                        <span className="bg-blue-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
-                      )}
-                      {data.categori == "呪術廻戦" && (
-                        <span className="bg-purple-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
-                      )}
-                      {data.categori == "東京リベンジャーズ" && (
-                        <span className="bg-rose-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
-                      )}
-                      {data.categori == "キングダム" && (
-                        <span className="bg-yellow-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
-                      )}
-                      {data.netabare == "ネタバレ有" && (
-                        <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
-                          {data.netabare}
-                        </span>
-                      )}
-                      {data.netabare == "ネタバレ無" && (
-                        <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
-                          {data.netabare}
-                        </span>
-                      )}
-                      <p className="text-left">{data.context}</p>
-                      <br></br>
-                      <br></br>
-                      <p>いいね数：{data.likes}</p>
-                      <br></br>
-                      {user && (
-                        <button
-                          onClick={() => handleClick(data.id, data.likes)}
-                          className=""
-                        >
-                          いいねする
-                        </button>
-                      )}
-                      {data.contextimage && (
-                        <p className="flex justify-center">
-                          <Image
-                            className="m-auto text-center max-w-sm"
-                            height={500}
-                            width={500}
-                            src={data.contextimage}
-                          />
-                        </p>
-                      )}
-                      <div className="bg-slate-200 my-8 py-8">
-                        <br></br>
-                        <Avatar alt="Remy Sharp" src={data.photoURL} />
-                        <br></br>
-                        <span className="text-xl">
-                          投稿者名：{data.displayname}
-                        </span>
-                        <br></br>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                  )} */}
+                </Card>
+              </Grid>
             );
           })}
-        </div>
+        </Grid>
         <br></br>
         <br></br>
       </div>

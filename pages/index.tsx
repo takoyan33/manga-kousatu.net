@@ -27,7 +27,6 @@ export default function Index() {
   const [ID, setID] = useState(null);
   const [title, setTitle] = useState<string>("");
   const [context, setContext] = useState<string>("");
-  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [categori, setCategori] = useState<string>("");
   const [firedata, setFiredata] = useState([]);
@@ -98,7 +97,6 @@ export default function Index() {
 
   const getID = (
     id,
-    name,
     title,
     context,
     downloadURL,
@@ -114,7 +112,6 @@ export default function Index() {
     setID(id);
     setContext(context);
     setTitle(title);
-    setName(name);
     setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);

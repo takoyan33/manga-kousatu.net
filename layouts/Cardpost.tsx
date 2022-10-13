@@ -159,7 +159,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     <p className="text-left">{context}</p>
                   )} */}
                 </div>
-                <p>
+                <p className="max-w-xs">
                   {selected &&
                     selected.map((tag, i) => (
                       <span className="text-cyan-700" key={i}>

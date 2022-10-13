@@ -127,6 +127,7 @@ export default function Edit() {
 
       <Box component="form" className="" noValidate autoComplete="off">
         <>
+          <p className="text-center my-4">新しいプロフィール画像</p>
           <br></br>
           <div className="">
             <img
@@ -167,7 +168,7 @@ export default function Edit() {
           <p className="text-center my-4">
             現在の名前： {user && <span>{user.displayName}</span>}
           </p>
-
+          <p className="text-center my-4">新しい名前（最大10文字）</p>
           <div className="text-center">
             <TextField
               id="outlined-basic"

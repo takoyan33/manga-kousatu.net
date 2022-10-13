@@ -9,29 +9,29 @@ type Props = {
 //React.memo化
 const Categori: React.VFC<Props> = React.memo(({ categori }) => {
   return (
-    <div>
+    <>
       {categori == "ONE PIECE" && (
-        <p className="bg-blue-500 p-1 inline-block text-white text-center">
+        <span className="bg-blue-500 p-1 inline-block text-white text-center">
           <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </p>
+        </span>
       )}
       {categori == "呪術廻戦" && (
-        <p className="bg-purple-500 p-1 inline-block text-white text-center">
+        <span className="bg-purple-500 p-1 inline-block text-white text-center">
           <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </p>
+        </span>
       )}
       {categori == "東京リベンジャーズ" && (
-        <p className="bg-rose-500 p-1 inline-block text-white text-center">
+        <span className="bg-rose-500 p-1 inline-block text-white text-center">
           <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </p>
+        </span>
       )}
       {categori == "キングダム" && (
-        <p className="bg-yellow-500 p-1 inline-block text-white text-center">
+        <span className="bg-yellow-500 p-1 inline-block text-white text-center">
           <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </p>
+        </span>
       )}
       <br></br>
-    </div>
+    </>
   );
 });
 

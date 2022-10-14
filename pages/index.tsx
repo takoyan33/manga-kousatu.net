@@ -1,7 +1,13 @@
 import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
 import { app, database } from "../firebaseConfig";
-import { collection, getDocs, doc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  onSnapshot,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
@@ -34,7 +40,8 @@ export default function Index() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
-  const q = query(databaseRef, orderBy("name"));
+  const q = query(databaseRef, orderBy("createtime"));
+  console.log(q);
   const [displayname, setDisplayName] = useState<string>("");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);
@@ -55,52 +62,12 @@ export default function Index() {
   const user = auth.currentUser;
 
   const getData = async () => {
-    await getDocs(databaseRef).then((response) => {
+    await onSnapshot(q, (querySnapshot) => {
       setFiredata(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id };
-        })
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
   };
-
-  // const getData = onSnapshot(q, (querySnapshot) => {
-  //   setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-  // });
-
-  // const KEYS = Object.keys(data.movies[0]);
-
-  // const sortedMovies = useMemo(() => {
-  //   let _sortedMovies = data.movies;
-  //   if (sort.key) {
-  //     _sortedMovies = _sortedMovies.sort((a, b) => {
-  //       a = a[sort.key];
-  //       b = b[sort.key];
-
-  //       if (a === b) {
-  //         return 0;
-  //       }
-  //       if (a > b) {
-  //         return 1 * sort.order;
-  //       }
-  //       if (a < b) {
-  //         return -1 * sort.order;
-  //       }
-  //     });
-  //   }
-  //   return _sortedMovies;
-  // }, [sort]);
-
-  // const handleSort = (key) => {
-  //   if (sort.key === key) {
-  //     setSort({ ...sort, order: -sort.order });
-  //   } else {
-  //     setSort({
-  //       key: key,
-  //       order: 1,
-  //     });
-  //   }
-  // };
 
   const getID = (
     id,
@@ -134,7 +101,7 @@ export default function Index() {
 
   useEffect(() => {
     getData();
-  }, [ID]);
+  }, []);
 
   const updatefields = () => {
     let fieldToEdit = doc(database, "CRUD DATA", ID);

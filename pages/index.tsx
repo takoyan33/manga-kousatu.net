@@ -16,6 +16,7 @@ import Avatar from "@mui/material/Avatar";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
+import { query, orderBy, limit } from "firebase/firestore";
 
 export const LoginContext = createContext(
   {} as {
@@ -33,6 +34,7 @@ export default function Index() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
+  const q = query(databaseRef, orderBy("name"));
   const [displayname, setDisplayName] = useState<string>("");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);
@@ -51,6 +53,7 @@ export default function Index() {
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
+
   const getData = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
@@ -60,6 +63,10 @@ export default function Index() {
       );
     });
   };
+
+  // const getData = onSnapshot(q, (querySnapshot) => {
+  //   setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  // });
 
   // const KEYS = Object.keys(data.movies[0]);
 
@@ -231,6 +238,7 @@ export default function Index() {
             </Button>
           </div>
         )}
+
         <h2 className="my-12 text-center text-2xl font-semibold">
           カテゴリから選ぶ
         </h2>

@@ -1,7 +1,3 @@
-import { app } from "../firebaseConfig";
-import { getAuth } from "firebase/auth";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Head from "next/head";
 import SignUp from "./api/auth/SignUp";

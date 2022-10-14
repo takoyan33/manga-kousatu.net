@@ -123,6 +123,9 @@ export default function Edit() {
             />
           </p>
         )}
+        {user.photoURL && (
+          <p className="flex justify-center">まだ設定されていません</p>
+        )}
       </p>
 
       <Box component="form" className="" noValidate autoComplete="off">

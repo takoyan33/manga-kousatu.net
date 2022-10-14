@@ -43,18 +43,21 @@ export default function SignUp() {
     resolver: yupResolver(schema),
   });
 
+  const auth = getAuth();
+
   const SignUp = (email: any) => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
-    const auth = getAuth();
     console.log(email.email);
     console.log(email.password);
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, email.email, email.password)
         .then((userCredential: any) => {
-          console.log("登録完了しました！");
+          console.log(
+            "登録完了しました！次に詳細なプロフィールの記載をお願いします！"
+          );
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
-          router.push("/");
+          router.push("/registerprofile");
         })
         .catch((err) => {
           alert("登録できませんでした");

@@ -223,6 +223,9 @@ export default function Profile() {
               src={user.photoURL}
             />
           )}
+          {/* {user  && (
+            <p className="flex justify-center">まだ設定されていません</p>
+          )}*/}
         </p>
         <p className="m-5">名前： {user && <span>{user.displayName}</span>}</p>
         <p className="m-5">

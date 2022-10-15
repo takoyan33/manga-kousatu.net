@@ -45,14 +45,14 @@ export default function Registerprofile() {
     }
   };
 
-  const uploadToClientcontext = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      console.log(contextimage);
-      setContextImage(file);
-      setCreatecontexObjectURL(URL.createObjectURL(file));
-    }
-  };
+  // const uploadToClientcontext = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     const file = event.target.files[0];
+  //     console.log(contextimage);
+  //     setContextImage(file);
+  //     setCreatecontexObjectURL(URL.createObjectURL(file));
+  //   }
+  // };
 
   const addDate = async () => {
     if (image == null) {

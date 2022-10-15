@@ -35,6 +35,7 @@ const Post = () => {
   const [categori, setCategori] = useState("");
   const [photoURL, setPhotoURL] = useState();
   const [title1, setTitle1] = useState("");
+  const [users, setUsers] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
@@ -45,6 +46,7 @@ const Post = () => {
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState(null);
   const [likecount, setLikecount] = useState(0);
+  const usersRef = collection(database, "users");
   const [image, setImage] = useState("");
   const [result, setResult] = useState("");
   const [email, setEmail] = useState("");
@@ -122,6 +124,7 @@ const Post = () => {
 
   useEffect(() => {
     getData();
+    usersData();
   }, [likes]);
 
   // const Opentext = () => {
@@ -131,6 +134,20 @@ const Post = () => {
   //     setOpentext(false);
   //   }
   // };
+
+  const usersData = async () => {
+    //firestoreからデータ取得
+    await getDocs(usersRef).then((response) => {
+      //コレクションのドキュメントを取得
+      setUsers(
+        response.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
   const updatefields = () => {
     //更新する
@@ -183,7 +200,6 @@ const Post = () => {
       likes: likes + 1,
     })
       .then(() => {
-        alert("いいねしました");
         console.log(likecount);
         setLikecount(0);
         getData();
@@ -340,17 +356,6 @@ const Post = () => {
                       )}
                       <p className="text-left">{data.context}</p>
                       <br></br>
-                      <br></br>
-                      <p>いいね数：{data.likes}</p>
-                      <br></br>
-                      {user && (
-                        <button
-                          onClick={() => handleClick(data.id, data.likes)}
-                          className=""
-                        >
-                          いいねする
-                        </button>
-                      )}
                       {data.contextimage && (
                         <p className="flex justify-center">
                           <Image
@@ -361,14 +366,45 @@ const Post = () => {
                           />
                         </p>
                       )}
-                      <div className="bg-slate-200 my-8 py-8">
-                        <br></br>
-                        <Avatar alt="Remy Sharp" src={data.photoURL} />
-                        <br></br>
-                        <span className="text-xl">
-                          投稿者名：{data.displayname}
-                        </span>
-                        <br></br>
+                      <br></br>
+                      <p>いいね数：{data.likes}</p>
+                      <br></br>
+                      {user && (
+                        <Button
+                          onClick={() => handleClick(data.id, data.likes)}
+                          className=""
+                          variant="outlined"
+                        >
+                          いいねする
+                        </Button>
+                      )}
+                      <div key={data.id}>
+                        {users &&
+                          users.map((user) => {
+                            return (
+                              <>
+                                {data.email == user.email && (
+                                  <div key={user.id}>
+                                    <div className="bg-slate-200 my-8 py-8">
+                                      <br></br>
+                                      <Avatar
+                                        alt="Remy Sharp"
+                                        src={data.profileimage}
+                                      />
+                                      <br></br>
+                                      <span className="text-xl">
+                                        投稿者名：{data.username}
+                                      </span>
+                                      <p className="text-xl">
+                                        プロフィール：{data.bio}
+                                      </p>
+                                      <br></br>
+                                    </div>
+                                  </div>
+                                )}
+                              </>
+                            );
+                          })}
                       </div>
                     </div>
                   </div>

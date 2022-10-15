@@ -41,7 +41,11 @@ export default function Index() {
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("createtime"));
+  //昇順
   const u = query(databaseRef, orderBy("createtime", "desc"));
+  //降順
+  const f = query(databaseRef, orderBy("likes", "desc"));
+  //いいね数順
   const [displayname, setDisplayName] = useState<string>("");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);
@@ -64,6 +68,7 @@ export default function Index() {
   const auth = getAuth();
   const user = auth.currentUser;
 
+  //新着順
   const getData = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
@@ -72,44 +77,53 @@ export default function Index() {
     });
   };
 
-  // const handleSort = async () => {
-  //   await onSnapshot(u, (querySnapshot) => {
-  //     setFiredata(
-  //       querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-  //     );
-  //   });
-  //   getData();
-  // };
-
-  const getID = (
-    id,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    displayname,
-    netabare,
-    photoURL,
-    userid,
-    likes,
-    selected
-  ) => {
-    setID(id);
-    setContext(context);
-    setTitle(title);
-    setDisplayName(displayname);
-    setDownloadURL(downloadURL);
-    setIsUpdate(true);
-    setCategori(categori);
-    setCreatetime(cratetime);
-    setNetabare(netabare);
-    setPhotoURL(photoURL);
-    setUserid(userid);
-    setLikes(likes);
-    setSelected(selected);
-    console.log(title);
+  //古い順
+  const handleSort = async () => {
+    await onSnapshot(u, (querySnapshot) => {
+      setFiredata(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
   };
+
+  //いいね順
+  const handlelikeSort = async () => {
+    await onSnapshot(f, (querySnapshot) => {
+      setFiredata(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+  };
+
+  // const getID = (
+  //   id,
+  //   title,
+  //   context,
+  //   downloadURL,
+  //   categori,
+  //   cratetime,
+  //   displayname,
+  //   netabare,
+  //   photoURL,
+  //   userid,
+  //   likes,
+  //   selected
+  // ) => {
+  //   setID(id);
+  //   setContext(context);
+  //   setTitle(title);
+  //   setDisplayName(displayname);
+  //   setDownloadURL(downloadURL);
+  //   setIsUpdate(true);
+  //   setCategori(categori);
+  //   setCreatetime(cratetime);
+  //   setNetabare(netabare);
+  //   setPhotoURL(photoURL);
+  //   setUserid(userid);
+  //   setLikes(likes);
+  //   setSelected(selected);
+  //   console.log(title);
+  // };
 
   useEffect(() => {
     getData();
@@ -167,10 +181,6 @@ export default function Index() {
       </Head>
 
       <MuiNavbar />
-      {/* 
-      <Button color="inherit" onClick={logout}>
-        ログアウト
-      </Button> */}
 
       <div className="max-w-7xl m-auto">
         <br></br>
@@ -249,15 +259,17 @@ export default function Index() {
             setSearchName(event.target.value);
           }}
         />
-        {/* <span className="m-4 ">
-          <button onClick={getData}>昇順</button>
+        <span className="m-4">
+          <Button onClick={getData} variant="outlined">
+            昇順
+          </Button>
         </span>
-        <button onClick={getData} className="m-4">
+        <Button onClick={handleSort} className="m-4" variant="outlined">
           降順
-        </button>
-        <button onClick={getData} className="m-4">
+        </Button>
+        <Button onClick={handlelikeSort} className="m-4" variant="outlined">
           いいね順
-        </button> */}
+        </Button>
         <br></br>
         <br></br>
         <Grid container className="m-auto">

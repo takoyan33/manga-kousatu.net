@@ -52,9 +52,6 @@ export default function SignUp() {
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, email.email, email.password)
         .then((userCredential: any) => {
-          console.log(
-            "登録完了しました！次に詳細なプロフィールの記載をお願いします！"
-          );
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
           router.push("/registerprofile");
@@ -75,7 +72,7 @@ export default function SignUp() {
       sessionStorage.setItem("Token", token);
       //tokenをセットする
       const user = result.user;
-      router.push("/");
+      router.push("/registerprofile");
     });
   };
 

@@ -128,15 +128,6 @@ export const MuiNavbar = () => {
         {user && (
           <>
             <MenuItem>
-              {user.photoURL && (
-                <Image
-                  className="m-auto text-center max-w-sm"
-                  height={30}
-                  width={30}
-                  src={user.photoURL}
-                />
-              )}
-
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>

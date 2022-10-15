@@ -41,7 +41,7 @@ export default function Index() {
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("createtime"));
-  console.log(q);
+  const u = query(databaseRef, orderBy("createtime", "desc"));
   const [displayname, setDisplayName] = useState<string>("");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);
@@ -56,6 +56,9 @@ export default function Index() {
   const [searchName, setSearchName] = useState("");
   const [selected, setSelected] = useState(["最終回"]);
   const [sort, setSort] = useState({});
+  const [loadIndex, setLoadIndex] = useState(6);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [currentPost, setCurrentPost] = useState([]);
 
   let router = useRouter();
   const auth = getAuth();
@@ -68,6 +71,15 @@ export default function Index() {
       );
     });
   };
+
+  // const handleSort = async () => {
+  //   await onSnapshot(u, (querySnapshot) => {
+  //     setFiredata(
+  //       querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+  //     );
+  //   });
+  //   getData();
+  // };
 
   const getID = (
     id,
@@ -121,14 +133,6 @@ export default function Index() {
       });
   };
 
-  const Opentext = () => {
-    if (opentext == false) {
-      setOpentext(true);
-    } else {
-      setOpentext(false);
-    }
-  };
-
   const logout = () => {
     sessionStorage.removeItem("Token");
 
@@ -142,11 +146,19 @@ export default function Index() {
       });
   };
 
+  const displayMore = () => {
+    if (loadIndex > firedata.length) {
+      setIsEmpty(true);
+    } else {
+      setLoadIndex(loadIndex + 4);
+    }
+  };
+
   return (
     <div>
       <Head>
         <title>Manga Study</title>
-        <meta name="description" content="漫画考察.net" />
+        <meta name="description" content="Manga Study" />
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap"
           rel="stylesheet"
@@ -238,10 +250,14 @@ export default function Index() {
           }}
         />
         {/* <span className="m-4 ">
-          <button onClick={() => handleSort(button)}>昇順</button>
+          <button onClick={getData}>昇順</button>
         </span>
-        <span className="m-4">降順</span>
-        <span className="m-4">いいね順</span> */}
+        <button onClick={getData} className="m-4">
+          降順
+        </button>
+        <button onClick={getData} className="m-4">
+          いいね順
+        </button> */}
         <br></br>
         <br></br>
         <Grid container className="m-auto">
@@ -257,6 +273,7 @@ export default function Index() {
                 return data;
               }
             })
+            .slice(0, loadIndex)
             .map((data) => {
               return (
                 <Cardpost
@@ -277,6 +294,16 @@ export default function Index() {
               );
             })}
         </Grid>
+        <div className="text-center">
+          <Button
+            disabled={isEmpty ? true : false}
+            onClick={displayMore}
+            variant="outlined"
+            className=""
+          >
+            さらに表示
+          </Button>
+        </div>
         <br></br>
         <br></br>
         <div>

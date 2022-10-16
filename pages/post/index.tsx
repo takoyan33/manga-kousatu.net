@@ -8,6 +8,7 @@ import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import firebase from "firebase/app";
 import { postImage } from "../api/upload";
 import { postContextImage } from "../api/uploadcontext";
 import Radio from "@mui/material/Radio";
@@ -15,6 +16,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
 import Head from "next/head";
+import { updateDoc, serverTimestamp } from "firebase/firestore";
+import "firebase/firestore";
 import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
 import Imageuploadcontext from "../../packages/utils/Imageuploadcontext";
@@ -101,6 +104,7 @@ export default function Post() {
         photoURL: user.photoURL,
         userid: user.uid,
         selected: selected,
+        timestamp: serverTimestamp(),
         likes: 0,
       })
         .then(() => {

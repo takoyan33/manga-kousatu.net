@@ -40,9 +40,9 @@ export default function Index() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "CRUD DATA");
-  const q = query(databaseRef, orderBy("createtime"));
+  const q = query(databaseRef, orderBy("timestamp", "desc"));
   //昇順
-  const u = query(databaseRef, orderBy("createtime", "desc"));
+  const u = query(databaseRef, orderBy("timestamp"));
   //降順
   const f = query(databaseRef, orderBy("likes", "desc"));
   //いいね数順
@@ -78,7 +78,7 @@ export default function Index() {
   };
 
   //古い順
-  const handleSort = async () => {
+  const handledesSort = async () => {
     await onSnapshot(u, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -94,36 +94,6 @@ export default function Index() {
       );
     });
   };
-
-  // const getID = (
-  //   id,
-  //   title,
-  //   context,
-  //   downloadURL,
-  //   categori,
-  //   cratetime,
-  //   displayname,
-  //   netabare,
-  //   photoURL,
-  //   userid,
-  //   likes,
-  //   selected
-  // ) => {
-  //   setID(id);
-  //   setContext(context);
-  //   setTitle(title);
-  //   setDisplayName(displayname);
-  //   setDownloadURL(downloadURL);
-  //   setIsUpdate(true);
-  //   setCategori(categori);
-  //   setCreatetime(cratetime);
-  //   setNetabare(netabare);
-  //   setPhotoURL(photoURL);
-  //   setUserid(userid);
-  //   setLikes(likes);
-  //   setSelected(selected);
-  //   console.log(title);
-  // };
 
   useEffect(() => {
     getData();
@@ -264,7 +234,7 @@ export default function Index() {
             昇順
           </Button>
         </span>
-        <Button onClick={handleSort} className="m-4" variant="outlined">
+        <Button onClick={handledesSort} className="m-4" variant="outlined">
           降順
         </Button>
         <Button onClick={handlelikeSort} className="m-4" variant="outlined">

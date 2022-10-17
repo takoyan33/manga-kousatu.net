@@ -1,6 +1,7 @@
 import React from "react";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Head from "next/head";
+import Footer from "../layouts/components/Footer";
 
 function About() {
   return (

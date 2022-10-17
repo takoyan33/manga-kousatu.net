@@ -2,15 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { app, database } from "../firebaseConfig";
-import {
-  collection,
-  addDoc,
-  getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
-  Firestore,
-} from "firebase/firestore";
+import { collection, getDocs, doc, Firestore } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import styles from "../styles/Home.module.css";
@@ -131,11 +123,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                   </p>
                 )}
                 <br></br>
-                <div className="w-80 m-auto" style={styles}>
-                  {/* {netabare == "ネタバレ無" && (
-                    <p className="text-left">{context}</p>
-                  )} */}
-                </div>
+                <div className="w-80 m-auto" style={styles}></div>
                 <p className="max-w-xs">
                   {selected &&
                     selected.map((tag, i) => (

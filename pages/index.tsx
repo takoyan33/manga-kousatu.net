@@ -23,6 +23,9 @@ import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
 import { query, orderBy, limit } from "firebase/firestore";
+import { SiteButton } from "../layouts/components/button";
+import { SiteCategory } from "../layouts/components/text";
+import { GetPosts } from "./api/firestore/GetPosts";
 
 export const LoginContext = createContext(
   {} as {
@@ -39,6 +42,8 @@ export default function Index() {
   const [firedata, setFiredata] = useState([]);
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
+  // const { getData, handledesSort, handlelikeSort } = GetPosts();
+
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //昇順
@@ -68,7 +73,7 @@ export default function Index() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  //新着順
+  // 新着順
   const getData = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
@@ -161,29 +166,40 @@ export default function Index() {
         )}
         {user && (
           <div className="lg:text-right text-center">
-            <Button variant="outlined" className="">
-              <Link href="/post">新規投稿をする</Link>
-            </Button>
+            <SiteButton
+              href="/post"
+              text="新規投稿をする"
+              className="m-auto w-50 my-2"
+            />
           </div>
         )}
 
         <h2 className="my-12 text-center text-2xl font-semibold">
           カテゴリから選ぶ
         </h2>
-        <p className="bg-blue-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/ONE PIECE">ONE PIECE</Link>
-        </p>
-        <p className="bg-purple-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/呪術廻戦">呪術廻戦</Link>
-        </p>
-        <p className="bg-rose-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/東京リベンジャーズ">
-            東京リベンジャーズ
-          </Link>
-        </p>
-        <p className="bg-yellow-500 p-1 inline-block text-white text-center m-6">
-          <Link href="/post/category/キングダム">キングダム</Link>
-        </p>
+        <SiteCategory
+          className="bg-blue-500 p-1 inline-block text-white text-center m-6"
+          text="ONE PIECE"
+          href="/post/category/ONE PIECE"
+        />
+
+        <SiteCategory
+          className="bg-purple-500 p-1 inline-block text-white text-center m-6"
+          text="呪術廻戦"
+          href="/post/category/呪術廻戦"
+        />
+
+        <SiteCategory
+          className="bg-rose-500 p-1 inline-block text-white text-center m-6"
+          text="東京リベンジャーズ"
+          href="/post/category/東京リベンジャーズ"
+        />
+
+        <SiteCategory
+          className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
+          text="キングダム"
+          href="/post/category/キングダム"
+        />
         <h2 className="my-12 text-center text-2xl font-semibold">
           新規投稿一覧
         </h2>
@@ -198,17 +214,27 @@ export default function Index() {
             setSearchName(event.target.value);
           }}
         />
-        <span className="m-4">
-          <Button onClick={getData} variant="outlined">
-            昇順
-          </Button>
-        </span>
-        <Button onClick={handledesSort} className="m-4" variant="outlined">
-          降順
-        </Button>
-        <Button onClick={handlelikeSort} className="m-4" variant="outlined">
-          いいね順
-        </Button>
+        <div className="flex mt-4">
+          <SiteButton
+            href=""
+            text="昇順"
+            className="inline my-2 m-4"
+            onClick={getData}
+          />
+          <SiteButton
+            href=""
+            text="降順"
+            className="inline my-2 m-4"
+            onClick={handledesSort}
+          />
+          <SiteButton
+            href=""
+            text="いいね順"
+            className="inline my-2 m-4"
+            onClick={handlelikeSort}
+          />
+        </div>
+
         <br></br>
         <br></br>
         <Grid container className="m-auto">
@@ -246,14 +272,13 @@ export default function Index() {
             })}
         </Grid>
         <div className="text-center">
-          <Button
+          <SiteButton
+            href=""
+            text="さらに表示"
             disabled={isEmpty ? true : false}
             onClick={displayMore}
-            variant="outlined"
-            className=""
-          >
-            さらに表示
-          </Button>
+            className="m-auto w-50 my-2"
+          />
         </div>
         <br></br>
         <br></br>

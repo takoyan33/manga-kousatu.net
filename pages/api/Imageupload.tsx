@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { app, database } from "../firebaseConfig";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import { postImage } from "./api/upload";
+import { app, database } from "../../firebaseConfig";
+import { MuiNavbar } from "../../layouts/components/MuiNavbar";
+import { postImage } from "./upload";
 
 export default function UploadImage() {
   const [image, setImage] = useState(null);

@@ -30,8 +30,7 @@ import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 import Categori from "./components/text/Categori";
-import Avater from "./components/text/Avater";
-import Openbutton from "./components/button/Openbutton";
+import Avatar from "@mui/material/Avatar";
 
 type Props = {
   downloadURL: string;
@@ -64,7 +63,8 @@ export const Cardpost: React.VFC<Props> = React.memo(
     createtime,
     selected,
   }) => {
-    const [opentext, setOpentext] = useState<boolean>(false);
+    const usersRef = collection(database, "users");
+    const [users, setUsers] = useState(null);
     const databaseRef = collection(database, "CRUD DATA");
     const style: React.CSSProperties = {
       whiteSpace: "pre-line",
@@ -77,45 +77,23 @@ export const Cardpost: React.VFC<Props> = React.memo(
     const auth = getAuth();
     const user = auth.currentUser;
 
-    const deleteDocument = useCallback((id) => {
-      let fieldToEdit = doc(database, "CRUD DATA", id);
-      let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
-
-      if (checkSaveFlg) {
-        deleteDoc(fieldToEdit)
-          .then(() => {
-            alert("記事を削除しました");
+    const usersData = async () => {
+      //firestoreからデータ取得
+      await getDocs(usersRef).then((response) => {
+        //コレクションのドキュメントを取得
+        setUsers(
+          response.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
           })
-          .catch((err) => {
-            alert("記事の削除に失敗しました");
-          });
-      } else {
-        router.push("/");
-      }
-    }, []);
-
-    const Opentext = () => {
-      if (opentext == false) {
-        setOpentext(true);
-      } else {
-        setOpentext(false);
-      }
+        );
+      });
     };
 
-    // const Opentext = useCallback(() => {
-    //   if (opentext == false) {
-    //     setOpentext(true);
-    //   } else {
-    //     setOpentext(false);
-    //   }
-    // }, []);
-
-    // console.log(displayname);
-    // console.log(photoURL);
-    // console.log(categori);
-    // console.log(user);
-    // console.log(id);
-    // console.log(selected);
+    useEffect(() => {
+      usersData();
+    }, []);
 
     return (
       <div className="">
@@ -145,10 +123,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
                       {netabare}
                     </p>
                     <br></br>
-
-                    {/* <Openbutton text="表示します" onClick={Opentext} /> */}
-
-                    {opentext == true && <p className="">{context}</p>}
                   </div>
                 )}
                 {netabare == "ネタバレ無" && (
@@ -170,7 +144,32 @@ export const Cardpost: React.VFC<Props> = React.memo(
                       </span>
                     ))}
                 </p>
-                <Avater photoURL={photoURL} displayname={displayname} />
+                {/* <Avater photoURL={photoURL} displayname={displayname} /> */}
+                <div key={id}>
+                  {users &&
+                    users.map((user) => {
+                      return (
+                        <>
+                          {email == user.email && (
+                            <div key={user.id}>
+                              <div className="bg-slate-200 my-2 py-2">
+                                <br></br>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={user.profileimage}
+                                />
+                                <br></br>
+                                <span className="text-xl">
+                                  投稿者名：{user.username}
+                                </span>
+                                <br></br>
+                              </div>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })}
+                </div>
                 投稿日時：{createtime}
                 <br></br>
                 いいね数：{likes}

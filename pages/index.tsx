@@ -99,37 +99,6 @@ export default function Index() {
     getData();
   }, []);
 
-  const updatefields = () => {
-    let fieldToEdit = doc(database, "CRUD DATA", ID);
-    updateDoc(fieldToEdit, {
-      title: title,
-      context: context.replace(/\r?\n/g, "\n"),
-    })
-      .then(() => {
-        alert("記事を更新しました");
-        setContext("");
-        setTitle("");
-        setIsUpdate(false);
-        getData();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const logout = () => {
-    sessionStorage.removeItem("Token");
-
-    signOut(auth)
-      .then(() => {
-        alert("ログアウトしました");
-        router.push("/");
-      })
-      .catch((error) => {
-        alert("ログアウトに失敗しました");
-      });
-  };
-
   const displayMore = () => {
     if (loadIndex > firedata.length) {
       setIsEmpty(true);

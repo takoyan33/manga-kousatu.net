@@ -15,17 +15,8 @@ import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { postImage } from "../api/upload";
-import Typography from "@mui/material/Typography";
-import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
-import Openbutton from "../../layouts/components/button/Openbutton";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import Avatar from "@mui/material/Avatar";
 
 const Post = () => {
@@ -54,7 +45,6 @@ const Post = () => {
   const [netabare, setNetabare] = useState("");
   const [likes, setLikes] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
-  const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
@@ -126,14 +116,6 @@ const Post = () => {
     getData();
     usersData();
   }, [likes]);
-
-  // const Opentext = () => {
-  //   if (opentext == false) {
-  //     setOpentext(true);
-  //   } else {
-  //     setOpentext(false);
-  //   }
-  // };
 
   const usersData = async () => {
     //firestoreからデータ取得
@@ -389,14 +371,14 @@ const Post = () => {
                                       <br></br>
                                       <Avatar
                                         alt="Remy Sharp"
-                                        src={data.profileimage}
+                                        src={user.profileimage}
                                       />
                                       <br></br>
                                       <span className="text-xl">
-                                        投稿者名：{data.username}
+                                        投稿者名：{user.username}
                                       </span>
                                       <p className="text-xl">
-                                        プロフィール：{data.bio}
+                                        プロフィール：{user.bio}
                                       </p>
                                       <br></br>
                                     </div>

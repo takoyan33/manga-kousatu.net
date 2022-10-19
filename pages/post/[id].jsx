@@ -19,6 +19,8 @@ import TextField from "@mui/material/TextField";
 import Head from "next/head";
 import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
+import { SiteButton } from "../../layouts/components/button";
+import { SiteCategory } from "../../layouts/components/text";
 import { Cardpost } from "../../layouts/Cardpost";
 
 const Post = () => {
@@ -85,31 +87,31 @@ const Post = () => {
     });
   };
 
-  const getCategorytData = async () => {
-    //firestoreからデータ取得
-    await getDocs(databaseRef).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setcategoriFiredata(
-        querySnapshot.docs
-          .map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-          .filter((data) => {
-            if (data.categori === categori) {
-              return data;
-              //そのまま返す
-            } else if (
-              data.categori.toLowerCase().includes(categori.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-            ) {
-              return data;
-            }
-          })
-      );
-    });
-  };
+  // const getCategorytData = async () => {
+  //   //firestoreからデータ取得
+  //   await getDocs(databaseRef).then((querySnapshot) => {
+  //     //コレクションのドキュメントを取得
+  //     setcategoriFiredata(
+  //       querySnapshot.docs
+  //         .map((data) => {
+  //           //配列なので、mapで展開する
+  //           return { ...data.data(), id: data.id };
+  //           //スプレッド構文で展開して、新しい配列を作成
+  //         })
+  //         .filter((data) => {
+  //           if (data.categori === categori) {
+  //             return data;
+  //             //そのまま返す
+  //           } else if (
+  //             data.categori.toLowerCase().includes(categori.toLowerCase())
+  //             //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+  //           ) {
+  //             return data;
+  //           }
+  //         })
+  //     );
+  //   });
+  // };
 
   const getID = (
     id,
@@ -146,7 +148,6 @@ const Post = () => {
   useEffect(() => {
     getData();
     usersData();
-    getCategorytData();
   }, [likes]);
 
   const usersData = async () => {
@@ -244,8 +245,10 @@ const Post = () => {
                     <>
                       {user.email == data.email && (
                         <div>
-                          <Button
-                            variant="outlined"
+                          <SiteButton
+                            href=""
+                            text="更新する"
+                            className=" my-2 m-4"
                             onClick={() =>
                               getID(
                                 data.id,
@@ -254,18 +257,13 @@ const Post = () => {
                                 data.edittime
                               )
                             }
-                            className="m-4"
-                          >
-                            更新する
-                          </Button>
-                          <Button
-                            variant="outlined"
-                            key={data.id}
+                          />
+                          <SiteButton
+                            href=""
+                            text="削除する"
+                            className=" my-2 m-4"
                             onClick={() => deleteDocument(data.id)}
-                            className="m-4"
-                          >
-                            削除する
-                          </Button>
+                          />
                         </div>
                       )}
                     </>
@@ -339,32 +337,32 @@ const Post = () => {
                     <br></br>
                     <div variant="body2" color="text.secondary">
                       {data.categori == "ONE PIECE" && (
-                        <span className="bg-blue-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
+                        <SiteCategory
+                          className="bg-blue-500 p-1 inline-block text-white text-center m-6"
+                          text="ONE PIECE"
+                          href="/post/category/ONE PIECE"
+                        />
                       )}
                       {data.categori == "呪術廻戦" && (
-                        <span className="bg-purple-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
+                        <SiteCategory
+                          className="bg-purple-500 p-1 inline-block text-white text-center m-6"
+                          text="呪術廻戦"
+                          href="/post/category/呪術廻戦"
+                        />
                       )}
                       {data.categori == "東京リベンジャーズ" && (
-                        <span className="bg-rose-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
+                        <SiteCategory
+                          className="bg-rose-500 p-1 inline-block text-white text-center m-6"
+                          text="東京リベンジャーズ"
+                          href="/post/category/東京リベンジャーズ"
+                        />
                       )}
                       {data.categori == "キングダム" && (
-                        <span className="bg-yellow-500 p-2 inline-block text-white text-center">
-                          <Link href={`/post/category/${data.categori}`}>
-                            {data.categori}
-                          </Link>
-                        </span>
+                        <SiteCategory
+                          className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
+                          text="キングダム"
+                          href="/post/category/キングダム"
+                        />
                       )}
                       {data.netabare == "ネタバレ有" && (
                         <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
@@ -392,13 +390,12 @@ const Post = () => {
                       <p>いいね数：{data.likes}</p>
                       <br></br>
                       {user && (
-                        <Button
+                        <SiteButton
+                          href=""
+                          text="いいねする"
+                          className="inline my-2 m-4"
                           onClick={() => handleClick(data.id, data.likes)}
-                          className=""
-                          variant="outlined"
-                        >
-                          いいねする
-                        </Button>
+                        />
                       )}
                       <div key={data.id}>
                         {users &&
@@ -406,6 +403,7 @@ const Post = () => {
                             return (
                               <>
                                 {data.email == user.email && (
+
                                   <Link href={`/profile/${user.userid}`}>
                                     <div key={user.userid}>
                                       <div className="bg-slate-200 my-8 py-8">
@@ -425,6 +423,7 @@ const Post = () => {
                                       </div>
                                     </div>
                                   </Link>
+                                  
                                 )}
                               </>
                             );

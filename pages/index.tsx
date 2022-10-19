@@ -1,13 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
-import { app, database } from "../firebaseConfig";
-import {
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-  onSnapshot,
-} from "firebase/firestore";
+import { database } from "../firebaseConfig";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
@@ -18,7 +12,6 @@ import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import { Cardpost } from "../layouts/Cardpost";
-import Avatar from "@mui/material/Avatar";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
@@ -43,8 +36,8 @@ export default function Index() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   // const { getData, handledesSort, handlelikeSort } = GetPosts();
-
   const databaseRef = collection(database, "CRUD DATA");
+
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //昇順
   const u = query(databaseRef, orderBy("timestamp"));

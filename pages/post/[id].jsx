@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
+import Grid from "@material-ui/core/Grid";
 import Link from "next/link";
 import { app, database, storage } from "../../firebaseConfig";
 import {
@@ -18,6 +19,7 @@ import TextField from "@mui/material/TextField";
 import Head from "next/head";
 import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
+import { Cardpost } from "../../layouts/Cardpost";
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -35,6 +37,7 @@ const Post = () => {
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
+  const [categoriFiredata, setcategoriFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState(null);
   const [likecount, setLikecount] = useState(0);
   const usersRef = collection(database, "users");
@@ -68,10 +71,37 @@ const Post = () => {
           })
           .filter((data) => {
             if (data.id === id) {
+              setCategori(data.categori);
               return data;
               //そのまま返す
             } else if (
               data.id.toLowerCase().includes(id)
+              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+            ) {
+              return data;
+            }
+          })
+      );
+    });
+  };
+
+  const getCategorytData = async () => {
+    //firestoreからデータ取得
+    await getDocs(databaseRef).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setcategoriFiredata(
+        querySnapshot.docs
+          .map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+          .filter((data) => {
+            if (data.categori === categori) {
+              return data;
+              //そのまま返す
+            } else if (
+              data.categori.toLowerCase().includes(categori.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -93,11 +123,12 @@ const Post = () => {
     photoURL,
     userid,
     likes,
-    selected
+    selected,
+    edittime
   ) => {
     setID(id);
     setContext(context);
-    setTitle1(title);
+    setPostTitle(title);
     setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
@@ -115,6 +146,7 @@ const Post = () => {
   useEffect(() => {
     getData();
     usersData();
+    getCategorytData();
   }, [likes]);
 
   const usersData = async () => {
@@ -134,10 +166,12 @@ const Post = () => {
   const updatefields = () => {
     //更新する
     let fieldToEdit = doc(database, "CRUD DATA", ID);
+    const newdate = new Date().toLocaleString("ja-JP");
     //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: posttitle,
       context: context.replace(/\r?\n/g, "\n"),
+      edittime: newdate,
       //改行を保存する
     })
       .then(() => {
@@ -213,7 +247,12 @@ const Post = () => {
                           <Button
                             variant="outlined"
                             onClick={() =>
-                              getID(data.id, data.title, data.context)
+                              getID(
+                                data.id,
+                                data.title,
+                                data.context,
+                                data.edittime
+                              )
                             }
                             className="m-4"
                           >
@@ -246,7 +285,7 @@ const Post = () => {
                         label="タイトル（最大20文字)"
                         variant="outlined"
                         type="text"
-                        value={title1}
+                        value={posttitle}
                         onChange={(event) => setPostTitle(event.target.value)}
                       />
 
@@ -286,8 +325,9 @@ const Post = () => {
                   <div>
                     <div className="text-2xl my-4">{data.title}</div>
                     <br></br>
-                    投稿日時：{data.createtime}
+                    <p>投稿日時：{data.createtime}</p>
                     <br></br>
+                    {data.edittime && <p>編集日時：{data.edittime}</p>}
                     <br></br>
                     {data.selected &&
                       data.selected.map((tag, i) => (
@@ -393,10 +433,44 @@ const Post = () => {
                     </div>
                   </div>
                 </div>
+                {/* <>
+                  <h2 className="text-2xl">こちらもおすすめ</h2>
+                  <div className="max-w-7xl m-auto">
+                    <Grid container spacing={1}>
+                      {categoriFiredata.map((data) => {
+                        return (
+                          <Cardpost
+                            key={data.id}
+                            downloadURL={data.downloadURL}
+                            title={data.title}
+                            categori={data.categori}
+                            netabare={data.netabare}
+                            context={data.context}
+                            createtime={data.createtime}
+                            displayname={data.displayname}
+                            email={data.email}
+                            id={data.id}
+                            photoURL={data.photoURL}
+                            selected={data.selected}
+                          />
+                        );
+                      })}
+                      {categoriFiredata.length == 0 && (
+                        <p className="text-center m-auto my-6 text-2xl">
+                          まだ投稿されていません
+                        </p>
+                      )}
+                    </Grid>
+                    <br></br>
+                    <br></br>
+                  </div> */}
+                {/* </> */}
               </div>
             );
           })}
         </div>
+        <br></br>
+        <br></br>
         <br></br>
         <br></br>
       </div>

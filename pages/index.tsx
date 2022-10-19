@@ -36,8 +36,8 @@ export default function Index() {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   // const { getData, handledesSort, handlelikeSort } = GetPosts();
-  const databaseRef = collection(database, "CRUD DATA");
 
+  const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //昇順
   const u = query(databaseRef, orderBy("timestamp"));

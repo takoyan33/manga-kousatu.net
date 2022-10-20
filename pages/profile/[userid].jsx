@@ -115,24 +115,32 @@ const Post = () => {
               return (
                 <>
                   {userid == user.userid && (
-                    <>
+                    <div className="">
                       <h2 className="m-5 my-12 text-center text-2xl font-semibold">
                         {user.username} さんのプロフィール
                       </h2>
-                      <div key={user.id}>
-                        <p>
-                          <Image
-                            className="m-auto text-center max-w-sm"
-                            height={100}
-                            width={100}
-                            src={user.profileimage}
-                          />
-                        </p>
-                        <p className="m-5">名前：{user.username}</p>
-                        <p className="m-5">プロフィール：{user.bio}</p>
-                        <p className="m-5">好きな漫画：{user.favarite}</p>
+                      <div className="flex m-auto max-w-md">
+                        <div key={user.id}>
+                          <p>
+                            <Avatar
+                              className="m-auto text-center max-w-sm border"
+                              alt="プロフィール"
+                              sx={{ width: 150, height: 150 }}
+                              src={user.profileimage}
+                            />
+                          </p>
+                        </div>
+                        <div className="">
+                          <p className="m-5 text-lg">{user.username}</p>
+                          <h2 className="m-5">好きな漫画</h2>
+                          <p className="m-5">{user.favarite}</p>
+                        </div>
                       </div>
-                    </>
+                      <div className="max-w-md m-auto my-10">
+                        <h2 className="m-5">プロフィール</h2>
+                        <p className="m-5">{user.bio}</p>
+                      </div>
+                    </div>
                   )}
                   <p></p>
                 </>

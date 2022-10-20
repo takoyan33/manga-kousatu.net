@@ -10,7 +10,7 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth, updateProfile, deleteUser } from "firebase/auth";
+import { getAuth, deleteUser } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -18,14 +18,11 @@ import TextField from "@mui/material/TextField";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import { postImage } from "../api/upload";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import Image from "react-image-resizer";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import Nameauth from "../api/auth/Nameauth";
+import { Profileid } from "../../layouts/components/ui/Profileid";
 
 export default function Profile() {
   const [ID, setID] = useState(null);
@@ -237,21 +234,15 @@ export default function Profile() {
               return (
                 <>
                   {data.email == user.email && (
-                    <div key={data.id}>
-                      <p>
-                        <Image
-                          className="m-auto text-center max-w-sm"
-                          height={100}
-                          width={100}
-                          src={data.profileimage}
-                        />
-                      </p>
-                      <p className="m-5">名前：{data.username}</p>
-                      <p className="m-5">プロフィール：{data.bio}</p>
-                      <p className="m-5">好きな漫画：{data.favarite}</p>
-                    </div>
+                    <Profileid
+                      key={data.id}
+                      profileimage={data.profileimage}
+                      username={data.username}
+                      bio={data.bio}
+                      favarite={data.favarite}
+                      id={0}
+                    />
                   )}
-                  <p></p>
                 </>
               );
             })}

@@ -30,7 +30,7 @@ const schema = yup.object({
   password: yup.string().required("必須です").min(8, "文字数が足りません"),
 });
 
-export default function Loginauth() {
+export default function Index() {
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();

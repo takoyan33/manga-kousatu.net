@@ -132,7 +132,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
                       </span>
                     ))}
                 </p>
-                {/* <Avater photoURL={photoURL} displayname={displayname} /> */}
                 <div key={id}>
                   {users &&
                     users.map((user) => {
@@ -140,16 +139,20 @@ export const Cardpost: React.VFC<Props> = React.memo(
                         <>
                           {email == user.email && (
                             <div key={user.id}>
-                              <div className="bg-slate-200 my-2 py-2">
-                                <br></br>
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={user.profileimage}
-                                />
-                                <br></br>
-                                <span className="text-xl">
-                                  投稿者名：{user.username}
-                                </span>
+                              <div className="bg-slate-200 my-2 py-4 flex m-auto">
+                                <div className="">
+                                  <Avatar
+                                    className="m-auto text-center max-w-sm border"
+                                    sx={{ width: 50, height: 50 }}
+                                    alt="投稿者プロフィール"
+                                    src={user.profileimage}
+                                  />
+                                </div>
+                                <div className=" pt-2">
+                                  <span className="text-xl my-2 ml-2 ">
+                                    投稿者名：{user.username}
+                                  </span>
+                                </div>
                                 <br></br>
                               </div>
                             </div>

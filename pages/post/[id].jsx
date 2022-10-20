@@ -403,27 +403,30 @@ const Post = () => {
                             return (
                               <>
                                 {data.email == user.email && (
-
                                   <Link href={`/profile/${user.userid}`}>
                                     <div key={user.userid}>
-                                      <div className="bg-slate-200 my-8 py-8">
-                                        <br></br>
-                                        <Avatar
-                                          alt="Remy Sharp"
-                                          src={user.profileimage}
-                                        />
-                                        <br></br>
-                                        <span className="text-xl">
-                                          投稿者名：{user.username}
-                                        </span>
-                                        <p className="text-xl">
-                                          プロフィール：{user.bio}
-                                        </p>
-                                        <br></br>
+                                      <div className="bg-slate-200 my-8 py-8 flex m-auto">
+                                        <div key={user.id}>
+                                          <p>
+                                            <Avatar
+                                              className="m-auto text-center max-w-sm border"
+                                              alt="プロフィール"
+                                              sx={{ width: 100, height: 100 }}
+                                              src={user.profileimage}
+                                            />
+                                          </p>
+                                        </div>
+                                        <div className="ml-6 mt-4 ">
+                                          <span className="text-xl">
+                                            投稿者名：{user.username}
+                                          </span>
+                                          <p className="text-xl">
+                                            プロフィール：{user.bio}
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                   </Link>
-                                  
                                 )}
                               </>
                             );

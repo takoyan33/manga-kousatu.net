@@ -2,11 +2,11 @@
 
 Manga Study
 
-https://next-auth-app-2aa40.web.app/
+https://manga-kousatu-net.vercel.app/
 
 ## プロジェクトの概要説明
 
-Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。
+Manga Study では、漫画の考察などを自由に投稿・閲覧できる web サイトです。
 
 2022 年の 6 月頃から制作を始めました。
 

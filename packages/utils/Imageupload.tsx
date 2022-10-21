@@ -16,6 +16,7 @@ const Imageupload: React.VFC<Props> = ({ onChange, createObjectURL }) => {
       <img
         className="flex justify-center items-center m-auto  w-full"
         src={createObjectURL}
+        alt="サムネイル"
       />
       <label
         htmlFor="file-input"

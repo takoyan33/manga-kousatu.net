@@ -22,6 +22,8 @@ import "moment/locale/ja";
 import Imageupload from "../../packages/utils/Imageupload";
 import Imageuploadcontext from "../../packages/utils/Imageuploadcontext";
 import { TagsInput } from "react-tag-input-component";
+import {Formcontrols} from "../../layouts/components/ui/Formcontrols"
+
 
 export default function Post() {
   const [ID, setID] = useState(null);
@@ -181,38 +183,17 @@ export default function Post() {
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
             >
-              <FormControlLabel
-                value="ONE PIECE"
-                control={<Radio />}
-                label="ONE PIECE"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCategori(event.target.value)
-                }
-              />
-              <FormControlLabel
-                value="呪術廻戦"
-                control={<Radio />}
-                label="呪術廻戦"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCategori(event.target.value)
-                }
-              />
-              <FormControlLabel
-                value="東京リベンジャーズ"
-                control={<Radio />}
-                label="東京リベンジャーズ"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCategori(event.target.value)
-                }
-              />
-              <FormControlLabel
-                value="キングダム"
-                control={<Radio />}
-                label="キングダム"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCategori(event.target.value)
-                }
-              />
+              {Formcontrols.map((Formcontrol) => (
+                <FormControlLabel
+                  key={Formcontrol.id}
+                  value={Formcontrol.value}
+                  control={<Radio />}
+                  label={Formcontrol.label}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                    setCategori(event.target.value)
+                  }
+                />
+              ))}
             </RadioGroup>
             <FormLabel id="demo-radio-buttons-group-label">タグ</FormLabel>
 

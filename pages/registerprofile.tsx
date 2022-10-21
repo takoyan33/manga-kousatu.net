@@ -1,4 +1,3 @@
-
 import { getAuth } from "firebase/auth";
 import { database } from "../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
@@ -126,6 +125,7 @@ export default function Registerprofile() {
               <img
                 className="flex justify-center items-center m-auto w-60"
                 src={createObjectURL}
+                alt="ユーザー画像"
               />
             </div>
             <div className="text-center m-auto my-4">

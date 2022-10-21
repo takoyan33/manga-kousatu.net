@@ -97,6 +97,7 @@ export default function Photoedit() {
         <img
           className="flex justify-center items-center m-auto  w-full"
           src={createObjectURL}
+          alt="画像"
         />
         <label
           htmlFor="file-input"

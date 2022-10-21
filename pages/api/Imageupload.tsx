@@ -32,7 +32,11 @@ export default function UploadImage() {
     <div title="upload image">
       <MuiNavbar />
       <div className="mb-4">this is upload image screen</div>
-      <img className="flex justify-center items-center" src={createObjectURL} />
+      <img
+        className="flex justify-center items-center"
+        src={createObjectURL}
+        alt="画像アップロード"
+      />
       <label
         htmlFor="file-input"
         className="bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full"

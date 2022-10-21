@@ -20,18 +20,38 @@ type Props = {
 export const Profileid: React.VFC<Props> = React.memo(
   ({ id, profileimage, username, bio, favarite }) => {
     return (
-      <div key={id}>
-        <p>
-          <Image
-            className="m-auto text-center max-w-sm"
-            height={100}
-            width={100}
-            src={profileimage}
-          />
-        </p>
-        <p className="m-5">名前：{username}</p>
-        <p className="m-5">プロフィール：{bio}</p>
-        <p className="m-5">好きな漫画：{favarite}</p>
+      <div className="">
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          {username} さんのプロフィール
+        </h2>
+        <div className="flex m-auto max-w-md">
+          <div key={id}>
+            <p>
+              <Avatar
+                className="m-auto text-center max-w-sm border"
+                alt="プロフィール"
+                sx={{ width: 150, height: 150 }}
+                src={profileimage}
+              />
+            </p>
+          </div>
+          <div className="">
+            <p className="m-5 text-lg">{username}</p>
+            <h2 className="m-5">好きな漫画</h2>
+            <div className="m-5">
+              {favarite &&
+                favarite.map((favarite, i) => (
+                  <p className="text-cyan-700 my-2" key={i}>
+                    {favarite}　
+                  </p>
+                ))}
+            </div>
+          </div>
+        </div>
+        <div className="max-w-md m-auto my-10">
+          <h2 className="m-5">プロフィール</h2>
+          <p className="m-5">{bio}</p>
+        </div>
       </div>
     );
   }

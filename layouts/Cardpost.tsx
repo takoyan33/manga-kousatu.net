@@ -101,6 +101,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                   height={300}
                   width={300}
                   src={downloadURL}
+                  alt="画像"
                 />
               </p>
 
@@ -114,7 +115,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
                       {netabare}
                     </p>
-                    <br></br>
                   </div>
                 )}
                 {netabare == "ネタバレ無" && (

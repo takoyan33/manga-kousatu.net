@@ -19,6 +19,7 @@ import { query, orderBy, limit } from "firebase/firestore";
 import { SiteButton } from "../layouts/components/button";
 import { SiteCategory } from "../layouts/components/text";
 import { GetPosts } from "./api/firestore/GetPosts";
+import { Categories, SiteHead } from "../layouts/components/ui";
 
 export const LoginContext = createContext(
   {} as {
@@ -107,16 +108,7 @@ export default function Index() {
 
   return (
     <div>
-      <Head>
-        <title>Manga Study</title>
-        <meta name="description" content="Manga Study" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@500&display=swap"
-          rel="stylesheet"
-        />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <SiteHead />
       <MuiNavbar />
 
       <div className="max-w-7xl m-auto">
@@ -133,7 +125,7 @@ export default function Index() {
           <img
             src="./magastudylogo.png"
             className="w-80 my-12 m-auto"
-            alt="ロゴ"
+            alt="mangastudyのロゴ"
           />
         </h2>
         <p className="my-5 text-center">
@@ -170,29 +162,15 @@ export default function Index() {
         <h2 className="my-12 text-center text-2xl font-semibold">
           カテゴリから選ぶ
         </h2>
-        <SiteCategory
-          className="bg-blue-500 p-1 inline-block text-white text-center m-6"
-          text="ONE PIECE"
-          href="/post/category/ONE PIECE"
-        />
+        {Categories.map((categori) => (
+          <SiteCategory
+            key={categori.id}
+            className={`p-1 inline-block text-white text-center m-6 + ${categori.className}`}
+            text={categori.title}
+            href={categori.link}
+          />
+        ))}
 
-        <SiteCategory
-          className="bg-purple-500 p-1 inline-block text-white text-center m-6"
-          text="呪術廻戦"
-          href="/post/category/呪術廻戦"
-        />
-
-        <SiteCategory
-          className="bg-rose-500 p-1 inline-block text-white text-center m-6"
-          text="東京リベンジャーズ"
-          href="/post/category/東京リベンジャーズ"
-        />
-
-        <SiteCategory
-          className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
-          text="キングダム"
-          href="/post/category/キングダム"
-        />
         <h2 className="my-12 text-center text-2xl font-semibold">
           新規投稿一覧
         </h2>

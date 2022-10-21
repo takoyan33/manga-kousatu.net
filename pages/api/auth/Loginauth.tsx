@@ -91,7 +91,7 @@ export default function Loginauth() {
           <TextField
             id="outlined-basic"
             label="sample@gmail.com"
-            className="m-auto w-80"
+            className="m-auto w-80 mb-6"
             variant="outlined"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(event.target.value)
@@ -101,17 +101,15 @@ export default function Loginauth() {
             helperText={errors.email?.message}
           />
           <br></br>
-          <br></br>
 
           <label className="text-center my-4">パスワード（8文字以上)*</label>
-          <br></br>
           <br></br>
           <TextField
             id="outlined-basic"
             label="Password"
             variant="outlined"
             type="password"
-            className="m-auto w-80"
+            className="m-auto w-80 mb-6"
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setPassword(event.target.value)
             }
@@ -119,8 +117,6 @@ export default function Loginauth() {
             error={"password" in errors}
             helperText={errors.password?.message}
           />
-          <br></br>
-          <br></br>
           <SiteButton
             href=""
             // onClick={SignIn}
@@ -128,8 +124,6 @@ export default function Loginauth() {
             text="ログイン"
             className="m-auto w-80 my-8"
           />
-          <br></br>
-          <br></br>
           <SiteButton
             href=""
             text="Googleでログイン"

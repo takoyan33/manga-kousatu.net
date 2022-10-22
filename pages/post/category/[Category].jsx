@@ -11,34 +11,19 @@ import Grid from "@material-ui/core/Grid";
 import Head from "next/head";
 import { Cardpost } from "../../../layouts/Cardpost";
 import { query, orderBy } from "firebase/firestore";
+import { SiteButton } from "../../../layouts/components/button";
 
 const Category = () => {
-  const [ID, setID] = useState(null);
-  const [context, setContext] = useState("");
-  const [file, setFile] = useState("");
-  const [categori, setCategori] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [displayName, setDisplayName] = useState("");
-  const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
   //データベースを取得
   const q = query(databaseRef, orderBy("timestamp", "desc"));
-  //昇順
+  //新しい順
   const u = query(databaseRef, orderBy("timestamp"));
-  //降順
+  //古い順
   const f = query(databaseRef, orderBy("likes", "desc"));
   //いいね数順
-  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
-  const [downloadURL, setDownloadURL] = useState(null);
   const [likecount, setLikecount] = useState(0);
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState("");
-  const [email, setEmail] = useState("");
-  const [userid, setUserid] = useState(null);
-  const [netabare, setNetabare] = useState("");
-  const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
@@ -129,37 +114,6 @@ const Category = () => {
     getData();
   }, [likecount]);
 
-  const getID = (
-    id,
-    name,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    displayname,
-    netabare,
-    photoURL,
-    userid,
-    likes,
-    selected
-  ) => {
-    setID(id);
-    setContext(context);
-    setTitle(title);
-    setName(name);
-    setDisplayName(displayname);
-    setDownloadURL(downloadURL);
-    setIsUpdate(true);
-    setCategori(categori);
-    setCreatetime(cratetime);
-    setNetabare(netabare);
-    setPhotoURL(photoURL);
-    setUserid(userid);
-    setLikes(likes);
-    setSelected(selected);
-    console.log(title);
-  };
   return (
     <>
       <Head>
@@ -179,15 +133,28 @@ const Category = () => {
         </h2>
 
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
-        <Button onClick={getData} variant="outlined">
-          昇順
-        </Button>
-        <Button onClick={handledesSort} className="m-4" variant="outlined">
-          降順
-        </Button>
-        <Button onClick={handlelikeSort} className="m-4" variant="outlined">
-          いいね順
-        </Button>
+
+        <div className="flex mt-4">
+          <SiteButton
+            href=""
+            text="新しい順"
+            className="inline my-2 m-4"
+            onClick={getData}
+          />
+          <SiteButton
+            href=""
+            text="古い順"
+            className="inline my-2 m-4"
+            onClick={handledesSort}
+          />
+          <SiteButton
+            href=""
+            text="いいね順"
+            className="inline my-2 m-4"
+            onClick={handlelikeSort}
+          />
+        </div>
+
         <div className="max-w-7xl m-auto">
           <Grid container spacing={1}>
             {firedata.map((data) => {

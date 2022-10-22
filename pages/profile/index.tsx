@@ -91,6 +91,11 @@ export default function Profile() {
         })
       );
     });
+    // const uid = user.uid;
+    // const userdata = doc(database, "users", uid);
+    // getDoc(userdata).then((documentSnapshot) => {
+    //   setFiredata(documentSnapshot.data());
+    // });
   };
 
   const getID = (

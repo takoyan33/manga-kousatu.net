@@ -128,6 +128,9 @@ export const MuiNavbar = () => {
         {user && (
           <>
             <MenuItem>
+              <Link href="/post">新しく投稿する</Link>
+            </MenuItem>
+            <MenuItem>
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>

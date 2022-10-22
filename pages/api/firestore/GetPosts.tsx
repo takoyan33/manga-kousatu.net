@@ -20,9 +20,9 @@ export const GetPosts = (): Type => {
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
-  //昇順
+  //新しい順
   const u = query(databaseRef, orderBy("timestamp"));
-  //降順
+  //古い順
   const f = query(databaseRef, orderBy("likes", "desc"));
   //新着順
   const getData = async () => {

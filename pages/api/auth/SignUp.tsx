@@ -101,7 +101,6 @@ export default function SignUp() {
           />
           <br></br>
           <br></br>
-
           <label className="text-center my-4">パスワード（8文字以上)*</label>
           <br></br>
           <TextField
@@ -119,7 +118,6 @@ export default function SignUp() {
           />
           <br></br>
           <br></br>
-
           <label className="text-center my-4">
             確認用パスワード（8文字以上)*
           </label>
@@ -147,7 +145,6 @@ export default function SignUp() {
             新規登録
           </Button>
           <br></br>
-          <br></br>
           <Button
             variant="outlined"
             onClick={SignUpWithGoogle}
@@ -155,12 +152,12 @@ export default function SignUp() {
           >
             Googleで新規登録
           </Button>
-          <br></br>
-          <br></br>
-
-          <Button variant="outlined" className="m-auto w-80 my-8">
-            <Link href="/login">ログインはこちら</Link>
-          </Button>
+          <p className="my-4">
+            登録済みの方はこちら
+            <Link href="/login">
+              <span className="text-blue-500 underline">ログイン</span>
+            </Link>
+          </p>
         </div>
       </Box>
     </>

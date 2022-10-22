@@ -14,6 +14,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../../layouts/components/button";
+import Link from "next/link";
 
 // フォームの型
 interface SampleFormInput {
@@ -101,7 +102,6 @@ export default function Loginauth() {
             helperText={errors.email?.message}
           />
           <br></br>
-
           <label className="text-center my-4">パスワード（8文字以上)*</label>
           <br></br>
           <TextField
@@ -122,14 +122,20 @@ export default function Loginauth() {
             // onClick={SignIn}
             onClick={handleSubmit(SignIn)}
             text="ログイン"
-            className="m-auto w-80 my-8"
+            className="m-auto w-80 my-4"
           />
           <SiteButton
             href=""
             text="Googleでログイン"
             onClick={SignInWithGoogle}
-            className="m-auto w-80 my-8"
+            className="m-auto w-80 my-4"
           />
+          <p className="my-4">
+            ユーザー未登録の方はこちら
+            <Link href="/register">
+              <span className="text-blue-500 underline">新規登録</span>
+            </Link>
+          </p>
         </div>
       </Box>
     </>

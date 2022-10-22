@@ -28,40 +28,19 @@ export const LoginContext = createContext(
 );
 
 export default function Index() {
-  const [ID, setID] = useState(null);
-  const [title, setTitle] = useState<string>("");
-  const [context, setContext] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [categori, setCategori] = useState<string>("");
   const [firedata, setFiredata] = useState([]);
-  const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   // const { getData, handledesSort, handlelikeSort } = GetPosts();
 
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
-  //昇順
+  //新しい順
   const u = query(databaseRef, orderBy("timestamp"));
-  //降順
+  //古い順
   const f = query(databaseRef, orderBy("likes", "desc"));
   //いいね数順
-  const [displayname, setDisplayName] = useState<string>("");
-  const [createObjectURL, setCreateObjectURL] = useState<string>(null);
-  const [downloadURL, setDownloadURL] = useState<string>(null);
-  const [image, setImage] = useState<string>("");
-  const [result, setResult] = useState<string>("");
-  const [photoURL, setPhotoURL] = useState<string>("");
-  const [likes, setLikes] = useState<number>(null);
-  const [userid, setUserid] = useState<string>(null);
-  const [netabare, setNetabare] = useState<string>("");
-  const [opentext, setOpentext] = useState<boolean>(false);
-  const styles = { whiteSpace: "pre-line" };
   const [searchName, setSearchName] = useState("");
-  const [selected, setSelected] = useState(["最終回"]);
-  const [sort, setSort] = useState({});
   const [loadIndex, setLoadIndex] = useState(6);
   const [isEmpty, setIsEmpty] = useState(false);
-  const [currentPost, setCurrentPost] = useState([]);
 
   let router = useRouter();
   const auth = getAuth();
@@ -137,10 +116,10 @@ export default function Index() {
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
-              <Registerbutton text="新規登録はこちら" />
+              <Registerbutton text="新規登録" />
               <br></br>
               {/* usecontextを使用 valueを送る*/}
-              <LoginContext.Provider value={{ text: "ログインはこちらです" }}>
+              <LoginContext.Provider value={{ text: "ログイン" }}>
                 {/* loginbuttonに向けて*/}
                 <Loginbutton />
               </LoginContext.Provider>
@@ -188,13 +167,13 @@ export default function Index() {
         <div className="flex mt-4">
           <SiteButton
             href=""
-            text="昇順"
+            text="新しい順"
             className="inline my-2 m-4"
             onClick={getData}
           />
           <SiteButton
             href=""
-            text="降順"
+            text="古い順"
             className="inline my-2 m-4"
             onClick={handledesSort}
           />
@@ -251,8 +230,6 @@ export default function Index() {
             className="m-auto w-50 my-2"
           />
         </div>
-        <br></br>
-        <br></br>
         <div>
           <p>© 尾田栄一郎／集英社・フジテレビ・東映アニメーション</p>
           <p>© 和久井健・講談社／アニメ「東京リベンジャーズ」</p>

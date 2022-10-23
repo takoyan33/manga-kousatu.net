@@ -15,14 +15,9 @@ type Props = {
 export const SiteButton: React.VFC<Props> = memo(
   ({ href, onClick, text, className, disabled }) => {
     return (
-      <div>
+      <div className={className}>
         <Link href={href}>
-          <Button
-            variant="outlined"
-            className={className}
-            onClick={onClick}
-            disabled={disabled}
-          >
+          <Button variant="outlined" onClick={onClick} disabled={disabled}>
             {text}
           </Button>
         </Link>

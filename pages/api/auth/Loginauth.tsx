@@ -122,13 +122,13 @@ export default function Loginauth() {
             // onClick={SignIn}
             onClick={handleSubmit(SignIn)}
             text="ログイン"
-            className="m-auto w-80 my-4"
+            className="m-auto text-center w-80 my-4"
           />
           <SiteButton
             href=""
             text="Googleでログイン"
             onClick={SignInWithGoogle}
-            className="m-auto w-80 my-4"
+            className="m-auto text-center w-80 my-4"
           />
           <p className="my-4">
             ユーザー未登録の方はこちら

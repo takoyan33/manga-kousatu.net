@@ -23,6 +23,7 @@ import Imageuploadcontext from "../../packages/utils/Imageuploadcontext";
 import { TagsInput } from "react-tag-input-component";
 import { Categories, SiteHead } from "../../layouts/components/ui";
 import { Formcontrols } from "../../layouts/components/ui/Formcontrols";
+import { SiteButton } from "../../layouts/components/button";
 
 export default function Post() {
   const [ID, setID] = useState(null);
@@ -254,15 +255,12 @@ export default function Post() {
               name="myImage"
               onChange={uploadToClientcontext}
             />
-            <div className="text-center">
-              <Button
-                variant="outlined"
-                onClick={addDate}
-                className="text-center m-auto my-10"
-              >
-                投稿する
-              </Button>
-            </div>
+            <SiteButton
+              href=""
+              text="投稿する"
+              className="text-center m-auto my-10"
+              onClick={addDate}
+            />
           </div>
         </Box>
       </div>

@@ -3,3 +3,4 @@ export * from "./Formcontrols";
 export * from "./Profileid";
 export * from "./Profilepost";
 export * from "./SiteHead";
+export * from "./SiteInput";

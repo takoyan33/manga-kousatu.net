@@ -109,8 +109,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 <Typography gutterBottom variant="h5" component="div">
                   {title}
                 </Typography>
-                {/* <Categori categori={categori} /> */}
-                
+                <Categori categori={categori} />
                 {netabare == "ネタバレ有" && (
                   <div>
                     <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">

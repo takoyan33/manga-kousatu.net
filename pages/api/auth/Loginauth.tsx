@@ -1,4 +1,3 @@
-import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -15,6 +14,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../../layouts/components/button";
 import Link from "next/link";
+import { SiteInput } from "../../../layouts/components/ui/SiteInput";
 
 // フォームの型
 interface SampleFormInput {
@@ -117,6 +117,7 @@ export default function Loginauth() {
             error={"password" in errors}
             helperText={errors.password?.message}
           />
+
           <SiteButton
             href=""
             // onClick={SignIn}

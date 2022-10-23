@@ -1,6 +1,7 @@
 /* eslint-disable react/display-name */
 import React from "react";
 import Link from "next/link";
+import { SiteCategory } from "./SiteCategory";
 
 type Props = {
   categori: String;
@@ -11,24 +12,32 @@ const Categori: React.VFC<Props> = React.memo(({ categori }) => {
   return (
     <>
       {categori == "ONE PIECE" && (
-        <span className="bg-blue-500 p-1 inline-block text-white text-center">
-          <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </span>
+        <SiteCategory
+          className="bg-blue-500 p-1 inline-block text-white text-center"
+          text="ONE PIECE"
+          href={`/post/category/${categori}`}
+        />
       )}
       {categori == "呪術廻戦" && (
-        <span className="bg-purple-500 p-1 inline-block text-white text-center">
-          <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </span>
+        <SiteCategory
+          className="bg-purple-500 p-1 inline-block text-white text-center"
+          text="呪術廻戦"
+          href={`/post/category/${categori}`}
+        />
       )}
       {categori == "東京リベンジャーズ" && (
-        <span className="bg-rose-500 p-1 inline-block text-white text-center">
-          <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </span>
+        <SiteCategory
+          className="bg-rose-500 p-1 inline-block text-white text-center"
+          text="東京リベンジャーズ"
+          href={`/post/category/${categori}`}
+        />
       )}
       {categori == "キングダム" && (
-        <span className="bg-yellow-500 p-1 inline-block text-white text-center">
-          <Link href={`/post/category/${categori}`}>{categori}</Link>
-        </span>
+        <SiteCategory
+          className="bg-yellow-500 p-1 inline-block text-white text-center"
+          text="キングダム"
+          href={`/post/category/${categori}`}
+        />
       )}
       <br></br>
     </>

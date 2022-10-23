@@ -1,21 +1,17 @@
-import Link from "next/link";
 import { useEffect, useState, useMemo } from "react";
 import { database } from "../firebaseConfig";
 import { collection, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth, signOut } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
-import Head from "next/head";
 import { Cardpost } from "../layouts/Cardpost";
 import { Loginbutton } from "../layouts/components/button/loginbutton";
 import { Registerbutton } from "../layouts/components/button/registerbutton";
 import { createContext } from "react";
-import { query, orderBy, limit } from "firebase/firestore";
+import { query, orderBy } from "firebase/firestore";
 import { SiteButton } from "../layouts/components/button";
 import { SiteCategory } from "../layouts/components/text";
 import { GetPosts } from "./api/firestore/GetPosts";
@@ -73,6 +69,23 @@ export default function Index() {
     });
   };
 
+  // 絞り込みの分離途中
+  // const Searchposts = useMemo(() => {
+  //   return firedata
+  //     .filter((data) => {
+  //       if (searchName === "") {
+  //         return data;
+  //         //そのまま返す
+  //       } else if (
+  //         data.title.toLowerCase().includes(searchName.toLowerCase())
+  //         //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+  //       ) {
+  //         return data;
+  //       }
+  //     })
+  //     .slice(0, loadIndex);
+  // }, [firedata]);
+
   useEffect(() => {
     getData();
   }, []);
@@ -116,7 +129,7 @@ export default function Index() {
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
-              <Registerbutton text="新規登録" />
+              <Registerbutton text="新規登録はこちら" />
               <br></br>
               {/* usecontextを使用 valueを送る*/}
               <LoginContext.Provider value={{ text: "ログイン" }}>
@@ -188,6 +201,7 @@ export default function Index() {
         <br></br>
         <br></br>
         <Grid container className="m-auto">
+          {firedata == [] && <p>まだ投稿していません</p>}
           {firedata
             .filter((data) => {
               if (searchName === "") {

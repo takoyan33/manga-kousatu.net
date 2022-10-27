@@ -16,6 +16,11 @@ import { SiteButton } from "../layouts/components/button";
 import { SiteCategory } from "../layouts/components/text";
 import { GetPosts } from "./api/firestore/GetPosts";
 import { Categories, SiteHead } from "../layouts/components/ui";
+import * as React from "react";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 export const LoginContext = createContext(
   {} as {
@@ -26,7 +31,6 @@ export const LoginContext = createContext(
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
   // const { getData, handledesSort, handlelikeSort } = GetPosts();
-
   const databaseRef = collection(database, "CRUD DATA");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //新しい順
@@ -177,7 +181,7 @@ export default function Index() {
             setSearchName(event.target.value);
           }}
         />
-        <div className="flex mt-4">
+        {/* <div className="flex mt-4">
           <SiteButton
             href=""
             text="新しい順"
@@ -196,7 +200,26 @@ export default function Index() {
             className="inline my-2 m-4"
             onClick={handlelikeSort}
           />
-        </div>
+        </div> */}
+
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">並び順</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            label="並び順"
+          >
+            <MenuItem value="新しい順" onClick={getData}>
+              新しい順
+            </MenuItem>
+            <MenuItem value="古い順" onClick={handledesSort}>
+              古い順
+            </MenuItem>
+            <MenuItem value="いいね順" onClick={handlelikeSort}>
+              いいね順
+            </MenuItem>
+          </Select>
+        </FormControl>
 
         <br></br>
         <br></br>

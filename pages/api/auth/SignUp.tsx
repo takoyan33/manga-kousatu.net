@@ -4,6 +4,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  sendSignInLinkToEmail,
 } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
@@ -54,6 +55,7 @@ export default function SignUp() {
         .then((userCredential: any) => {
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
+          // firebase.firestore().collection("users").doc(user.uid);
           router.push("/registerprofile");
         })
         .catch((err) => {

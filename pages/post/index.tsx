@@ -76,7 +76,7 @@ export default function Post() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  console.log(setContext);
+  console.log(context.length);
 
   type addDate = {
     toLocaleString(timeZone): string;
@@ -225,6 +225,7 @@ export default function Post() {
                 }
               />
             </RadioGroup>
+            <p className="my-4">現在の文字数：{context.length}</p>
             <TextField
               label="内容*(最大500文字）"
               className="m-auto w-full"

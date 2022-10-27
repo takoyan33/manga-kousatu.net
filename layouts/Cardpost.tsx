@@ -127,9 +127,11 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 <p className="max-w-xs">
                   {selected &&
                     selected.map((tag, i) => (
+                      // <Link href={`/post/tag/${tag}`} key={i}>
                       <span className="text-cyan-700" key={i}>
                         #{tag}　
                       </span>
+                      // </Link>
                     ))}
                 </p>
                 <div key={id}>

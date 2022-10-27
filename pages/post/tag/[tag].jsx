@@ -28,12 +28,12 @@ const Category = () => {
 
   const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
-  const { Category } = router.query;
+  const { tag } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
 
-  console.log({ Category });
+  console.log({ tag });
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -47,11 +47,11 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.selected === tag) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.selected.toLowerCase().includes(tag.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -72,11 +72,11 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.selected === tag) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.selected.toLowerCase().includes(tag.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -97,11 +97,11 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.selected === Category) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.selected.toLowerCase().includes(tag.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -122,11 +122,11 @@ const Category = () => {
       <div className="max-w-7xl m-auto">
         <br></br>
         <p>
-          <Link href="/">トップ</Link>　＞　投稿記事　＞　{Category}
+          <Link href="/">トップ</Link>　＞　投稿記事　＞　#{tag}
         </p>
         <br></br>
         <h2 className="my-12 text-center text-2xl font-semibold">
-          {Category}の考察記事一覧
+          #{tag}の考察記事一覧
         </h2>
 
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>

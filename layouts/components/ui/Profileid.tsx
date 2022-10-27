@@ -1,12 +1,9 @@
 import React from "react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import { app, database } from "../../../firebaseConfig";
-import { collection, getDocs, doc, Firestore } from "firebase/firestore";
-import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
-import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 type Props = {
   profileimage: string;
@@ -36,20 +33,26 @@ export const Profileid: React.VFC<Props> = React.memo(
             </p>
           </div>
           <div className="">
-            <p className="m-5 text-lg">{username}</p>
-            <h2 className="m-5">好きな漫画</h2>
+            <p className="m-5 text-lg">
+              <AccountBoxIcon /> {username}
+            </p>
+            <h2 className="m-5">
+              <FavoriteIcon /> 好きな漫画
+            </h2>
             <div className="m-5">
               {favarite &&
                 favarite.map((favarite, i) => (
                   <p className="text-cyan-700 my-2" key={i}>
-                    {favarite}　
+                    ＃{favarite}　
                   </p>
                 ))}
             </div>
           </div>
         </div>
         <div className="max-w-md m-auto my-10">
-          <h2 className="m-5">プロフィール</h2>
+          <h2 className="m-5">
+            <BorderColorIcon /> プロフィール
+          </h2>
           <p className="m-5">{bio}</p>
         </div>
       </div>

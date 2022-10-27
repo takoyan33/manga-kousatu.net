@@ -6,7 +6,6 @@ import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
-
 import { Profileid } from "../../layouts/components/ui/Profileid";
 
 const Post = () => {
@@ -34,8 +33,6 @@ const Post = () => {
   const [netabare, setNetabare] = useState("");
   const [likes, setLikes] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
-
-  const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
   const { userid } = router.query;
   const auth = getAuth();

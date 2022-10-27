@@ -1,8 +1,5 @@
-import { AppBar, Toolbar, Button, Stack } from "@mui/material";
-import { useState } from "react";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import Link from "next/link";
-import { database, app } from "../../firebaseConfig.js";
-import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
 import Box from "@mui/material/Box";

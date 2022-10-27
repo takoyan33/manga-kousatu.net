@@ -11,7 +11,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import { getAuth, updateProfile, deleteUser } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -22,6 +22,10 @@ import { SiteButton } from "../../layouts/components/button";
 import { SiteCategory } from "../../layouts/components/text";
 import { Cardpost } from "../../layouts/Cardpost";
 import { Categories, SiteHead } from "../../layouts/components/ui";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -273,9 +277,16 @@ const Post = () => {
               <div>
                 <div className="text-2xl my-4">{firedata.title}</div>
                 <br></br>
-                <p>投稿日時：{firedata.createtime}</p>
+                <p>
+                  <AccessTimeIcon /> 投稿日時：{firedata.createtime}
+                </p>
                 <br></br>
-                {firedata.edittime && <p>編集日時：{firedata.edittime}</p>}
+                {firedata.edittime && (
+                  <p>
+                    <AccessTimeIcon />
+                    編集日時：{firedata.edittime}
+                  </p>
+                )}
                 <br></br>
                 {firedata.selected &&
                   firedata.selected.map((tag, i) => (
@@ -355,7 +366,10 @@ const Post = () => {
                     </p>
                   )}
                   <br></br>
-                  <p>いいね数：{firedata.likes}</p>
+                  <p>
+                    <FavoriteIcon />
+                    {firedata.likes}
+                  </p>
                   <br></br>
                   {user && (
                     <SiteButton
@@ -386,10 +400,11 @@ const Post = () => {
                                     </div>
                                     <div className="ml-6 mt-4 ">
                                       <span className="text-xl">
-                                        投稿者名：{user.username}
+                                        <AccountBoxIcon /> {user.username}
                                       </span>
                                       <p className="text-xl">
-                                        プロフィール：{user.bio}
+                                        <BorderColorIcon />
+                                        {user.bio}
                                       </p>
                                     </div>
                                   </div>

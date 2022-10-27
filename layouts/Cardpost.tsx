@@ -1,13 +1,12 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState, useMemo, useCallback } from "react";
-import { app, database } from "../firebaseConfig";
+import { database } from "../firebaseConfig";
 import { collection, getDocs, doc, Firestore } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import styles from "../styles/Home.module.css";
 import { updatePassword } from "firebase/auth";
-import { MuiNavbar } from "./components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
@@ -18,11 +17,12 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import Grid from "@material-ui/core/Grid";
-import Head from "next/head";
 import { getStorage } from "firebase/storage";
 import Image from "react-image-resizer";
 import Categori from "./components/text/Categori";
 import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 
 type Props = {
   downloadURL: string;
@@ -163,9 +163,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                       );
                     })}
                 </div>
-                投稿日時：{createtime}
-                <br></br>
-                いいね数：{likes}
+                <FavoriteIcon /> {likes}　<AccessTimeIcon /> {createtime}
               </CardContent>
             </Card>
           </Grid>

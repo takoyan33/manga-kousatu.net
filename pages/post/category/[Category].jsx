@@ -7,12 +7,15 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import TextField from "@mui/material/TextField";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../../layouts/Cardpost";
 import { query, orderBy } from "firebase/firestore";
 import { SiteButton } from "../../../layouts/components/button";
-import { Categories, SiteHead } from "../../../layouts/components/ui";
+import { SiteHead } from "../../../layouts/components/ui";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const Category = () => {
   const databaseRef = collection(database, "CRUD DATA");
@@ -140,27 +143,24 @@ const Category = () => {
           }}
         />
 
-        <div className="flex mt-4">
-          <SiteButton
-            href=""
-            text="新しい順"
-            className="inline my-2 m-4"
-            onClick={getData}
-          />
-          <SiteButton
-            href=""
-            text="古い順"
-            className="inline my-2 m-4"
-            onClick={handledesSort}
-          />
-          <SiteButton
-            href=""
-            text="いいね順"
-            className="inline my-2 m-4"
-            onClick={handlelikeSort}
-          />
-        </div>
-
+        <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+          <InputLabel id="demo-select-small">並び順</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            label="並び順"
+          >
+            <MenuItem value="新しい順" onClick={getData}>
+              新しい順
+            </MenuItem>
+            <MenuItem value="古い順" onClick={handledesSort}>
+              古い順
+            </MenuItem>
+            <MenuItem value="いいね順" onClick={handlelikeSort}>
+              いいね順
+            </MenuItem>
+          </Select>
+        </FormControl>
         <div className="max-w-7xl m-auto">
           <Grid container spacing={1}>
             {firedata

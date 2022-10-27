@@ -16,7 +16,6 @@ import { SiteButton } from "../layouts/components/button";
 import { SiteCategory } from "../layouts/components/text";
 import { GetPosts } from "./api/firestore/GetPosts";
 import { Categories, SiteHead } from "../layouts/components/ui";
-import * as React from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -181,26 +180,6 @@ export default function Index() {
             setSearchName(event.target.value);
           }}
         />
-        {/* <div className="flex mt-4">
-          <SiteButton
-            href=""
-            text="新しい順"
-            className="inline my-2 m-4"
-            onClick={getData}
-          />
-          <SiteButton
-            href=""
-            text="古い順"
-            className="inline my-2 m-4"
-            onClick={handledesSort}
-          />
-          <SiteButton
-            href=""
-            text="いいね順"
-            className="inline my-2 m-4"
-            onClick={handlelikeSort}
-          />
-        </div> */}
 
         <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
           <InputLabel id="demo-select-small">並び順</InputLabel>

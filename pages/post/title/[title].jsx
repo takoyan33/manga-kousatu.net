@@ -204,7 +204,6 @@ const Post = () => {
       <MuiNavbar />
 
       <div className="max-w-5xl m-auto">
-        <br></br>
         <p>
           <Link href="/">トップ</Link>　＞　投稿記事　＞　{title}
         </p>
@@ -257,8 +256,6 @@ const Post = () => {
                         onChange={(event) => setPostTitle(event.target.value)}
                       />
 
-                      <br></br>
-
                       <TextField
                         label="内容(最大500文字）"
                         className="m-auto w-full"
@@ -269,11 +266,10 @@ const Post = () => {
                         value={context}
                         onChange={(event) => setContext(event.target.value)}
                       />
-                      <br></br>
+
                       <Button variant="outlined" onClick={updatefields}>
                         更新する
                       </Button>
-                      <br></br>
                     </Box>
                   )}
                   <p className="flex justify-center">
@@ -289,18 +285,13 @@ const Post = () => {
                     <div gutterBottom variant="h5" component="div">
                       {data.title}
                     </div>
-                    <br></br>
                     投稿日時：{data.createtime}
-                    <br></br>
-                    <br></br>
                     {data.selected &&
                       data.selected.map((tag, i) => (
                         <span className="text-cyan-700" key={i}>
                           #{tag}　
                         </span>
                       ))}
-                    <br></br>
-                    <br></br>
                     <div variant="body2" color="text.secondary">
                       {data.categori == "ONE PIECE" && (
                         <span className="bg-blue-500 p-2 inline-block text-white text-center">
@@ -341,10 +332,9 @@ const Post = () => {
                         </span>
                       )}
                       <p className="text-left">{data.context}</p>
-                      <br></br>
-                      <br></br>
+
                       <p>いいね数：{data.likes}</p>
-                      <br></br>
+
                       {user && (
                         <button
                           onClick={() => handleClick(data.id, data.likes)}
@@ -364,13 +354,11 @@ const Post = () => {
                         </p>
                       )}
                       <div className="bg-slate-200 my-8 py-8">
-                        <br></br>
                         <Avatar alt="Remy Sharp" src={data.photoURL} />
-                        <br></br>
+
                         <span className="text-xl">
                           投稿者名：{data.displayname}
                         </span>
-                        <br></br>
                       </div>
                     </div>
                   </div>
@@ -379,8 +367,6 @@ const Post = () => {
             );
           })}
         </div>
-        <br></br>
-        <br></br>
       </div>
     </>
   );

@@ -117,7 +117,6 @@ export default function Registerprofile() {
               }
             />
             <br></br>
-            <br></br>
             <label className="text-center my-4">ユーザー画像*</label>
             <br></br>
 
@@ -157,7 +156,6 @@ export default function Registerprofile() {
                 onChange={uploadToClient}
               />
               <br></br>
-              <br></br>
             </div>
             <label className="text-center my-4">
               プロフィール（最大50文字）*
@@ -174,7 +172,6 @@ export default function Registerprofile() {
               }
             />
             <br></br>
-            <br></br>
             <label className="text-center my-4">好きな漫画（最大10）*</label>
             <br></br>
             <TagsInput
@@ -184,7 +181,6 @@ export default function Registerprofile() {
               placeHolder="タグを追加してください"
             />
 
-            <br></br>
             <br></br>
             <Button
               variant="outlined"

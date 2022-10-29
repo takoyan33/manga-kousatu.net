@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { database, storage } from "../../../firebaseConfig";
+import { database } from "../../../firebaseConfig";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import TextField from "@mui/material/TextField";
 import { getAuth } from "firebase/auth";

@@ -88,7 +88,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
     }, []);
 
     return (
-      <div className="">
+      <div className="cursor-pointer">
         <Link href={`/post/${id}`}>
           <Grid key={id} className="flex  m-auto">
             <Card
@@ -122,7 +122,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     {netabare}
                   </p>
                 )}
-                <br></br>
                 <div className="w-80 m-auto" style={styles}></div>
                 <p className="max-w-xs">
                   {selected &&
@@ -134,13 +133,13 @@ export const Cardpost: React.VFC<Props> = React.memo(
                       // </Link>
                     ))}
                 </p>
-                <div key={id}>
+                <div key={id} className="cursor-pointer">
                   {users &&
                     users.map((user) => {
                       return (
                         <>
                           {email == user.email && (
-                            <div key={user.id}>
+                            <div key={user.id} className="">
                               <div className="bg-slate-200 my-2 py-4 flex m-auto">
                                 <div className="">
                                   <Avatar
@@ -155,7 +154,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
                                     投稿者名：{user.username}
                                   </span>
                                 </div>
-                                <br></br>
                               </div>
                             </div>
                           )}

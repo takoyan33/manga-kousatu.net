@@ -11,10 +11,8 @@ type Props = {
 const Avater: React.VFC<Props> = React.memo(({ photoURL, displayname }) => {
   return (
     <div>
-      <br></br>
       <Avatar alt="Remy Sharp" src={photoURL} />
       <span className="text-xl">{displayname}</span>
-      <br></br>
     </div>
   );
 });

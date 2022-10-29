@@ -107,8 +107,6 @@ export default function Index() {
       <MuiNavbar />
 
       <div className="max-w-7xl m-auto">
-        <br></br>
-        <br></br>
         <p className="text-center">
           <img
             src="./images/book-reading.png"
@@ -128,18 +126,15 @@ export default function Index() {
           自由に投稿・閲覧できるwebサイトです。
           <br></br> ※非収益サイトです
         </p>
-        <br></br>
         {!user && (
           <>
             <Stack className="text-center m-auto w-full ">
               <Registerbutton text="新規登録はこちら" />
-              <br></br>
               {/* usecontextを使用 valueを送る*/}
               <LoginContext.Provider value={{ text: "ログイン" }}>
                 {/* loginbuttonに向けて*/}
                 <Loginbutton />
               </LoginContext.Provider>
-              <br></br>
               <div></div>
             </Stack>
           </>
@@ -147,7 +142,7 @@ export default function Index() {
         {user && (
           <div className="lg:text-right text-center">
             <SiteButton
-              href="/post"
+              href="/post/new"
               text="新規投稿をする"
               className="m-auto w-50 my-2"
             />
@@ -171,7 +166,6 @@ export default function Index() {
         </h2>
 
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
-        <br></br>
         <TextField
           id="outlined-basic"
           label="考察記事を検索する"
@@ -200,8 +194,6 @@ export default function Index() {
           </Select>
         </FormControl>
 
-        <br></br>
-        <br></br>
         <Grid container className="m-auto">
           {firedata == [] && <p>まだ投稿していません</p>}
           {firedata

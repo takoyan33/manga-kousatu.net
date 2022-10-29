@@ -101,10 +101,8 @@ export default function Index() {
             helperText={errors.email?.message}
           />
           <br></br>
-          <br></br>
 
           <label className="text-center my-4">パスワード（8文字以上)*</label>
-          <br></br>
           <br></br>
           <TextField
             id="outlined-basic"
@@ -120,7 +118,6 @@ export default function Index() {
             helperText={errors.password?.message}
           />
           <br></br>
-          <br></br>
           <SiteButton
             href=""
             // onClick={SignIn}
@@ -128,7 +125,6 @@ export default function Index() {
             text="ログイン"
             className="m-auto w-80 my-8"
           />
-          <br></br>
           <br></br>
           <SiteButton
             href=""

@@ -92,7 +92,6 @@ export default function Nameauth() {
             setDisplayName(event.target.value)
           }
         />
-        <br></br>
       </Box>
       <br></br>
       <Button variant="outlined" className="m-5" onClick={updatename}>

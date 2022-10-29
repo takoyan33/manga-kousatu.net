@@ -25,7 +25,7 @@
     "**/*.tsx",
     "pages/register.tsx",
     "pages/login.tsx"
-, "pages/post/index.tsx", "pages/home.tsx", "layouts/Cardpost.tsx", "pages/api/auth/SignUp.tsx", "pages/profile/index.tsx", "pages/post/[postId].jsx", "layouts/components/button/loginbutton.tsx", "pages/post/title/[title].jsx", "pages/edit.jsx", "layouts/components/MuiNavbar.jsx"  ],
+, "pages/post/new/index.tsx", "pages/home.tsx", "layouts/Cardpost.tsx", "pages/api/auth/SignUp.tsx", "pages/profile/index.tsx", "pages/post/[postId].jsx", "layouts/components/button/loginbutton.tsx", "pages/post/title/[title].jsx", "pages/edit.jsx", "layouts/components/MuiNavbar.jsx"  ],
   "exclude": [
     "node_modules"
   ]

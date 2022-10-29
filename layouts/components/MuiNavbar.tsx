@@ -61,6 +61,7 @@ export const MuiNavbar = () => {
                 src="/magastudylogo.png"
                 width="200"
                 height="30"
+                className="cursor-pointer"
                 alt="ロゴ"
               />
             </Link>
@@ -125,14 +126,22 @@ export const MuiNavbar = () => {
         {user && (
           <>
             <MenuItem>
-              <Link href="/post">新しく投稿する</Link>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              <Link href="/post/new">新規投稿</Link>
             </MenuItem>
             <MenuItem>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>
-              <Button color="inherit" onClick={logout}>
+              <ListItemIcon>
                 <Logout fontSize="small" />
+              </ListItemIcon>
+              <Button color="inherit" onClick={logout}>
                 ログアウト
               </Button>
             </MenuItem>

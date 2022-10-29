@@ -102,7 +102,6 @@ export default function SignUp() {
             helperText={errors.email?.message}
           />
           <br></br>
-          <br></br>
           <label className="text-center my-4">パスワード（8文字以上)*</label>
           <br></br>
           <TextField
@@ -118,7 +117,6 @@ export default function SignUp() {
             error={"password" in errors}
             helperText={errors.password?.message}
           />
-          <br></br>
           <br></br>
           <label className="text-center my-4">
             確認用パスワード（8文字以上)*
@@ -136,7 +134,6 @@ export default function SignUp() {
             error={"password" in errors}
             helperText={errors.password?.message}
           />
-          <br></br>
           <br></br>
           <Button
             variant="outlined"

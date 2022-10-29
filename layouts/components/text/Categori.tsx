@@ -39,7 +39,6 @@ const Categori: React.VFC<Props> = React.memo(({ categori }) => {
           href={`/post/category/${categori}`}
         />
       )}
-      <br></br>
     </>
   );
 });

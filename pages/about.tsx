@@ -12,7 +12,6 @@ function About() {
         <p>
           Manga Studyでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。
         </p>
-        <br></br>
         <ul>
           <li>運営者　　　　　阿部　舜平</li>
           <li>メールアドレス　harrier2070@gmail.com</li>

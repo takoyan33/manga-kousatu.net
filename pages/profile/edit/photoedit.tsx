@@ -131,7 +131,6 @@ export default function Photoedit() {
       <Button variant="outlined" className="m-5" onClick={updatename}>
         画像を更新する
       </Button>
-      <br></br>
       <Button variant="outlined" className="m-5">
         <Link href="/profile">戻る</Link>
       </Button>

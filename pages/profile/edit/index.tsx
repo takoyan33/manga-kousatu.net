@@ -118,7 +118,6 @@ export default function Edit() {
                   <p className="my-12 text-center font-semib">
                     現在のプロフィール画像
                     <br></br>
-                    <br></br>
                     <p className="flex justify-center">
                       <Image
                         className="m-auto text-center max-w-sm"
@@ -193,7 +192,6 @@ export default function Edit() {
                         />
                       </div>
                       <br></br>
-                      <br></br>
                       <p className="text-center my-4">
                         現在のプロフィール： <span>{data.bio}</span>
                       </p>
@@ -212,7 +210,6 @@ export default function Edit() {
                         />
                       </div>
                       <br></br>
-                      <br></br>
                       <p className="text-center my-4">
                         現在の好きな漫画： <span>{data.favarite}</span>
                       </p>
@@ -226,7 +223,6 @@ export default function Edit() {
                         />
                       </div>
                       <br></br>
-                      <br></br>
                       <div className="text-center">
                         <Button
                           variant="outlined"
@@ -237,7 +233,6 @@ export default function Edit() {
                           プロフィールを更新する
                         </Button>
                       </div>
-                      <br></br>
                       <br></br>
                       <div className="text-center">
                         <Button variant="outlined" className="m-auto w-80 ">

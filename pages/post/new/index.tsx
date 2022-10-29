@@ -1,15 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { database } from "../../firebaseConfig";
+import { database } from "../../../firebaseConfig";
 import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { postImage } from "../api/upload";
-import { postContextImage } from "../api/uploadcontext";
+import { postImage } from "../../api/upload";
+import { postContextImage } from "../../api/uploadcontext";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -18,12 +18,12 @@ import Head from "next/head";
 import { updateDoc, serverTimestamp } from "firebase/firestore";
 import "firebase/firestore";
 import "moment/locale/ja";
-import Imageupload from "../../packages/utils/Imageupload";
-import Imageuploadcontext from "../../packages/utils/Imageuploadcontext";
+import Imageupload from "../../../packages/utils/Imageupload";
+import Imageuploadcontext from "../../../packages/utils/Imageuploadcontext";
 import { TagsInput } from "react-tag-input-component";
-import { Categories, SiteHead } from "../../layouts/components/ui";
-import { Formcontrols } from "../../layouts/components/ui/Formcontrols";
-import { SiteButton } from "../../layouts/components/button";
+import { Categories, SiteHead } from "../../../layouts/components/ui";
+import { Formcontrols } from "../../../layouts/components/ui/Formcontrols";
+import { SiteButton } from "../../../layouts/components/button";
 
 export default function Post() {
   const [ID, setID] = useState(null);

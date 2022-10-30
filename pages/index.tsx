@@ -4,7 +4,6 @@ import { collection, onSnapshot } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../layouts/Cardpost";
@@ -17,12 +16,6 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
-// export const LoginContext = createContext(
-//   {} as {
-//     text: string;
-//   }
-// );
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);

@@ -15,6 +15,7 @@ import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { SiteButton } from "../../../layouts/components/button";
 
 // フォームの型
 interface SampleFormInput {
@@ -135,22 +136,18 @@ export default function SignUp() {
             helperText={errors.password?.message}
           />
           <br></br>
-          <Button
-            variant="outlined"
-            // onClick={SignUp}
+          <SiteButton
+            href=""
             onClick={handleSubmit(SignUp)}
-            className="m-auto w-80 my-8"
-          >
-            新規登録
-          </Button>
-          <br></br>
-          <Button
-            variant="outlined"
+            text="新規登録"
+            className="m-auto w-80 my-8 text-center"
+          />
+          <SiteButton
+            href=""
+            text="Googleで新規登録"
             onClick={SignUpWithGoogle}
-            className="m-auto w-80 "
-          >
-            Googleで新規登録
-          </Button>
+            className="m-auto text-center w-80 my-4"
+          />
           <p className="my-4">
             登録済みの方はこちら
             <Link href="/login">

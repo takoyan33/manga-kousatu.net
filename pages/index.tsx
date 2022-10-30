@@ -21,11 +21,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-export const LoginContext = createContext(
-  {} as {
-    text: string;
-  }
-);
+// export const LoginContext = createContext(
+//   {} as {
+//     text: string;
+//   }
+// );
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
@@ -128,15 +128,17 @@ export default function Index() {
         </p>
         {!user && (
           <>
-            <Stack className="text-center m-auto w-full ">
-              <Registerbutton text="新規登録はこちら" />
-              {/* usecontextを使用 valueを送る*/}
-              <LoginContext.Provider value={{ text: "ログイン" }}>
-                {/* loginbuttonに向けて*/}
-                <Loginbutton />
-              </LoginContext.Provider>
-              <div></div>
-            </Stack>
+            <SiteButton
+              href="/register"
+              text="新規登録"
+              className="m-auto w-50 my-2 text-center"
+            />
+
+            <SiteButton
+              href="/login"
+              text="ログイン"
+              className="m-auto w-50 my-2 text-center"
+            />
           </>
         )}
         {user && (

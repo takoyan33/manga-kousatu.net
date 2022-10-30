@@ -5,7 +5,6 @@ import { collection, addDoc } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { postImage } from "../../api/upload";
@@ -14,33 +13,26 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormLabel from "@mui/material/FormLabel";
-import Head from "next/head";
-import { updateDoc, serverTimestamp } from "firebase/firestore";
+import { serverTimestamp } from "firebase/firestore";
 import "firebase/firestore";
 import "moment/locale/ja";
 import Imageupload from "../../../packages/utils/Imageupload";
 import Imageuploadcontext from "../../../packages/utils/Imageuploadcontext";
 import { TagsInput } from "react-tag-input-component";
-import { Categories, SiteHead } from "../../../layouts/components/ui";
+import { SiteHead } from "../../../layouts/components/ui";
 import { Formcontrols } from "../../../layouts/components/ui/Formcontrols";
 import { SiteButton } from "../../../layouts/components/button";
 
 export default function Post() {
-  const [ID, setID] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
-  const [name, setName] = useState("");
   const [categori, setCategori] = useState("");
-  const [firedata, setFiredata] = useState([]);
-  const [isUpdate, setIsUpdate] = useState(false);
   const databaseRef = collection(database, "CRUD DATA");
   const [image, setImage] = useState(null);
   const [contextimage, setContextImage] = useState<File[]>([]);
   const [createObjectURL, setCreateObjectURL] = useState<string>("");
   const [createcontextObjectURL, setCreatecontexObjectURL] = useState("");
-  const [downloadURL, setDownloadURL] = useState(null);
-  const [uploadResult, setUploadResultL] = useState(null);
   const [userid, setUserid] = useState(null);
   const [result, setResult] = useState("");
   const [netabare, setNetabare] = useState("");
@@ -140,7 +132,6 @@ export default function Post() {
             "& > :not(style)": { m: 1, width: "50ch" },
           }}
           className="flex justify-center max-w-7xl "
-          // Validate
           autoComplete="off"
         >
           <div>

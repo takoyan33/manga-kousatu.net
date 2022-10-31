@@ -151,7 +151,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
                                 </div>
                                 <div className=" pt-2">
                                   <span className="text-xl my-2 ml-2 ">
-                                    投稿者名：{user.username}
+                                    {user.username}
                                   </span>
                                 </div>
                               </div>

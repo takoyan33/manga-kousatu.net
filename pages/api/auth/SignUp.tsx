@@ -16,6 +16,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../../layouts/components/button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // フォームの型
 interface SampleFormInput {
@@ -33,6 +35,7 @@ const schema = yup.object({
 });
 
 export default function SignUp() {
+  const notify = () => toast("Wow so easy !");
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
@@ -88,6 +91,7 @@ export default function SignUp() {
         autoComplete="off"
       >
         <div>
+          <ToastContainer />
           <label className="text-center my-4">メールアドレス*</label>
           <br></br>
           <TextField

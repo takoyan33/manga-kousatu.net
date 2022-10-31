@@ -195,7 +195,7 @@ export default function Index() {
                 //そのまま返す
               } else if (
                 data.title.toLowerCase().includes(searchName.toLowerCase())
-                //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+                //data.titleが含んでいたら小文字で返す　含んでいないdataは返さない
               ) {
                 return data;
               }
@@ -230,7 +230,7 @@ export default function Index() {
             className="m-auto w-50 my-2"
           />
         </div>
-        <div>
+        <div className="my-4">
           <p>© 尾田栄一郎／集英社・フジテレビ・東映アニメーション</p>
           <p>© 和久井健・講談社／アニメ「東京リベンジャーズ」</p>
           <p>©原泰久／集英社・キングダム製作委員会</p>

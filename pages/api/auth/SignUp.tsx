@@ -35,7 +35,8 @@ const schema = yup.object({
 });
 
 export default function SignUp() {
-  const notify = () => toast("Wow so easy !");
+  const signupnotify = () => toast("登録できました！");
+  const signupmissnotify = () => toast("登録失敗しました！");
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const [email, setEmail] = useState<string>("");
@@ -60,10 +61,11 @@ export default function SignUp() {
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
           // firebase.firestore().collection("users").doc(user.uid);
+          signupnotify();
           router.push("/registerprofile");
         })
         .catch((err) => {
-          alert("登録できませんでした");
+          signupmissnotify();
         });
     } else {
     }
@@ -157,6 +159,18 @@ export default function SignUp() {
             <Link href="/login">
               <span className="text-blue-500 underline">ログイン</span>
             </Link>
+            <ToastContainer
+              position="top-right"
+              autoClose={6000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
           </p>
         </div>
       </Box>

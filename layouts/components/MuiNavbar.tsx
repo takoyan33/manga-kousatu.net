@@ -1,5 +1,8 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { AppBar, Toolbar, Button, Stack } from "@mui/material";
+import { useState } from "react";
 import Link from "next/link";
+import { database } from "../../firebaseConfig.js";
+import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
 import Box from "@mui/material/Box";
@@ -27,6 +30,8 @@ export const MuiNavbar = () => {
   };
 
   let router = useRouter();
+  const databaseRef = collection(database, "CRUD DATA");
+  const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
   console.log(user);
@@ -36,11 +41,10 @@ export const MuiNavbar = () => {
 
     signOut(auth)
       .then(() => {
-        alert("ログアウトしました");
         router.push("/");
       })
       .catch((error) => {
-        alert("ログアウトに失敗しました");
+        // An error happened.
       });
   };
 
@@ -61,7 +65,6 @@ export const MuiNavbar = () => {
                 src="/magastudylogo.png"
                 width="200"
                 height="30"
-                className="cursor-pointer"
                 alt="ロゴ"
               />
             </Link>
@@ -75,7 +78,7 @@ export const MuiNavbar = () => {
               aria-haspopup="true"
               aria-expanded={open ? "true" : undefined}
             >
-              <Avatar sx={{ width: 32, height: 32 }}>=</Avatar>
+              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
             </IconButton>
           </Tooltip>
         </Toolbar>
@@ -126,22 +129,17 @@ export const MuiNavbar = () => {
         {user && (
           <>
             <MenuItem>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
-              <Link href="/post/new">新規投稿</Link>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <Settings fontSize="small" />
-              </ListItemIcon>
+              <Image
+                className="m-auto text-center max-w-sm"
+                height={30}
+                width={30}
+                src={user.photoURL}
+              />
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>
-              <ListItemIcon>
-                <Logout fontSize="small" />
-              </ListItemIcon>
               <Button color="inherit" onClick={logout}>
+                <Logout fontSize="small" />
                 ログアウト
               </Button>
             </MenuItem>

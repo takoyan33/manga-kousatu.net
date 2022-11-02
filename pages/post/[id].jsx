@@ -76,7 +76,6 @@ const Post = () => {
     userid,
     likes,
     selected,
-    edittime
   ) => {
     setID(id);
     setContext(context);
@@ -95,11 +94,6 @@ const Post = () => {
     console.log(context);
   };
 
-  useEffect(() => {
-    getData();
-    usersData();
-  }, [likes]);
-
   const usersData = async () => {
     //firestoreからデータ取得
     await getDocs(usersRef).then((response) => {
@@ -117,6 +111,14 @@ const Post = () => {
     //   setFiredata(documentSnapshot.data());
     // });
   };
+
+  useEffect(() => {
+    getData();
+    usersData();
+  }, [likes]);
+
+  // getData();
+  // usersData();
 
   const updatefields = () => {
     //更新する

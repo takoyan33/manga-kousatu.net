@@ -22,8 +22,11 @@ import { TagsInput } from "react-tag-input-component";
 import { SiteHead } from "../../../layouts/components/ui";
 import { Formcontrols } from "../../../layouts/components/ui/Formcontrols";
 import { SiteButton } from "../../../layouts/components/button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Post() {
+  const notify = () => toast("Wow so easy !");
   const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
@@ -256,6 +259,7 @@ export default function Post() {
           </div>
         </Box>
       </div>
+      
     </div>
   );
 }

@@ -70,17 +70,15 @@ const Post = () => {
     downloadURL,
     categori,
     cratetime,
-    displayname,
     netabare,
     photoURL,
     userid,
     likes,
-    selected,
+    selected
   ) => {
     setID(id);
     setContext(context);
     setPostTitle(title);
-    setDisplayName(displayname);
     setDownloadURL(downloadURL);
     setIsUpdate(true);
     setCategori(categori);
@@ -136,7 +134,10 @@ const Post = () => {
         setPostTitle("");
         setContext("");
         setIsUpdate(false);
-        getData();
+        // router.push(`${ID}`);
+        // getData();
+        // usersData();
+        router.push("/");
       })
       .catch((err) => {
         console.log(err);
@@ -154,6 +155,7 @@ const Post = () => {
         //記事を削除する
         .then(() => {
           alert("記事を削除しました");
+          router.push("/");
           getData();
         })
         .catch((err) => {
@@ -201,7 +203,7 @@ const Post = () => {
                         className=" my-2 m-4"
                         onClick={() =>
                           getID(
-                            firedata.id,
+                            id,
                             firedata.title,
                             firedata.context,
                             firedata.edittime
@@ -212,13 +214,14 @@ const Post = () => {
                         href=""
                         text="削除する"
                         className=" my-2 m-4"
-                        onClick={() => deleteDocument(firedata.id)}
+                        onClick={() => deleteDocument(id)}
                       />
                     </div>
                   )}
                 </>
               )}
 
+              {/* <Link href={`/post/edit/${id}`}>編集</Link> */}
               {isUpdate && (
                 <Box
                   component="form"
@@ -370,10 +373,10 @@ const Post = () => {
                       href=""
                       text="いいねする"
                       className="inline my-2 m-4"
-                      onClick={() => handleClick(firedata.id, firedata.likes)}
+                      onClick={() => handleClick(id, firedata.likes)}
                     />
                   )}
-                  <div key={firedata.id} className="cursor-pointer">
+                  <div key={id} className="cursor-pointer">
                     {users &&
                       users.map((user) => {
                         return (

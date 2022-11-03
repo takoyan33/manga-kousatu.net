@@ -7,6 +7,8 @@ import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
 import { Profileid } from "../../layouts/components/ui/Profileid";
+import Grid from "@material-ui/core/Grid";
+import { Cardpost } from "../../layouts/Cardpost";
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -20,7 +22,7 @@ const Post = () => {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [posttitle, setPostTitle] = useState("");
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
@@ -41,34 +43,34 @@ const Post = () => {
 
   console.log({ userid });
 
-  // const getData = async () => {
-  //   //firestoreからデータ取得
-  //   await getDocs(databaseRef).then((response) => {
-  //     //コレクションのドキュメントを取得
-  //     setFiredata(
-  //       response.docs
-  //         .map((data) => {
-  //           //配列なので、mapで展開する
-  //           return { ...data.data(), id: data.id };
-  //           //スプレッド構文で展開して、新しい配列を作成
-  //         })
-  //         .filter((data) => {
-  //           if (data.id === id) {
-  //             return data;
-  //             //そのまま返す
-  //           } else if (
-  //             data.id.toLowerCase().includes(id)
-  //             //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-  //           ) {
-  //             return data;
-  //           }
-  //         })
-  //     );
-  //   });
-  // };
+  const getData = async () => {
+    //firestoreからデータ取得
+    await getDocs(databaseRef).then((response) => {
+      //コレクションのドキュメントを取得
+      setFiredata(
+        response.docs
+          .map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+          .filter((data) => {
+            if (data.userid === userid) {
+              return data;
+              //そのまま返す
+            } else if (
+              data.userid.toLowerCase().includes(userid)
+              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+            ) {
+              return data;
+            }
+          })
+      );
+    });
+  };
 
   useEffect(() => {
-    // getData();
+    getData();
     usersData();
   }, [likes]);
 
@@ -112,6 +114,33 @@ const Post = () => {
               );
             })}
         </>
+        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+          過去の投稿
+        </h2>
+        <Grid container className="m-auto">
+          {firedata == [] && <p>まだ投稿していません</p>}
+          {firedata.map((data) => {
+            return (
+              <>
+                <Cardpost
+                  key={data.id}
+                  downloadURL={data.downloadURL}
+                  title={data.title}
+                  categori={data.categori}
+                  netabare={data.netabare}
+                  context={data.context}
+                  createtime={data.createtime}
+                  displayname={data.displayname}
+                  email={data.email}
+                  id={data.id}
+                  photoURL={data.photoURL}
+                  likes={data.likes}
+                  selected={data.selected}
+                />
+              </>
+            );
+          })}
+        </Grid>
       </div>
     </>
   );

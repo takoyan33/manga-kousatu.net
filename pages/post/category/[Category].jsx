@@ -18,7 +18,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
 const Category = () => {
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   //データベースを取得
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //新しい順

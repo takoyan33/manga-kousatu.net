@@ -40,7 +40,7 @@ const Post = () => {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [posttitle, setPostTitle] = useState("");
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
@@ -135,7 +135,7 @@ const Post = () => {
 
   const updatefields = () => {
     //更新する
-    let fieldToEdit = doc(database, "CRUD DATA", ID);
+    let fieldToEdit = doc(database, "posts", ID);
     //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: posttitle,
@@ -156,7 +156,7 @@ const Post = () => {
 
   const deleteDocument = (id) => {
     //data.idを送っているのでidを受け取る
-    let fieldToEdit = doc(database, "CRUD DATA", id);
+    let fieldToEdit = doc(database, "posts", id);
     let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
     //確認画面を出す
 
@@ -179,7 +179,7 @@ const Post = () => {
     // setLikecount(likes + 1);
     console.log(likes);
 
-    let fieldToEdit = doc(database, "CRUD DATA", id);
+    let fieldToEdit = doc(database, "posts", id);
     updateDoc(fieldToEdit, {
       likes: likes + 1,
     })

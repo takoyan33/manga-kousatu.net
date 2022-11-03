@@ -5,9 +5,6 @@ import { database } from "../../firebaseConfig";
 import {
   collection,
   getDocs,
-  doc,
-  updateDoc,
-  deleteDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, deleteUser } from "firebase/auth";
@@ -30,7 +27,7 @@ export default function Profile() {
   const [displayName, setDisplayName] = useState<string>("");
   const [createtime, setCreatetime] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const usersRef = collection(database, "users");
   const [users, setUsers] = useState(null);
   //データベースを取得
@@ -112,7 +109,7 @@ export default function Profile() {
   };
 
   // const deleteDocument = useCallback((id) => {
-  //   let fieldToEdit = doc(database, "CRUD DATA", id);
+  //   let fieldToEdit = doc(database, "posts", id);
   //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
 
   //   if (checkSaveFlg) {

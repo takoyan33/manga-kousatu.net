@@ -37,7 +37,7 @@ const Post = () => {
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [posttitle, setPostTitle] = useState("");
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState(null);
@@ -57,7 +57,7 @@ const Post = () => {
 
   const getData = async () => {
     //firestoreからデータ取得
-    const data = doc(database, "CRUD DATA", id);
+    const data = doc(database, "posts", id);
     getDoc(data).then((documentSnapshot) => {
       setFiredata(documentSnapshot.data());
     });
@@ -89,7 +89,7 @@ const Post = () => {
 
   // const updatefields = () => {
   //   //更新する
-  //   let fieldToEdit = doc(database, "CRUD DATA", ID);
+  //   let fieldToEdit = doc(database, "posts", ID);
   //   const newdate = new Date().toLocaleString("ja-JP");
   //   //セットしたIDをセットする
   //   updateDoc(fieldToEdit, {

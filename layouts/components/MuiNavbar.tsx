@@ -30,7 +30,7 @@ export const MuiNavbar = () => {
   };
 
   let router = useRouter();
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;

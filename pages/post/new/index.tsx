@@ -26,12 +26,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Post() {
-  const notify = () => toast("Wow so easy !");
+  const notify = () => toast("記事投稿ができました！");
+  const [processing, setProcessing] = useState(false);
   const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
   const [context, setContext] = useState("");
   const [categori, setCategori] = useState("");
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const [image, setImage] = useState(null);
   const [contextimage, setContextImage] = useState<File[]>([]);
   const [createObjectURL, setCreateObjectURL] = useState<string>("");
@@ -78,6 +79,10 @@ export default function Post() {
   };
 
   const addDate = async () => {
+    // 処理中(true)なら非同期処理せずに抜ける
+    if (processing) return;
+    // 処理中フラグを上げる
+    setProcessing(true);
     if (image == null) {
       alert("サムネイルを選んでください");
     } else {
@@ -105,7 +110,8 @@ export default function Post() {
         likes: 0,
       })
         .then(() => {
-          alert("記事投稿ができました。");
+          notify();
+          setProcessing(false);
           setTitle("");
           setContext("");
           setCategori("");
@@ -259,7 +265,6 @@ export default function Post() {
           </div>
         </Box>
       </div>
-      
     </div>
   );
 }

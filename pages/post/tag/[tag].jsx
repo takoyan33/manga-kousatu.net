@@ -15,7 +15,7 @@ import { SiteButton } from "../../../layouts/components/button";
 import { Categories, SiteHead } from "../../../layouts/components/ui";
 
 const Category = () => {
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   //データベースを取得
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //新しい順

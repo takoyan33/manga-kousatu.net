@@ -10,17 +10,18 @@ import { Cardpost } from "../layouts/Cardpost";
 import { query, orderBy } from "firebase/firestore";
 import { SiteButton } from "../layouts/components/button";
 import { SiteCategory } from "../layouts/components/text";
-import { GetPosts } from "./api/firestore/GetPosts";
+import { useGetPosts } from "../layouts/components/hooks/useGetPosts";
 import { Categories, SiteHead } from "../layouts/components/ui";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { Changetab } from "../layouts/components/ui/Changetab";
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
   // const { getData, handledesSort, handlelikeSort } = GetPosts();
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //新しい順
   const u = query(databaseRef, orderBy("timestamp"));

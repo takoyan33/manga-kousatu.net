@@ -57,7 +57,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
   }) => {
     const usersRef = collection(database, "users");
     const [users, setUsers] = useState(null);
-    const databaseRef = collection(database, "CRUD DATA");
+    const databaseRef = collection(database, "posts");
     const style: React.CSSProperties = {
       whiteSpace: "pre-line",
     };

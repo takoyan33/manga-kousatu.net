@@ -2,10 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { app, database } from "../../../firebaseConfig";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
@@ -17,7 +14,7 @@ import Head from "next/head";
 export default function Emaildedit() {
   const [email, setEmail] = useState<string>("");
   let router = useRouter();
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;

@@ -20,7 +20,7 @@ export default function Nameauth() {
   let router = useRouter();
   const [createtime, setCreatetime] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
-  const databaseRef = collection(database, "CRUD DATA");
+  const databaseRef = collection(database, "posts");
   const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState<string>(null);

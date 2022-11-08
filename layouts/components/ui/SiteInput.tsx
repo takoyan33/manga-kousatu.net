@@ -10,7 +10,7 @@ type Props = {
   helperText: string;
   className: string;
   variant: any;
-onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 // eslint-disable-next-line react/display-name
@@ -28,8 +28,9 @@ export const SiteInput: React.VFC<Props> = React.memo(
   }) => {
     return (
       <>
-        <label className="text-center my-4">{text}</label>
-        <br></br>
+        <div>
+          <label className="text-center my-4">{text}</label>
+        </div>
         <TextField
           id={id}
           type={type}

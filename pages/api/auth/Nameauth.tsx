@@ -93,7 +93,6 @@ export default function Nameauth() {
           }
         />
       </Box>
-      <br></br>
       <Button variant="outlined" className="m-5" onClick={updatename}>
         名前を更新する
       </Button>

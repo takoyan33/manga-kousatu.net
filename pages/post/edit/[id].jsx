@@ -13,19 +13,11 @@ import {
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
+import { Stack } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
-import { SiteButton } from "../../../layouts/components/button";
-import { SiteCategory } from "../../../layouts/components/text";
-import { Cardpost } from "../../../layouts/Cardpost";
 import { Categories, SiteHead } from "../../../layouts/components/ui";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -119,26 +111,29 @@ const Post = () => {
         <div>
           <div>
             <div className="lg:w-full my-4 ">
-              <Box
+              <Stack
                 component="form"
-                sx={{
-                  "& > :not(style)": { m: 1, width: "25ch" },
-                }}
+                className="m-auto"
                 noValidate
-                autoComplete="off"
+                spacing={2}
+                sx={{ m: 2, width: "38ch" }}
               >
-                <p>タイトル</p>
-                <TextField
-                  id="outlined-basic"
-                  label="タイトル（最大20文字)"
-                  variant="outlined"
-                  type="text"
-                  value={posttitle}
-                  onChange={(event) => setPostTitle(event.target.value)}
-                />
-
-                <br></br>
-                <p>内容(最大500文字）</p>
+                <div>
+                  <p>タイトル</p>
+                </div>
+                <div>
+                  <TextField
+                    id="outlined-basic"
+                    label="タイトル（最大20文字)"
+                    variant="outlined"
+                    type="text"
+                    value={posttitle}
+                    onChange={(event) => setPostTitle(event.target.value)}
+                  />
+                </div>
+                <div>
+                  <p>内容(最大500文字）</p>
+                </div>
                 <TextField
                   label="内容(最大500文字）"
                   className="m-auto w-full"
@@ -149,11 +144,10 @@ const Post = () => {
                   value={firedata.title}
                   onChange={(event) => setContext(event.target.value)}
                 />
-                <br></br>
                 {/* <Button variant="outlined" onClick={updatefields}>
                   更新する
                 </Button> */}
-              </Box>
+              </Stack>
               <Link href="/">トップ</Link>　＞　投稿記事　＞　 {firedata.title}
             </div>
           </div>

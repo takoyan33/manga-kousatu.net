@@ -11,8 +11,7 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Imageupload from "../packages/utils/Imageupload";
 import Imageuploadcontext from "../packages/utils/Imageuploadcontext";
-import SignUp from "./api/auth/SignUp";
-import { boxSizing } from "@mui/system";
+import { Stack } from "@mui/material";
 import { TagsInput } from "react-tag-input-component";
 
 export default function Registerprofile() {
@@ -89,99 +88,96 @@ export default function Registerprofile() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MuiNavbar />
-
       <div className="max-w-7xl m-auto">
-        <Box
+        <Stack
           component="form"
-          className="flex justify-center max-w-7xl "
+          className="m-auto"
           noValidate
-          autoComplete="off"
+          spacing={2}
+          sx={{ m: 2, width: "38ch" }}
         >
+          <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+            プロフィール登録
+          </h2>
+          <p>詳細なプロフィールの記載をお願いします。</p>
           <div>
-            <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-              プロフィール登録
-            </h2>
-            <p>詳細なプロフィールの記載をお願いします。</p>
-            <br></br>
             <label className="text-center my-4">
               ユーザーの名前*（10文字以内）
             </label>
-            <br></br>
-            <TextField
-              id="outlined-basic"
-              label="太郎"
-              className="m-auto w-80"
-              variant="outlined"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setUsername(event.target.value)
-              }
-            />
-            <br></br>
+          </div>
+          <TextField
+            id="outlined-basic"
+            label="太郎"
+            className="m-auto w-80"
+            variant="outlined"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setUsername(event.target.value)
+            }
+          />
+          <div>
             <label className="text-center my-4">ユーザー画像*</label>
-            <br></br>
-
-            <div className="">
-              <img
-                className="flex justify-center items-center m-auto w-60"
-                src={createObjectURL}
-                alt="ユーザー画像"
-              />
-            </div>
-            <div className="text-center m-auto my-4">
-              <label
-                htmlFor="file-input"
-                className="bg-primary-900 text-white-900 text-center m-auto dark:bg-dark-900 px-4 py-2 rounded mb-6 w-full"
+          </div>
+          <div className="">
+            <img
+              className="flex justify-center items-center m-auto w-60"
+              src={createObjectURL}
+              alt="ユーザー画像"
+            />
+          </div>
+          <div className="text-center m-auto my-4">
+            <label
+              htmlFor="file-input"
+              className="bg-primary-900 text-white-900 text-center m-auto dark:bg-dark-900 px-4 py-2 rounded mb-6 w-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700 text-center m-auto"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth="2"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-10 w-10 hover:cursor-pointer hover:bg-gray-700 text-center m-auto"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-              </label>
-              <input
-                id="file-input"
-                className="hidden text-center m-auto"
-                type="file"
-                accept="image/*"
-                name="myImage"
-                onChange={uploadToClient}
-              />
-              <br></br>
-            </div>
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                />
+              </svg>
+            </label>
+            <input
+              id="file-input"
+              className="hidden text-center m-auto"
+              type="file"
+              accept="image/*"
+              name="myImage"
+              onChange={uploadToClient}
+            />
+          </div>
+          <div>
             <label className="text-center my-4">
               プロフィール（最大50文字）*
             </label>
-            <br></br>
-            <TextField
-              id="outlined-basic"
-              label="よろしくお願いします。"
-              type="text"
-              variant="outlined"
-              className="m-auto w-80"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setBio(event.target.value)
-              }
-            />
-            <br></br>
+          </div>
+          <TextField
+            id="outlined-basic"
+            label="よろしくお願いします。"
+            type="text"
+            variant="outlined"
+            className="m-auto w-80"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setBio(event.target.value)
+            }
+          />
+          <div>
             <label className="text-center my-4">好きな漫画（最大10）*</label>
-            <br></br>
-            <TagsInput
-              value={selected}
-              onChange={setSelected}
-              name="selected"
-              placeHolder="タグを追加してください"
-            />
-
-            <br></br>
+          </div>
+          <TagsInput
+            value={selected}
+            onChange={setSelected}
+            name="selected"
+            placeHolder="タグを追加してください"
+          />
+          <div>
             <Button
               variant="outlined"
               onClick={addDate}
@@ -190,7 +186,7 @@ export default function Registerprofile() {
               新規登録
             </Button>
           </div>
-        </Box>
+        </Stack>
       </div>
     </div>
   );

@@ -14,6 +14,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../../layouts/components/button";
 import Link from "next/link";
 import { SiteInput } from "../../../layouts/components/ui/SiteInput";
+import { Grid } from "@material-ui/core";
+import { Stack, Button } from "@mui/material";
 
 // フォームの型
 interface SampleFormInput {
@@ -79,44 +81,51 @@ export default function Loginauth() {
 
   return (
     <>
-      <Box
+      <Stack
         component="form"
-        className="flex justify-center max-w-7xl "
+        className="m-auto"
         noValidate
-        autoComplete="off"
+        spacing={2}
+        sx={{ m: 2, width: "38ch" }}
       >
-        <div>
-          <label className="text-center my-4">メールアドレス*</label>
-          <br></br>
-          <TextField
-            id="outlined-basic"
-            label="sample@gmail.com"
-            className="m-auto w-80 mb-6"
-            variant="outlined"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(event.target.value)
-            }
-            {...register("email")}
-            error={"email" in errors}
-            helperText={errors.email?.message}
-          />
-          <br></br>
-          <label className="text-center my-4">パスワード（8文字以上)*</label>
-          <br></br>
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            variant="outlined"
-            type="password"
-            className="m-auto w-80 mb-6"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(event.target.value)
-            }
-            {...register("password")}
-            error={"password" in errors}
-            helperText={errors.password?.message}
-          />
-
+        <>
+          <div>
+            <label className="text-center my-4">メールアドレス*</label>
+          </div>
+          <div>
+            <TextField
+              id="outlined-basic"
+              label="sample@gmail.com"
+              className="m-auto w-80 mb-6"
+              variant="outlined"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(event.target.value)
+              }
+              {...register("email")}
+              error={"email" in errors}
+              helperText={errors.email?.message}
+            />
+            <div>
+              <label className="text-center my-4">
+                パスワード（8文字以上)*
+              </label>
+            </div>
+          </div>
+          <div className="m-auto">
+            <TextField
+              id="outlined-basic"
+              label="Password"
+              variant="outlined"
+              type="password"
+              className="m-auto w-80 mb-6"
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(event.target.value)
+              }
+              {...register("password")}
+              error={"password" in errors}
+              helperText={errors.password?.message}
+            />
+          </div>
           <SiteButton
             href=""
             // onClick={SignIn}
@@ -136,8 +145,8 @@ export default function Loginauth() {
               <span className="text-blue-500 underline">新規登録</span>
             </Link>
           </p>
-        </div>
-      </Box>
+        </>
+      </Stack>
     </>
   );
 }

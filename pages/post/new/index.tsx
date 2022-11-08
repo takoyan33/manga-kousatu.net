@@ -173,8 +173,9 @@ export default function Post() {
                 }
               }}
             />
-            <br></br>
-            <FormLabel id="demo-radio-buttons-group-label">作品名*</FormLabel>
+            <div>
+              <FormLabel id="demo-radio-buttons-group-label">作品名*</FormLabel>
+            </div>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
@@ -239,8 +240,9 @@ export default function Post() {
                 }
               }}
             />
-            <br></br>
-            <p>写真（最大1枚）</p>
+            <div>
+              <p>写真（最大1枚）</p>
+            </div>
             <Imageuploadcontext
               onChange={uploadToClientcontext}
               createcontextObjectURL={createcontextObjectURL}

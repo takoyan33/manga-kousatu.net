@@ -123,11 +123,9 @@ const Category = () => {
       <SiteHead />
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
-        <br></br>
-        <p>
+        <p className="my-4">
           <Link href="/">トップ</Link>　＞　投稿記事　＞　{Category}
         </p>
-        <br></br>
         <h2 className="my-12 text-center text-2xl font-semibold">
           {Category}の考察記事一覧
         </h2>
@@ -199,8 +197,6 @@ const Category = () => {
               </p>
             )}
           </Grid>
-          <br></br>
-          <br></br>
         </div>
       </div>
     </>

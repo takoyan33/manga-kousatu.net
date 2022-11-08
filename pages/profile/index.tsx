@@ -2,10 +2,7 @@ import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { database } from "../../firebaseConfig";
-import {
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, deleteUser } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
@@ -209,19 +206,17 @@ export default function Profile() {
             })}
         </Grid>
 
-        <br></br>
-
         {/* <Button variant="outlined" className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </Button> */}
         {/* <Button variant="outlined" className="myy-5">
           <Link href="/profile/passwordedit">パスワードを変更する</Link>
         </Button> */}
-        <br></br>
-
-        <Button variant="outlined" className="my-5" onClick={deleteuser}>
-          アカウントを退会する
-        </Button>
+        <div>
+          <Button variant="outlined" className="my-5" onClick={deleteuser}>
+            アカウントを退会する
+          </Button>
+        </div>
       </div>
     </>
   );

@@ -31,6 +31,7 @@ export default function Index() {
   const [searchName, setSearchName] = useState("");
   const [loadIndex, setLoadIndex] = useState(6);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   let router = useRouter();
   const auth = getAuth();
@@ -38,11 +39,14 @@ export default function Index() {
 
   // 新着順
   const getData = async () => {
+    setLoading(true);
+    console.log(loading);
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
     });
+    setLoading(false);
   };
 
   //古い順
@@ -188,6 +192,7 @@ export default function Index() {
         </FormControl>
 
         <Grid container className="m-auto">
+          {loading && <p>読み込み中・・・</p>}
           {firedata == [] && <p>まだ投稿していません</p>}
           {firedata
             .filter((data) => {

@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../../layouts/components/button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Stack } from "@mui/material";
 
 // フォームの型
 interface SampleFormInput {
@@ -86,94 +87,93 @@ export default function SignUp() {
 
   return (
     <>
-      <Box
+      <Stack
         component="form"
-        className="flex justify-center max-w-7xl "
+        className="m-auto"
         noValidate
-        autoComplete="off"
+        spacing={2}
+        sx={{ m: 2, width: "38ch" }}
       >
+        <ToastContainer />
         <div>
-          <ToastContainer />
           <label className="text-center my-4">メールアドレス*</label>
-          <br></br>
-          <TextField
-            id="outlined-basic"
-            label="sample@gmail.com"
-            className="m-auto w-80"
-            variant="outlined"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(event.target.value)
-            }
-            {...register("email")}
-            error={"email" in errors}
-            helperText={errors.email?.message}
-          />
-          <br></br>
+        </div>
+        <TextField
+          id="outlined-basic"
+          label="sample@gmail.com"
+          className="m-auto w-80"
+          variant="outlined"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setEmail(event.target.value)
+          }
+          {...register("email")}
+          error={"email" in errors}
+          helperText={errors.email?.message}
+        />
+        <div>
           <label className="text-center my-4">パスワード（8文字以上)*</label>
-          <br></br>
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            type="password"
-            variant="outlined"
-            className="m-auto w-80"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(event.target.value)
-            }
-            {...register("password")}
-            error={"password" in errors}
-            helperText={errors.password?.message}
-          />
-          <br></br>
+        </div>
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          type="password"
+          variant="outlined"
+          className="m-auto w-80"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(event.target.value)
+          }
+          {...register("password")}
+          error={"password" in errors}
+          helperText={errors.password?.message}
+        />
+        <div>
           <label className="text-center my-4">
             確認用パスワード（8文字以上)*
           </label>
-          <br></br>
-          <TextField
-            id="outlined-basic"
-            label="Password"
-            type="password"
-            variant="outlined"
-            className="m-auto w-80"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(event.target.value)
-            }
-            error={"password" in errors}
-            helperText={errors.password?.message}
-          />
-          <br></br>
-          <SiteButton
-            href=""
-            onClick={handleSubmit(SignUp)}
-            text="新規登録"
-            className="m-auto w-80 my-8 text-center"
-          />
-          <SiteButton
-            href=""
-            text="Googleで新規登録"
-            onClick={SignUpWithGoogle}
-            className="m-auto text-center w-80 my-4"
-          />
-          <p className="my-4">
-            登録済みの方はこちら
-            <Link href="/login">
-              <span className="text-blue-500 underline">ログイン</span>
-            </Link>
-            <ToastContainer
-              position="top-right"
-              autoClose={6000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-          </p>
         </div>
-      </Box>
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          type="password"
+          variant="outlined"
+          className="m-auto w-80"
+          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+            setPassword(event.target.value)
+          }
+          error={"password" in errors}
+          helperText={errors.password?.message}
+        />
+        <SiteButton
+          href=""
+          onClick={handleSubmit(SignUp)}
+          text="新規登録"
+          className="m-auto w-80 my-8 text-center"
+        />
+        <SiteButton
+          href=""
+          text="Googleで新規登録"
+          onClick={SignUpWithGoogle}
+          className="m-auto text-center w-80 my-4"
+        />
+        <p className="my-4">
+          登録済みの方はこちら
+          <Link href="/login">
+            <span className="text-blue-500 underline">ログイン</span>
+          </Link>
+          <ToastContainer
+            position="top-right"
+            autoClose={6000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+        </p>
+      </Stack>
     </>
   );
 }

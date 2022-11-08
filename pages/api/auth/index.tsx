@@ -87,7 +87,6 @@ export default function Index() {
       >
         <div>
           <label className="text-center my-4">メールアドレス*</label>
-          <br></br>
           <TextField
             id="outlined-basic"
             label="sample@gmail.com"
@@ -100,10 +99,8 @@ export default function Index() {
             error={"email" in errors}
             helperText={errors.email?.message}
           />
-          <br></br>
 
           <label className="text-center my-4">パスワード（8文字以上)*</label>
-          <br></br>
           <TextField
             id="outlined-basic"
             label="Password"
@@ -117,7 +114,6 @@ export default function Index() {
             error={"password" in errors}
             helperText={errors.password?.message}
           />
-          <br></br>
           <SiteButton
             href=""
             // onClick={SignIn}
@@ -125,7 +121,6 @@ export default function Index() {
             text="ログイン"
             className="m-auto w-80 my-8"
           />
-          <br></br>
           <SiteButton
             href=""
             text="Googleでログイン"

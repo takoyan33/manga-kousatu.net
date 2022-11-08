@@ -94,7 +94,7 @@ export default function Registerprofile() {
           className="m-auto"
           noValidate
           spacing={2}
-          sx={{ m: 2, width: "38ch" }}
+          sx={{ width: "38ch" }}
         >
           <h2 className="m-5 my-12 text-center text-2xl font-semibold">
             プロフィール登録

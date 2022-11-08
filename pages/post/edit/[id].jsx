@@ -116,7 +116,7 @@ const Post = () => {
                 className="m-auto"
                 noValidate
                 spacing={2}
-                sx={{ m: 2, width: "38ch" }}
+                sx={{ width: "38ch" }}
               >
                 <div>
                   <p>タイトル</p>

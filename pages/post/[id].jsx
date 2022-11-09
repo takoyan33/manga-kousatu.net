@@ -11,6 +11,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
+import Grid from "@material-ui/core/Grid";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
@@ -25,6 +26,7 @@ import { Categories, SiteHead } from "../../layouts/components/ui";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import { query, orderBy, where } from "firebase/firestore";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Post = () => {
@@ -40,6 +42,7 @@ const Post = () => {
   const databaseRef = collection(database, "posts");
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
+  const [recfiredata, setRecfiredata] = useState([]);
   const [downloadURL, setDownloadURL] = useState(null);
   const [likecount, setLikecount] = useState(0);
   const usersRef = collection(database, "users");
@@ -47,6 +50,8 @@ const Post = () => {
   const [netabare, setNetabare] = useState("");
   const [likes, setLikes] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
+  //データベースを取得
+  const q = query(databaseRef, orderBy("timestamp", "desc"), limit(3));
 
   let router = useRouter();
   const { id } = router.query;
@@ -60,6 +65,31 @@ const Post = () => {
     const data = doc(database, "posts", id);
     getDoc(data).then((documentSnapshot) => {
       setFiredata(documentSnapshot.data());
+    });
+  };
+
+  const categoriFiredata = async () => {
+    //firestoreからデータ取得
+    await getDocs(q).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setRecfiredata(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+        // .filter((data) => {
+        //   if (data.categori === firedata.categori) {
+        //     return data;
+        //     //そのまま返す
+        //   } else if (
+        //     data.categori.toLowerCase().includes(firedata.categori)
+        //     //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+        //   ) {
+        //     return data;
+        //   }
+        // })
+      );
     });
   };
 
@@ -112,6 +142,7 @@ const Post = () => {
 
   useEffect(() => {
     getData();
+    categoriFiredata();
     usersData();
   }, [likes]);
 
@@ -415,36 +446,36 @@ const Post = () => {
                 </div>
               </div>
             </div>
-            {/* <>
-                  <h2 className="text-2xl">こちらもおすすめ</h2>
-                  <div className="max-w-7xl m-auto">
-                    <Grid container spacing={1}>
-                      {categoriFiredata.map((firedata) => {
-                        return (
-                          <Cardpost
-                            key={firedata.id}
-                            downloadURL={data.downloadURL}
-                            title={data.title}
-                            categori={data.categori}
-                            netabare={data.netabare}
-                            context={data.context}
-                            createtime={data.createtime}
-                            displayname={data.displayname}
-                            email={data.email}
-                            id={data.id}
-                            photoURL={data.photoURL}
-                            selected={data.selected}
-                          />
-                        );
-                      })}
-                      {categoriFiredata.length == 0 && (
-                        <p className="text-center m-auto my-6 text-2xl">
-                          まだ投稿されていません
-                        </p>
-                      )}
-                    </Grid>
-                  </div> */}
-            {/* </> */}
+            <>
+              <h2 className="text-2xl">こちらもおすすめ</h2>
+              <div className="max-w-7xl m-auto">
+                <Grid container spacing={1}>
+                  {recfiredata.map((data) => {
+                    return (
+                      <Cardpost
+                        key={data.id}
+                        downloadURL={data.downloadURL}
+                        title={data.title}
+                        categori={data.categori}
+                        netabare={data.netabare}
+                        context={data.context}
+                        createtime={data.createtime}
+                        displayname={data.displayname}
+                        email={data.email}
+                        id={data.id}
+                        photoURL={data.photoURL}
+                        selected={data.selected}
+                      />
+                    );
+                  })}
+                  {recfiredata.length == 0 && (
+                    <p className="text-center m-auto my-6 text-2xl">
+                      まだ投稿されていません
+                    </p>
+                  )}
+                </Grid>
+              </div>
+            </>
           </div>
         </div>
       </div>

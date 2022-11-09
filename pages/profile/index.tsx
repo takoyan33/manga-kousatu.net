@@ -13,31 +13,22 @@ import { SiteHead } from "../../layouts/components/ui";
 import Image from "react-image-resizer";
 import { Profileid } from "../../layouts/components/ui/Profileid";
 import { Cardpost } from "../../layouts/Cardpost";
+import ListSubheader from "@mui/material/ListSubheader";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import DraftsIcon from "@mui/icons-material/Drafts";
+import SendIcon from "@mui/icons-material/Send";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
+import StarBorder from "@mui/icons-material/StarBorder";
 
 export default function Profile() {
-  const [ID, setID] = useState(null);
-  const [title, setTitle] = useState<string>("");
-  const [context, setContext] = useState<string>("");
-  const [file, setFile] = useState("");
-  const [categori, setCategori] = useState<string>("");
-  const [photoURL, setPhotoURL] = useState<string>();
-  const [displayName, setDisplayName] = useState<string>("");
-  const [createtime, setCreatetime] = useState<string>("");
-  const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "posts");
   const usersRef = collection(database, "users");
   const [users, setUsers] = useState(null);
   //データベースを取得
-  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
-  const [downloadURL, setDownloadURL] = useState<string>(null);
-  const [likecount, setLikecount] = useState(0);
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState<string>("");
-  const [email, setEmail] = useState("");
-  const [userid, setUserid] = useState<string>(null);
-  const [netabare, setNetabare] = useState<string>("");
-  const [opentext, setOpentext] = useState<boolean>(false);
   const [searchName, setSearchName] = useState("");
 
   const styles = { whiteSpace: "pre-line" };
@@ -132,6 +123,40 @@ export default function Profile() {
           プロフィール
         </h2>
 
+        <List
+          sx={{ width: "100%", maxWidth: 300, bgcolor: "background.paper" }}
+          component="nav"
+          aria-labelledby="nested-list-subheader"
+          subheader={
+            <ListSubheader component="div" id="nested-list-subheader">
+              アカウントメニュー
+            </ListSubheader>
+          }
+        >
+          <ListItemButton>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+            <button className="">
+              <Link href="/profile/edit"> プロフィールを変更する</Link>
+            </button>
+          </ListItemButton>
+          <ListItemButton>
+            <ListItemIcon>
+              <DraftsIcon />
+            </ListItemIcon>
+            <button className="" onClick={deleteuser}>
+              アカウントを退会する
+            </button>
+            {/* <button className="m-5">
+          <Link href="/profile/emailedit">メールアドレスを変更する</Link>
+        </button> */}
+            {/* <button className="myy-5">
+          <Link href="/profile/passwordedit">パスワードを変更する</Link>
+        </button> */}
+          </ListItemButton>
+        </List>
+
         <>
           {users &&
             users.map((data) => {
@@ -151,9 +176,6 @@ export default function Profile() {
               );
             })}
         </>
-        <Button variant="outlined" className="my-5">
-          <Link href="/profile/edit"> プロフィールを変更する</Link>
-        </Button>
 
         <p className="my-12 text-center text-2xl font-semibold">過去の投稿</p>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
@@ -205,18 +227,6 @@ export default function Profile() {
               );
             })}
         </Grid>
-
-        {/* <Button variant="outlined" className="m-5">
-          <Link href="/profile/emailedit">メールアドレスを変更する</Link>
-        </Button> */}
-        {/* <Button variant="outlined" className="myy-5">
-          <Link href="/profile/passwordedit">パスワードを変更する</Link>
-        </Button> */}
-        <div>
-          <Button variant="outlined" className="my-5" onClick={deleteuser}>
-            アカウントを退会する
-          </Button>
-        </div>
       </div>
     </>
   );

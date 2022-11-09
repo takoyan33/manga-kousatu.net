@@ -40,8 +40,6 @@ export default function SignUp() {
   const signupmissnotify = () => toast("登録失敗しました！");
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
   const {
     register,
     handleSubmit,
@@ -52,12 +50,12 @@ export default function SignUp() {
 
   const auth = getAuth();
 
-  const SignUp = (email: any) => {
+  const SignUp = (data) => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
-    console.log(email.email);
-    console.log(email.password);
+    console.log(data.email);
+    console.log(data.password);
     if (checkSaveFlg) {
-      createUserWithEmailAndPassword(auth, email.email, email.password)
+      createUserWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential: any) => {
           const user = userCredential.user;
           sessionStorage.setItem("Token", user.accessToken);
@@ -103,12 +101,10 @@ export default function SignUp() {
           label="sample@gmail.com"
           className="m-auto w-80"
           variant="outlined"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setEmail(event.target.value)
-          }
-          {...register("email")}
-          error={"email" in errors}
-          helperText={errors.email?.message}
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          //   setEmail(event.target.value)
+          // }
+          {...register("email", { required: true })}
         />
         <div>
           <label className="text-center my-4">パスワード（8文字以上)*</label>
@@ -119,12 +115,7 @@ export default function SignUp() {
           type="password"
           variant="outlined"
           className="m-auto w-80"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(event.target.value)
-          }
-          {...register("password")}
-          error={"password" in errors}
-          helperText={errors.password?.message}
+          {...register("password", { required: true })}
         />
         <div>
           <label className="text-center my-4">
@@ -137,11 +128,7 @@ export default function SignUp() {
           type="password"
           variant="outlined"
           className="m-auto w-80"
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-            setPassword(event.target.value)
-          }
-          error={"password" in errors}
-          helperText={errors.password?.message}
+          {...register("password", { required: true })}
         />
         <SiteButton
           href=""

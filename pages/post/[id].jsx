@@ -51,7 +51,7 @@ const Post = () => {
   const [likes, setLikes] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
   //データベースを取得
-  const q = query(databaseRef, orderBy("timestamp", "desc"), limit(3));
+  const q = query(databaseRef, orderBy("timestamp", "desc"));
 
   let router = useRouter();
   const { id } = router.query;

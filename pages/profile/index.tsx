@@ -25,23 +25,43 @@ import StarBorder from "@mui/icons-material/StarBorder";
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function Profile() {
+  let router = useRouter();
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  // const useremail = user.email;
+  // console.log(useremail);
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, where("email", "==", "harrier2070@gmail.com"));
-  console.log(q);
+  const o = query(
+    databaseRef,
+    where("email", "==", "harrier2070@gmail.com"),
+    where("categori", "==", "ONE PIECE")
+  );
+  const z = query(
+    databaseRef,
+    where("email", "==", "harrier2070@gmail.com"),
+    where("categori", "==", "呪術廻戦")
+  );
+  const t = query(
+    databaseRef,
+    where("email", "==", "harrier2070@gmail.com"),
+    where("categori", "==", "東京リベンジャーズ")
+  );
+  const k = query(
+    databaseRef,
+    where("email", "==", "harrier2070@gmail.com"),
+    where("categori", "==", "キングダム")
+  );
   const usersRef = collection(database, "users");
   const [users, setUsers] = useState(null);
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
   const [searchName, setSearchName] = useState("");
-  const [onpiece, setOnpiece] = useState(0);
+  const [onpiece, setOnpiece] = useState([]);
   const [kingdom, setKingdom] = useState([]);
   const [tokyo, setTokyo] = useState([]);
   const [kaisen, setKaisen] = useState([]);
-
-  const styles = { whiteSpace: "pre-line" };
-  let router = useRouter();
-  const auth = getAuth();
-  const user = auth.currentUser;
 
   useEffect(() => {
     let token = sessionStorage.getItem("Token");
@@ -50,6 +70,10 @@ export default function Profile() {
     } else {
       getData();
       usersData();
+      getDataone();
+      getDatzyu();
+      getDatatokyo();
+      getDataking();
     }
   }, []);
 
@@ -67,19 +91,61 @@ export default function Profile() {
     });
   };
 
-  // const getData = async () => {
-  //   //firestoreからデータ取得
-  //   await getDocs(databaseRef).then((response) => {
-  //     //コレクションのドキュメントを取得
-  //     setFiredata(
-  //       response.docs.map((data) => {
-  //         //配列なので、mapで展開する
-  //         return { ...data.data(), id: data.id };
-  //         //スプレッド構文で展開して、新しい配列を作成
-  //       })
-  //     );
-  //   });
-  // };
+  const getDataone = async () => {
+    //firestoreからデータ取得
+    await getDocs(o).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setOnpiece(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
+
+  const getDatzyu = async () => {
+    //firestoreからデータ取得
+    await getDocs(z).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setKaisen(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
+
+  const getDatatokyo = async () => {
+    //firestoreからデータ取得
+    await getDocs(t).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setTokyo(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
+
+  const getDataking = async () => {
+    //firestoreからデータ取得
+    await getDocs(k).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setKingdom(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
   const usersData = async () => {
     //firestoreからデータ取得
@@ -136,10 +202,10 @@ export default function Profile() {
   // }, []);
 
   const sample_data = [
-    { name: "ONE PIECE", value: 2 },
-    { name: "呪術廻戦", value: 0 },
-    { name: "キングダム", value: 1 },
-    { name: "東京リベンジャーズ", value: 0 },
+    { name: "ONE PIECE", value: onpiece.length },
+    { name: "呪術廻戦", value: kaisen.length },
+    { name: "キングダム", value: kingdom.length },
+    { name: "東京リベンジャーズ", value: tokyo.length },
     // { name: "data5", value: 10 },
   ];
 
@@ -243,8 +309,6 @@ export default function Profile() {
 
         <p className="my-12 text-center text-2xl font-semibold">過去の投稿</p>
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
-        <p>ワンピースのカテゴリ数{onpiece}</p>
-        <p>キングダムのカテゴリ数</p>
         <div>
           <ResponsiveContainer height={256}>
             <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
@@ -294,7 +358,7 @@ export default function Profile() {
             // .filter((data) => {
             //   if (data.categori === "ONE PIECE") {
             //     console.log(data.categori);
-            //     setOnpiece(+1);
+            //     setOnpiece((onpiece) => onpiece + 1);
             //     return data;
             //   }
             //   {

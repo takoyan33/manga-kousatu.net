@@ -63,10 +63,17 @@ const Post = () => {
   const getData = async () => {
     //firestoreからデータ取得
     const data = doc(database, "posts", id);
-    getDoc(data).then((documentSnapshot) => {
-      setFiredata(documentSnapshot.data());
-    });
+    console.log("Error getting document:", id);
+    getDoc(data)
+      .then((documentSnapshot) => {
+        setFiredata(documentSnapshot.data());
+      })
+      .catch((error) => {
+        console.log("Error", error);
+      });
   };
+
+  
 
   const categoriFiredata = async () => {
     //firestoreからデータ取得
@@ -144,6 +151,7 @@ const Post = () => {
     getData();
     categoriFiredata();
     usersData();
+    console.log("render!");
   }, [likes]);
 
   // getData();
@@ -290,47 +298,44 @@ const Post = () => {
                   <br></br>
                 </Box>
               )}
-              <br></br>
-              <p>
+              <div>
                 <Link href="/">トップ</Link>　＞　投稿記事　＞　
                 {firedata.title}
-              </p>
-              <p className="flex justify-center my-6">
+              </div>
+              <div className="flex justify-center my-6">
                 <Image
                   className="m-auto text-center max-w-sm"
                   height={500}
                   width={500}
                   src={firedata.downloadURL}
                 />
-              </p>
+              </div>
+              <div className="text-2xl my-4">{firedata.title}</div>
+              <br></br>
               <div>
-                <div className="text-2xl my-4">{firedata.title}</div>
-                <br></br>
-                <p>
-                  <AccessTimeIcon /> 投稿日時：{firedata.createtime}
-                </p>
-                <br></br>
-                {firedata.edittime && (
-                  <p>
-                    <AccessTimeIcon />
-                    編集日時：{firedata.edittime}
-                  </p>
-                )}
-                <br></br>
-                {firedata.selected &&
-                  firedata.selected.map((tag, i) => (
-                    <span className="text-cyan-700" key={i}>
-                      #{tag}　
-                    </span>
-                  ))}
-                <br></br>
-                <div variant="body2" color="text.secondary">
-                  {/* <SiteCategory
+                <AccessTimeIcon /> 投稿日時：{firedata.createtime}
+              </div>
+              <br></br>
+              {firedata.edittime && (
+                <div>
+                  <AccessTimeIcon />
+                  編集日時：{firedata.edittime}
+                </div>
+              )}
+              <br></br>
+              {firedata.selected &&
+                firedata.selected.map((tag, i) => (
+                  <span className="text-cyan-700" key={i}>
+                    #{tag}　
+                  </span>
+                ))}
+              <div variant="body2" color="text.secondary">
+                {/* <SiteCategory
                     className={Categories[firedata.categori].className}
                     text={Categories[firedata.categori].title}
                     href={Categories[firedata.categori].link}
                   /> */}
-                  {/* 
+                {/* 
                   {Categories.map((categori) => (
                     <SiteCategory
                       key={categori.id}
@@ -342,107 +347,104 @@ const Post = () => {
                     />
                   ))} */}
 
-                  {firedata.categori == "ONE PIECE" && (
-                    <SiteCategory
-                      className="bg-blue-500 p-1 inline-block text-white text-center m-6"
-                      text="ONE PIECE"
-                      href="/post/category/ONE PIECE"
-                    />
-                  )}
-                  {firedata.categori == "呪術廻戦" && (
-                    <SiteCategory
-                      className="bg-purple-500 p-1 inline-block text-white text-center m-6"
-                      text="呪術廻戦"
-                      href="/post/category/呪術廻戦"
-                    />
-                  )}
-                  {firedata.categori == "東京リベンジャーズ" && (
-                    <SiteCategory
-                      className="bg-rose-500 p-1 inline-block text-white text-center m-6"
-                      text="東京リベンジャーズ"
-                      href="/post/category/東京リベンジャーズ"
-                    />
-                  )}
-                  {firedata.categori == "キングダム" && (
-                    <SiteCategory
-                      className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
-                      text="キングダム"
-                      href="/post/category/キングダム"
-                    />
-                  )}
+                {firedata.categori == "ONE PIECE" && (
+                  <SiteCategory
+                    className="bg-blue-500 p-1 inline-block text-white text-center m-6"
+                    text="ONE PIECE"
+                    href="/post/category/ONE PIECE"
+                  />
+                )}
+                {firedata.categori == "呪術廻戦" && (
+                  <SiteCategory
+                    className="bg-purple-500 p-1 inline-block text-white text-center m-6"
+                    text="呪術廻戦"
+                    href="/post/category/呪術廻戦"
+                  />
+                )}
+                {firedata.categori == "東京リベンジャーズ" && (
+                  <SiteCategory
+                    className="bg-rose-500 p-1 inline-block text-white text-center m-6"
+                    text="東京リベンジャーズ"
+                    href="/post/category/東京リベンジャーズ"
+                  />
+                )}
+                {firedata.categori == "キングダム" && (
+                  <SiteCategory
+                    className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
+                    text="キングダム"
+                    href="/post/category/キングダム"
+                  />
+                )}
 
-                  {firedata.netabare == "ネタバレ有" && (
-                    <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
-                      {firedata.netabare}
-                    </span>
-                  )}
-                  {firedata.netabare == "ネタバレ無" && (
-                    <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
-                      {firedata.netabare}
-                    </span>
-                  )}
-                  <p className="text-left">{firedata.context}</p>
-                  <br></br>
-                  {firedata.contextimage && (
-                    <p className="flex justify-center">
-                      <Image
-                        className="m-auto text-center max-w-sm"
-                        height={500}
-                        width={500}
-                        src={firedata.contextimage}
-                      />
-                    </p>
-                  )}
-                  <br></br>
-                  <p>
-                    <FavoriteIcon />
-                    {firedata.likes}
-                  </p>
-                  <br></br>
-                  {user && (
-                    <SiteButton
-                      href=""
-                      text="いいねする"
-                      className="inline my-2 m-4"
-                      onClick={() => handleClick(id, firedata.likes)}
+                {firedata.netabare == "ネタバレ有" && (
+                  <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
+                    {firedata.netabare}
+                  </span>
+                )}
+                {firedata.netabare == "ネタバレ無" && (
+                  <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
+                    {firedata.netabare}
+                  </span>
+                )}
+                <p className="text-left">{firedata.context}</p>
+                <br></br>
+                {firedata.contextimage && (
+                  <div className="flex justify-center">
+                    <Image
+                      className="m-auto text-center max-w-sm"
+                      height={500}
+                      width={500}
+                      src={firedata.contextimage}
                     />
-                  )}
-                  <div key={id} className="cursor-pointer">
-                    {users &&
-                      users.map((user) => {
-                        return (
-                          <>
-                            {firedata.email == user.email && (
-                              <Link href={`/profile/${user.userid}`}>
-                                <div key={user.userid}>
-                                  <div className="bg-slate-200 my-8 py-8 flex m-auto">
-                                    <div key={user.id}>
-                                      <p>
-                                        <Avatar
-                                          className="m-auto text-center max-w-sm border"
-                                          alt="プロフィール"
-                                          sx={{ width: 100, height: 100 }}
-                                          src={user.profileimage}
-                                        />
-                                      </p>
+                  </div>
+                )}
+                <div className="my-4">
+                  <FavoriteIcon />
+                  {firedata.likes}
+                </div>
+                {user && (
+                  <SiteButton
+                    href=""
+                    text="いいねする"
+                    className="inline my-2 m-4"
+                    onClick={() => handleClick(id, firedata.likes)}
+                  />
+                )}
+                <div key={id} className="cursor-pointer">
+                  {users &&
+                    users.map((user) => {
+                      return (
+                        <>
+                          {firedata.email == user.email && (
+                            <Link href={`/profile/${user.userid}`}>
+                              <div key={user.userid}>
+                                <div className="bg-slate-200 my-8 py-8 flex m-auto">
+                                  <div key={user.id}>
+                                    <div>
+                                      <Avatar
+                                        className="m-auto text-center max-w-sm border"
+                                        alt="プロフィール"
+                                        sx={{ width: 100, height: 100 }}
+                                        src={user.profileimage}
+                                      />
                                     </div>
-                                    <div className="ml-6 mt-4 ">
-                                      <span className="text-xl">
-                                        <AccountBoxIcon /> {user.username}
-                                      </span>
-                                      <p className="text-xl">
-                                        <BorderColorIcon />
-                                        {user.bio}
-                                      </p>
+                                  </div>
+                                  <div className="ml-6 mt-4 ">
+                                    <span className="text-xl">
+                                      <AccountBoxIcon /> {user.username}
+                                    </span>
+                                    <div className="text-xl my-2">
+                                      <BorderColorIcon />
+                                      {user.bio}
                                     </div>
                                   </div>
                                 </div>
-                              </Link>
-                            )}
-                          </>
-                        );
-                      })}
-                  </div>
+                              </div>
+                            </Link>
+                          )}
+                        </>
+                      );
+                    })}
                 </div>
               </div>
             </div>

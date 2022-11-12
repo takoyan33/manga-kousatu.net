@@ -28,55 +28,31 @@ export default function Profile() {
   let router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
-
-  const useremail = user?.email;
-  console.log(useremail);
   const databaseRef = collection(database, "posts");
-  const q = query(databaseRef, where("email", "==", useremail));
+  const usersRef = collection(database, "users");
+  // if (user) {
+  const q = query(databaseRef, where("email", "==", "harrier2070@gmail.com"));
   const o = query(
     databaseRef,
-    where("email", "==", useremail),
+    where("email", "==", "harrier2070@gmail.com"),
     where("categori", "==", "ONE PIECE")
   );
   const z = query(
     databaseRef,
-    where("email", "==", useremail),
+    where("email", "==", "harrier2070@gmail.com"),
     where("categori", "==", "呪術廻戦")
   );
   const t = query(
     databaseRef,
-    where("email", "==", useremail),
+    where("email", "==", "harrier2070@gmail.com"),
     where("categori", "==", "東京リベンジャーズ")
   );
   const k = query(
     databaseRef,
-    where("email", "==", useremail),
+    where("email", "==", "harrier2070@gmail.com"),
     where("categori", "==", "キングダム")
   );
-  const usersRef = collection(database, "users");
-  const my = query(usersRef, where("email", "==", useremail));
-  const [users, setUsers] = useState(null);
-  //データベースを取得
-  const [firedata, setFiredata] = useState([]);
-  const [searchName, setSearchName] = useState("");
-  const [onpiece, setOnpiece] = useState([]);
-  const [kingdom, setKingdom] = useState([]);
-  const [tokyo, setTokyo] = useState([]);
-  const [kaisen, setKaisen] = useState([]);
-
-  useEffect(() => {
-    let token = localStorage.getItem("Token");
-    if (!token) {
-      router.push("/register");
-    } else {
-      getData();
-      usersData();
-      getDataone();
-      getDatzyu();
-      getDatatokyo();
-      getDataking();
-    }
-  }, []);
+  const my = query(usersRef, where("email", "==", "useremail"));
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -163,6 +139,30 @@ export default function Profile() {
     });
     console.log(firedata);
   };
+  // }
+
+  const [users, setUsers] = useState(null);
+  //データベースを取得
+  const [firedata, setFiredata] = useState([]);
+  const [searchName, setSearchName] = useState("");
+  const [onpiece, setOnpiece] = useState([]);
+  const [kingdom, setKingdom] = useState([]);
+  const [tokyo, setTokyo] = useState([]);
+  const [kaisen, setKaisen] = useState([]);
+
+  useEffect(() => {
+    let token = localStorage.getItem("Token");
+    if (!token) {
+      router.push("/register");
+    } else {
+      getData();
+      usersData();
+      getDataone();
+      getDatzyu();
+      getDatatokyo();
+      getDataking();
+    }
+  }, []);
 
   const deleteuser = async () => {
     //userを削除する

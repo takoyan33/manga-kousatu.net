@@ -65,7 +65,7 @@ export default function Profile() {
   const [kaisen, setKaisen] = useState([]);
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
+    let token = localStorage.getItem("Token");
     if (!token) {
       router.push("/register");
     } else {
@@ -170,7 +170,7 @@ export default function Profile() {
       deleteUser(user)
         //user削除
         .then(() => {
-          sessionStorage.removeItem("Token");
+          localStorage.removeItem("Token");
           //tokenを削除
           alert("退会しました。TOP画面に戻ります。");
           router.push("/");

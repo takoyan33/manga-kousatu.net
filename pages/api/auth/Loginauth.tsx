@@ -54,7 +54,7 @@ export default function Loginauth() {
     signInWithEmailAndPassword(auth, email.email, email.password)
       .then((userCredential: any) => {
         const user = userCredential.user;
-        sessionStorage.setItem("Token", user.accessToken);
+        localStorage.setItem("Token", user.accessToken);
         router.push("/");
       })
       .catch((err) => {
@@ -69,7 +69,7 @@ export default function Loginauth() {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        sessionStorage.setItem("Token", token);
+        localStorage.setItem("Token", token);
         alert("ログインしました");
         router.push("/");
       })

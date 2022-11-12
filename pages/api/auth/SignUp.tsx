@@ -58,7 +58,7 @@ export default function SignUp() {
       createUserWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential: any) => {
           const user = userCredential.user;
-          sessionStorage.setItem("Token", user.accessToken);
+          localStorage.setItem("Token", user.accessToken);
           // firebase.firestore().collection("users").doc(user.uid);
           signupnotify();
           router.push("/registerprofile");
@@ -76,7 +76,7 @@ export default function SignUp() {
       //googleで登録する
       const credential = GoogleAuthProvider.credentialFromResult(result);
       const token = credential.accessToken;
-      sessionStorage.setItem("Token", token);
+      localStorage.setItem("Token", token);
       //tokenをセットする
       const user = result.user;
       router.push("/registerprofile");

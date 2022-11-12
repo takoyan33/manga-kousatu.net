@@ -35,7 +35,7 @@ export default function Edit() {
   console.log(user);
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
+    let token = localStorage.getItem("Token");
     if (token) {
       usersData();
     }

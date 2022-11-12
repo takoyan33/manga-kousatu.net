@@ -43,7 +43,7 @@ export default function Post() {
   const [photoURL, setPhotoURL] = useState("");
 
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
+    let token = localStorage.getItem("Token");
     if (!token) {
       router.push("/register");
     }

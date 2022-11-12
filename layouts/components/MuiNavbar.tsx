@@ -37,7 +37,7 @@ export const MuiNavbar = () => {
   console.log(user);
 
   const logout = () => {
-    sessionStorage.removeItem("Token");
+    localStorage.removeItem("Token");
 
     signOut(auth)
       .then(() => {

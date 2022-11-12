@@ -22,7 +22,7 @@ export default function Passworddedit() {
 
   console.log(user);
   useEffect(() => {
-    let token = sessionStorage.getItem("Token");
+    let token = localStorage.getItem("Token");
 
     if (token) {
       getData();

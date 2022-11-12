@@ -29,7 +29,6 @@ const Category = () => {
   const [firedata, setFiredata] = useState([]);
   const [likecount, setLikecount] = useState(0);
 
-  const styles = { whiteSpace: "pre-line" };
   let router = useRouter();
   const { Category } = router.query;
   const auth = getAuth();

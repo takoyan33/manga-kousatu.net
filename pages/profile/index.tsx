@@ -29,31 +29,32 @@ export default function Profile() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // const useremail = user.email;
-  // console.log(useremail);
+  const useremail = user.email;
+  console.log(useremail);
   const databaseRef = collection(database, "posts");
-  const q = query(databaseRef, where("email", "==", "harrier2070@gmail.com"));
+  const q = query(databaseRef, where("email", "==", useremail));
   const o = query(
     databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
+    where("email", "==", useremail),
     where("categori", "==", "ONE PIECE")
   );
   const z = query(
     databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
+    where("email", "==", useremail),
     where("categori", "==", "呪術廻戦")
   );
   const t = query(
     databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
+    where("email", "==", useremail),
     where("categori", "==", "東京リベンジャーズ")
   );
   const k = query(
     databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
+    where("email", "==", useremail),
     where("categori", "==", "キングダム")
   );
   const usersRef = collection(database, "users");
+  const my = query(usersRef, where("email", "==", useremail));
   const [users, setUsers] = useState(null);
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
@@ -89,6 +90,7 @@ export default function Profile() {
         })
       );
     });
+    console.log(firedata);
   };
 
   const getDataone = async () => {
@@ -149,21 +151,17 @@ export default function Profile() {
 
   const usersData = async () => {
     //firestoreからデータ取得
-    await getDocs(usersRef).then((response) => {
+    await getDocs(my).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setUsers(
-        response.docs.map((data) => {
+        querySnapshot.docs.map((data) => {
           //配列なので、mapで展開する
           return { ...data.data(), id: data.id };
           //スプレッド構文で展開して、新しい配列を作成
         })
       );
     });
-    // const uid = user.uid;
-    // const userdata = doc(database, "users", uid);
-    // getDoc(userdata).then((documentSnapshot) => {
-    //   setFiredata(documentSnapshot.data());
-    // });
+    console.log(firedata);
   };
 
   const deleteuser = async () => {
@@ -292,16 +290,14 @@ export default function Profile() {
             users.map((data) => {
               return (
                 <>
-                  {data.email == user.email && (
-                    <Profileid
-                      key={data.id}
-                      profileimage={data.profileimage}
-                      username={data.username}
-                      bio={data.bio}
-                      favarite={data.favarite}
-                      id={0}
-                    />
-                  )}
+                  <Profileid
+                    key={data.id}
+                    profileimage={data.profileimage}
+                    username={data.username}
+                    bio={data.bio}
+                    favarite={data.favarite}
+                    id={0}
+                  />
                 </>
               );
             })}

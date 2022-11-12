@@ -11,12 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../layouts/Cardpost";
 
 const Post = () => {
-  const [ID, setID] = useState(null);
-  const [context, setContext] = useState("");
-  const [file, setFile] = useState("");
-  const [categori, setCategori] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [title1, setTitle1] = useState("");
   const [users, setUsers] = useState(null);
   const [displayName, setDisplayName] = useState("");
   const [createtime, setCreatetime] = useState("");
@@ -40,7 +34,7 @@ const Post = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
-
+  // const yourprofile = query(usersRef, where("userid", "==",userid ));
   console.log({ userid });
 
   const getData = async () => {
@@ -87,6 +81,21 @@ const Post = () => {
       );
     });
   };
+
+    // const usersData = async () => {
+    //   //firestoreからデータ取得
+    //   await getDocs(yourprofile).then((querySnapshot) => {
+    //     //コレクションのドキュメントを取得
+    //     setUsers(
+    //       querySnapshot.docs.map((data) => {
+    //         //配列なので、mapで展開する
+    //         return { ...data.data(), id: data.id };
+    //         //スプレッド構文で展開して、新しい配列を作成
+    //       })
+    //     );
+    //   });
+    //   console.log(firedata);
+    // };
 
   return (
     <>

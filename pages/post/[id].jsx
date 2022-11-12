@@ -69,11 +69,9 @@ const Post = () => {
         setFiredata(documentSnapshot.data());
       })
       .catch((error) => {
-        console.log("Error", error);
+        console.log("Error getting document:", error);
       });
   };
-
-  
 
   const categoriFiredata = async () => {
     //firestoreからデータ取得

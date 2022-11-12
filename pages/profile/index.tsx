@@ -29,7 +29,7 @@ export default function Profile() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const useremail = user.email;
+  const useremail = user?.email;
   console.log(useremail);
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, where("email", "==", useremail));

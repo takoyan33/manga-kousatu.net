@@ -146,8 +146,8 @@ const Post = () => {
   };
 
   useEffect(() => {
-    getData();
     categoriFiredata();
+    getData();
     usersData();
     console.log("render!");
   }, [likes]);

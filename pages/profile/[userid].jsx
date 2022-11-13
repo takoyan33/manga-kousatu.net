@@ -2,13 +2,21 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import { database } from "../../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+} from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
 import { Profileid } from "../../layouts/components/ui/Profileid";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../layouts/Cardpost";
+import { query, orderBy, where } from "firebase/firestore";
 
 const Post = () => {
   const [users, setUsers] = useState(null);
@@ -34,7 +42,7 @@ const Post = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
-  // const yourprofile = query(usersRef, where("userid", "==",userid ));
+  const yourprofile = query(usersRef, where("userid", "==", userid));
   console.log({ userid });
 
   const getData = async () => {
@@ -64,11 +72,26 @@ const Post = () => {
   };
 
   useEffect(() => {
+    userData();
     getData();
-    usersData();
   }, [likes]);
 
-  const usersData = async () => {
+  // const userData = async () => {
+  //   //firestoreからデータ取得
+  //   const data = doc(database, "users", "JBz1ZXsW7oe9LJmtpOJm5EoJ0XT2");
+  //   // const data = doc(database, "users", userid);
+  //   console.log("Error getting document:");
+  //   getDoc(data)
+  //     .then((documentSnapshot) => {
+  //       setUsers(documentSnapshot.data());
+  //     })
+  //     .catch((error) => {
+  //       console.log("Error getting document:", error);
+  //     });
+  // };
+  // console.log(users);
+
+  const userData = async () => {
     //firestoreからデータ取得
     await getDocs(usersRef).then((response) => {
       //コレクションのドキュメントを取得
@@ -82,21 +105,6 @@ const Post = () => {
     });
   };
 
-    // const usersData = async () => {
-    //   //firestoreからデータ取得
-    //   await getDocs(yourprofile).then((querySnapshot) => {
-    //     //コレクションのドキュメントを取得
-    //     setUsers(
-    //       querySnapshot.docs.map((data) => {
-    //         //配列なので、mapで展開する
-    //         return { ...data.data(), id: data.id };
-    //         //スプレッド構文で展開して、新しい配列を作成
-    //       })
-    //     );
-    //   });
-    //   console.log(firedata);
-    // };
-
   return (
     <>
       <SiteHead />
@@ -104,51 +112,43 @@ const Post = () => {
 
       <div className="max-w-7xl m-auto">
         <>
-          {users &&
-            users.map((user) => {
-              return (
-                <>
-                  {userid == user.userid && (
-                    <Profileid
-                      key={user.id}
-                      profileimage={user.profileimage}
-                      username={user.username}
-                      bio={user.bio}
-                      favarite={user.favarite}
-                      id={0}
-                    />
-                  )}
-                  <p></p>
-                </>
-              );
-            })}
+          <>
+            <Profileid
+              key={users.userid}
+              profileimage={users.profileimage}
+              username={users.username}
+              bio={users.bio}
+              favarite={users.favarite}
+            />
+          </>
         </>
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           過去の投稿
         </h2>
         <Grid container className="m-auto">
           {firedata == [] && <p>まだ投稿していません</p>}
-          {firedata.map((data) => {
-            return (
-              <>
-                <Cardpost
-                  key={data.id}
-                  downloadURL={data.downloadURL}
-                  title={data.title}
-                  categori={data.categori}
-                  netabare={data.netabare}
-                  context={data.context}
-                  createtime={data.createtime}
-                  displayname={data.displayname}
-                  email={data.email}
-                  id={data.id}
-                  photoURL={data.photoURL}
-                  likes={data.likes}
-                  selected={data.selected}
-                />
-              </>
-            );
-          })}
+          {firedata &&
+            firedata.map((data) => {
+              return (
+                <>
+                  <Cardpost
+                    key={data.id}
+                    downloadURL={data.downloadURL}
+                    title={data.title}
+                    categori={data.categori}
+                    netabare={data.netabare}
+                    context={data.context}
+                    createtime={data.createtime}
+                    displayname={data.displayname}
+                    email={data.email}
+                    id={data.id}
+                    photoURL={data.photoURL}
+                    likes={data.likes}
+                    selected={data.selected}
+                  />
+                </>
+              );
+            })}
         </Grid>
       </div>
     </>

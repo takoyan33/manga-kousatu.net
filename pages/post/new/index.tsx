@@ -264,6 +264,7 @@ export default function Post() {
               className="text-center m-auto my-10"
               onClick={addDate}
             />
+            <ToastContainer />
           </div>
         </Box>
       </div>

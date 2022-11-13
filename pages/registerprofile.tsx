@@ -1,6 +1,6 @@
 import { getAuth } from "firebase/auth";
 import { database } from "../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { postImage } from "./api/upload";
@@ -13,19 +13,17 @@ import Imageupload from "../packages/utils/Imageupload";
 import Imageuploadcontext from "../packages/utils/Imageuploadcontext";
 import { Stack } from "@mui/material";
 import { TagsInput } from "react-tag-input-component";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Registerprofile() {
-  const [email, setEmail] = useState<string>("");
+  const notify = () => toast("登録できました！");
   const [selected, setSelected] = useState(["ワンピース"]);
-  const [password, setPassword] = useState<string>("");
   const databaseRef = collection(database, "users");
   const [image, setImage] = useState(null);
-  const [contextimage, setContextImage] = useState<File[]>([]);
   const [username, setUsername] = useState(null);
   const [bio, setBio] = useState(null);
   const [createObjectURL, setCreateObjectURL] = useState<string>("");
-  const [createcontextObjectURL, setCreatecontexObjectURL] = useState("");
-  const [downloadURL, setDownloadURL] = useState(null);
   const [result, setResult] = useState("");
   const [uploadResult, setUploadResultL] = useState(null);
 
@@ -58,8 +56,9 @@ export default function Registerprofile() {
     } else {
       const result = await postImage(image);
       setResult(result);
+      const userRef = await doc(database, "users", user.uid);
       //写真のurlをセットする
-      addDoc(databaseRef, {
+      await setDoc(userRef, {
         username: username,
         bio: bio,
         email: user.email,
@@ -69,7 +68,7 @@ export default function Registerprofile() {
         admin: 0,
       })
         .then(() => {
-          alert("ユーザー情報が登録ができました。");
+          notify();
           setUsername("");
           setBio("");
           router.push("/");
@@ -88,6 +87,7 @@ export default function Registerprofile() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MuiNavbar />
+      <ToastContainer />
       <div className="max-w-7xl m-auto">
         <Stack
           component="form"

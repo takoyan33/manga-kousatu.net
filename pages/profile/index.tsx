@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
@@ -19,9 +20,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import SendIcon from "@mui/icons-material/Send";
 import { query, orderBy, where } from "firebase/firestore";
-import ExpandLess from "@mui/icons-material/ExpandLess";
-import ExpandMore from "@mui/icons-material/ExpandMore";
-import StarBorder from "@mui/icons-material/StarBorder";
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function Profile() {
@@ -30,116 +28,6 @@ export default function Profile() {
   const user = auth.currentUser;
   const databaseRef = collection(database, "posts");
   const usersRef = collection(database, "users");
-  // if (user) {
-  const q = query(databaseRef, where("email", "==", "harrier2070@gmail.com"));
-  const o = query(
-    databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
-    where("categori", "==", "ONE PIECE")
-  );
-  const z = query(
-    databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
-    where("categori", "==", "呪術廻戦")
-  );
-  const t = query(
-    databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
-    where("categori", "==", "東京リベンジャーズ")
-  );
-  const k = query(
-    databaseRef,
-    where("email", "==", "harrier2070@gmail.com"),
-    where("categori", "==", "キングダム")
-  );
-  const my = query(usersRef, where("email", "==", "useremail"));
-
-  const getData = async () => {
-    //firestoreからデータ取得
-    await getDocs(q).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setFiredata(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-    console.log(firedata);
-  };
-
-  const getDataone = async () => {
-    //firestoreからデータ取得
-    await getDocs(o).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setOnpiece(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-  };
-
-  const getDatzyu = async () => {
-    //firestoreからデータ取得
-    await getDocs(z).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setKaisen(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-  };
-
-  const getDatatokyo = async () => {
-    //firestoreからデータ取得
-    await getDocs(t).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setTokyo(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-  };
-
-  const getDataking = async () => {
-    //firestoreからデータ取得
-    await getDocs(k).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setKingdom(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-  };
-
-  const usersData = async () => {
-    //firestoreからデータ取得
-    await getDocs(my).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
-    console.log(firedata);
-  };
-  // }
 
   const [users, setUsers] = useState(null);
   //データベースを取得
@@ -149,20 +37,131 @@ export default function Profile() {
   const [kingdom, setKingdom] = useState([]);
   const [tokyo, setTokyo] = useState([]);
   const [kaisen, setKaisen] = useState([]);
+  if (user === null) {
+  } else {
+    console.log(user.email);
+    const q = query(databaseRef, where("email", "==", user.email));
+    const o = query(
+      databaseRef,
+      where("email", "==", user.email),
+      where("categori", "==", "ONE PIECE")
+    );
+    const z = query(
+      databaseRef,
+      where("email", "==", user.email),
+      where("categori", "==", "呪術廻戦")
+    );
+    const t = query(
+      databaseRef,
+      where("email", "==", user.email),
+      where("categori", "==", "東京リベンジャーズ")
+    );
+    const k = query(
+      databaseRef,
+      where("email", "==", user.email),
+      where("categori", "==", "キングダム")
+    );
+    const my = query(usersRef, where("email", "==", user.email));
 
-  useEffect(() => {
-    let token = localStorage.getItem("Token");
-    if (!token) {
-      router.push("/register");
-    } else {
-      getData();
-      usersData();
-      getDataone();
-      getDatzyu();
-      getDatatokyo();
-      getDataking();
-    }
-  }, []);
+    const getData = async () => {
+      //firestoreからデータ取得
+      await getDocs(q).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setFiredata(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+      console.log(firedata);
+    };
+
+    const getDataone = async () => {
+      //firestoreからデータ取得
+      await getDocs(o).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setOnpiece(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+    };
+
+    const getDatzyu = async () => {
+      //firestoreからデータ取得
+      await getDocs(z).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setKaisen(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+    };
+
+    const getDatatokyo = async () => {
+      //firestoreからデータ取得
+      await getDocs(t).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setTokyo(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+    };
+
+    const getDataking = async () => {
+      //firestoreからデータ取得
+      await getDocs(k).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setKingdom(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+    };
+    const usersData = async () => {
+      //firestoreからデータ取得
+      await getDocs(my).then((querySnapshot) => {
+        //コレクションのドキュメントを取得
+        setUsers(
+          querySnapshot.docs.map((data) => {
+            //配列なので、mapで展開する
+            return { ...data.data(), id: data.id };
+            //スプレッド構文で展開して、新しい配列を作成
+          })
+        );
+      });
+      console.log(users);
+    };
+    // }
+    useEffect(() => {
+      let token = localStorage.getItem("Token");
+      if (!token) {
+        router.push("/register");
+      } else {
+        getData();
+        usersData();
+        getDataone();
+        getDatzyu();
+        getDatatokyo();
+        getDataking();
+      }
+    }, []);
+  }
 
   const deleteuser = async () => {
     //userを削除する
@@ -204,7 +203,6 @@ export default function Profile() {
     { name: "呪術廻戦", value: kaisen.length },
     { name: "キングダム", value: kingdom.length },
     { name: "東京リベンジャーズ", value: tokyo.length },
-    // { name: "data5", value: 10 },
   ];
 
   const COLORS = [
@@ -242,6 +240,7 @@ export default function Profile() {
       </text>
     );
   };
+
   return (
     <>
       <SiteHead />

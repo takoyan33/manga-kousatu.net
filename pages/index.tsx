@@ -39,7 +39,6 @@ export default function Index() {
 
   // 新着順
   const getData = async () => {
-    setLoading(true);
     console.log(loading);
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
@@ -47,6 +46,7 @@ export default function Index() {
       );
     });
     setLoading(false);
+    console.log(loading);
   };
 
   //古い順
@@ -85,6 +85,7 @@ export default function Index() {
   // }, [firedata]);
 
   useEffect(() => {
+    setLoading(true);
     getData();
   }, []);
 
@@ -102,20 +103,20 @@ export default function Index() {
       <MuiNavbar />
 
       <div className="max-w-7xl m-auto">
-        <p className="text-center">
+        <div className="text-center">
           <img
             src="./images/book-reading.png"
             className="w-40  my-6 m-auto"
             alt="漫画のイラスト"
           />
-        </p>
-        <h2 className="my-5 text-center">
+        </div>
+        <div className="my-5 text-center">
           <img
             src="./magastudylogo.png"
             className="w-80 my-12 m-auto"
             alt="mangastudyのロゴ"
           />
-        </h2>
+        </div>
         <p className="my-5 text-center">
           Manga Studyでは、人気漫画の考察を<br></br>
           自由に投稿・閲覧できるwebサイトです。
@@ -190,10 +191,10 @@ export default function Index() {
             </MenuItem>
           </Select>
         </FormControl>
-
         <Grid container className="m-auto">
-          {loading && <p>読み込み中・・・</p>}
-          {firedata == [] && <p>まだ投稿していません</p>}
+          {firedata.length == 0 && (
+            <p className="ext-cneter my-2">読み込み中・・・</p>
+          )}
           {firedata
             .filter((data) => {
               if (searchName === "") {

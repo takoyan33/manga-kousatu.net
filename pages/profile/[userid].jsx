@@ -63,6 +63,12 @@ const Post = () => {
   };
 
   useEffect(() => {
+    if (userid == user.uid) {
+      router.push("/profile");
+    }
+  }, []);
+
+  useEffect(() => {
     userData();
     getData();
   }, [likes]);

@@ -20,10 +20,6 @@ import { query, orderBy, where } from "firebase/firestore";
 
 const Post = () => {
   const [users, setUsers] = useState(null);
-  const [displayName, setDisplayName] = useState("");
-  const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [posttitle, setPostTitle] = useState("");
   const databaseRef = collection(database, "posts");
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null);
@@ -31,12 +27,7 @@ const Post = () => {
   const [downloadURL, setDownloadURL] = useState(null);
   const [likecount, setLikecount] = useState(0);
   const usersRef = collection(database, "users");
-  const [image, setImage] = useState("");
-  const [result, setResult] = useState("");
-  const [email, setEmail] = useState("");
-  const [netabare, setNetabare] = useState("");
   const [likes, setLikes] = useState(null);
-  const [selected, setSelected] = useState(["最終回"]);
   let router = useRouter();
   const { userid } = router.query;
   const auth = getAuth();
@@ -112,15 +103,22 @@ const Post = () => {
 
       <div className="max-w-7xl m-auto">
         <>
-          <>
-            <Profileid
-              key={users.userid}
-              profileimage={users.profileimage}
-              username={users.username}
-              bio={users.bio}
-              favarite={users.favarite}
-            />
-          </>
+          {users &&
+            users.map((user) => {
+              return (
+                <>
+                  {userid == user.userid && (
+                    <Profileid
+                      key={user.id}
+                      profileimage={user.profileimage}
+                      username={user.username}
+                      bio={user.bio}
+                      favarite={user.favarite}
+                    />
+                  )}
+                </>
+              );
+            })}
         </>
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           過去の投稿

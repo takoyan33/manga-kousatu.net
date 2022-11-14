@@ -42,7 +42,7 @@ const Post = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
-  const yourprofile = query(usersRef, where("userid", "==", userid));
+  // const yourprofile = query(usersRef, where("userid", "==", userid));
   console.log({ userid });
 
   const getData = async () => {

@@ -30,6 +30,7 @@ export default function Passworddedit() {
     if (!token) {
       router.push("/register");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {

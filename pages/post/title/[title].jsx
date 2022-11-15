@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
@@ -123,6 +124,7 @@ const Post = () => {
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
   // const Opentext = () => {

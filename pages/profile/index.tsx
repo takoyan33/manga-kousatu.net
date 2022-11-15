@@ -160,6 +160,7 @@ export default function Profile() {
         getDatatokyo();
         getDataking();
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   }
 

@@ -47,6 +47,7 @@ export default function Post() {
     if (!token) {
       router.push("/register");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadToClient = (event) => {

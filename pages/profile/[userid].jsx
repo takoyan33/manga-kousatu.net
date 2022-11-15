@@ -68,11 +68,13 @@ const Post = () => {
         router.push("/profile");
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     userData();
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
   // const userData = async () => {

@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -33,6 +34,7 @@ export default function Photoedit() {
     if (!token) {
       router.push("/register");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const uploadToClient = (event) => {

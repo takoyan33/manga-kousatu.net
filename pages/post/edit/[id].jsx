@@ -57,6 +57,7 @@ const Post = () => {
 
   useEffect(() => {
     getID();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
   const getID = () => {

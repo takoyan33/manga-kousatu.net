@@ -87,6 +87,7 @@ export default function Index() {
   useEffect(() => {
     setLoading(true);
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const displayMore = () => {

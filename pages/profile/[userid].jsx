@@ -22,17 +22,13 @@ const Post = () => {
   const [users, setUsers] = useState(null);
   const databaseRef = collection(database, "posts");
   //データベースを取得
-  const [createObjectURL, setCreateObjectURL] = useState(null);
   const [firedata, setFiredata] = useState([]);
-  const [downloadURL, setDownloadURL] = useState(null);
-  const [likecount, setLikecount] = useState(0);
   const usersRef = collection(database, "users");
   const [likes, setLikes] = useState(null);
   let router = useRouter();
   const { userid } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
-  const [searchName, setSearchName] = useState("");
   // const yourprofile = query(usersRef, where("userid", "==", userid));
   console.log({ userid });
 

@@ -30,11 +30,8 @@ export const MuiNavbar = () => {
   };
 
   let router = useRouter();
-  const databaseRef = collection(database, "posts");
-  const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
-  console.log(user);
 
   const logout = () => {
     localStorage.removeItem("Token");

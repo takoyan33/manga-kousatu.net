@@ -63,8 +63,10 @@ const Post = () => {
   };
 
   useEffect(() => {
-    if (userid == user.uid) {
-      router.push("/profile");
+    if (user) {
+      if (userid == user.uid) {
+        router.push("/profile");
+      }
     }
   }, []);
 
@@ -75,9 +77,9 @@ const Post = () => {
 
   // const userData = async () => {
   //   //firestoreからデータ取得
-  //   const data = doc(database, "users", "JBz1ZXsW7oe9LJmtpOJm5EoJ0XT2");
+  //   const data = doc(database, "users", "ilvobFpZAceNGncxNWwPOE88kvu1");
   //   // const data = doc(database, "users", userid);
-  //   console.log("Error getting document:");
+
   //   getDoc(data)
   //     .then((documentSnapshot) => {
   //       setUsers(documentSnapshot.data());

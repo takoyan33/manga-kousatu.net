@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
-import { app, database, storage } from "../../firebaseConfig";
+import { database } from "../../firebaseConfig";
 import {
   collection,
   getDocs,
@@ -22,12 +22,32 @@ import Avatar from "@mui/material/Avatar";
 import { SiteButton } from "../../layouts/components/button";
 import { SiteCategory } from "../../layouts/components/text";
 import { Cardpost } from "../../layouts/Cardpost";
-import { Categories, SiteHead } from "../../layouts/components/ui";
+import { SiteHead } from "../../layouts/components/ui";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import { query, orderBy, where } from "firebase/firestore";
+import { query, orderBy } from "firebase/firestore";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+
+// export const getStaticPaths = () => {};
+
+// export const getfireData = () => {
+//   // eslint-disable-next-line react-hooks/rules-of-hooks
+//   const [firedata, setFiredata] = useState([]);
+//   const databaseRef = collection(database, "posts");
+//   const q = query(databaseRef, orderBy("timestamp", "desc"));
+
+//   const getData = async () => {
+//     await onSnapshot(q, (querySnapshot) => {
+//       setFiredata(
+//         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+//       );
+//     });
+//   };
+//   getData();
+//   console.log(firedata);
+//   return firedata;
+// };
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -72,6 +92,7 @@ const Post = () => {
         console.log("Error getting document:", error);
       });
   };
+  console.log({ firedata });
 
   const categoriFiredata = async () => {
     //firestoreからデータ取得
@@ -268,32 +289,31 @@ const Post = () => {
                   noValidate
                   autoComplete="off"
                 >
-                  <TextField
-                    id="outlined-basic"
-                    label="タイトル（最大20文字)"
-                    variant="outlined"
-                    type="text"
-                    value={posttitle}
-                    onChange={(event) => setPostTitle(event.target.value)}
-                  />
-
-                  <br></br>
-
-                  <TextField
-                    label="内容(最大500文字）"
-                    className="m-auto w-full"
-                    id="filled-multiline-static"
-                    multiline
-                    rows={14}
-                    type="text"
-                    value={context}
-                    onChange={(event) => setContext(event.target.value)}
-                  />
-                  <br></br>
+                  <div>
+                    <TextField
+                      id="outlined-basic"
+                      label="タイトル（最大20文字)"
+                      variant="outlined"
+                      type="text"
+                      value={posttitle}
+                      onChange={(event) => setPostTitle(event.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <TextField
+                      label="内容(最大500文字）"
+                      className="m-auto w-full"
+                      id="filled-multiline-static"
+                      multiline
+                      rows={14}
+                      type="text"
+                      value={context}
+                      onChange={(event) => setContext(event.target.value)}
+                    />
+                  </div>
                   <Button variant="outlined" onClick={updatefields}>
                     更新する
                   </Button>
-                  <br></br>
                 </Box>
               )}
               <div>

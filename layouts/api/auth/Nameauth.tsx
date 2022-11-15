@@ -7,7 +7,7 @@ import { getAuth, updateProfile, deleteUser } from "firebase/auth";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { postImage } from "../../api/upload";
+import { postImage } from "../upload";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 export default function Nameauth() {

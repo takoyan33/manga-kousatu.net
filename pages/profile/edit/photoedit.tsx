@@ -9,7 +9,7 @@ import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { postImage } from "../../api/upload";
+import { postImage } from "../../../layouts/api/upload";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Head from "next/head";

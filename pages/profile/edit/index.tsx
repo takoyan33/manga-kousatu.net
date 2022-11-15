@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
-import { postImage } from "../../api/upload";
+import { postImage } from "../../../layouts/api/upload";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { query, orderBy, limit } from "firebase/firestore";

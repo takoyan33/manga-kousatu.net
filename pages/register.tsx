@@ -1,6 +1,6 @@
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { SiteHead } from "../layouts/components/ui/SiteHead";
-import SignUp from "./api/auth/SignUp";
+import SignUp from "../layouts/api/auth/SignUp";
 
 export default function Register() {
   return (

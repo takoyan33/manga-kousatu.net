@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import { SiteHead } from "../layouts/components/ui/SiteHead";
-import Loginauth from "./api/auth/Loginauth";
+import Loginauth from "../layouts/api/auth/Loginauth";
 
 export default function Login() {
   const router = useRouter();

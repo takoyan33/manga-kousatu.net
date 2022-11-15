@@ -3,7 +3,7 @@ import { database } from "../firebaseConfig";
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import { postImage } from "./api/upload";
+import { postImage } from "../layouts/api/upload";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
 import Head from "next/head";
 import Button from "@mui/material/Button";

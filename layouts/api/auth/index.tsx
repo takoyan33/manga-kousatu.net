@@ -1,3 +1,4 @@
+import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -6,16 +7,13 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SiteButton } from "../../../layouts/components/button";
-import Link from "next/link";
-import { SiteInput } from "../../../layouts/components/ui/SiteInput";
-import { Grid } from "@material-ui/core";
-import { Stack, Button } from "@mui/material";
+import { SiteButton } from "../../components/button";
 
 // フォームの型
 interface SampleFormInput {
@@ -32,7 +30,7 @@ const schema = yup.object({
   password: yup.string().required("必須です").min(8, "文字数が足りません"),
 });
 
-export default function Loginauth() {
+export default function Index() {
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
@@ -81,72 +79,56 @@ export default function Loginauth() {
 
   return (
     <>
-      <Stack
+      <Box
         component="form"
-        className="m-auto"
+        className="flex justify-center max-w-7xl "
         noValidate
-        spacing={2}
-        sx={{ width: "38ch" }}
+        autoComplete="off"
       >
-        <>
-          <div>
-            <label className="text-center my-4">メールアドレス*</label>
-          </div>
-          <div>
-            <TextField
-              id="outlined-basic"
-              label="sample@gmail.com"
-              className="m-auto w-80 mb-6"
-              variant="outlined"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(event.target.value)
-              }
-              {...register("email")}
-              error={"email" in errors}
-              helperText={errors.email?.message}
-            />
-            <div>
-              <label className="text-center my-4">
-                パスワード（8文字以上)*
-              </label>
-            </div>
-          </div>
-          <div className="m-auto">
-            <TextField
-              id="outlined-basic"
-              label="Password"
-              variant="outlined"
-              type="password"
-              className="m-auto w-80 mb-6"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(event.target.value)
-              }
-              {...register("password")}
-              error={"password" in errors}
-              helperText={errors.password?.message}
-            />
-          </div>
+        <div>
+          <label className="text-center my-4">メールアドレス*</label>
+          <TextField
+            id="outlined-basic"
+            label="sample@gmail.com"
+            className="m-auto w-80"
+            variant="outlined"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setEmail(event.target.value)
+            }
+            {...register("email")}
+            error={"email" in errors}
+            helperText={errors.email?.message}
+          />
+
+          <label className="text-center my-4">パスワード（8文字以上)*</label>
+          <TextField
+            id="outlined-basic"
+            label="Password"
+            variant="outlined"
+            type="password"
+            className="m-auto w-80"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              setPassword(event.target.value)
+            }
+            {...register("password")}
+            error={"password" in errors}
+            helperText={errors.password?.message}
+          />
           <SiteButton
             href=""
             // onClick={SignIn}
             onClick={handleSubmit(SignIn)}
             text="ログイン"
-            className="m-auto text-center w-80 my-4"
+            className="m-auto w-80 my-8"
           />
           <SiteButton
             href=""
             text="Googleでログイン"
             onClick={SignInWithGoogle}
-            className="m-auto text-center w-80 my-4"
+            className="m-auto w-80 my-8"
           />
-          <p className="my-4">
-            ユーザー未登録の方はこちら
-            <Link href="/register">
-              <span className="text-blue-500 underline">新規登録</span>
-            </Link>
-          </p>
-        </>
-      </Stack>
+        </div>
+      </Box>
     </>
   );
 }

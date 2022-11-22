@@ -13,7 +13,7 @@ import Head from "next/head";
 
 export default function Passworddedit() {
   const [password, setPassword] = useState<string>("");
-  let router = useRouter();
+  const router = useRouter();
   const databaseRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();

@@ -65,7 +65,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
       margin: "10px",
     };
 
-    let router = useRouter();
+    const router = useRouter();
     const auth = getAuth();
     const user = auth.currentUser;
 

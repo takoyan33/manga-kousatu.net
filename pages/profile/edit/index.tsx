@@ -22,7 +22,7 @@ export default function Edit() {
   const [result, setResult] = useState("");
   const [users, setUsers] = useState(null);
   const [displayName, setDisplayName] = useState<string>();
-  let router = useRouter();
+  const router = useRouter();
   const usersRef = collection(database, "users");
   const databaseRef = collection(database, "posts");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);

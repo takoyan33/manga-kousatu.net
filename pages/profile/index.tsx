@@ -23,7 +23,7 @@ import { query, orderBy, where } from "firebase/firestore";
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 export default function Profile() {
-  let router = useRouter();
+  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
   const databaseRef = collection(database, "posts");

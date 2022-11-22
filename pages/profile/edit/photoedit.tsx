@@ -17,7 +17,7 @@ import Image from "react-image-resizer";
 export default function Photoedit() {
   const [image, setImage] = useState<string>();
   const [result, setResult] = useState("");
-  let router = useRouter();
+  const router = useRouter();
   const databaseRef = collection(database, "posts");
   const [createObjectURL, setCreateObjectURL] = useState<string>(null);
   const [downloadURL, setDownloadURL] = useState<string>(null);

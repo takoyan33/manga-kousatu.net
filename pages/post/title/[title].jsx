@@ -57,7 +57,7 @@ const Post = () => {
   const [opentext, setOpentext] = useState(false);
 
   const styles = { whiteSpace: "pre-line" };
-  let router = useRouter();
+  const router = useRouter();
   const { title } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

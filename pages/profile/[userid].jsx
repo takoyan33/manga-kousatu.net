@@ -25,7 +25,7 @@ const Post = () => {
   const [firedata, setFiredata] = useState([]);
   const usersRef = collection(database, "users");
   const [likes, setLikes] = useState(null);
-  let router = useRouter();
+  const router = useRouter();
   const { userid } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

@@ -74,7 +74,7 @@ const Post = () => {
   //データベースを取得
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
-  let router = useRouter();
+  const router = useRouter();
   const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

@@ -12,7 +12,7 @@ import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 
 export default function Emaildedit() {
   const [email, setEmail] = useState<string>("");
-  let router = useRouter();
+  const router = useRouter();
   const databaseRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();

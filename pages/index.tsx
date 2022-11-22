@@ -33,7 +33,7 @@ export default function Index() {
   const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  let router = useRouter();
+  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 

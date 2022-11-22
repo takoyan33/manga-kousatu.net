@@ -29,7 +29,7 @@ export const MuiNavbar = () => {
     setAnchorEl(null);
   };
 
-  let router = useRouter();
+  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 

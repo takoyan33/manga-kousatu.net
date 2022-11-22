@@ -29,7 +29,7 @@ const Category = () => {
   const [firedata, setFiredata] = useState([]);
   const [likecount, setLikecount] = useState(0);
 
-  let router = useRouter();
+  const router = useRouter();
   const { Category } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

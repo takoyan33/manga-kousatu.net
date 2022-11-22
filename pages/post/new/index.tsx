@@ -69,7 +69,7 @@ export default function Post() {
     }
   };
 
-  let router = useRouter();
+  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 

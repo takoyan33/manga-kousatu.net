@@ -17,7 +17,7 @@ export default function Nameauth() {
   const [categori, setCategori] = useState<string>("");
   const auth = getAuth();
   const [displayName, setDisplayName] = useState<string>("");
-  let router = useRouter();
+  const router = useRouter();
   const [createtime, setCreatetime] = useState<string>("");
   const [isUpdate, setIsUpdate] = useState<boolean>(false);
   const databaseRef = collection(database, "posts");

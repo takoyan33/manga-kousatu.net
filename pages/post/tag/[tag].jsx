@@ -27,7 +27,7 @@ const Category = () => {
   const [likecount, setLikecount] = useState(0);
 
   const styles = { whiteSpace: "pre-line" };
-  let router = useRouter();
+  const router = useRouter();
   const { tag } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

@@ -25,7 +25,7 @@ export default function Registerprofile() {
   const [createObjectURL, setCreateObjectURL] = useState<string>("");
   const [result, setResult] = useState("");
 
-  let router = useRouter();
+  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 

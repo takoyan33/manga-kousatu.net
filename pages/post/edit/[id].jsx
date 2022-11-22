@@ -40,7 +40,7 @@ const Post = () => {
   const [likes, setLikes] = useState(null);
   const [selected, setSelected] = useState(["最終回"]);
 
-  let router = useRouter();
+  const router = useRouter();
   const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;

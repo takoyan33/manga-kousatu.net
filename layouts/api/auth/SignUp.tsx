@@ -50,7 +50,7 @@ export default function SignUp() {
 
   const auth = getAuth();
 
-  const SignUp = (data) => {
+  const SignUp: SubmitHandler<SampleFormInput> = (data) => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
     console.log(data.email);
     console.log(data.password);
@@ -98,13 +98,13 @@ export default function SignUp() {
         </div>
         <TextField
           id="outlined-basic"
+          type="email"
           label="sample@gmail.com"
           className="m-auto w-80"
           variant="outlined"
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          //   setEmail(event.target.value)
-          // }
           {...register("email", { required: true })}
+          error={"email" in errors}
+          helperText={errors.email?.message}
         />
         <div>
           <label className="text-center my-4">パスワード（8文字以上)*</label>
@@ -116,6 +116,8 @@ export default function SignUp() {
           variant="outlined"
           className="m-auto w-80"
           {...register("password", { required: true })}
+          error={"password" in errors}
+          helperText={errors.password?.message}
         />
         <div>
           <label className="text-center my-4">
@@ -129,6 +131,8 @@ export default function SignUp() {
           variant="outlined"
           className="m-auto w-80"
           {...register("password", { required: true })}
+          error={"password" in errors}
+          helperText={errors.password?.message}
         />
         <SiteButton
           href=""

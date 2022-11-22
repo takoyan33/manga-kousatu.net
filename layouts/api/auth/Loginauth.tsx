@@ -98,6 +98,7 @@ export default function Loginauth() {
               label="sample@gmail.com"
               className="m-auto w-80 mb-6"
               variant="outlined"
+              type="email"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(event.target.value)
               }

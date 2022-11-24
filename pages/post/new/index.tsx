@@ -26,7 +26,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Post() {
-  const notify = () => toast("記事投稿ができました！");
+  const notify = () =>
+    toast.success("記事投稿ができました", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   const [processing, setProcessing] = useState(false);
   const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
@@ -161,6 +171,10 @@ export default function Post() {
               onChange={uploadToClient}
             />
 
+            <FormLabel id="demo-radio-buttons-group-label">
+              タイトル<span className="text-red-600">*</span>
+            </FormLabel>
+
             <TextField
               id="outlined-basic"
               label="タイトル*（最大20文字)"
@@ -175,7 +189,9 @@ export default function Post() {
               }}
             />
             <div>
-              <FormLabel id="demo-radio-buttons-group-label">作品名*</FormLabel>
+              <FormLabel id="demo-radio-buttons-group-label">
+                作品名<span className="text-red-600">*</span>
+              </FormLabel>
             </div>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
@@ -203,7 +219,7 @@ export default function Post() {
             />
 
             <FormLabel id="demo-radio-buttons-group-label">
-              ネタバレについて*
+              ネタバレについて<span className="text-red-600">*</span>
             </FormLabel>
 
             <RadioGroup
@@ -227,6 +243,11 @@ export default function Post() {
                 }
               />
             </RadioGroup>
+
+            <FormLabel id="demo-radio-buttons-group-label">
+              内容<span className="text-red-600">*</span>(最大500文字）
+            </FormLabel>
+
             <p className="my-4">現在の文字数：{context.length}</p>
             <TextField
               label="内容*(最大500文字）"

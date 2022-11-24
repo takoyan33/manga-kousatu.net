@@ -36,8 +36,28 @@ const schema = yup.object({
 });
 
 export default function SignUp() {
-  const signupnotify = () => toast("登録できました！");
-  const signupmissnotify = () => toast("登録失敗しました！");
+  const signupnotify = () =>
+    toast.success("成功しました！", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const signupmissnotify = () =>
+    toast.error("失敗しました！", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const {
@@ -59,7 +79,6 @@ export default function SignUp() {
         .then((userCredential: any) => {
           const user = userCredential.user;
           localStorage.setItem("Token", user.accessToken);
-          // firebase.firestore().collection("users").doc(user.uid);
           signupnotify();
           router.push("/registerprofile");
         })
@@ -67,6 +86,7 @@ export default function SignUp() {
           signupmissnotify();
         });
     } else {
+      signupmissnotify();
     }
   };
 
@@ -94,7 +114,9 @@ export default function SignUp() {
       >
         <ToastContainer />
         <div>
-          <label className="text-center my-4">メールアドレス*</label>
+          <label className="text-center my-4">
+            メールアドレス<span className="text-red-600">*</span>
+          </label>
         </div>
         <TextField
           id="outlined-basic"
@@ -107,7 +129,9 @@ export default function SignUp() {
           helperText={errors.email?.message}
         />
         <div>
-          <label className="text-center my-4">パスワード（8文字以上)*</label>
+          <label className="text-center my-4">
+            パスワード<span className="text-red-600">*</span>（8文字以上)
+          </label>
         </div>
         <TextField
           id="outlined-basic"
@@ -121,7 +145,7 @@ export default function SignUp() {
         />
         <div>
           <label className="text-center my-4">
-            確認用パスワード（8文字以上)*
+            確認用パスワード<span className="text-red-600">*</span>（8文字以上)
           </label>
         </div>
         <TextField

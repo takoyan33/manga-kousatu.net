@@ -90,7 +90,9 @@ export default function Loginauth() {
       >
         <>
           <div>
-            <label className="text-center my-4">メールアドレス*</label>
+            <label className="text-center my-4">
+              メールアドレス<span className="text-red-600">*</span>
+            </label>
           </div>
           <div>
             <TextField
@@ -108,7 +110,7 @@ export default function Loginauth() {
             />
             <div>
               <label className="text-center my-4">
-                パスワード（8文字以上)*
+                パスワード<span className="text-red-600">*</span>（8文字以上)
               </label>
             </div>
           </div>

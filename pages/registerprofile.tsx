@@ -14,9 +14,36 @@ import { TagsInput } from "react-tag-input-component";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SiteHead } from "../layouts/components/ui/SiteHead";
+import Box from "@mui/material/Box";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export default function Registerprofile() {
-  const notify = () => toast("登録できました！");
+  const notify = () =>
+    toast.success("成功しました！", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const signupmissnotify = () =>
+    toast.error("失敗しました！", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   const [selected, setSelected] = useState(["ワンピース"]);
   const databaseRef = collection(database, "users");
   const [image, setImage] = useState(null);
@@ -63,6 +90,7 @@ export default function Registerprofile() {
           router.push("/");
         })
         .catch((err) => {
+          signupmissnotify();
           console.error(err);
         });
     }
@@ -87,10 +115,11 @@ export default function Registerprofile() {
           <p>詳細なプロフィールの記載をお願いします。</p>
           <div>
             <label className="text-center my-4">
-              ユーザーの名前*（10文字以内）
+              ユーザーの名前<span className="text-red-600">*</span>
+              （10文字以内）
             </label>
           </div>
-          <TextField
+          {/* <TextField
             id="outlined-basic"
             label="太郎"
             className="m-auto w-80"
@@ -98,9 +127,27 @@ export default function Registerprofile() {
             onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
               setUsername(event.target.value)
             }
-          />
+          /> */}
+
+          <FormControl variant="standard">
+            <InputLabel htmlFor="input-with-icon-adornment">太郎</InputLabel>
+            <Input
+              id="input-with-icon-adornment"
+              startAdornment={
+                <InputAdornment position="start">
+                  <AccountCircle />
+                </InputAdornment>
+              }
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setUsername(event.target.value)
+              }
+            />
+          </FormControl>
+
           <div>
-            <label className="text-center my-4">ユーザー画像*</label>
+            <label className="text-center my-4">
+              ユーザー画像<span className="text-red-600">*</span>
+            </label>
           </div>
           <div className="">
             <img
@@ -140,7 +187,7 @@ export default function Registerprofile() {
           </div>
           <div>
             <label className="text-center my-4">
-              プロフィール（最大50文字）*
+              プロフィール<span className="text-red-600">*</span>（最大50文字）
             </label>
           </div>
           <TextField
@@ -154,7 +201,9 @@ export default function Registerprofile() {
             }
           />
           <div>
-            <label className="text-center my-4">好きな漫画（最大10）*</label>
+            <label className="text-center my-4">
+              好きな漫画<span className="text-red-600">*</span>（最大10作品）
+            </label>
           </div>
           <TagsInput
             value={selected}

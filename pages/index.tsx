@@ -67,8 +67,13 @@ export default function Index() {
     });
   };
 
-  // 絞り込みの分離途中
-  // const Searchposts = useMemo(() => {
+  useEffect(() => {
+    setLoading(true);
+    getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // const Posts = useMemo(() => {
   //   return firedata
   //     .filter((data) => {
   //       if (searchName === "") {
@@ -76,19 +81,13 @@ export default function Index() {
   //         //そのまま返す
   //       } else if (
   //         data.title.toLowerCase().includes(searchName.toLowerCase())
-  //         //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+  //         //data.titleが含んでいたら小文字で返す　含んでいないdataは返さない
   //       ) {
   //         return data;
   //       }
   //     })
   //     .slice(0, loadIndex);
   // }, [firedata]);
-
-  useEffect(() => {
-    setLoading(true);
-    getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const displayMore = () => {
     if (loadIndex > firedata.length) {
@@ -167,6 +166,7 @@ export default function Index() {
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
         <TextField
           id="outlined-basic"
+          type="search"
           label="考察記事を検索する"
           variant="outlined"
           onChange={(event) => {

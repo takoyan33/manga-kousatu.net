@@ -132,6 +132,7 @@ const Category = () => {
 
         <TextField
           id="outlined-basic"
+          type="search"
           label="考察記事を検索する"
           variant="outlined"
           onChange={(event) => {

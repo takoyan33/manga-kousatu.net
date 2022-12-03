@@ -25,7 +25,7 @@ export default function Passworddedit() {
     let token = localStorage.getItem("Token");
 
     if (token) {
-      getData();
+      getallPost();
     }
     if (!token) {
       router.push("/register");
@@ -33,7 +33,7 @@ export default function Passworddedit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
+  const getallPost = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {

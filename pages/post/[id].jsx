@@ -38,14 +38,14 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 //   const databaseRef = collection(database, "posts");
 //   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
-//   const getData = async () => {
+//   const getallPost = async () => {
 //     await onSnapshot(q, (querySnapshot) => {
 //       setFiredata(
 //         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
 //       );
 //     });
 //   };
-//   getData();
+//   getallPost();
 //   console.log(firedata);
 //   return firedata;
 // };
@@ -81,7 +81,7 @@ const Post = () => {
 
   console.log({ id });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     const data = doc(database, "posts", id);
     console.log("Error getting document:", id);
@@ -169,13 +169,13 @@ const Post = () => {
 
   useEffect(() => {
     categoriFiredata();
-    getData();
+    getallPost();
     usersData();
     console.log("render!");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
-  // getData();
+  // getallPost();
   // usersData();
 
   const updatefields = () => {
@@ -195,7 +195,7 @@ const Post = () => {
         setContext("");
         setIsUpdate(false);
         // router.push(`${ID}`);
-        // getData();
+        // getallPost();
         // usersData();
         router.push("/");
       })
@@ -216,7 +216,7 @@ const Post = () => {
         .then(() => {
           alert("記事を削除しました");
           router.push("/");
-          getData();
+          getallPost();
         })
         .catch((err) => {
           alert("記事の削除に失敗しました");
@@ -237,7 +237,7 @@ const Post = () => {
       .then(() => {
         console.log(likecount);
         setLikecount(0);
-        getData();
+        getallPost();
       })
       .catch((err) => {
         alert("失敗しました");

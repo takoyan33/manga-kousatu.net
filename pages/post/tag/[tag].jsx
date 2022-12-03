@@ -35,7 +35,7 @@ const Category = () => {
 
   console.log({ tag });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     await getDocs(q).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -62,7 +62,7 @@ const Category = () => {
   };
 
   //古い順
-  const handledesSort = async () => {
+  const getallOldpost = async () => {
     await onSnapshot(u, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs
@@ -87,7 +87,7 @@ const Category = () => {
   };
 
   //いいね順
-  const handlelikeSort = async () => {
+  const getallLikepost = async () => {
     await onSnapshot(f, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs
@@ -112,7 +112,7 @@ const Category = () => {
   };
 
   useEffect(() => {
-    getData();
+    getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likecount]);
 
@@ -145,19 +145,19 @@ const Category = () => {
             href=""
             text="新しい順"
             className="inline my-2 m-4"
-            onClick={getData}
+            onClick={getallPost}
           />
           <SiteButton
             href=""
             text="古い順"
             className="inline my-2 m-4"
-            onClick={handledesSort}
+            onClick={getallOldpost}
           />
           <SiteButton
             href=""
             text="いいね順"
             className="inline my-2 m-4"
-            onClick={handlelikeSort}
+            onClick={getallLikepost}
           />
         </div>
 

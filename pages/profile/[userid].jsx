@@ -32,7 +32,7 @@ const Post = () => {
   // const yourprofile = query(usersRef, where("userid", "==", userid));
   console.log({ userid });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     await getDocs(databaseRef).then((response) => {
       //コレクションのドキュメントを取得
@@ -69,7 +69,7 @@ const Post = () => {
 
   useEffect(() => {
     userData();
-    getData();
+    getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 

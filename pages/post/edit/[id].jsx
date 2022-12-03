@@ -47,7 +47,7 @@ const Post = () => {
 
   console.log({ id });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     const data = doc(database, "posts", id);
     getDoc(data).then((documentSnapshot) => {
@@ -77,7 +77,7 @@ const Post = () => {
     console.log(context);
   };
 
-  // getData();
+  // getallPost();
   // usersData();
 
   // const updatefields = () => {

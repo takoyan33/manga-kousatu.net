@@ -20,7 +20,7 @@ import { Changetab } from "../layouts/components/ui/Changetab";
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
-  // const { getData, handledesSort, handlelikeSort } = GetPosts();
+  // const { getallPost, getallOldpost, getallLikepost } = GetPosts();
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
   //新しい順
@@ -37,8 +37,8 @@ export default function Index() {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  // 新着順
-  const getData = async () => {
+  // 新着順…
+  const getallPost = async () => {
     console.log(loading);
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
@@ -50,7 +50,7 @@ export default function Index() {
   };
 
   //古い順
-  const handledesSort = async () => {
+  const getallOldpost = async () => {
     await onSnapshot(u, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -59,7 +59,7 @@ export default function Index() {
   };
 
   //いいね順
-  const handlelikeSort = async () => {
+  const getallLikepost = async () => {
     await onSnapshot(f, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -69,7 +69,7 @@ export default function Index() {
 
   useEffect(() => {
     setLoading(true);
-    getData();
+    getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -181,13 +181,13 @@ export default function Index() {
             id="demo-select-small"
             label="並び順"
           >
-            <MenuItem value="新しい順" onClick={getData}>
+            <MenuItem value="新しい順" onClick={getallPost}>
               新しい順
             </MenuItem>
-            <MenuItem value="古い順" onClick={handledesSort}>
+            <MenuItem value="古い順" onClick={getallOldpost}>
               古い順
             </MenuItem>
-            <MenuItem value="いいね順" onClick={handlelikeSort}>
+            <MenuItem value="いいね順" onClick={getallLikepost}>
               いいね順
             </MenuItem>
           </Select>

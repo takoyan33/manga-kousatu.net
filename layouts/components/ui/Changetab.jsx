@@ -11,14 +11,14 @@ import { query, orderBy } from "firebase/firestore";
 import React from "react";
 
 // type Props = {
-//   getData?: () => Promise<void>;
-//   handledesSort?: () => Promise<void>;
-//   handlelikeSort?: () => Promise<void>;
+//   getallPost?: () => Promise<void>;
+//   getallOldpost?: () => Promise<void>;
+//   getallLikepost?: () => Promise<void>;
 // };
 
 // eslint-disable-next-line react/display-name
 export const Changetab = React.memo(
-  ({ handledesSort, getData, handlelikeSort }) => {
+  ({ getallOldpost, getallPost, getallLikepost }) => {
     const [firedata, setFiredata] = useState([]);
 
     const databaseRef = collection(database, "posts");
@@ -38,13 +38,13 @@ export const Changetab = React.memo(
             id="demo-select-small"
             label="並び順"
           >
-            <MenuItem value="新しい順" onClick={getData}>
+            <MenuItem value="新しい順" onClick={getallPost}>
               新しい順
             </MenuItem>
-            <MenuItem value="古い順" onClick={handledesSort}>
+            <MenuItem value="古い順" onClick={getallOldpost}>
               古い順
             </MenuItem>
-            <MenuItem value="いいね順" onClick={handlelikeSort}>
+            <MenuItem value="いいね順" onClick={getallLikepost}>
               いいね順
             </MenuItem>
           </Select>

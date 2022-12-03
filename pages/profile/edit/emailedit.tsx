@@ -23,7 +23,7 @@ export default function Emaildedit() {
     let token = localStorage.getItem("Token");
 
     if (token) {
-      getData();
+      getallPost();
     }
     if (!token) {
       router.push("/register");
@@ -31,7 +31,7 @@ export default function Emaildedit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const getData = async () => {
+  const getallPost = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {

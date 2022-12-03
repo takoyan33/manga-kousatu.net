@@ -34,7 +34,7 @@ export default function Nameauth() {
         alert("プロフィールを更新しました。");
         setDisplayName("");
         setResult("");
-        getData();
+        getallPost();
         router.push("/profile");
       })
       .catch((error) => {
@@ -42,7 +42,7 @@ export default function Nameauth() {
       });
   };
 
-  const getData = async () => {
+  const getallPost = async () => {
     await getDocs(databaseRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {

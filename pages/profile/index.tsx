@@ -63,7 +63,7 @@ export default function Profile() {
     );
     const my = query(usersRef, where("email", "==", user.email));
 
-    const getData = async () => {
+    const getallPost = async () => {
       //firestoreからデータ取得
       await getDocs(q).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -78,7 +78,7 @@ export default function Profile() {
       console.log(firedata);
     };
 
-    const getDataone = async () => {
+    const getallPostone = async () => {
       //firestoreからデータ取得
       await getDocs(o).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -106,7 +106,7 @@ export default function Profile() {
       });
     };
 
-    const getDatatokyo = async () => {
+    const getallPosttokyo = async () => {
       //firestoreからデータ取得
       await getDocs(t).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -120,7 +120,7 @@ export default function Profile() {
       });
     };
 
-    const getDataking = async () => {
+    const getallPostking = async () => {
       //firestoreからデータ取得
       await getDocs(k).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -153,12 +153,12 @@ export default function Profile() {
       if (!token) {
         router.push("/register");
       } else {
-        getData();
+        getallPost();
         usersData();
-        getDataone();
+        getallPostone();
         getDatzyu();
-        getDatatokyo();
-        getDataking();
+        getallPosttokyo();
+        getallPostking();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -189,7 +189,7 @@ export default function Profile() {
   //     deleteDoc(fieldToEdit)
   //       .then(() => {
   //         alert("記事を削除しました");
-  //         getData();
+  //         getallPost();
   //       })
   //       .catch((err) => {
   //         alert("記事の削除に失敗しました");

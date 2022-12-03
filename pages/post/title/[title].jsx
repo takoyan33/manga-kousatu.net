@@ -65,7 +65,7 @@ const Post = () => {
 
   console.log({ title });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     await getDocs(databaseRef).then((response) => {
       //コレクションのドキュメントを取得
@@ -123,7 +123,7 @@ const Post = () => {
   };
 
   useEffect(() => {
-    getData();
+    getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
@@ -149,7 +149,7 @@ const Post = () => {
         setPostTitle("");
         setContext("");
         setIsUpdate(false);
-        getData();
+        getallPost();
       })
       .catch((err) => {
         console.log(err);
@@ -167,7 +167,7 @@ const Post = () => {
         //記事を削除する
         .then(() => {
           alert("記事を削除しました");
-          getData();
+          getallPost();
         })
         .catch((err) => {
           alert("記事の削除に失敗しました");
@@ -189,7 +189,7 @@ const Post = () => {
         alert("いいねしました");
         console.log(likecount);
         setLikecount(0);
-        getData();
+        getallPost();
       })
       .catch((err) => {
         alert("失敗しました");

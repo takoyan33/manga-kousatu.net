@@ -37,7 +37,7 @@ const Category = () => {
 
   console.log({ Category });
 
-  const getData = async () => {
+  const getallPost = async () => {
     //firestoreからデータ取得
     await getDocs(q).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -64,7 +64,7 @@ const Category = () => {
   };
 
   //古い順
-  const handledesSort = async () => {
+  const getallOldpost = async () => {
     await onSnapshot(u, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs
@@ -89,7 +89,7 @@ const Category = () => {
   };
 
   //いいね順
-  const handlelikeSort = async () => {
+  const getallLikepost = async () => {
     await onSnapshot(f, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs
@@ -114,7 +114,7 @@ const Category = () => {
   };
 
   useEffect(() => {
-    getData();
+    getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likecount]);
 
@@ -149,13 +149,13 @@ const Category = () => {
             id="demo-select-small"
             label="並び順"
           >
-            <MenuItem value="新しい順" onClick={getData}>
+            <MenuItem value="新しい順" onClick={getallPost}>
               新しい順
             </MenuItem>
-            <MenuItem value="古い順" onClick={handledesSort}>
+            <MenuItem value="古い順" onClick={getallOldpost}>
               古い順
             </MenuItem>
-            <MenuItem value="いいね順" onClick={handlelikeSort}>
+            <MenuItem value="いいね順" onClick={getallLikepost}>
               いいね順
             </MenuItem>
           </Select>

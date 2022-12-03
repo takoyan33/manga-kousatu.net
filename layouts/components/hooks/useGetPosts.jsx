@@ -10,9 +10,9 @@ import {
 } from "firebase/firestore";
 
 // type Type = {
-//   getData: () => Promise<void>,
-//   handledesSort: () => Promise<void>,
-//   handlelikeSort: () => Promise<void>,
+//   getallPost: () => Promise<void>,
+//   getallOldpost: () => Promise<void>,
+//   getallLikepost: () => Promise<void>,
 //   firedata: any,
 // };
 
@@ -22,7 +22,7 @@ export const useGetPosts = () => {
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
   //新着順
-  const getData = async () => {
+  const getallPost = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -30,7 +30,7 @@ export const useGetPosts = () => {
     });
   };
   useEffect(() => {
-    getData();
+    getallPost();
   }, []);
 
   return { firedata };

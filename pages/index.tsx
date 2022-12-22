@@ -46,7 +46,7 @@ export default function Index() {
       );
     });
     setLoading(false);
-    console.log(loading);
+    console.log(firedata);
   };
 
   //古い順

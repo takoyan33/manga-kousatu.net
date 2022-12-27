@@ -6,7 +6,7 @@ export default function Custom404() {
     <>
       <SiteHead />
       <MuiNavbar />
-      <h1 className="text-center m-10">ページが見つかりませんでした</h1>
+      <h1 className="text-center m-10">ページが見つかりませんでした。</h1>
     </>
   );
 }

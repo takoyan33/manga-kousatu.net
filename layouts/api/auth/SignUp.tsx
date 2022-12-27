@@ -1,4 +1,3 @@
-import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,10 +5,7 @@ import {
   signInWithPopup,
   sendSignInLinkToEmail,
 } from "firebase/auth";
-import { useState } from "react";
 import { useRouter } from "next/router";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Link from "next/link";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -37,7 +33,7 @@ const schema = yup.object({
 
 export default function SignUp() {
   const signupnotify = () =>
-    toast.success("成功しました！", {
+    toast.success("ユーザー登録完了!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -48,7 +44,7 @@ export default function SignUp() {
       theme: "light",
     });
   const signupmissnotify = () =>
-    toast.error("失敗しました！", {
+    toast.error("ユーザー登録失敗!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -70,15 +66,13 @@ export default function SignUp() {
 
   const auth = getAuth();
 
-  const SignUp: SubmitHandler<SampleFormInput> = (data) => {
+  const SignUp = (data) => {
     let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
     console.log(data.email);
     console.log(data.password);
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential: any) => {
-          const user = userCredential.user;
-          localStorage.setItem("Token", user.accessToken);
           signupnotify();
           router.push("/registerprofile");
         })
@@ -86,7 +80,6 @@ export default function SignUp() {
           signupmissnotify();
         });
     } else {
-      signupmissnotify();
     }
   };
 
@@ -94,11 +87,6 @@ export default function SignUp() {
     const auth = getAuth();
     signInWithPopup(auth, googleProvider).then((result) => {
       //googleで登録する
-      const credential = GoogleAuthProvider.credentialFromResult(result);
-      const token = credential.accessToken;
-      localStorage.setItem("Token", token);
-      //tokenをセットする
-      const user = result.user;
       router.push("/registerprofile");
     });
   };
@@ -114,23 +102,32 @@ export default function SignUp() {
       >
         <ToastContainer />
         <div>
-          <label className="text-center my-4">
-            メールアドレス<span className="text-red-600">*</span>
-          </label>
+          <label className="text-center my-4">メールアドレス*</label>
         </div>
         <TextField
           id="outlined-basic"
-          type="email"
           label="sample@gmail.com"
           className="m-auto w-80"
           variant="outlined"
+          // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+          //   setEmail(event.target.value)
+          // }
           {...register("email", { required: true })}
-          error={"email" in errors}
-          helperText={errors.email?.message}
+        />
+        <div>
+          <label className="text-center my-4">パスワード（8文字以上)*</label>
+        </div>
+        <TextField
+          id="outlined-basic"
+          label="Password"
+          type="password"
+          variant="outlined"
+          className="m-auto w-80"
+          {...register("password", { required: true })}
         />
         <div>
           <label className="text-center my-4">
-            パスワード<span className="text-red-600">*</span>（8文字以上)
+            確認用パスワード（8文字以上)*
           </label>
         </div>
         <TextField
@@ -140,23 +137,6 @@ export default function SignUp() {
           variant="outlined"
           className="m-auto w-80"
           {...register("password", { required: true })}
-          error={"password" in errors}
-          helperText={errors.password?.message}
-        />
-        <div>
-          <label className="text-center my-4">
-            確認用パスワード<span className="text-red-600">*</span>（8文字以上)
-          </label>
-        </div>
-        <TextField
-          id="outlined-basic"
-          label="Password"
-          type="password"
-          variant="outlined"
-          className="m-auto w-80"
-          {...register("password", { required: true })}
-          error={"password" in errors}
-          helperText={errors.password?.message}
         />
         <SiteButton
           href=""

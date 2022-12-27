@@ -13,10 +13,9 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../components/button";
 import Link from "next/link";
-import { SiteInput } from "../../components/ui/SiteInput";
-import { Grid } from "@material-ui/core";
-import { Stack, Button } from "@mui/material";
-
+import { Stack } from "@mui/material";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // フォームの型
 interface SampleFormInput {
   email: string;
@@ -33,6 +32,28 @@ const schema = yup.object({
 });
 
 export default function Loginauth() {
+  const signupnotify = () =>
+    toast.success("ユーザー登録完了!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+  const signupmissnotify = () =>
+    toast.error("ユーザー登録失敗!", {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
@@ -48,13 +69,11 @@ export default function Loginauth() {
   });
 
   const SignIn: SubmitHandler<SampleFormInput> = (email: any) => {
-    alert("ログインしました");
     console.log(email.email);
     console.log(email.password);
     signInWithEmailAndPassword(auth, email.email, email.password)
       .then((userCredential: any) => {
-        const user = userCredential.user;
-        localStorage.setItem("Token", user.accessToken);
+        alert("ログインしました");
         router.push("/");
       })
       .catch((err) => {
@@ -66,11 +85,6 @@ export default function Loginauth() {
   const SignInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        const user = result.user;
-        localStorage.setItem("Token", token);
-        alert("ログインしました");
         router.push("/");
       })
       .catch((err) => {
@@ -89,10 +103,9 @@ export default function Loginauth() {
         sx={{ width: "38ch" }}
       >
         <>
+          <ToastContainer />
           <div>
-            <label className="text-center my-4">
-              メールアドレス<span className="text-red-600">*</span>
-            </label>
+            <label className="text-center my-4">メールアドレス*</label>
           </div>
           <div>
             <TextField
@@ -100,7 +113,6 @@ export default function Loginauth() {
               label="sample@gmail.com"
               className="m-auto w-80 mb-6"
               variant="outlined"
-              type="email"
               onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
                 setEmail(event.target.value)
               }
@@ -110,7 +122,7 @@ export default function Loginauth() {
             />
             <div>
               <label className="text-center my-4">
-                パスワード<span className="text-red-600">*</span>（8文字以上)
+                パスワード（8文字以上)*
               </label>
             </div>
           </div>

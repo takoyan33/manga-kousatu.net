@@ -5,12 +5,11 @@ import Link from "next/link";
 import { database } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
-import { getAuth, deleteUser } from "firebase/auth";
+import { deleteUser } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import { SiteHead } from "../../layouts/components/ui";
-import Image from "react-image-resizer";
 import { Profileid } from "../../layouts/components/ui/Profileid";
 import { Cardpost } from "../../layouts/Cardpost";
 import ListSubheader from "@mui/material/ListSubheader";
@@ -19,13 +18,14 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import SendIcon from "@mui/icons-material/Send";
-import { query, orderBy, where } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
+import { useAuthContext } from "../../layouts/context/AuthContext";
 
 export default function Profile() {
-  const router = useRouter();
-  const auth = getAuth();
-  const user = auth.currentUser;
+  let router = useRouter();
+  const { user } = useAuthContext();
+
   const databaseRef = collection(database, "posts");
   const usersRef = collection(database, "users");
 
@@ -37,7 +37,7 @@ export default function Profile() {
   const [kingdom, setKingdom] = useState([]);
   const [tokyo, setTokyo] = useState([]);
   const [kaisen, setKaisen] = useState([]);
-  if (user === null) {
+  if (!user) {
   } else {
     console.log(user.email);
     const q = query(databaseRef, where("email", "==", user.email));
@@ -63,7 +63,7 @@ export default function Profile() {
     );
     const my = query(usersRef, where("email", "==", user.email));
 
-    const getallPost = async () => {
+    const getData = async () => {
       //firestoreからデータ取得
       await getDocs(q).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -78,7 +78,7 @@ export default function Profile() {
       console.log(firedata);
     };
 
-    const getallPostone = async () => {
+    const getDataone = async () => {
       //firestoreからデータ取得
       await getDocs(o).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -106,7 +106,7 @@ export default function Profile() {
       });
     };
 
-    const getallPosttokyo = async () => {
+    const getDatatokyo = async () => {
       //firestoreからデータ取得
       await getDocs(t).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -120,7 +120,7 @@ export default function Profile() {
       });
     };
 
-    const getallPostking = async () => {
+    const getDataking = async () => {
       //firestoreからデータ取得
       await getDocs(k).then((querySnapshot) => {
         //コレクションのドキュメントを取得
@@ -149,20 +149,25 @@ export default function Profile() {
     };
     // }
     useEffect(() => {
-      let token = localStorage.getItem("Token");
-      if (!token) {
-        router.push("/register");
+      if (!user) {
       } else {
-        getallPost();
+        getData();
         usersData();
-        getallPostone();
+        getDataone();
         getDatzyu();
-        getallPosttokyo();
-        getallPostking();
+        getDatatokyo();
+        getDataking();
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
   }
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/register");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const deleteuser = async () => {
     //userを削除する
@@ -189,7 +194,7 @@ export default function Profile() {
   //     deleteDoc(fieldToEdit)
   //       .then(() => {
   //         alert("記事を削除しました");
-  //         getallPost();
+  //         getData();
   //       })
   //       .catch((err) => {
   //         alert("記事の削除に失敗しました");
@@ -328,8 +333,8 @@ export default function Profile() {
         </div>
 
         <TextField
+          type="text"
           id="outlined-basic"
-          type="search"
           label="考察記事を検索する"
           variant="outlined"
           onChange={(event) => {

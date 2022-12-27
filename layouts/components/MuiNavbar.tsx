@@ -1,8 +1,5 @@
-import { AppBar, Toolbar, Button, Stack } from "@mui/material";
-import { useState } from "react";
+import { AppBar, Toolbar, Button } from "@mui/material";
 import Link from "next/link";
-import { database } from "../../firebaseConfig.js";
-import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, signOut } from "firebase/auth";
 import Box from "@mui/material/Box";
@@ -18,9 +15,11 @@ import Logout from "@mui/icons-material/Logout";
 import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Image from "next/image";
+import { useAuthContext } from "../context/AuthContext";
 
 export const MuiNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const { user } = useAuthContext();
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -29,9 +28,8 @@ export const MuiNavbar = () => {
     setAnchorEl(null);
   };
 
-  const router = useRouter();
+  let router = useRouter();
   const auth = getAuth();
-  const user = auth.currentUser;
 
   const logout = () => {
     localStorage.removeItem("Token");
@@ -40,9 +38,7 @@ export const MuiNavbar = () => {
       .then(() => {
         router.push("/");
       })
-      .catch((error) => {
-        // An error happened.
-      });
+      .catch((error) => {});
   };
 
   return (

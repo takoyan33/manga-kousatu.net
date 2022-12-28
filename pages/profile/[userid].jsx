@@ -2,14 +2,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import { database } from "../../firebaseConfig";
-import {
-  collection,
-  getDocs,
-  doc,
-  getDoc,
-  updateDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
@@ -29,7 +22,8 @@ const Post = () => {
   const { userid } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
-  // const yourprofile = query(usersRef, where("userid", "==", userid));
+  const yourprofile = query(usersRef, where("userid", "==", userid));
+  console.log(yourprofile);
   console.log({ userid });
 
   const getallPost = async () => {
@@ -90,7 +84,7 @@ const Post = () => {
 
   const userData = async () => {
     //firestoreからデータ取得
-    await getDocs(usersRef).then((response) => {
+    await getDocs(yourprofile).then((response) => {
       //コレクションのドキュメントを取得
       setUsers(
         response.docs.map((data) => {

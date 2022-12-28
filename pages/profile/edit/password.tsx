@@ -1,47 +1,22 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { app, database } from "../../../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, updatePassword } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Head from "next/head";
+import Button from "@mui/material/Button";
 
-export default function Passworddedit() {
+export default function Password() {
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
-  const databaseRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const auth = getAuth();
   const user = auth.currentUser;
   // const newPassword = getASecureRandomPassword();
 
   console.log(user);
-  useEffect(() => {
-    let token = localStorage.getItem("Token");
-
-    if (token) {
-      getallPost();
-    }
-    if (!token) {
-      router.push("/register");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const getallPost = async () => {
-    await getDocs(databaseRef).then((response) => {
-      setFiredata(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id };
-        })
-      );
-    });
-  };
 
   // const updatepassword = async () => {
   //   updatePassword(user, newPassword)
@@ -59,7 +34,7 @@ export default function Passworddedit() {
       <SiteHead />
       <MuiNavbar />
 
-      <h2 className="my-5">パスワードの編集</h2>
+      <h2 className="my-5">パスワード再設定</h2>
 
       <Box
         component="form"

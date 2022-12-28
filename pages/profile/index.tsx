@@ -37,134 +37,124 @@ export default function Profile() {
   const [kingdom, setKingdom] = useState([]);
   const [tokyo, setTokyo] = useState([]);
   const [kaisen, setKaisen] = useState([]);
-  if (!user) {
-  } else {
-    console.log(user.email);
-    const q = query(databaseRef, where("email", "==", user.email));
-    const o = query(
-      databaseRef,
-      where("email", "==", user.email),
-      where("categori", "==", "ONE PIECE")
-    );
-    const z = query(
-      databaseRef,
-      where("email", "==", user.email),
-      where("categori", "==", "呪術廻戦")
-    );
-    const t = query(
-      databaseRef,
-      where("email", "==", user.email),
-      where("categori", "==", "東京リベンジャーズ")
-    );
-    const k = query(
-      databaseRef,
-      where("email", "==", user.email),
-      where("categori", "==", "キングダム")
-    );
-    const my = query(usersRef, where("email", "==", user.email));
 
-    const getData = async () => {
-      //firestoreからデータ取得
-      await getDocs(q).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setFiredata(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-      console.log(firedata);
-    };
+  console.log(user.email);
+  const q = query(databaseRef, where("email", "==", user.email));
+  const o = query(
+    databaseRef,
+    where("email", "==", user.email),
+    where("categori", "==", "ONE PIECE")
+  );
+  const z = query(
+    databaseRef,
+    where("email", "==", user.email),
+    where("categori", "==", "呪術廻戦")
+  );
+  const t = query(
+    databaseRef,
+    where("email", "==", user.email),
+    where("categori", "==", "東京リベンジャーズ")
+  );
+  const k = query(
+    databaseRef,
+    where("email", "==", user.email),
+    where("categori", "==", "キングダム")
+  );
+  const my = query(usersRef, where("email", "==", user.email));
 
-    const getDataone = async () => {
-      //firestoreからデータ取得
-      await getDocs(o).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setOnpiece(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-    };
+  const getData = async () => {
+    //firestoreからデータ取得
+    await getDocs(q).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setFiredata(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
-    const getDatzyu = async () => {
-      //firestoreからデータ取得
-      await getDocs(z).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setKaisen(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-    };
+  const getDataone = async () => {
+    //firestoreからデータ取得
+    await getDocs(o).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setOnpiece(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
-    const getDatatokyo = async () => {
-      //firestoreからデータ取得
-      await getDocs(t).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setTokyo(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-    };
+  const getDatzyu = async () => {
+    //firestoreからデータ取得
+    await getDocs(z).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setKaisen(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
-    const getDataking = async () => {
-      //firestoreからデータ取得
-      await getDocs(k).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setKingdom(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-    };
-    const usersData = async () => {
-      //firestoreからデータ取得
-      await getDocs(my).then((querySnapshot) => {
-        //コレクションのドキュメントを取得
-        setUsers(
-          querySnapshot.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-      console.log(users);
-    };
-    // }
-    useEffect(() => {
-      if (!user) {
-      } else {
-        getData();
-        usersData();
-        getDataone();
-        getDatzyu();
-        getDatatokyo();
-        getDataking();
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-  }
+  const getDatatokyo = async () => {
+    //firestoreからデータ取得
+    await getDocs(t).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setTokyo(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
 
+  const getDataking = async () => {
+    //firestoreからデータ取得
+    await getDocs(k).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setKingdom(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
+  const usersData = async () => {
+    //firestoreからデータ取得
+    await getDocs(my).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setUsers(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+      );
+    });
+  };
+  // }
   useEffect(() => {
     if (!user) {
       router.push("/register");
+    } else {
+      getData();
+      usersData();
+      getDataone();
+      getDatzyu();
+      getDatatokyo();
+      getDataking();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -270,9 +260,7 @@ export default function Profile() {
             <ListItemIcon>
               <SendIcon />
             </ListItemIcon>
-            <button className="">
-              <Link href="/profile/edit"> プロフィールを変更する</Link>
-            </button>
+            <Link href="/profile/edit"> プロフィールを変更する</Link>
           </ListItemButton>
           <ListItemButton>
             <ListItemIcon>
@@ -281,12 +269,15 @@ export default function Profile() {
             <button className="" onClick={deleteuser}>
               アカウントを退会する
             </button>
-            {/* <button className="m-5">
+          </ListItemButton>
+          {/* <button className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>
         </button> */}
-            {/* <button className="myy-5">
-          <Link href="/profile/passwordedit">パスワードを変更する</Link>
-        </button> */}
+          <ListItemButton>
+            <ListItemIcon>
+              <SendIcon />
+            </ListItemIcon>
+            <Link href="/profile/edit/password">パスワードを変更する</Link>
           </ListItemButton>
         </List>
 
@@ -356,17 +347,6 @@ export default function Profile() {
                 return data;
               }
             })
-            // .filter((data) => {
-            //   if (data.categori === "ONE PIECE") {
-            //     console.log(data.categori);
-            //     setOnpiece((onpiece) => onpiece + 1);
-            //     return data;
-            //   }
-            //   {
-            //     console.log(data.categori);
-            //     return data;
-            //   }
-            // })
             .map((data) => {
               return (
                 <>

@@ -6,7 +6,6 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -16,6 +15,8 @@ import Link from "next/link";
 import { Stack } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
+
 // フォームの型
 interface SampleFormInput {
   email: string;

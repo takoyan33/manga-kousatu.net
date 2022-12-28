@@ -3,12 +3,11 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
-  sendSignInLinkToEmail,
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
 import Link from "next/link";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../components/button";
@@ -72,7 +71,7 @@ export default function SignUp() {
     console.log(data.password);
     if (checkSaveFlg) {
       createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then((userCredential: any) => {
+        .then(() => {
           signupnotify();
           router.push("/registerprofile");
         })

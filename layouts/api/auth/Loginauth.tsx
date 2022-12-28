@@ -16,7 +16,6 @@ import { Stack } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-
 // フォームの型
 interface SampleFormInput {
   email: string;
@@ -34,7 +33,7 @@ const schema = yup.object({
 
 export default function Loginauth() {
   const signupnotify = () =>
-    toast.success("ユーザー登録完了!", {
+    toast.success("ログインしました!", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -58,8 +57,6 @@ export default function Loginauth() {
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
 
   const {
     register,
@@ -73,23 +70,28 @@ export default function Loginauth() {
     console.log(email.email);
     console.log(email.password);
     signInWithEmailAndPassword(auth, email.email, email.password)
-      .then((userCredential: any) => {
-        alert("ログインしました");
-        router.push("/");
+      .then(() => {
+        signupnotify();
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
-        alert("ログインできません");
+        signupmissnotify();
         console.log(err);
       });
   };
 
   const SignInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        router.push("/");
+      .then(() => {
+        signupnotify();
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
-        alert("登録できませんでした");
+        signupmissnotify();
         console.log(err);
       });
   };
@@ -114,9 +116,6 @@ export default function Loginauth() {
               label="sample@gmail.com"
               className="m-auto w-80 mb-6"
               variant="outlined"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(event.target.value)
-              }
               {...register("email")}
               error={"email" in errors}
               helperText={errors.email?.message}
@@ -134,9 +133,6 @@ export default function Loginauth() {
               variant="outlined"
               type="password"
               className="m-auto w-80 mb-6"
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(event.target.value)
-              }
               {...register("password")}
               error={"password" in errors}
               helperText={errors.password?.message}
@@ -144,7 +140,6 @@ export default function Loginauth() {
           </div>
           <SiteButton
             href=""
-            // onClick={SignIn}
             onClick={handleSubmit(SignIn)}
             text="ログイン"
             className="m-auto text-center w-80 my-4"
@@ -159,6 +154,12 @@ export default function Loginauth() {
             ユーザー未登録の方はこちら
             <Link href="/register">
               <span className="text-blue-500 underline">新規登録</span>
+            </Link>
+          </p>
+          <p className="my-4">
+            パスワードを忘れた方はこちら<br></br>
+            <Link href="/profile/edit/password">
+              <span className="text-blue-500 underline">パスワード再設定</span>
             </Link>
           </p>
         </>

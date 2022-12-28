@@ -17,7 +17,12 @@ export const SiteButton: React.VFC<Props> = memo(
     return (
       <div className={className}>
         <Link href={href}>
-          <Button variant="outlined" onClick={onClick} disabled={disabled}>
+          <Button
+            variant="outlined"
+            onClick={onClick}
+            disabled={disabled}
+            type="submit"
+          >
             {text}
           </Button>
         </Link>

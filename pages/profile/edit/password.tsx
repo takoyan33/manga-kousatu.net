@@ -7,64 +7,64 @@ import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import { usePasswordReset } from "../../../layouts/api/auth/useAuth";
+import { Alert, Grid, Link } from "@mui/material";
+import { SiteButton } from "../../../layouts/components/button";
 
 export default function Password() {
-  const [password, setPassword] = useState<string>("");
-  const router = useRouter();
-  const [firedata, setFiredata] = useState([]);
-  const auth = getAuth();
-  const user = auth.currentUser;
-  // const newPassword = getASecureRandomPassword();
+  const [email, setEmail] = useState("");
+  const { success, error, passwordReset } = usePasswordReset();
 
-  console.log(user);
-
-  // const updatepassword = async () => {
-  //   updatePassword(user, newPassword)
-  //     .then(() => {
-  //       alert("パスワードを変更しました");
-  //     })
-  //     .catch((error) => {
-  //       // An error ocurred
-  //       // ...
-  //     });
-  // };
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    passwordReset(email);
+  };
 
   return (
     <div>
       <SiteHead />
       <MuiNavbar />
+      <div className="max-w-7xl m-auto">
+        <h2 className="my-5">パスワード再設定</h2>
 
-      <h2 className="my-5">パスワード再設定</h2>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="メールアドレス"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            送信
+          </Button>
 
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="outlined-basic"
-          label="新しいパスワード*8文字以上"
-          variant="outlined"
-          value={password}
-          type="password"
-          onChange={(event) => setPassword(event.target.value)}
-        />
+          <Grid container sx={{ justifyContent: "center" }}>
+            <Grid item>
+              <Link href="login" variant="body2">
+                戻る
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
 
-        <TextField
-          id="outlined-basic"
-          label="新しいパスワード*8文字以上"
-          variant="outlined"
-          value={password}
-          type="password"
-          onChange={(event) => setPassword(event.target.value)}
-        />
-      </Box>
-      {/* <Button variant="outlined" className="m-5" onClick={updatepassword}>
-        更新する
-      </Button> */}
+        {error && (
+          <Alert severity="error">メールアドレスに送信できませんでした</Alert>
+        )}
+        {success && (
+          <Alert severity="success">メールアドレスに送信しました</Alert>
+        )}
+      </div>
     </div>
   );
 }

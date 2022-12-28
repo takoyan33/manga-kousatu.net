@@ -1,7 +1,5 @@
 import React from "react";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { getAuth, updatePassword } from "firebase/auth";
+import { useState } from "react";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 import Box from "@mui/material/Box";
@@ -9,7 +7,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { usePasswordReset } from "../../../layouts/api/auth/useAuth";
 import { Alert, Grid, Link } from "@mui/material";
-import { SiteButton } from "../../../layouts/components/button";
 
 export default function Password() {
   const [email, setEmail] = useState("");

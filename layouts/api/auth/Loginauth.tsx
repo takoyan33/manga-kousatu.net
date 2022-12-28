@@ -15,6 +15,7 @@ import Link from "next/link";
 import { Stack } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { SignInWithGoogle } from "../../api/auth/useAuth";
 
 // フォームの型
 interface SampleFormInput {
@@ -54,6 +55,7 @@ export default function Loginauth() {
       progress: undefined,
       theme: "light",
     });
+
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();

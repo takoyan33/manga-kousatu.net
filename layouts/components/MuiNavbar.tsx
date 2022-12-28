@@ -16,6 +16,7 @@ import React from "react";
 import Tooltip from "@mui/material/Tooltip";
 import Image from "next/image";
 import { useAuthContext } from "../context/AuthContext";
+import { useLogout } from "../api/auth/useAuth";
 
 export const MuiNavbar = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,18 +28,15 @@ export const MuiNavbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const router = useRouter();
+  const { logout } = useLogout();
 
-  let router = useRouter();
-  const auth = getAuth();
-
-  const logout = () => {
-    localStorage.removeItem("Token");
-
-    signOut(auth)
-      .then(() => {
-        router.push("/");
-      })
-      .catch((error) => {});
+  const handleLogout = () => {
+    logout();
+    setAnchorEl(null);
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
   };
 
   return (
@@ -125,7 +123,7 @@ export const MuiNavbar = () => {
               <Link href="/profile">プロフィール</Link>
             </MenuItem>
             <MenuItem>
-              <Button color="inherit" onClick={logout}>
+              <Button color="inherit" onClick={handleLogout}>
                 <Logout fontSize="small" />
                 ログアウト
               </Button>

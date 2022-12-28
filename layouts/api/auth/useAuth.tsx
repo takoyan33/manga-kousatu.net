@@ -1,5 +1,11 @@
 import { app } from "../../../firebaseConfig";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import {
+  getAuth,
+  sendPasswordResetEmail,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
 
@@ -24,4 +30,38 @@ export const usePasswordReset = () => {
   };
 
   return { success, error, passwordReset };
+};
+
+export const useLogout = () => {
+  const auth = getAuth();
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log("Sign-out successful.");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  return { logout };
+};
+
+export const SignInWithGoogle = () => {
+  const googleProvider = new GoogleAuthProvider();
+  const router = useRouter();
+  const auth = getAuth();
+
+  signInWithPopup(auth, googleProvider)
+    .then(() => {
+      // signupnotify();
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    })
+    .catch((err) => {
+      // signupmissnotify();
+      console.log(err.message);
+    });
+  return { SignInWithGoogle };
 };

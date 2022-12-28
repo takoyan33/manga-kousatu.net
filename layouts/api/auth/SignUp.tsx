@@ -73,7 +73,9 @@ export default function SignUp() {
       createUserWithEmailAndPassword(auth, data.email, data.password)
         .then(() => {
           signupnotify();
-          router.push("/registerprofile");
+          setTimeout(() => {
+            router.push("/registerprofile");
+          }, 2000);
         })
         .catch((err) => {
           signupmissnotify();
@@ -84,10 +86,17 @@ export default function SignUp() {
 
   const SignUpWithGoogle = () => {
     const auth = getAuth();
-    signInWithPopup(auth, googleProvider).then((result) => {
-      //googleで登録する
-      router.push("/registerprofile");
-    });
+    signInWithPopup(auth, googleProvider)
+      .then((result) => {
+        //googleで登録する
+        signupnotify();
+        setTimeout(() => {
+          router.push("/registerprofile");
+        }, 2000);
+      })
+      .catch((err) => {
+        signupmissnotify();
+      });
   };
 
   return (

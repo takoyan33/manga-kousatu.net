@@ -23,31 +23,31 @@ const Post = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const yourprofile = query(usersRef, where("userid", "==", userid));
+  const yourdata = query(databaseRef, where("userid", "==", userid));
   console.log(yourprofile);
   console.log({ userid });
 
   const getallPost = async () => {
     //firestoreからデータ取得
-    await getDocs(databaseRef).then((response) => {
+    await getDocs(yourdata).then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
-        response.docs
-          .map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-          .filter((data) => {
-            if (data.userid === userid) {
-              return data;
-              //そのまま返す
-            } else if (
-              data.userid.toLowerCase().includes(userid)
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-            ) {
-              return data;
-            }
-          })
+        response.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id };
+          //スプレッド構文で展開して、新しい配列を作成
+        })
+        // .filter((data) => {
+        //   if (data.userid === userid) {
+        //     return data;
+        //     //そのまま返す
+        //   } else if (
+        //     data.userid.toLowerCase().includes(userid)
+        //     //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+        //   ) {
+        //     return data;
+        //   }
+        // })
       );
     });
   };
@@ -107,15 +107,13 @@ const Post = () => {
             users.map((user) => {
               return (
                 <>
-                  {userid == user.userid && (
-                    <Profileid
-                      key={user.id}
-                      profileimage={user.profileimage}
-                      username={user.username}
-                      bio={user.bio}
-                      favarite={user.favarite}
-                    />
-                  )}
+                  <Profileid
+                    key={user.id}
+                    profileimage={user.profileimage}
+                    username={user.username}
+                    bio={user.bio}
+                    favarite={user.favarite}
+                  />
                 </>
               );
             })}

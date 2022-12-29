@@ -1,4 +1,3 @@
-import { app } from "../../../firebaseConfig";
 import {
   getAuth,
   sendPasswordResetEmail,

@@ -15,6 +15,10 @@ import Image from "react-image-resizer";
 import { TagsInput } from "react-tag-input-component";
 import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 import { useAuthContext } from "../../../layouts/context/AuthContext";
+import {
+  notify,
+  signupmissnotify,
+} from "../../../layouts/components/text/SiteModal";
 
 export default function Edit() {
   const [image, setImage] = useState<string>();
@@ -84,12 +88,13 @@ export default function Edit() {
       //改行を保存する
     })
       .then(() => {
-        alert("ユーザー情報が更新されました");
+        notify("ユーザー情報が更新されました");
         setUsername("");
         setBio("");
         router.push("/profile");
       })
       .catch((err) => {
+        signupmissnotify("ユーザー情報が更新に失敗しました");
         console.log(err);
       });
   };

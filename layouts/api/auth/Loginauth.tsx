@@ -12,9 +12,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../components/button";
 import Link from "next/link";
 import { Stack } from "@mui/material";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SignInWithGoogle } from "../../api/auth/useAuth";
+import { notify, signupmissnotify } from "../../components/text/SiteModal";
 import { useLogin } from "./useAuth";
 
 // フォームの型
@@ -33,29 +33,6 @@ const schema = yup.object({
 });
 
 export default function Loginauth() {
-  const signupnotify = () =>
-    toast.success("ログインしました!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  const signupmissnotify = () =>
-    toast.error("ユーザー登録失敗!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-
   const auth = getAuth();
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
@@ -73,26 +50,26 @@ export default function Loginauth() {
   const handleSignIn: SubmitHandler<SampleFormInput> = (data: any) => {
     const { email, password } = data;
     login(email, password);
-    signupnotify();
+    notify("ログインしました");
     setTimeout(() => {
       router.push("/");
     }, 2000);
 
     if (error) {
-      signupmissnotify();
+      signupmissnotify("ログインに失敗しました");
     }
   };
 
   const SignInWithGoogle = () => {
     signInWithPopup(auth, googleProvider)
       .then(() => {
-        signupnotify();
+        notify("ログインしました");
         setTimeout(() => {
           router.push("/");
         }, 2000);
       })
       .catch((err) => {
-        signupmissnotify();
+        signupmissnotify("ログインに失敗しました");
         console.log(err);
       });
   };

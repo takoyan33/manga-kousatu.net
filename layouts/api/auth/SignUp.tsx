@@ -11,8 +11,9 @@ import Link from "next/link";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../components/button";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { notify, signupmissnotify } from "../../components/text/SiteModal";
 import { Stack } from "@mui/material";
 import { useSignup } from "./useAuth";
 
@@ -32,28 +33,6 @@ const schema = yup.object({
 });
 
 export default function SignUp() {
-  const signupnotify = () =>
-    toast.success("ユーザー登録完了!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  const signupmissnotify = () =>
-    toast.error("ユーザー登録失敗!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
   const router = useRouter();
   const googleProvider = new GoogleAuthProvider();
   const {
@@ -69,13 +48,13 @@ export default function SignUp() {
   const handleSignUp: SubmitHandler<SampleFormInput> = (data) => {
     const { email, password } = data;
     signup(email, password);
-    signupnotify();
+    notify("ユーザー登録完了しました");
     setTimeout(() => {
       router.push("/registerprofile");
     }, 2000);
 
     if (error) {
-      signupmissnotify();
+      signupmissnotify("ユーザー登録失敗しました");
     }
   };
 
@@ -84,13 +63,13 @@ export default function SignUp() {
     signInWithPopup(auth, googleProvider)
       .then(() => {
         //googleで登録する
-        signupnotify();
+        notify("ユーザー登録完了しました");
         setTimeout(() => {
           router.push("/registerprofile");
         }, 2000);
       })
-      .catch((err) => {
-        signupmissnotify();
+      .catch(() => {
+        signupmissnotify("ユーザー登録失敗しました");
       });
   };
 

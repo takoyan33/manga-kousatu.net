@@ -230,13 +230,15 @@ export default function Index() {
             })}
         </Grid>
         <div className="text-center">
-          <SiteButton
-            href=""
-            text="さらに表示"
-            disabled={isEmpty ? true : false}
-            onClick={displayMore}
-            className="m-auto w-50 my-2"
-          />
+          {firedata.length > 6 && (
+            <SiteButton
+              href=""
+              text="さらに表示"
+              disabled={isEmpty ? true : false}
+              onClick={displayMore}
+              className="m-auto w-50 my-2"
+            />
+          )}
         </div>
         <div className="my-4">
           <p>© 尾田栄一郎／集英社・フジテレビ・東映アニメーション</p>

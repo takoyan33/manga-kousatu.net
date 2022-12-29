@@ -29,6 +29,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { query, orderBy } from "firebase/firestore";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
+import { GetStaticPaths, GetStaticProps } from "next";
 
 // export const getStaticPaths = () => {};
 
@@ -161,10 +162,6 @@ const Post = () => {
         })
       );
     });
-    // const userdata = doc(database, "users", id);
-    // getDoc(userdata).then((documentSnapshot) => {
-    //   setFiredata(documentSnapshot.data());
-    // });
   };
 
   useEffect(() => {

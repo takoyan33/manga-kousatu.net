@@ -25,10 +25,8 @@ import { useAuthContext } from "../../layouts/context/AuthContext";
 export default function Profile() {
   let router = useRouter();
   const { user } = useAuthContext();
-
   const databaseRef = collection(database, "posts");
   const usersRef = collection(database, "users");
-
   const [users, setUsers] = useState(null);
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
@@ -38,8 +36,9 @@ export default function Profile() {
   const [tokyo, setTokyo] = useState([]);
   const [kaisen, setKaisen] = useState([]);
 
-  console.log(user.email);
   const q = query(databaseRef, where("email", "==", user.email));
+  const my = query(usersRef, where("email", "==", user.email));
+
   const o = query(
     databaseRef,
     where("email", "==", user.email),
@@ -60,7 +59,6 @@ export default function Profile() {
     where("email", "==", user.email),
     where("categori", "==", "キングダム")
   );
-  const my = query(usersRef, where("email", "==", user.email));
 
   const getData = async () => {
     //firestoreからデータ取得

@@ -9,23 +9,23 @@ import { SiteHead } from "../../layouts/components/ui/SiteHead";
 import { Profileid } from "../../layouts/components/ui/Profileid";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../layouts/Cardpost";
-import { query, orderBy, where } from "firebase/firestore";
-
+import { query, where } from "firebase/firestore";
+import { useAuthContext } from "../../layouts/context/AuthContext";
 const Post = () => {
   const [users, setUsers] = useState(null);
   const databaseRef = collection(database, "posts");
   //データベースを取得
   const [firedata, setFiredata] = useState([]);
   const usersRef = collection(database, "users");
-  const [likes, setLikes] = useState(null);
+  const [Userid, setUserid] = useState(null);
   const router = useRouter();
   const { userid } = router.query;
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const yourprofile = query(usersRef, where("userid", "==", userid));
-  const yourdata = query(databaseRef, where("userid", "==", userid));
   console.log(yourprofile);
   console.log({ userid });
+
+  const { user } = useAuthContext();
+  const yourprofile = query(usersRef, where("userid", "==", userid));
+  const yourdata = query(databaseRef, where("userid", "==", userid));
 
   const getallPost = async () => {
     //firestoreからデータ取得
@@ -37,17 +37,6 @@ const Post = () => {
           return { ...data.data(), id: data.id };
           //スプレッド構文で展開して、新しい配列を作成
         })
-        // .filter((data) => {
-        //   if (data.userid === userid) {
-        //     return data;
-        //     //そのまま返す
-        //   } else if (
-        //     data.userid.toLowerCase().includes(userid)
-        //     //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-        //   ) {
-        //     return data;
-        //   }
-        // })
       );
     });
   };
@@ -56,31 +45,15 @@ const Post = () => {
     if (user) {
       if (userid == user.uid) {
         router.push("/profile");
+      } else {
+        userData();
+        getallPost();
+        setUserid({ userid });
+        console.log(Userid);
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    userData();
-    getallPost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likes]);
-
-  // const userData = async () => {
-  //   //firestoreからデータ取得
-  //   const data = doc(database, "users", "ilvobFpZAceNGncxNWwPOE88kvu1");
-  //   // const data = doc(database, "users", userid);
-
-  //   getDoc(data)
-  //     .then((documentSnapshot) => {
-  //       setUsers(documentSnapshot.data());
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting document:", error);
-  //     });
-  // };
-  // console.log(users);
 
   const userData = async () => {
     //firestoreからデータ取得

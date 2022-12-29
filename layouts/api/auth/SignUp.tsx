@@ -6,14 +6,15 @@ import {
 } from "firebase/auth";
 import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
+import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SiteButton } from "../../components/button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Stack } from "@mui/material";
+import { useSignup } from "./useAuth";
 
 // フォームの型
 interface SampleFormInput {
@@ -63,21 +64,19 @@ export default function SignUp() {
     resolver: yupResolver(schema),
   });
 
-  const auth = getAuth();
+  const { signup, error } = useSignup();
 
-  const SignUp = (data) => {
-    console.log(data.email);
-    console.log(data.password);
-    createUserWithEmailAndPassword(auth, data.email, data.password)
-      .then(() => {
-        signupnotify();
-        setTimeout(() => {
-          router.push("/registerprofile");
-        }, 2000);
-      })
-      .catch((err) => {
-        signupmissnotify();
-      });
+  const handleSignUp: SubmitHandler<SampleFormInput> = (data) => {
+    const { email, password } = data;
+    signup(email, password);
+    signupnotify();
+    setTimeout(() => {
+      router.push("/registerprofile");
+    }, 2000);
+
+    if (error) {
+      signupmissnotify();
+    }
   };
 
   const SignUpWithGoogle = () => {
@@ -115,10 +114,9 @@ export default function SignUp() {
           label="sample@gmail.com"
           className="m-auto w-80"
           variant="outlined"
-          // onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-          //   setEmail(event.target.value)
-          // }
           {...register("email", { required: true })}
+          error={"email" in errors}
+          helperText={errors.email?.message}
         />
         <div>
           <label className="text-center my-4">
@@ -132,6 +130,8 @@ export default function SignUp() {
           variant="outlined"
           className="m-auto w-80"
           {...register("password", { required: true })}
+          error={"password" in errors}
+          helperText={errors.password?.message}
         />
         <div>
           <label className="text-center my-4">
@@ -145,10 +145,12 @@ export default function SignUp() {
           variant="outlined"
           className="m-auto w-80"
           {...register("password", { required: true })}
+          error={"password" in errors}
+          helperText={errors.password?.message}
         />
         <SiteButton
           href=""
-          onClick={handleSubmit(SignUp)}
+          onClick={handleSubmit(handleSignUp)}
           text="新規登録"
           className="m-auto w-80 my-8 text-center"
         />

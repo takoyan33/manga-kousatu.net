@@ -4,7 +4,6 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { useState } from "react";
 import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -16,6 +15,7 @@ import { Stack } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { SignInWithGoogle } from "../../api/auth/useAuth";
+import { useLogin } from "./useAuth";
 
 // フォームの型
 interface SampleFormInput {
@@ -68,20 +68,19 @@ export default function Loginauth() {
     resolver: yupResolver(schema),
   });
 
-  const SignIn: SubmitHandler<SampleFormInput> = (email: any) => {
-    console.log(email.email);
-    console.log(email.password);
-    signInWithEmailAndPassword(auth, email.email, email.password)
-      .then(() => {
-        signupnotify();
-        setTimeout(() => {
-          router.push("/");
-        }, 2000);
-      })
-      .catch((err) => {
-        signupmissnotify();
-        console.log(err);
-      });
+  const { login, success, error } = useLogin();
+
+  const handleSignIn: SubmitHandler<SampleFormInput> = (data: any) => {
+    const { email, password } = data;
+    login(email, password);
+    signupnotify();
+    setTimeout(() => {
+      router.push("/");
+    }, 2000);
+
+    if (error) {
+      signupmissnotify();
+    }
   };
 
   const SignInWithGoogle = () => {
@@ -144,7 +143,7 @@ export default function Loginauth() {
           </div>
           <SiteButton
             href=""
-            onClick={handleSubmit(SignIn)}
+            onClick={handleSubmit(handleSignIn)}
             text="ログイン"
             className="m-auto text-center w-80 my-4"
           />

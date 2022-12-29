@@ -79,6 +79,7 @@ const Post = () => {
   const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
+  const styles = { whiteSpace: "pre-line" };
 
   console.log({ id });
 
@@ -403,7 +404,9 @@ const Post = () => {
                     {firedata.netabare}
                   </span>
                 )}
-                <p className="text-left">{firedata.context}</p>
+                <p className="text-left" style={styles}>
+                  {firedata.context}
+                </p>
                 <br></br>
                 {firedata.contextimage && (
                   <div className="flex justify-center">

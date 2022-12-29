@@ -66,28 +66,24 @@ export default function SignUp() {
   const auth = getAuth();
 
   const SignUp = (data) => {
-    let checkSaveFlg = window.confirm("この内容で登録しても大丈夫ですか？");
     console.log(data.email);
     console.log(data.password);
-    if (checkSaveFlg) {
-      createUserWithEmailAndPassword(auth, data.email, data.password)
-        .then(() => {
-          signupnotify();
-          setTimeout(() => {
-            router.push("/registerprofile");
-          }, 2000);
-        })
-        .catch((err) => {
-          signupmissnotify();
-        });
-    } else {
-    }
+    createUserWithEmailAndPassword(auth, data.email, data.password)
+      .then(() => {
+        signupnotify();
+        setTimeout(() => {
+          router.push("/registerprofile");
+        }, 2000);
+      })
+      .catch((err) => {
+        signupmissnotify();
+      });
   };
 
   const SignUpWithGoogle = () => {
     const auth = getAuth();
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
+      .then(() => {
         //googleで登録する
         signupnotify();
         setTimeout(() => {
@@ -110,7 +106,9 @@ export default function SignUp() {
       >
         <ToastContainer />
         <div>
-          <label className="text-center my-4">メールアドレス*</label>
+          <label className="text-center my-4">
+            メールアドレス<span className="text-red-600">*</span>
+          </label>
         </div>
         <TextField
           id="outlined-basic"
@@ -123,7 +121,9 @@ export default function SignUp() {
           {...register("email", { required: true })}
         />
         <div>
-          <label className="text-center my-4">パスワード（8文字以上)*</label>
+          <label className="text-center my-4">
+            パスワード（8文字以上)<span className="text-red-600">*</span>
+          </label>
         </div>
         <TextField
           id="outlined-basic"
@@ -135,7 +135,7 @@ export default function SignUp() {
         />
         <div>
           <label className="text-center my-4">
-            確認用パスワード（8文字以上)*
+            確認用パスワード（8文字以上)<span className="text-red-600">*</span>
           </label>
         </div>
         <TextField

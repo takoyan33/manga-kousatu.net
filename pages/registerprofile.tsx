@@ -23,7 +23,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 
 export default function Registerprofile() {
   const notify = () =>
-    toast.success("成功しました！", {
+    toast.success("プロフィールの登録が完了しました！", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -34,7 +34,7 @@ export default function Registerprofile() {
       theme: "light",
     });
   const signupmissnotify = () =>
-    toast.error("失敗しました！", {
+    toast.error("登録に失敗しました！", {
       position: "top-center",
       autoClose: 5000,
       hideProgressBar: false,
@@ -85,9 +85,9 @@ export default function Registerprofile() {
       })
         .then(() => {
           notify();
-          setUsername("");
-          setBio("");
-          router.push("/");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
         })
         .catch((err) => {
           signupmissnotify();

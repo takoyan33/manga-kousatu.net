@@ -24,6 +24,7 @@ import { Formcontrols } from "../../../layouts/components/ui/Formcontrols";
 import { SiteButton } from "../../../layouts/components/button";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuthContext } from "../../../layouts/context/AuthContext";
 
 export default function Post() {
   const notify = () =>
@@ -51,10 +52,10 @@ export default function Post() {
   const [result, setResult] = useState("");
   const [netabare, setNetabare] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    let token = localStorage.getItem("Token");
-    if (!token) {
+    if (!user) {
       router.push("/register");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -81,7 +82,6 @@ export default function Post() {
 
   const router = useRouter();
   const auth = getAuth();
-  const user = auth.currentUser;
 
   console.log(context.length);
 
@@ -263,12 +263,12 @@ export default function Post() {
               }}
             />
             <div>
-              <p>写真（最大1枚）</p>
+              <p>他の写真（最大1枚）</p>
             </div>
             <Imageuploadcontext
               onChange={uploadToClientcontext}
               createcontextObjectURL={createcontextObjectURL}
-              text={""}
+              text={"写真"}
               event={undefined}
             />
             <input

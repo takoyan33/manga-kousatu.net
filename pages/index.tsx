@@ -161,7 +161,7 @@ export default function Index() {
           // userの情報
           const CategoriesInfo = {
             id: categori.id,
-            name: categori.title,
+            title: categori.title,
           };
           return (
             <span key={categori.id}>
@@ -181,7 +181,7 @@ export default function Index() {
             </span>
           );
         })}
-        
+
         {/* {Categories.map((categori) => (
           <SiteCategory
             key={categori.id}

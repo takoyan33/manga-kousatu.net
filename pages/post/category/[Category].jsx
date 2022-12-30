@@ -116,7 +116,7 @@ const Category = () => {
   useEffect(() => {
     getallPost();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likecount]);
+  }, [router.query]);
 
   return (
     <>

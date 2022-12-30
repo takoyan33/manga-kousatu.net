@@ -3,7 +3,6 @@ import React from "react";
 import { useEffect, useState, useCallback } from "react";
 import { database } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
 import { Profileid } from "../../layouts/components/ui/Profileid";

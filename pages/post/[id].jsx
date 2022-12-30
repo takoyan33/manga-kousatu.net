@@ -430,7 +430,7 @@ const Post = () => {
                     onClick={() => handleClick(id, firedata.likes)}
                   />
                 )}
-                <div key={id} className="cursor-pointer">
+                {/* <div key={id} className="cursor-pointer">
                   {users &&
                     users.map((user) => {
                       return (
@@ -465,7 +465,7 @@ const Post = () => {
                         </>
                       );
                     })}
-                </div>
+                </div> */}
               </div>
             </div>
             <>

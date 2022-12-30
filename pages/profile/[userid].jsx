@@ -17,6 +17,8 @@ const Post = () => {
   const [firedata, setFiredata] = useState([]);
   const usersRef = collection(database, "users");
   const [Userid, setUserid] = useState(null);
+  const [greeting, setGreeting] = useState("hello");
+  const [str, setStr] = useState("");
   const router = useRouter();
   const { userid } = router.query;
   console.log(yourprofile);
@@ -51,8 +53,12 @@ const Post = () => {
         console.log(Userid);
       }
     }
+    if (str === "goodbye") {
+      const newGreeting = str;
+      setGreeting(newGreeting);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [str]);
 
   const userData = async () => {
     //firestoreからデータ取得

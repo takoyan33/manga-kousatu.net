@@ -29,27 +29,6 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import { query, orderBy } from "firebase/firestore";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
-import { GetStaticPaths, GetStaticProps } from "next";
-
-// export const getStaticPaths = () => {};
-
-// export const getfireData = () => {
-//   // eslint-disable-next-line react-hooks/rules-of-hooks
-//   const [firedata, setFiredata] = useState([]);
-//   const databaseRef = collection(database, "posts");
-//   const q = query(databaseRef, orderBy("timestamp", "desc"));
-
-//   const getallPost = async () => {
-//     await onSnapshot(q, (querySnapshot) => {
-//       setFiredata(
-//         querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-//       );
-//     });
-//   };
-//   getallPost();
-//   console.log(firedata);
-//   return firedata;
-// };
 
 const Post = () => {
   const [ID, setID] = useState(null);
@@ -178,7 +157,7 @@ const Post = () => {
 
   const updatefields = () => {
     //更新する
-    let fieldToEdit = doc(database, "posts", ID);
+    const fieldToEdit = doc(database, "posts", ID);
     const newdate = new Date().toLocaleString("ja-JP");
     //セットしたIDをセットする
     updateDoc(fieldToEdit, {

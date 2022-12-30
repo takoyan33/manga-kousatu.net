@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { database } from "../firebaseConfig";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, getDocs } from "firebase/firestore";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../layouts/components/MuiNavbar";
@@ -23,6 +24,7 @@ export default function Index() {
   // const { getallPost, getallOldpost, getallLikepost } = GetPosts();
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
+
   //新しい順
   const u = query(databaseRef, orderBy("timestamp"));
   //古い順
@@ -33,7 +35,6 @@ export default function Index() {
   const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const router = useRouter();
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -46,8 +47,13 @@ export default function Index() {
       );
     });
     setLoading(false);
-    console.log(firedata);
   };
+
+  // const datas = getDocs(databaseRef).then((querySnapshot) => {
+  //   querySnapshot.docs.map((doc) => doc.data());
+  // });
+
+  // console.log(datas);
 
   //古い順
   const getallOldpost = async () => {
@@ -150,14 +156,40 @@ export default function Index() {
         <h2 className="my-12 text-center text-2xl font-semibold">
           カテゴリから選ぶ
         </h2>
-        {Categories.map((categori) => (
+
+        {Categories.map((categori) => {
+          // userの情報
+          const CategoriesInfo = {
+            id: categori.id,
+            name: categori.title,
+          };
+          return (
+            <span key={categori.id}>
+              <span
+                className={`p-1 inline-block text-white text-center m-6 + ${categori.className}`}
+              >
+                <Link
+                  as={`/post/category/${categori.title}`}
+                  href={{
+                    pathname: `/post/category/[title]`,
+                    query: CategoriesInfo,
+                  }}
+                >
+                  <a>{categori.title}</a>
+                </Link>
+              </span>
+            </span>
+          );
+        })}
+        
+        {/* {Categories.map((categori) => (
           <SiteCategory
             key={categori.id}
             className={`p-1 inline-block text-white text-center m-6 + ${categori.className}`}
             text={categori.title}
             href={categori.link}
           />
-        ))}
+        ))} */}
 
         <h2 className="my-12 text-center text-2xl font-semibold">
           新規投稿一覧

@@ -30,12 +30,7 @@ const Category = () => {
   const [likecount, setLikecount] = useState(0);
 
   const router = useRouter();
-  const { Category } = router.query;
-  const auth = getAuth();
-  const user = auth.currentUser;
   const [searchName, setSearchName] = useState("");
-
-  console.log({ Category });
 
   const getallPost = async () => {
     //firestoreからデータ取得
@@ -49,11 +44,13 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.categori === router.query.title) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.categori
+                .toLowerCase()
+                .includes(router.query.title.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -74,11 +71,13 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.categori === router.query.title) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.categori
+                .toLowerCase()
+                .includes(router.query.title.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -99,11 +98,13 @@ const Category = () => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === Category) {
+            if (data.categori === router.query.title) {
               return data;
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(Category.toLowerCase())
+              data.categori
+                .toLowerCase()
+                .includes(router.query.title.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data;
@@ -124,10 +125,10 @@ const Category = () => {
       <MuiNavbar />
       <div className="max-w-7xl m-auto">
         <p className="my-4">
-          <Link href="/">トップ</Link>　＞　投稿記事　＞　{Category}
+          <Link href="/">トップ</Link>　＞　投稿記事　＞　{router.query.title}
         </p>
         <h2 className="my-12 text-center text-2xl font-semibold">
-          {Category}の考察記事一覧
+          {router.query.title}の考察記事一覧
         </h2>
 
         <p className="text-1xl text-center">投稿数　{firedata.length}件</p>

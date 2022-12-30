@@ -430,7 +430,7 @@ const Post = () => {
                     onClick={() => handleClick(id, firedata.likes)}
                   />
                 )}
-                {/* <div key={id} className="cursor-pointer">
+                <div key={id} className="cursor-pointer">
                   {users &&
                     users.map((user) => {
                       return (
@@ -465,11 +465,11 @@ const Post = () => {
                         </>
                       );
                     })}
-                </div> */}
+                </div>
               </div>
             </div>
             <>
-              <h2 className="text-2xl">こちらもおすすめ</h2>
+              {/* <h2 className="text-2xl">こちらもおすすめ</h2>
               <div className="max-w-7xl m-auto">
                 <Grid container spacing={1}>
                   {recfiredata.map((data) => {
@@ -496,7 +496,7 @@ const Post = () => {
                     </p>
                   )}
                 </Grid>
-              </div>
+              </div> */}
             </>
           </div>
         </div>

@@ -19,6 +19,8 @@ const firebaseConfig = {
   databaseURL: "<your-database-url>",
 };
 
+//https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts
+
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 

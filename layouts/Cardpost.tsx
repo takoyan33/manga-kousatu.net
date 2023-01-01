@@ -89,7 +89,7 @@ export const Cardpost: React.VFC<Props> = React.memo(
 
     return (
       <div className="cursor-pointer">
-        <Link href={`/post/${id}`}>
+        <Link href={`/posts/${id}`}>
           <Grid key={id} className="flex  m-auto">
             <Card
               className="my-8 m-auto hover:shadow-2xl border"

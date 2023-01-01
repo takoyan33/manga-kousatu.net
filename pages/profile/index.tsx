@@ -142,7 +142,8 @@ export default function Profile() {
       );
     });
   };
-  // }
+
+  
   useEffect(() => {
     if (!user) {
       router.push("/register");
@@ -238,8 +239,6 @@ export default function Profile() {
   return (
     <>
       <SiteHead />
-      <MuiNavbar />
-      <div className="max-w-7xl m-auto">
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
           プロフィール
         </h2>
@@ -367,7 +366,6 @@ export default function Profile() {
               );
             })}
         </Grid>
-      </div>
     </>
   );
 }

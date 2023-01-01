@@ -12,9 +12,7 @@ import {
   updateDoc,
   deleteDoc,
 } from "firebase/firestore";
-import Grid from "@material-ui/core/Grid";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -152,9 +150,6 @@ const Post = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likes]);
 
-  // getallPost();
-  // usersData();
-
   const updatefields = () => {
     //更新する
     const fieldToEdit = doc(database, "posts", ID);
@@ -224,115 +219,112 @@ const Post = () => {
   return (
     <>
       <SiteHead />
-      <MuiNavbar />
-
-      <div className="max-w-5xl m-auto">
+      <div>
         <div>
-          <div>
-            <div className="lg:w-full my-4 ">
-              {user && (
-                <>
-                  {user.email == firedata.email && (
-                    <div>
-                      <SiteButton
-                        href=""
-                        text="更新する"
-                        className=" my-2 m-4"
-                        onClick={() =>
-                          getID(
-                            id,
-                            firedata.title,
-                            firedata.context,
-                            firedata.edittime
-                          )
-                        }
-                      />
-                      <SiteButton
-                        href=""
-                        text="削除する"
-                        className=" my-2 m-4"
-                        onClick={() => deleteDocument(id)}
-                      />
-                    </div>
-                  )}
-                </>
-              )}
+          <div className="lg:w-full my-4 ">
+            {user && (
+              <>
+                {user.email == firedata.email && (
+                  <div>
+                    <SiteButton
+                      href=""
+                      text="更新する"
+                      className=" my-2 m-4"
+                      onClick={() =>
+                        getID(
+                          id,
+                          firedata.title,
+                          firedata.context,
+                          firedata.edittime
+                        )
+                      }
+                    />
+                    <SiteButton
+                      href=""
+                      text="削除する"
+                      className=" my-2 m-4"
+                      onClick={() => deleteDocument(id)}
+                    />
+                  </div>
+                )}
+              </>
+            )}
 
-              {/* <Link href={`/post/edit/${id}`}>編集</Link> */}
-              {isUpdate && (
-                <Box
-                  component="form"
-                  sx={{
-                    "& > :not(style)": { m: 1, width: "25ch" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <div>
-                    <TextField
-                      id="outlined-basic"
-                      label="タイトル（最大20文字)"
-                      variant="outlined"
-                      type="text"
-                      value={posttitle}
-                      onChange={(event) => setPostTitle(event.target.value)}
-                    />
-                  </div>
-                  <div>
-                    <TextField
-                      label="内容(最大500文字）"
-                      className="m-auto w-full"
-                      id="filled-multiline-static"
-                      multiline
-                      rows={14}
-                      type="text"
-                      value={context}
-                      onChange={(event) => setContext(event.target.value)}
-                    />
-                  </div>
-                  <Button variant="outlined" onClick={updatefields}>
-                    更新する
-                  </Button>
-                </Box>
-              )}
-              <div>
-                <Link href="/">トップ</Link>　＞　投稿記事　＞　
-                {firedata.title}
-              </div>
-              <div className="flex justify-center my-6">
-                <Image
-                  className="m-auto text-center max-w-sm"
-                  height={500}
-                  width={500}
-                  src={firedata.downloadURL}
-                />
-              </div>
-              <div className="text-2xl my-4">{firedata.title}</div>
-              <br></br>
-              <div>
-                <AccessTimeIcon /> 投稿日時：{firedata.createtime}
-              </div>
-              <br></br>
-              {firedata.edittime && (
+            {/* <Link href={`/post/edit/${id}`}>編集</Link> */}
+            {isUpdate && (
+              <Box
+                component="form"
+                sx={{
+                  "& > :not(style)": { m: 1, width: "25ch" },
+                }}
+                noValidate
+                autoComplete="off"
+              >
                 <div>
-                  <AccessTimeIcon />
-                  編集日時：{firedata.edittime}
+                  <TextField
+                    id="outlined-basic"
+                    label="タイトル（最大20文字)"
+                    variant="outlined"
+                    type="text"
+                    value={posttitle}
+                    onChange={(event) => setPostTitle(event.target.value)}
+                  />
                 </div>
-              )}
-              <br></br>
-              {firedata.selected &&
-                firedata.selected.map((tag, i) => (
-                  <span className="text-cyan-700" key={i}>
-                    #{tag}　
-                  </span>
-                ))}
-              <div variant="body2" color="text.secondary">
-                {/* <SiteCategory
+                <div>
+                  <TextField
+                    label="内容(最大500文字）"
+                    className="m-auto w-full"
+                    id="filled-multiline-static"
+                    multiline
+                    rows={14}
+                    type="text"
+                    value={context}
+                    onChange={(event) => setContext(event.target.value)}
+                  />
+                </div>
+                <Button variant="outlined" onClick={updatefields}>
+                  更新する
+                </Button>
+              </Box>
+            )}
+            <div>
+              <Link href="/">トップ</Link>　＞　投稿記事　＞　
+              {firedata.title}
+            </div>
+            <div className="flex justify-center my-6">
+              <Image
+                className="m-auto text-center max-w-sm"
+                height={500}
+                width={500}
+                src={firedata.downloadURL}
+              />
+            </div>
+            <div className="text-2xl my-4">{firedata.title}</div>
+            <br></br>
+            <div>
+              <AccessTimeIcon /> 投稿日時：{firedata.createtime}
+            </div>
+            <br></br>
+            {firedata.edittime && (
+              <div>
+                <AccessTimeIcon />
+                編集日時：{firedata.edittime}
+              </div>
+            )}
+            <br></br>
+            {firedata.selected &&
+              firedata.selected.map((tag, i) => (
+                <span className="text-cyan-700" key={i}>
+                  #{tag}　
+                </span>
+              ))}
+            <div variant="body2" color="text.secondary">
+              {/* <SiteCategory
                     className={Categories[firedata.categori].className}
                     text={Categories[firedata.categori].title}
                     href={Categories[firedata.categori].link}
                   /> */}
-                {/* 
+              {/* 
                   {Categories.map((categori) => (
                     <SiteCategory
                       key={categori.id}
@@ -344,111 +336,111 @@ const Post = () => {
                     />
                   ))} */}
 
-                {firedata.categori == "ONE PIECE" && (
-                  <SiteCategory
-                    className="bg-blue-500 p-1 inline-block text-white text-center m-6"
-                    text="ONE PIECE"
-                    href="/post/category/ONE PIECE"
-                  />
-                )}
-                {firedata.categori == "呪術廻戦" && (
-                  <SiteCategory
-                    className="bg-purple-500 p-1 inline-block text-white text-center m-6"
-                    text="呪術廻戦"
-                    href="/post/category/呪術廻戦"
-                  />
-                )}
-                {firedata.categori == "東京リベンジャーズ" && (
-                  <SiteCategory
-                    className="bg-rose-500 p-1 inline-block text-white text-center m-6"
-                    text="東京リベンジャーズ"
-                    href="/post/category/東京リベンジャーズ"
-                  />
-                )}
-                {firedata.categori == "キングダム" && (
-                  <SiteCategory
-                    className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
-                    text="キングダム"
-                    href="/post/category/キングダム"
-                  />
-                )}
+              {firedata.categori == "ONE PIECE" && (
+                <SiteCategory
+                  className="bg-blue-500 p-1 inline-block text-white text-center m-6"
+                  text="ONE PIECE"
+                  href="/post/category/ONE PIECE"
+                />
+              )}
+              {firedata.categori == "呪術廻戦" && (
+                <SiteCategory
+                  className="bg-purple-500 p-1 inline-block text-white text-center m-6"
+                  text="呪術廻戦"
+                  href="/post/category/呪術廻戦"
+                />
+              )}
+              {firedata.categori == "東京リベンジャーズ" && (
+                <SiteCategory
+                  className="bg-rose-500 p-1 inline-block text-white text-center m-6"
+                  text="東京リベンジャーズ"
+                  href="/post/category/東京リベンジャーズ"
+                />
+              )}
+              {firedata.categori == "キングダム" && (
+                <SiteCategory
+                  className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
+                  text="キングダム"
+                  href="/post/category/キングダム"
+                />
+              )}
 
-                {firedata.netabare == "ネタバレ有" && (
-                  <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
-                    {firedata.netabare}
-                  </span>
-                )}
-                {firedata.netabare == "ネタバレ無" && (
-                  <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
-                    {firedata.netabare}
-                  </span>
-                )}
-                <p className="text-left" style={styles}>
-                  {firedata.context}
-                </p>
-                <br></br>
-                {firedata.contextimage && (
-                  <div className="flex justify-center">
-                    <Image
-                      className="m-auto text-center max-w-sm"
-                      height={500}
-                      width={500}
-                      src={firedata.contextimage}
-                    />
-                  </div>
-                )}
-                <div className="my-4">
-                  <FavoriteIcon />
-                  {firedata.likes}
-                </div>
-                {user && (
-                  <SiteButton
-                    href=""
-                    text="いいねする"
-                    className="inline my-2 m-4"
-                    onClick={() => handleClick(id, firedata.likes)}
+              {firedata.netabare == "ネタバレ有" && (
+                <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
+                  {firedata.netabare}
+                </span>
+              )}
+              {firedata.netabare == "ネタバレ無" && (
+                <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
+                  {firedata.netabare}
+                </span>
+              )}
+              <p className="text-left" style={styles}>
+                {firedata.context}
+              </p>
+              <br></br>
+              {firedata.contextimage && (
+                <div className="flex justify-center">
+                  <Image
+                    className="m-auto text-center max-w-sm"
+                    height={500}
+                    width={500}
+                    src={firedata.contextimage}
                   />
-                )}
-                <div key={id} className="cursor-pointer">
-                  {users &&
-                    users.map((user) => {
-                      return (
-                        <>
-                          {firedata.email == user.email && (
-                            <Link href={`/profile/${user.userid}`}>
-                              <div key={user.userid}>
-                                <div className="bg-slate-200 my-8 py-8 flex m-auto">
-                                  <div key={user.id}>
-                                    <div>
-                                      <Avatar
-                                        className="m-auto text-center max-w-sm border"
-                                        alt="プロフィール"
-                                        sx={{ width: 100, height: 100 }}
-                                        src={user.profileimage}
-                                      />
-                                    </div>
+                </div>
+              )}
+              <div className="my-4">
+                <FavoriteIcon />
+                {firedata.likes}
+              </div>
+              {user && (
+                <SiteButton
+                  href=""
+                  text="いいねする"
+                  className="inline my-2 m-4"
+                  onClick={() => handleClick(id, firedata.likes)}
+                />
+              )}
+              <div key={id} className="cursor-pointer">
+                {users &&
+                  users.map((user) => {
+                    return (
+                      <>
+                        {firedata.email === user.email && (
+                          <Link href={`/profile/${user.userid}`}>
+                            <div key={user.userid}>
+                              <div className="bg-slate-200 my-8 py-8 flex m-auto">
+                                <div key={user.id}>
+                                  <div>
+                                    <Avatar
+                                      className="m-auto text-center max-w-sm border"
+                                      alt="プロフィール"
+                                      sx={{ width: 100, height: 100 }}
+                                      src={user.profileimage}
+                                    />
                                   </div>
-                                  <div className="ml-6 mt-4 ">
-                                    <span className="text-xl">
-                                      <AccountBoxIcon /> {user.username}
-                                    </span>
-                                    <div className="text-xl my-2">
-                                      <BorderColorIcon />
-                                      {user.bio}
-                                    </div>
+                                </div>
+                                <div className="ml-6 mt-4 ">
+                                  <span className="text-xl">
+                                    <AccountBoxIcon /> {user.username}
+                                  </span>
+                                  <div className="text-xl my-2">
+                                    <BorderColorIcon />
+                                    {user.bio}
                                   </div>
                                 </div>
                               </div>
-                            </Link>
-                          )}
-                        </>
-                      );
-                    })}
-                </div>
+                            </div>
+                          </Link>
+                        )}
+                      </>
+                    );
+                  })}
               </div>
             </div>
-            <>
-              {/* <h2 className="text-2xl">こちらもおすすめ</h2>
+          </div>
+          <>
+            {/* <h2 className="text-2xl">こちらもおすすめ</h2>
               <div className="max-w-7xl m-auto">
                 <Grid container spacing={1}>
                   {recfiredata.map((data) => {
@@ -476,8 +468,7 @@ const Post = () => {
                   )}
                 </Grid>
               </div> */}
-            </>
-          </div>
+          </>
         </div>
       </div>
     </>

@@ -4,12 +4,11 @@ import { useEffect, useState, useCallback } from "react";
 import { database } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../layouts/components/ui/SiteHead";
 import { Profileid } from "../../layouts/components/ui/Profileid";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../layouts/Cardpost";
-import { query, orderBy, where } from "firebase/firestore";
+import { query, where } from "firebase/firestore";
 
 const Post = () => {
   const [users, setUsers] = useState(null);
@@ -99,9 +98,6 @@ const Post = () => {
   return (
     <>
       <SiteHead />
-      <MuiNavbar />
-
-      <div className="max-w-7xl m-auto">
         <>
           {users &&
             users.map((user) => {
@@ -148,7 +144,6 @@ const Post = () => {
               );
             })}
         </Grid>
-      </div>
     </>
   );
 };

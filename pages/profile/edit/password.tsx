@@ -1,6 +1,5 @@
 import React from "react";
 import { useState } from "react";
-import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import { SiteHead } from "../../../layouts/components/ui/SiteHead";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -20,8 +19,6 @@ export default function Password() {
   return (
     <div>
       <SiteHead />
-      <MuiNavbar />
-      <div className="max-w-7xl m-auto">
         <h2 className="my-5">パスワード再設定</h2>
 
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -62,6 +59,5 @@ export default function Password() {
           <Alert severity="success">メールアドレスに送信しました</Alert>
         )}
       </div>
-    </div>
   );
 }

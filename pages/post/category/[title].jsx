@@ -5,8 +5,6 @@ import Link from "next/link";
 import { database } from "../../../firebaseConfig";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import TextField from "@mui/material/TextField";
-import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../../../layouts/Cardpost";
 import { query, orderBy } from "firebase/firestore";
@@ -122,8 +120,6 @@ const Category = () => {
   return (
     <>
       <SiteHead />
-      <MuiNavbar />
-      <div className="max-w-7xl m-auto">
         <p className="my-4">
           <Link href="/">トップ</Link>　＞　投稿記事　＞　{router.query.title}
         </p>
@@ -200,7 +196,6 @@ const Category = () => {
             )}
           </Grid>
         </div>
-      </div>
     </>
   );
 };

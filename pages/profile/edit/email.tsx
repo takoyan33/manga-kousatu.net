@@ -4,7 +4,6 @@ import { app, database } from "../../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification } from "firebase/auth";
-import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
@@ -50,8 +49,6 @@ export default function Emaildedit() {
   return (
     <div>
       <SiteHead />
-      <MuiNavbar />
-
       <h2 className="my-5">メールアドレスの編集</h2>
 
       <p className="my-5">

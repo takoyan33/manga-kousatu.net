@@ -21,6 +21,7 @@ import { Changetab } from "../layouts/components/ui/Changetab";
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
+  const [bool, setBool] = useState([]);
   // const { getallPost, getallOldpost, getallLikepost } = GetPosts();
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
@@ -49,11 +50,25 @@ export default function Index() {
     setLoading(false);
   };
 
-  // const datas = getDocs(databaseRef).then((querySnapshot) => {
-  //   querySnapshot.docs.map((doc) => doc.data());
-  // });
+  const getall = async () => {
+    const res = await fetch(
+      "https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts"
+    );
+    const data = await res.json();
+    var array = Object.keys(data).map(function (key) {
+      return data[key];
+    });
+    // console.log(Array.isArray(data));
+    // console.log(array[0]);
 
-  // console.log(datas);
+    const paths = array[0].map((post) => {
+      return {
+        params: { id: post.fields.id.stringValue.toString() },
+      };
+    });
+
+    console.log(paths);
+  };
 
   //古い順
   const getallOldpost = async () => {
@@ -76,6 +91,7 @@ export default function Index() {
   useEffect(() => {
     setLoading(true);
     getallPost();
+    getall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -106,9 +122,7 @@ export default function Index() {
   return (
     <div>
       <SiteHead />
-      <MuiNavbar />
 
-      <div className="max-w-7xl m-auto">
         <div className="text-center">
           <img
             src="./images/book-reading.png"
@@ -279,6 +293,5 @@ export default function Index() {
           <p>©芥見下々／集英社・呪術廻戦製作委員会</p>
         </div>
       </div>
-    </div>
   );
 }

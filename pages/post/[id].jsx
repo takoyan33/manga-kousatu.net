@@ -59,6 +59,13 @@ const Post = () => {
   const user = auth.currentUser;
   const styles = { whiteSpace: "pre-line" };
 
+  const [count, setCount] = useState(0);
+  const [timer, setTimer] = useState(false);
+
+  const countup = () => {
+    setCount((count) => count + 1);
+  };
+
   // console.log({ id });
 
   const getallPost = async () => {
@@ -140,8 +147,12 @@ const Post = () => {
     // categoriFiredata();
     getallPost();
     usersData();
+    if (timer) {
+      const timerId = setInterval(countup, 2000);
+      return () => clearInterval(timerId);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router]);
+  }, [timer]);
 
   const updatefields = () => {
     //更新する

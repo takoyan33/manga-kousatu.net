@@ -62,16 +62,10 @@ const Post = () => {
   // console.log({ id });
 
   const getallPost = async () => {
-    //firestoreからデータ取得
-    const data = doc(database, "posts", routerid);
-    console.log("Error getting document:", routerid);
-    getDoc(data)
-      .then((documentSnapshot) => {
-        setFiredata(documentSnapshot.data());
-      })
-      .catch((error) => {
-        console.log("Error getting document:", error);
-      });
+    const ref = doc(database, "posts", routerid);
+    getDoc(ref).then((snap) => {
+      setRecfiredata(snap.data());
+    });
   };
 
   const categoriFiredata = async () => {
@@ -143,10 +137,9 @@ const Post = () => {
   };
 
   useEffect(() => {
-    categoriFiredata();
+    // categoriFiredata();
     getallPost();
     usersData();
-    console.log("render!");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routerid]);
 
@@ -224,7 +217,7 @@ const Post = () => {
           <div className="lg:w-full my-4 ">
             {user && (
               <>
-                {user.email == firedata.email && (
+                {user.email == recfiredata.email && (
                   <div>
                     <SiteButton
                       href=""
@@ -233,9 +226,9 @@ const Post = () => {
                       onClick={() =>
                         getID(
                           id,
-                          firedata.title,
-                          firedata.context,
-                          firedata.edittime
+                          recfiredata.title,
+                          recfiredata.context,
+                          recfiredata.edittime
                         )
                       }
                     />
@@ -289,75 +282,75 @@ const Post = () => {
             )}
             <div>
               <Link href="/">トップ</Link>　＞　投稿記事　＞　
-              {firedata.title}
+              {recfiredata.title}
             </div>
             <div className="flex justify-center my-6">
               <Image
                 className="m-auto text-center max-w-sm"
                 height={500}
                 width={500}
-                src={firedata.downloadURL}
+                src={recfiredata.downloadURL}
               />
             </div>
-            <div className="text-2xl my-4">{firedata.title}</div>
+            <div className="text-2xl my-4">{recfiredata.title}</div>
             <br></br>
             <div>
-              <AccessTimeIcon /> 投稿日時：{firedata.createtime}
+              <AccessTimeIcon /> 投稿日時：{recfiredata.createtime}
             </div>
             <br></br>
-            {firedata.edittime && (
+            {recfiredata.edittime && (
               <div>
                 <AccessTimeIcon />
-                編集日時：{firedata.edittime}
+                編集日時：{recfiredata.edittime}
               </div>
             )}
             <br></br>
-            {firedata.selected &&
-              firedata.selected.map((tag, i) => (
+            {recfiredata.selected &&
+              recfiredata.selected.map((tag, i) => (
                 <span className="text-cyan-700" key={i}>
                   #{tag}　
                 </span>
               ))}
             <div variant="body2" color="text.secondary">
               {/* <SiteCategory
-                    className={Categories[firedata.categori].className}
-                    text={Categories[firedata.categori].title}
-                    href={Categories[firedata.categori].link}
+                    className={Categories[recfiredata.categori].className}
+                    text={Categories[recfiredata.categori].title}
+                    href={Categories[recfiredata.categori].link}
                   /> */}
               {/* 
                   {Categories.map((categori) => (
                     <SiteCategory
                       key={categori.id}
                       className={`p-1 inline-block text-white text-center m-6 + ${
-                        categori[firedata.categori].className
+                        categori[recfiredata.categori].className
                       }`}
-                      text={categori[firedata.categori].title}
-                      href={categori[firedata.categori].link}
+                      text={categori[recfiredata.categori].title}
+                      href={categori[recfiredata.categori].link}
                     />
                   ))} */}
 
-              {firedata.categori == "ONE PIECE" && (
+              {recfiredata.categori == "ONE PIECE" && (
                 <SiteCategory
                   className="bg-blue-500 p-1 inline-block text-white text-center m-6"
                   text="ONE PIECE"
                   href="/post/category/ONE PIECE"
                 />
               )}
-              {firedata.categori == "呪術廻戦" && (
+              {recfiredata.categori == "呪術廻戦" && (
                 <SiteCategory
                   className="bg-purple-500 p-1 inline-block text-white text-center m-6"
                   text="呪術廻戦"
                   href="/post/category/呪術廻戦"
                 />
               )}
-              {firedata.categori == "東京リベンジャーズ" && (
+              {recfiredata.categori == "東京リベンジャーズ" && (
                 <SiteCategory
                   className="bg-rose-500 p-1 inline-block text-white text-center m-6"
                   text="東京リベンジャーズ"
                   href="/post/category/東京リベンジャーズ"
                 />
               )}
-              {firedata.categori == "キングダム" && (
+              {recfiredata.categori == "キングダム" && (
                 <SiteCategory
                   className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
                   text="キングダム"
@@ -365,40 +358,40 @@ const Post = () => {
                 />
               )}
 
-              {firedata.netabare == "ネタバレ有" && (
+              {recfiredata.netabare == "ネタバレ有" && (
                 <span className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4">
-                  {firedata.netabare}
+                  {recfiredata.netabare}
                 </span>
               )}
-              {firedata.netabare == "ネタバレ無" && (
+              {recfiredata.netabare == "ネタバレ無" && (
                 <span className="bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4">
-                  {firedata.netabare}
+                  {recfiredata.netabare}
                 </span>
               )}
               <p className="text-left" style={styles}>
-                {firedata.context}
+                {recfiredata.context}
               </p>
               <br></br>
-              {firedata.contextimage && (
+              {recfiredata.contextimage && (
                 <div className="flex justify-center">
                   <Image
                     className="m-auto text-center max-w-sm"
                     height={500}
                     width={500}
-                    src={firedata.contextimage}
+                    src={recfiredata.contextimage}
                   />
                 </div>
               )}
               <div className="my-4">
                 <FavoriteIcon />
-                {firedata.likes}
+                {recfiredata.likes}
               </div>
               {user && (
                 <SiteButton
                   href=""
                   text="いいねする"
                   className="inline my-2 m-4"
-                  onClick={() => handleClick(routerid, firedata.likes)}
+                  onClick={() => handleClick(routerid, recfiredata.likes)}
                 />
               )}
               <div className="cursor-pointer">
@@ -406,7 +399,7 @@ const Post = () => {
                   users.map((user) => {
                     return (
                       <>
-                        {firedata.email === user.email && (
+                        {recfiredata.email === user.email && (
                           <Link href={`/profile/${user.userid}`}>
                             <div key={user.userid}>
                               <div className="bg-slate-200 my-8 py-8 flex m-auto">

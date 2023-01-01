@@ -139,7 +139,7 @@ const Post = () => {
   useEffect(() => {
     // categoriFiredata();
     getallPost();
-    usersData();
+    // usersData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [routerid]);
 

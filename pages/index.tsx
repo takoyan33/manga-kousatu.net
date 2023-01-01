@@ -196,6 +196,10 @@ export default function Index() {
         );
       })}
 
+      <Link href={`/sample/aaaa`}>
+        <a>aaaa</a>
+      </Link>
+      
       {/* {Categories.map((categori) => (
           <SiteCategory
             key={categori.id}

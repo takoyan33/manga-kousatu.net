@@ -53,6 +53,7 @@ const Post = () => {
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
   const router = useRouter();
+  const routerid = router.query.id;
   // const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
@@ -62,8 +63,8 @@ const Post = () => {
 
   const getallPost = async () => {
     //firestoreからデータ取得
-    const data = doc(database, "posts", router.query.id);
-    console.log("Error getting document:", router.query.id);
+    const data = doc(database, "posts", routerid);
+    console.log("Error getting document:", routerid);
     getDoc(data)
       .then((documentSnapshot) => {
         setFiredata(documentSnapshot.data());
@@ -147,7 +148,7 @@ const Post = () => {
     usersData();
     console.log("render!");
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likes]);
+  }, [routerid]);
 
   const updatefields = () => {
     //更新する
@@ -397,7 +398,7 @@ const Post = () => {
                   href=""
                   text="いいねする"
                   className="inline my-2 m-4"
-                  onClick={() => handleClick(router.query.id, firedata.likes)}
+                  onClick={() => handleClick(routerid, firedata.likes)}
                 />
               )}
               <div className="cursor-pointer">

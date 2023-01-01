@@ -34,7 +34,7 @@ const Post = () => {
   const [categori, setCategori] = useState("");
   const [photoURL, setPhotoURL] = useState();
   const [users, setUsers] = useState(null);
-  const [displayName, setDisplayName] = useState("");
+  const [postid, setPostid] = useState("");
   const [createtime, setCreatetime] = useState("");
   const [isUpdate, setIsUpdate] = useState(false);
   const [posttitle, setPostTitle] = useState("");
@@ -53,17 +53,17 @@ const Post = () => {
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
   const router = useRouter();
-  const { id } = router.query;
+  // const { id } = router.query;
   const auth = getAuth();
   const user = auth.currentUser;
   const styles = { whiteSpace: "pre-line" };
 
-  console.log({ id });
+  // console.log({ id });
 
   const getallPost = async () => {
     //firestoreからデータ取得
-    const data = doc(database, "posts", id);
-    console.log("Error getting document:", id);
+    const data = doc(database, "posts", router.query.id);
+    console.log("Error getting document:", router.query.id);
     getDoc(data)
       .then((documentSnapshot) => {
         setFiredata(documentSnapshot.data());
@@ -72,7 +72,6 @@ const Post = () => {
         console.log("Error getting document:", error);
       });
   };
-  console.log({ firedata });
 
   const categoriFiredata = async () => {
     //firestoreからデータ取得
@@ -398,10 +397,10 @@ const Post = () => {
                   href=""
                   text="いいねする"
                   className="inline my-2 m-4"
-                  onClick={() => handleClick(id, firedata.likes)}
+                  onClick={() => handleClick(router.query.id, firedata.likes)}
                 />
               )}
-              <div key={id} className="cursor-pointer">
+              <div className="cursor-pointer">
                 {users &&
                   users.map((user) => {
                     return (

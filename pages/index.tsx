@@ -196,10 +196,10 @@ export default function Index() {
         );
       })}
 
-      <Link href={`/sample/aaaa`}>
+      <Link href={"sample/aaaa"} passHref>
         <a>aaaa</a>
       </Link>
-      
+
       {/* {Categories.map((categori) => (
           <SiteCategory
             key={categori.id}

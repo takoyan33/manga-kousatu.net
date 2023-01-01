@@ -53,14 +53,12 @@ const Post = () => {
   const q = query(databaseRef, orderBy("timestamp", "desc"));
 
   const router = useRouter();
-  const routerid = router.query.id;
-  // const { id } = router.query;
-  const auth = getAuth();
-  const user = auth.currentUser;
-  const styles = { whiteSpace: "pre-line" };
-
-  console.log(routerid);
-
+  useEffect(() => {
+    if (router.isReady) {
+      const routeId = router.query.id;
+      console.log(routeId);
+    }
+  }, [router]);
   return (
     <>
       <p>aaaa</p>

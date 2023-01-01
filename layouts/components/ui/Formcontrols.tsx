@@ -2,7 +2,7 @@ export const Formcontrols = [
   {
     id: 1,
     label: "ONE PIECE",
-    value: "ONE PIECE",
+    value: "ONEPIECE",
   },
   {
     id: 2,

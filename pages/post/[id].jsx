@@ -63,9 +63,13 @@ const Post = () => {
 
   const getallPost = async () => {
     const ref = doc(database, "posts", routerid);
-    getDoc(ref).then((snap) => {
-      setRecfiredata(snap.data());
-    });
+    getDoc(ref)
+      .then((snap) => {
+        setRecfiredata(snap.data());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const categoriFiredata = async () => {
@@ -329,11 +333,11 @@ const Post = () => {
                     />
                   ))} */}
 
-              {recfiredata.categori == "ONE PIECE" && (
+              {recfiredata.categori == "ONEPIECE" && (
                 <SiteCategory
                   className="bg-blue-500 p-1 inline-block text-white text-center m-6"
                   text="ONE PIECE"
-                  href="/post/category/ONE PIECE"
+                  href="/post/category/ONEPIECE"
                 />
               )}
               {recfiredata.categori == "呪術廻戦" && (

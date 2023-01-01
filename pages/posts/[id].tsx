@@ -138,11 +138,11 @@ const Daitails = ({ post }) => {
             </span>
           ))}
         <div color="text.secondary">
-          {post.fields.categori.stringValue == "ONE PIECE" && (
+          {post.fields.categori.stringValue == "ONEPIECE" && (
             <SiteCategory
               className="bg-blue-500 p-1 inline-block text-white text-center m-6"
               text="ONE PIECE"
-              href="/post/category/ONE PIECE"
+              href="/post/category/ONEPIECE"
             />
           )}
           {post.fields.categori.stringValue == "呪術廻戦" && (

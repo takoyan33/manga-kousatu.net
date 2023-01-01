@@ -42,7 +42,7 @@ export default function Profile() {
   const o = query(
     databaseRef,
     where("email", "==", user.email),
-    where("categori", "==", "ONE PIECE")
+    where("categori", "==", "ONEPIECE")
   );
   const z = query(
     databaseRef,
@@ -143,7 +143,7 @@ export default function Profile() {
     });
   };
 
-  
+
   useEffect(() => {
     if (!user) {
       router.push("/register");

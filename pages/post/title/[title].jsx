@@ -295,7 +295,7 @@ const Post = () => {
                         </span>
                       ))}
                     <div variant="body2" color="text.secondary">
-                      {data.categori == "ONE PIECE" && (
+                      {data.categori == "ONEPIECE" && (
                         <span className="bg-blue-500 p-2 inline-block text-white text-center">
                           <Link href={`/post/category/${data.categori}`}>
                             {data.categori}

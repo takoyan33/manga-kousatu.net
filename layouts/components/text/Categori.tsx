@@ -11,7 +11,7 @@ type Props = {
 const Categori: React.VFC<Props> = React.memo(({ categori }) => {
   return (
     <div className="my-1">
-      {categori == "ONE PIECE" && (
+      {categori == "ONEPIECE" && (
         <SiteCategory
           className="bg-blue-500 p-1 inline-block text-white text-center hover:bg-blue-700"
           text="ONE PIECE"

@@ -21,7 +21,6 @@ import { Changetab } from "../layouts/components/ui/Changetab";
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
-  const [bool, setBool] = useState([]);
   // const { getallPost, getallOldpost, getallLikepost } = GetPosts();
   const databaseRef = collection(database, "posts");
   const q = query(databaseRef, orderBy("timestamp", "desc"));
@@ -195,9 +194,6 @@ export default function Index() {
           </span>
         );
       })}
-      <Link href={"/sample/aaaa"} passHref>
-        <a>aaaa</a>
-      </Link>
 
       {/* {Categories.map((categori) => (
           <SiteCategory

@@ -173,7 +173,9 @@ const Post = () => {
           alert("記事の削除に失敗しました");
         });
     } else {
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     }
   };
 

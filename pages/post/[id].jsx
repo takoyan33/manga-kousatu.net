@@ -166,7 +166,9 @@ const Post = () => {
         // router.push(`${ID}`);
         // getallPost();
         // usersData();
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
         console.log(err);
@@ -184,14 +186,18 @@ const Post = () => {
         //記事を削除する
         .then(() => {
           alert("記事を削除しました");
-          router.push("/");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
           getallPost();
         })
         .catch((err) => {
           alert("記事の削除に失敗しました");
         });
     } else {
-      router.push("/");
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
     }
   };
 

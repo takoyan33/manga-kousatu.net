@@ -91,7 +91,9 @@ export default function Edit() {
         notify("ユーザー情報が更新されました");
         setUsername("");
         setBio("");
-        router.push("/profile");
+        setTimeout(() => {
+          router.push("/profile");
+        }, 2000);
       })
       .catch((err) => {
         signupmissnotify("ユーザー情報が更新に失敗しました");

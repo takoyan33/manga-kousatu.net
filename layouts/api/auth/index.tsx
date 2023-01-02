@@ -53,7 +53,9 @@ export default function Index() {
       .then((userCredential: any) => {
         const user = userCredential.user;
         localStorage.setItem("Token", user.accessToken);
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
         alert("ログインできません");
@@ -69,7 +71,9 @@ export default function Index() {
         const user = result.user;
         localStorage.setItem("Token", token);
         alert("ログインしました");
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       })
       .catch((err) => {
         alert("登録できませんでした");

@@ -50,6 +50,8 @@ export default function Post() {
   const [context, setContext] = useState("");
   const [categori, setCategori] = useState("");
   const databaseRef = collection(database, "posts");
+  const q = query(databaseRef, orderBy("timestamp", "desc"));
+
   const [image, setImage] = useState(null);
   const [contextimage, setContextImage] = useState<File[]>([]);
   const [createObjectURL, setCreateObjectURL] = useState<string>("");
@@ -67,12 +69,10 @@ export default function Post() {
       router.push("/register");
     } else {
       getallPost();
-      setLengthdata(firedata.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const q = query(databaseRef, orderBy("timestamp", "desc"));
   const getallPost = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(
@@ -80,6 +80,7 @@ export default function Post() {
       );
     });
   };
+  console.log(firedata);
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -101,7 +102,6 @@ export default function Post() {
   };
 
   const router = useRouter();
-  const auth = getAuth();
 
   type addDate = {
     toLocaleString(timeZone): string;
@@ -120,8 +120,11 @@ export default function Post() {
       const contextresult = await postContextImage(contextimage);
       //日本時間を代入
       const newdate = new Date().toLocaleString("ja-JP");
-      const postRef = await doc(database, "posts", (lengthdata + 1).toString());
-      console.log(lengthdata);
+      const postRef = await doc(
+        database,
+        "posts",
+        (firedata.length + 1).toString()
+      );
 
       setResult(result);
       await setDoc(postRef, {

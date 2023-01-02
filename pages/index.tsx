@@ -50,23 +50,25 @@ export default function Index() {
     setLoading(false);
   };
 
-  const getall = async () => {
-    const res = await fetch(
-      "https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts"
-    );
-    const data = await res.json();
-    var array = Object.keys(data).map(function (key) {
-      return data[key];
-    });
-    // console.log(Array.isArray(data));
-    console.log(array[0]);
+  console.log(firedata);
 
-    const paths = array[0].map((post) => {
-      return {
-        params: { id: post.fields.id.stringValue.toString() },
-      };
-    });
-  };
+  // const getall = async () => {
+  //   const res = await fetch(
+  //     "https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts"
+  //   );
+  //   const data = await res.json();
+  //   var array = Object.keys(data).map(function (key) {
+  //     return data[key];
+  //   });
+  //   // console.log(Array.isArray(data));
+  //   console.log(array[0]);
+
+  //   const paths = array[0].map((post) => {
+  //     return {
+  //       params: { id: post.fields.id.stringValue.toString() },
+  //     };
+  //   });
+  // };
 
   //古い順
   const getallOldpost = async () => {
@@ -89,7 +91,7 @@ export default function Index() {
   useEffect(() => {
     setLoading(true);
     getallPost();
-    getall();
+    // getall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

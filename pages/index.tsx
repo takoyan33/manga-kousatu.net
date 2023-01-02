@@ -196,7 +196,7 @@ export default function Index() {
         );
       })}
 
-      <Link href={"sample/aaaa"} passHref>
+      <Link href={"/sample/aaaa"} passHref>
         <a>aaaa</a>
       </Link>
 

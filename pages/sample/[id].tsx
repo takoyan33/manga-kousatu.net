@@ -43,20 +43,5 @@ const Post = () => {
     </>
   );
 };
+
 export default Post;
-
-export const getStaticProps = async (req) => {
-  return {
-    props: {
-      name: req.params.name,
-    },
-    revalidate: 100,
-  };
-};
-
-export const getStaticPaths = async (req) => {
-  return {
-    paths: [],
-    fallback: "blocking",
-  };
-};

@@ -137,7 +137,7 @@ export default function Post() {
         categori: categori,
         createtime: newdate,
         edittime: "",
-        id: (lengthdata + 1).toString(),
+        id: (firedata.length + 1).toString(),
         netabare: netabare,
         photoURL: user.photoURL,
         userid: user.uid,

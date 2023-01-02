@@ -15,28 +15,28 @@ const Categori: React.VFC<Props> = React.memo(({ categori }) => {
         <SiteCategory
           className="bg-blue-500 p-1 inline-block text-white text-center hover:bg-blue-700"
           text="ONE PIECE"
-          href={`/post/category/${categori}`}
+          href={`/post/categories/${categori}`}
         />
       )}
       {categori == "呪術廻戦" && (
         <SiteCategory
           className="bg-purple-500 p-1 inline-block text-white text-center hover:bg-purple-700"
           text="呪術廻戦"
-          href={`/post/category/${categori}`}
+          href={`/post/categories/${categori}`}
         />
       )}
       {categori == "東京リベンジャーズ" && (
         <SiteCategory
           className="bg-rose-500 p-1 inline-block text-white text-center hover:bg-yellow-700"
           text="東京リベンジャーズ"
-          href={`/post/category/${categori}`}
+          href={`/post/categories/${categori}`}
         />
       )}
       {categori == "キングダム" && (
         <SiteCategory
           className="bg-yellow-500 p-1 inline-block text-white text-center"
           text="キングダム"
-          href={`/post/category/${categori}`}
+          href={`/post/categories/${categori}`}
         />
       )}
     </div>

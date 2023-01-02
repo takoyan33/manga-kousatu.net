@@ -1,7 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { database } from "../../../firebaseConfig";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  doc,
+  addDoc,
+} from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
 import Box from "@mui/material/Box";
@@ -21,9 +27,10 @@ import { TagsInput } from "react-tag-input-component";
 import { SiteHead } from "../../../layouts/components/ui";
 import { Formcontrols } from "../../../layouts/components/ui/Formcontrols";
 import { SiteButton } from "../../../layouts/components/button";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "../../../layouts/context/AuthContext";
+import { query, orderBy } from "firebase/firestore";
 
 export default function Post() {
   const notify = () =>
@@ -51,14 +58,28 @@ export default function Post() {
   const [result, setResult] = useState("");
   const [netabare, setNetabare] = useState("");
   const [photoURL, setPhotoURL] = useState("");
+  const [firedata, setFiredata] = useState([]);
+  const [lengthdata, setLengthdata] = useState(null);
   const { user } = useAuthContext();
 
   useEffect(() => {
     if (!user) {
       router.push("/register");
+    } else {
+      getallPost();
+      setLengthdata(firedata.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const q = query(databaseRef, orderBy("timestamp", "desc"));
+  const getallPost = async () => {
+    await onSnapshot(q, (querySnapshot) => {
+      setFiredata(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    });
+  };
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -82,8 +103,6 @@ export default function Post() {
   const router = useRouter();
   const auth = getAuth();
 
-  console.log(context.length);
-
   type addDate = {
     toLocaleString(timeZone): string;
   };
@@ -97,13 +116,13 @@ export default function Post() {
       alert("サムネイルを選んでください");
     } else {
       const result = await postImage(image);
-      const contextresult = await postContextImage(contextimage);
-      // const newdate = new Date().toLocaleString({ timeZone: "Asia/Tokyo" });
-      const newdate = new Date().toLocaleString("ja-JP");
-      //日本時間を代入
-      setResult(result);
       //写真のurlをセットする
-      addDoc(databaseRef, {
+      const contextresult = await postContextImage(contextimage);
+      //日本時間を代入
+      const newdate = new Date().toLocaleString("ja-JP");
+      const postRef = await doc(database, "posts", (lengthdata + 1).toString());
+      setResult(result);
+      await setDoc(postRef, {
         title: title,
         context: context.replace(/\r?\n/g, "\n"),
         downloadURL: result,
@@ -113,6 +132,7 @@ export default function Post() {
         categori: categori,
         createtime: newdate,
         edittime: "",
+        id: (lengthdata + 1).toString(),
         netabare: netabare,
         photoURL: user.photoURL,
         userid: user.uid,
@@ -133,6 +153,7 @@ export default function Post() {
           router.push("/");
         })
         .catch((err) => {
+          notify();
           console.error(err);
         });
     }
@@ -141,6 +162,7 @@ export default function Post() {
   return (
     <div>
       <SiteHead />
+      <ToastContainer />
       <h2 className="my-12 text-center text-2xl font-semibold">
         考察記事の投稿
       </h2>

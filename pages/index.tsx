@@ -59,15 +59,13 @@ export default function Index() {
       return data[key];
     });
     // console.log(Array.isArray(data));
-    // console.log(array[0]);
+    console.log(array[0]);
 
     const paths = array[0].map((post) => {
       return {
         params: { id: post.fields.id.stringValue.toString() },
       };
     });
-
-    console.log(paths);
   };
 
   //古い順

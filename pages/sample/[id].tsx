@@ -30,13 +30,9 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Post = () => {
   const router = useRouter();
+  const routeId = router.query.id;
+  console.log(routeId);
 
-  useEffect(() => {
-    if (router.isReady) {
-      const routeId = router.query.id;
-      console.log(routeId);
-    }
-  }, [router]);
   return (
     <>
       <p>aaaa</p>

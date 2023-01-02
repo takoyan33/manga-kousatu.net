@@ -343,28 +343,28 @@ const Post = () => {
                 <SiteCategory
                   className="bg-blue-500 p-1 inline-block text-white text-center m-6"
                   text="ONE PIECE"
-                  href="/post/category/ONEPIECE"
+                  href="/post/categories/ONEPIECE"
                 />
               )}
               {recfiredata.categori == "呪術廻戦" && (
                 <SiteCategory
                   className="bg-purple-500 p-1 inline-block text-white text-center m-6"
                   text="呪術廻戦"
-                  href="/post/category/呪術廻戦"
+                  href="/post/categories/呪術廻戦"
                 />
               )}
               {recfiredata.categori == "東京リベンジャーズ" && (
                 <SiteCategory
                   className="bg-rose-500 p-1 inline-block text-white text-center m-6"
                   text="東京リベンジャーズ"
-                  href="/post/category/東京リベンジャーズ"
+                  href="/post/categories/東京リベンジャーズ"
                 />
               )}
               {recfiredata.categori == "キングダム" && (
                 <SiteCategory
                   className="bg-yellow-500 p-1 inline-block text-white text-center m-6"
                   text="キングダム"
-                  href="/post/category/キングダム"
+                  href="/post/categories/キングダム"
                 />
               )}
 

@@ -63,7 +63,7 @@ export const getStaticProps = async (context) => {
     props: {
       post: data,
     },
-    revalidate: 30, // ここを追加
+    revalidate: 10, // ここを追加
   };
 };
 

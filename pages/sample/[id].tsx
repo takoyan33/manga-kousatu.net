@@ -29,30 +29,8 @@ import { query, orderBy } from "firebase/firestore";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 
 const Post = () => {
-  const [ID, setID] = useState(null);
-  const [context, setContext] = useState("");
-  const [categori, setCategori] = useState("");
-  const [photoURL, setPhotoURL] = useState();
-  const [users, setUsers] = useState(null);
-  const [postid, setPostid] = useState("");
-  const [createtime, setCreatetime] = useState("");
-  const [isUpdate, setIsUpdate] = useState(false);
-  const [posttitle, setPostTitle] = useState("");
-  const databaseRef = collection(database, "posts");
-  //データベースを取得
-  const [firedata, setFiredata] = useState([]);
-  const [recfiredata, setRecfiredata] = useState([]);
-  const [downloadURL, setDownloadURL] = useState(null);
-  const [likecount, setLikecount] = useState(0);
-  const usersRef = collection(database, "users");
-  const [userid, setUserid] = useState(null);
-  const [netabare, setNetabare] = useState("");
-  const [likes, setLikes] = useState(null);
-  const [selected, setSelected] = useState(["最終回"]);
-  //データベースを取得
-  const q = query(databaseRef, orderBy("timestamp", "desc"));
-
   const router = useRouter();
+
   useEffect(() => {
     if (router.isReady) {
       const routeId = router.query.id;
@@ -65,5 +43,20 @@ const Post = () => {
     </>
   );
 };
-
 export default Post;
+
+export const getStaticProps = async (req) => {
+  return {
+    props: {
+      name: req.params.name,
+    },
+    revalidate: 100,
+  };
+};
+
+export const getStaticPaths = async (req) => {
+  return {
+    paths: [],
+    fallback: "blocking",
+  };
+};

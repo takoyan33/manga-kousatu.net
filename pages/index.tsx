@@ -195,10 +195,11 @@ export default function Index() {
           </span>
         );
       })}
-
-      <Link href={"/sample/aaaa"} passHref>
-        <a>aaaa</a>
-      </Link>
+      <base href="/">
+        <Link href={"sample/aaaa"} passHref>
+          <a>aaaa</a>
+        </Link>
+      </base>
 
       {/* {Categories.map((categori) => (
           <SiteCategory

@@ -121,6 +121,8 @@ export default function Post() {
       //日本時間を代入
       const newdate = new Date().toLocaleString("ja-JP");
       const postRef = await doc(database, "posts", (lengthdata + 1).toString());
+      console.log(lengthdata);
+
       setResult(result);
       await setDoc(postRef, {
         title: title,
@@ -150,7 +152,9 @@ export default function Post() {
           setPhotoURL("");
           setSelected([]);
           setUserid("");
-          router.push("/");
+          setTimeout(() => {
+            router.push("/");
+          }, 2000);
         })
         .catch((err) => {
           notify();

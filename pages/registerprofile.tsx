@@ -16,30 +16,9 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import { notify, signupmissnotify } from "../layouts/components/text/SiteModal";
 
 export default function Registerprofile() {
-  const notify = () =>
-    toast.success("プロフィールの登録が完了しました！", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-  const signupmissnotify = () =>
-    toast.error("登録に失敗しました！", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
   const [selected, setSelected] = useState(["ワンピース"]);
   const databaseRef = collection(database, "users");
   const [image, setImage] = useState(null);
@@ -80,13 +59,13 @@ export default function Registerprofile() {
         admin: 0,
       })
         .then(() => {
-          notify();
+          notify("プロフィールの登録が完了しました！");
           setTimeout(() => {
             router.push("/");
           }, 2000);
         })
         .catch((err) => {
-          signupmissnotify();
+          signupmissnotify("登録に失敗しました！");
           console.error(err);
         });
     }

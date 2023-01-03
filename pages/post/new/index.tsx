@@ -31,19 +31,12 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuthContext } from "../../../layouts/context/AuthContext";
 import { query, orderBy } from "firebase/firestore";
+import {
+  notify,
+  signupmissnotify,
+} from "../../../layouts/components/text/SiteModal";
 
 export default function Post() {
-  const notify = () =>
-    toast.success("記事投稿ができました", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
   const [processing, setProcessing] = useState(false);
   const [selected, setSelected] = useState(["最終回"]);
   const [title, setTitle] = useState("");
@@ -113,7 +106,7 @@ export default function Post() {
     // 処理中フラグを上げる
     setProcessing(true);
     if (image == null) {
-      alert("サムネイルを選んでください");
+      signupmissnotify("サムネイルを選んでください");
     } else {
       const result = await postImage(image);
       //写真のurlをセットする
@@ -146,7 +139,7 @@ export default function Post() {
         likes: 0,
       })
         .then(() => {
-          notify();
+          notify("記事投稿ができました！");
           setProcessing(false);
           setTitle("");
           setContext("");
@@ -160,7 +153,7 @@ export default function Post() {
           }, 2000);
         })
         .catch((err) => {
-          notify();
+          signupmissnotify("記事投稿に失敗しました！");
           console.error(err);
         });
     }

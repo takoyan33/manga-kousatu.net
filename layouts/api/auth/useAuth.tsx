@@ -99,13 +99,11 @@ export const SignInWithGoogle = () => {
 
   signInWithPopup(auth, googleProvider)
     .then(() => {
-      // signupnotify();
       setTimeout(() => {
         router.push("/");
       }, 2000);
     })
     .catch((err) => {
-      // signupmissnotify();
       console.log(err.message);
     });
   return { SignInWithGoogle };

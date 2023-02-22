@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { database } from "../firebaseConfig";
 import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import Link from "next/link";
@@ -18,6 +18,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Changetab } from "../layouts/components/ui/Changetab";
+import dynamic from "next/dynamic";
 
 export default function Index() {
   const [firedata, setFiredata] = useState([]);
@@ -121,7 +122,6 @@ export default function Index() {
   return (
     <div>
       <SiteHead />
-
       <div className="text-center">
         <img
           src="./images/book-reading.png"
@@ -165,11 +165,9 @@ export default function Index() {
           />
         </div>
       )}
-
       <h2 className="my-12 text-center text-2xl font-semibold">
         カテゴリから選ぶ
       </h2>
-
       {Categories.map((categori) => {
         // userの情報
         const CategoriesInfo = {
@@ -194,7 +192,6 @@ export default function Index() {
           </span>
         );
       })}
-
       {/* {Categories.map((categori) => (
           <SiteCategory
             key={categori.id}
@@ -203,9 +200,7 @@ export default function Index() {
             href={categori.link}
           />
         ))} */}
-
       <h2 className="my-12 text-center text-2xl font-semibold">新規投稿一覧</h2>
-
       <p className="text-1xl text-center">投稿数　{firedata.length}件</p>
       <TextField
         id="outlined-basic"
@@ -216,7 +211,6 @@ export default function Index() {
           setSearchName(event.target.value);
         }}
       />
-
       <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
         <InputLabel id="demo-select-small">並び順</InputLabel>
         <Select

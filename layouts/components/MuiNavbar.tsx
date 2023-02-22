@@ -117,6 +117,12 @@ export const MuiNavbar = () => {
           </ListItemIcon>
           <Link href="/about">About</Link>
         </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          <Link href="/realsenotes">リリースノート</Link>
+        </MenuItem>
         {user && (
           <>
             <MenuItem>

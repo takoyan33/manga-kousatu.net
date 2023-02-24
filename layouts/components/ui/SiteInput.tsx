@@ -6,10 +6,10 @@ type Props = {
   text: string;
   label: string;
   error: any;
-  type: any;
+  type: string;
   helperText: string;
   className: string;
-  variant: any;
+  variant?: "standard" | "outlined" | "filled" | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 

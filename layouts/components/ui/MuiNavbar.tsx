@@ -1,26 +1,38 @@
-import { AppBar, Toolbar, Button } from "@mui/material";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { getAuth, signOut } from "firebase/auth";
-import Box from "@mui/material/Box";
-import Avatar from "@mui/material/Avatar";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Avatar,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+  Divider,
+  Tooltip,
+  Button,
+  Box,
+} from "@mui/material";
 import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import React from "react";
-import Tooltip from "@mui/material/Tooltip";
 import Image from "next/image";
-import { useAuthContext } from "../context/AuthContext";
-import { useLogout } from "../api/auth/useAuth";
+import { useAuthContext } from "../../context/AuthContext";
+import { useLogout } from "../../api/auth/useAuth";
+
+const ACCOUNT_MENU_ITEMS = [
+  { text: "About", href: "/about" },
+  { text: "リリースノート", href: "/realsenotes" },
+];
 
 export const MuiNavbar = () => {
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const { user } = useAuthContext();
+  const router = useRouter();
+  const { logout } = useLogout();
+
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -28,11 +40,9 @@ export const MuiNavbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const router = useRouter();
-  const { logout } = useLogout();
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setAnchorEl(null);
     setTimeout(() => {
       router.push("/login");
@@ -111,18 +121,6 @@ export const MuiNavbar = () => {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         <Divider />
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <Link href="/about">About</Link>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <Settings fontSize="small" />
-          </ListItemIcon>
-          <Link href="/realsenotes">リリースノート</Link>
-        </MenuItem>
         {user && (
           <>
             <MenuItem>
@@ -152,6 +150,14 @@ export const MuiNavbar = () => {
             </MenuItem>
           </>
         )}
+        {ACCOUNT_MENU_ITEMS.map((item) => (
+          <MenuItem key={item.text} onClick={handleClose}>
+            <ListItemIcon>
+              <Settings fontSize="small" />
+            </ListItemIcon>
+            <Link href={item.href}>{item.text}</Link>
+          </MenuItem>
+        ))}
       </Menu>
     </AppBar>
   );

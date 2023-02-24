@@ -1,2 +1,2 @@
-export * from "./Footer";
-export * from "./MuiNavbar";
+export * from "./ui/Footer";
+export * from "./MuiNavbarbar";

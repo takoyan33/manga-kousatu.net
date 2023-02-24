@@ -4,7 +4,7 @@ import { collection, onSnapshot, getDocs } from "firebase/firestore";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { getAuth } from "firebase/auth";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbarbar";
 import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import { Cardpost } from "../layouts/components/ui/Cardpost";

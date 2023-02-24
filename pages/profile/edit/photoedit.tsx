@@ -6,7 +6,7 @@ import { database, auth } from "../../../firebaseConfig";
 import { collection } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
-import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../../../layouts/components/MuiNavbarbar";
 import Button from "@mui/material/Button";
 import { postImage } from "../../../layouts/api/upload";
 import Box from "@mui/material/Box";

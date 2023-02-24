@@ -1,5 +1,5 @@
 import React from "react";
-import { MuiNavbar } from "../layouts/components/MuiNavbar";
+import { MuiNavbar } from "../layouts/components/MuiNavbarbar";
 import { SiteHead } from "../layouts/components/ui/SiteHead";
 
 function Contact() {

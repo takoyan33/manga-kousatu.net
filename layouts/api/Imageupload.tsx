@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { app, database } from "../../firebaseConfig";
-import { MuiNavbar } from "../components/MuiNavbar";
+import { MuiNavbar } from "../components/MuiNavbarbar";
 import { postImage } from "./upload";
 
 export default function UploadImage() {

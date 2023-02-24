@@ -18,30 +18,21 @@ const Post = () => {
   const user = auth.currentUser;
   const yourprofile = query(usersRef, where("userid", "==", userid));
 
-  const getallPost = async () => {
-    //firestoreからデータ取得
-    await getDocs(postsRef).then((response) => {
-      //コレクションのドキュメントを取得
-      setFiredata(
-        response.docs
-          .map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
-            //スプレッド構文で展開して、新しい配列を作成
-          })
-          .filter((data) => {
-            if (data.userid === userid) {
-              return data;
-              //そのまま返す
-            } else if (
-              data.userid.toLowerCase().includes(userid)
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-            ) {
-              return data;
-            }
-          })
+  const fetchPosts = async () => {
+    try {
+      const querySnapshot = await getDocs(postsRef);
+      const posts = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      const filteredPosts = posts.filter(
+        (post) =>
+          post.userid === userid || post.userid.toLowerCase().includes(userid)
       );
-    });
+      setFiredata(filteredPosts);
+    } catch (error) {
+      console.log("Error fetching posts", error);
+    }
   };
 
   useEffect(() => {
@@ -53,23 +44,22 @@ const Post = () => {
 
   useEffect(() => {
     fetchUserProfile();
-    getallPost();
-
+    fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUserProfile = async () => {
     //firestoreからデータ取得
-    await getDocs(yourprofile).then((response) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id };
-          //スプレッド構文で展開して、新しい配列を作成
-        })
-      );
-    });
+    try {
+      const querySnapshot = await getDocs(yourprofile);
+      const userData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setUsers(userData);
+    } catch (error) {
+      console.log("Error fetching user data", error);
+    }
   };
 
   return (

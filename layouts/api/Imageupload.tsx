@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { app, database } from "../../firebaseConfig";
-import { MuiNavbar } from "../components/MuiNavbarbar";
 import { postImage } from "./upload";
 
 export default function UploadImage() {
@@ -30,7 +29,6 @@ export default function UploadImage() {
 
   return (
     <div title="upload image">
-      <MuiNavbar />
       <div className="mb-4">this is upload image screen</div>
       <img
         className="flex justify-center items-center"

@@ -5,6 +5,6 @@ export * from "./Profilepost";
 export * from "./SiteHead";
 export * from "./SiteInput";
 export * from "./Cardpost";
-export * from "./MuiNavbar";
+export * from "../MuiNavbar";
 export * from "./Footer";
 

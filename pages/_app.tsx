@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import "tailwindcss/tailwind.css";
 import { AuthProvider } from "../layouts/context/AuthContext";
 import Footer from "../layouts/components/ui/Footer";
-import { MuiNavbar } from "../layouts/components/ui";
+import { MuiNavbar } from "../layouts/components";
 
 function MyApp({ Component, pageProps }) {
   return (

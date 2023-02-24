@@ -6,7 +6,6 @@ import { database } from "../../firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { deleteUser } from "firebase/auth";
-import { MuiNavbar } from "../../layouts/components/MuiNavbarbar";
 import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import { SiteHead } from "../../layouts/components/ui";

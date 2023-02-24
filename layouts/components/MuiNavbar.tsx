@@ -19,8 +19,8 @@ import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import React from "react";
 import Image from "next/image";
-import { useAuthContext } from "../../context/AuthContext";
-import { useLogout } from "../../api/auth/useAuth";
+import { useAuthContext } from "../context/AuthContext";
+import { useLogout } from "../api/auth/useAuth";
 
 const ACCOUNT_MENU_ITEMS = [
   { text: "About", href: "/about" },

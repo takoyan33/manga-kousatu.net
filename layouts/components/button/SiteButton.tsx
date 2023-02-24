@@ -2,7 +2,7 @@ import { DOMAttributes, FC, memo, ReactNode } from "react";
 import Link from "next/link";
 import Button from "@mui/material/Button";
 
-type Props = {
+type SiteButtonProps = {
   href: string;
   onClick?: DOMAttributes<HTMLButtonElement>["onClick"];
   // children: React.ReactNode;
@@ -12,7 +12,7 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-export const SiteButton: React.VFC<Props> = memo(
+export const SiteButton: React.VFC<SiteButtonProps> = memo(
   ({ href, onClick, text, className, disabled }) => {
     return (
       <div className={className}>

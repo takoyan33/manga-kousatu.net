@@ -25,7 +25,7 @@
     "**/*.tsx",
     "pages/register.tsx",
     "pages/login.tsx"
-, "pages/post/new/index.tsx", "pages/home.tsx", "layouts/Cardpost.tsx", "layouts/api/auth/SignUp.tsx", "pages/profile/index.tsx", "pages/post/[postId].jsx", "layouts/components/button/loginbutton.tsx", "pages/post/title/[title].jsx", "pages/edit.jsx", "layouts/components/MuiNavbar.jsx", "layouts/components/hooks/useGetPosts.jsx", "layouts/components/ui/Changetab.jsx", "pages/profile/[userid].jsx", "pages/profile/edit/email.tsx", "pages/ninjas/[id].tsx", "pages/posts/[id].js", "pages/post/categories/[id].jsx"  ],
+, "pages/post/new/index.tsx", "pages/home.tsx", "layouts/components/Cardpost.tsxardpost.tsx", "layouts/api/auth/SignUp.tsx", "pages/profile/index.tsx", "pages/post/[postId].jsx", "layouts/components/button/loginbutton.tsx", "pages/post/title/[title].jsx", "pages/edit.jsx", "layouts/components/MuiNavbar.jsx", "layouts/components/hooks/useGetPosts.jsx", "layouts/components/ui/Changetab.jsx", "pages/profile/[userid].jsx", "pages/profile/edit/email.tsx", "pages/ninjas/[id].tsx", "pages/posts/[id].js", "pages/post/categories/[id].jsx"  ],
   "exclude": [
     "node_modules"
   ]

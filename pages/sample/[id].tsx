@@ -20,7 +20,7 @@ import Image from "react-image-resizer";
 import Avatar from "@mui/material/Avatar";
 import { SiteButton } from "../../layouts/components/button";
 import { SiteCategory } from "../../layouts/components/text";
-import { Cardpost } from "../../layouts/Cardpost";
+import { Cardpost } from "../../layouts/components/ui/Cardpost";
 import { SiteHead } from "../../layouts/components/ui";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";

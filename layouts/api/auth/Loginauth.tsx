@@ -18,10 +18,10 @@ import { notify, signupmissnotify } from "../../components/text/SiteModal";
 import { useLogin } from "./useAuth";
 
 // フォームの型
-interface SampleFormInput {
+type SampleFormInput = {
   email: string;
   password: string;
-}
+};
 
 // バリデーションルール
 const schema = yup.object({
@@ -47,30 +47,30 @@ export default function Loginauth() {
 
   const { login, success, error } = useLogin();
 
-  const handleSignIn: SubmitHandler<SampleFormInput> = (data: any) => {
-    const { email, password } = data;
-    login(email, password);
-    notify("ログインしました");
-    setTimeout(() => {
-      router.push("/");
-    }, 2000);
-
-    if (error) {
+  const handleSignIn: SubmitHandler<SampleFormInput> = async (data: any) => {
+    try {
+      await login(data.email, data.password);
+      notify("ログインしました");
+      setTimeout(() => {
+        router.push("/");
+      }, 2000);
+    } catch (e) {
       signupmissnotify("ログインに失敗しました");
+      console.log(e);
     }
   };
 
-  const SignInWithGoogle = () => {
-    signInWithPopup(auth, googleProvider)
+  const SignInWithGoogle = async () => {
+    await signInWithPopup(auth, googleProvider)
       .then(() => {
         notify("ログインしました");
         setTimeout(() => {
           router.push("/");
         }, 2000);
       })
-      .catch((err) => {
+      .catch((e) => {
         signupmissnotify("ログインに失敗しました");
-        console.log(err);
+        console.log(e);
       });
   };
 

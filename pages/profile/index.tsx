@@ -11,7 +11,7 @@ import TextField from "@mui/material/TextField";
 import Grid from "@material-ui/core/Grid";
 import { SiteHead } from "../../layouts/components/ui";
 import { Profileid } from "../../layouts/components/ui/Profileid";
-import { Cardpost } from "../../layouts/Cardpost";
+import { Cardpost } from "../../layouts/components/ui/Cardpost";
 import ListSubheader from "@mui/material/ListSubheader";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -288,7 +288,7 @@ export default function Profile() {
                     profileimage={data.profileimage}
                     username={data.username}
                     bio={data.bio}
-                    favarite={data.favarite}
+                    favorite={data.favarite}
                     id={0}
                   />
                 </>

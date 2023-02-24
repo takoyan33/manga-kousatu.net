@@ -1,19 +1,14 @@
 import { useRouter } from "next/router";
-import React from "react";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { database } from "../../firebaseConfig";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { SiteHead } from "../../layouts/components/ui/SiteHead";
-import { Profileid } from "../../layouts/components/ui/Profileid";
+import { SiteHead, Profileid, Cardpost } from "../../layouts/components/ui";
 import Grid from "@material-ui/core/Grid";
-import { Cardpost } from "../../layouts/Cardpost";
-import { query, where } from "firebase/firestore";
 
 const Post = () => {
-  const [users, setUsers] = useState(null);
-  const databaseRef = collection(database, "posts");
-  //データベースを取得
+  const [users, setUsers] = useState([]);
+  const postsRef = collection(database, "posts");
   const [firedata, setFiredata] = useState([]);
   const usersRef = collection(database, "users");
   const [likes, setLikes] = useState(null);
@@ -22,12 +17,10 @@ const Post = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const yourprofile = query(usersRef, where("userid", "==", userid));
-  console.log(yourprofile);
-  console.log({ userid });
 
   const getallPost = async () => {
     //firestoreからデータ取得
-    await getDocs(databaseRef).then((response) => {
+    await getDocs(postsRef).then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
         response.docs
@@ -52,36 +45,20 @@ const Post = () => {
   };
 
   useEffect(() => {
-    if (user) {
-      if (userid == user.uid) {
-        router.push("/profile");
-      }
+    if (user && userid == user.uid) {
+      router.push("/profile");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user, userid, router]);
+
+  useEffect(() => {
+    fetchUserProfile();
+    getallPost();
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    userData();
-    getallPost();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likes]);
-
-  // const userData = async () => {
-  //   //firestoreからデータ取得
-  //   const data = doc(database, "users", "ilvobFpZAceNGncxNWwPOE88kvu1");
-  //   // const data = doc(database, "users", userid);
-
-  //   getDoc(data)
-  //     .then((documentSnapshot) => {
-  //       setUsers(documentSnapshot.data());
-  //     })
-  //     .catch((error) => {
-  //       console.log("Error getting document:", error);
-  //     });
-  // };
-  // console.log(users);
-
-  const userData = async () => {
+  const fetchUserProfile = async () => {
     //firestoreからデータ取得
     await getDocs(yourprofile).then((response) => {
       //コレクションのドキュメントを取得
@@ -98,52 +75,52 @@ const Post = () => {
   return (
     <>
       <SiteHead />
-        <>
-          {users &&
-            users.map((user) => {
-              return (
-                <>
-                  {userid == user.userid && (
-                    <Profileid
-                      key={user.id}
-                      profileimage={user.profileimage}
-                      username={user.username}
-                      bio={user.bio}
-                      favarite={user.favarite}
-                    />
-                  )}
-                </>
-              );
-            })}
-        </>
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">
-          過去の投稿
-        </h2>
-        <Grid container className="m-auto">
-          {firedata == [] && <p>まだ投稿していません</p>}
-          {firedata &&
-            firedata.map((data) => {
-              return (
-                <>
-                  <Cardpost
-                    key={data.id}
-                    downloadURL={data.downloadURL}
-                    title={data.title}
-                    categori={data.categori}
-                    netabare={data.netabare}
-                    context={data.context}
-                    createtime={data.createtime}
-                    displayname={data.displayname}
-                    email={data.email}
-                    id={data.id}
-                    photoURL={data.photoURL}
-                    likes={data.likes}
-                    selected={data.selected}
+      <>
+        {users &&
+          users.map((user) => {
+            return (
+              <>
+                {userid == user.userid && (
+                  <Profileid
+                    key={user.id}
+                    profileimage={user.profileimage}
+                    username={user.username}
+                    bio={user.bio}
+                    favorite={user.favarite}
                   />
-                </>
-              );
-            })}
-        </Grid>
+                )}
+              </>
+            );
+          })}
+      </>
+      <h2 className="m-5 my-12 text-center text-2xl font-semibold">
+        過去の投稿
+      </h2>
+      <Grid container className="m-auto">
+        {firedata.length === 0 && <p>まだ投稿していません</p>}
+        {firedata &&
+          firedata.map((data) => {
+            return (
+              <>
+                <Cardpost
+                  key={data.id}
+                  downloadURL={data.downloadURL}
+                  title={data.title}
+                  categori={data.categori}
+                  netabare={data.netabare}
+                  context={data.context}
+                  createtime={data.createtime}
+                  displayname={data.displayname}
+                  email={data.email}
+                  id={data.id}
+                  photoURL={data.photoURL}
+                  likes={data.likes}
+                  selected={data.selected}
+                />
+              </>
+            );
+          })}
+      </Grid>
     </>
   );
 };

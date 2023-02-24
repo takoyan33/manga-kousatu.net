@@ -10,12 +10,12 @@ type Props = {
   id: number;
   username: string;
   bio: string;
-  favarite: string[];
+  favorite: string[];
 };
 
 // eslint-disable-next-line react/display-name
 export const Profileid: React.VFC<Props> = React.memo(
-  ({ id, profileimage, username, bio, favarite }) => {
+  ({ id, profileimage, username, bio, favorite }) => {
     return (
       <div className="">
         <h2 className="m-5 my-12 text-center text-2xl font-semibold">
@@ -40,10 +40,10 @@ export const Profileid: React.VFC<Props> = React.memo(
               <FavoriteIcon /> 好きな漫画
             </h2>
             <div className="m-5">
-              {favarite &&
-                favarite.map((favarite, i) => (
-                  <p className="text-cyan-700 my-2" key={i}>
-                    ＃{favarite}　
+              {favorite &&
+                favorite.map((favorite, index) => (
+                  <p className="text-cyan-700 my-2" key={index}>
+                    ＃{favorite}　
                   </p>
                 ))}
             </div>
@@ -51,7 +51,7 @@ export const Profileid: React.VFC<Props> = React.memo(
         </div>
         <div className="max-w-md m-auto my-10">
           <h2 className="m-5">
-            <BorderColorIcon /> プロフィール
+            <BorderColorIcon className="mr-2" /> プロフィール
           </h2>
           <p className="m-5">{bio}</p>
         </div>

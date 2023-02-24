@@ -7,12 +7,10 @@ import { collection, getDocs, onSnapshot } from "firebase/firestore";
 import TextField from "@mui/material/TextField";
 import { getAuth } from "firebase/auth";
 import { MuiNavbar } from "../../../layouts/components/MuiNavbar";
-import Button from "@mui/material/Button";
 import Grid from "@material-ui/core/Grid";
-import { Cardpost } from "../../../layouts/Cardpost";
 import { query, orderBy } from "firebase/firestore";
 import { SiteButton } from "../../../layouts/components/button";
-import { Categories, SiteHead } from "../../../layouts/components/ui";
+import { Cardpost, SiteHead } from "../../../layouts/components/ui";
 
 const Category = () => {
   const databaseRef = collection(database, "posts");

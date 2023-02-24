@@ -92,15 +92,6 @@ export default function Registerprofile() {
             （10文字以内）
           </label>
         </div>
-        {/* <TextField
-            id="outlined-basic"
-            label="太郎"
-            className="m-auto w-80"
-            variant="outlined"
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setUsername(event.target.value)
-            }
-          /> */}
 
         <FormControl variant="standard">
           <InputLabel htmlFor="input-with-icon-adornment">太郎</InputLabel>

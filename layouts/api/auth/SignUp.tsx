@@ -1,9 +1,4 @@
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
 import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,10 +13,11 @@ import { Stack } from "@mui/material";
 import { useSignup } from "./useAuth";
 
 // フォームの型
-interface SampleFormInput {
+type SampleFormInput = {
   email: string;
   password: string;
-}
+  confirmPassword: string;
+};
 
 // バリデーションルール
 const schema = yup.object({
@@ -30,6 +26,10 @@ const schema = yup.object({
     .required("必須です")
     .email("正しいメールアドレス入力してください"),
   password: yup.string().required("必須です").min(8, "文字数が足りません"),
+  confirmPassword: yup
+    .string()
+    .required("必須です")
+    .oneOf([yup.ref("password")], "パスワードが一致していません"),
 });
 
 export default function SignUp() {
@@ -38,6 +38,7 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm<SampleFormInput>({
     resolver: yupResolver(schema),
@@ -45,9 +46,9 @@ export default function SignUp() {
 
   const { signup, error } = useSignup();
 
-  const handleSignUp: SubmitHandler<SampleFormInput> = (data) => {
+  const handleSignUp = async (data: SampleFormInput) => {
     const { email, password } = data;
-    signup(email, password);
+    await signup(email, password);
     notify("ユーザー登録完了しました");
     setTimeout(() => {
       router.push("/registerprofile");
@@ -58,9 +59,9 @@ export default function SignUp() {
     }
   };
 
-  const SignUpWithGoogle = () => {
+  const SignUpWithGoogle = async () => {
     const auth = getAuth();
-    signInWithPopup(auth, googleProvider)
+    await signInWithPopup(auth, googleProvider)
       .then(() => {
         //googleで登録する
         notify("ユーザー登録完了しました");
@@ -94,7 +95,7 @@ export default function SignUp() {
           className="m-auto w-80"
           variant="outlined"
           {...register("email", { required: true })}
-          error={"email" in errors}
+          error={Boolean(errors.email)}
           helperText={errors.email?.message}
         />
         <div>
@@ -108,8 +109,8 @@ export default function SignUp() {
           type="password"
           variant="outlined"
           className="m-auto w-80"
-          {...register("password", { required: true })}
-          error={"password" in errors}
+          {...register("password", { minLength: 8 })}
+          error={Boolean(errors.password)}
           helperText={errors.password?.message}
         />
         <div>
@@ -123,9 +124,11 @@ export default function SignUp() {
           type="password"
           variant="outlined"
           className="m-auto w-80"
-          {...register("password", { required: true })}
-          error={"password" in errors}
-          helperText={errors.password?.message}
+          {...register("confirmPassword", {
+            validate: (value) => value === watch("password"),
+          })}
+          error={Boolean(errors.confirmPassword)}
+          helperText={errors.confirmPassword?.message}
         />
         <SiteButton
           href=""

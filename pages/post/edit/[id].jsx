@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { app, database, storage } from '../../../firebaseConfig'
 import { collection, getDocs, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { MuiNavbar } from '../../../layouts/components/MuiNavbar'
 import { Stack } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import Image from 'react-image-resizer'
@@ -99,7 +98,6 @@ const Post = () => {
   return (
     <>
       <CommonHead />
-      <MuiNavbar />
 
       <div className='max-w-5xl m-auto'>
         <div>

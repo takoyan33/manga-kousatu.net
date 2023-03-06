@@ -7,11 +7,15 @@ import { MuiNavbar } from "../layouts/components";
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <MuiNavbar />
-      <div className="max-w-5xl m-auto mt-10">
-        <Component {...pageProps} />
+      <div className="">
+        <MuiNavbar />
+        <div
+          className="max-w-5xl m-auto mt-10"
+        >
+          <Component {...pageProps} />
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </AuthProvider>
   );
 }

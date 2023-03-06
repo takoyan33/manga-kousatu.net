@@ -1,23 +1,20 @@
-import "../styles/globals.css";
-import "tailwindcss/tailwind.css";
-import { AuthProvider } from "../layouts/context/AuthContext";
-import Footer from "../layouts/components/ui/Footer";
-import { MuiNavbar } from "../layouts/components";
+import '../styles/globals.css'
+import 'tailwindcss/tailwind.css'
+import { Header, Footer } from '../layouts/components/ui'
+import { AuthProvider } from '../layouts/context/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <div className="">
-        <MuiNavbar />
-        <div
-          className="max-w-5xl m-auto mt-10"
-        >
+      <>
+        <Header />
+        <div className='max-w-5xl m-auto mt-10'>
           <Component {...pageProps} />
         </div>
         <Footer />
-      </div>
+      </>
     </AuthProvider>
-  );
+  )
 }
 
-export default MyApp;
+export default MyApp

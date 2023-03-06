@@ -1,5 +1,5 @@
-import React from "react";
 import TextField from "@mui/material/TextField";
+import React from "react";
 
 type Props = {
   id: any;
@@ -14,22 +14,12 @@ type Props = {
 };
 
 // eslint-disable-next-line react/display-name
-export const SiteInput: React.VFC<Props> = React.memo(
-  ({
-    onChange,
-    error,
-    text,
-    type,
-    helperText,
-    label,
-    id,
-    className,
-    variant,
-  }) => {
+export const CommonInput: React.VFC<Props> = React.memo(
+  ({ onChange, error, text, type, helperText, label, id, className, variant }) => {
     return (
       <>
         <div>
-          <label className="text-center my-4">{text}</label>
+          <label className='text-center my-4'>{text}</label>
         </div>
         <TextField
           id={id}
@@ -42,6 +32,6 @@ export const SiteInput: React.VFC<Props> = React.memo(
           helperText={helperText}
         />
       </>
-    );
-  }
-);
+    )
+  },
+)

@@ -1,15 +1,15 @@
-import { DOMAttributes, FC, memo, ReactNode } from "react";
-import Link from "next/link";
-import Button from "@mui/material/Button";
+import Button from '@mui/material/Button'
+import Link from 'next/link'
+import { DOMAttributes, memo } from 'react'
 
 type SiteButtonProps = {
-  href: string;
-  onClick?: DOMAttributes<HTMLButtonElement>["onClick"];
+  href: string
+  onClick?: DOMAttributes<HTMLButtonElement>['onClick']
   // children: React.ReactNode;
-  text: string;
-  className: string;
-  disabled?: boolean;
-};
+  text: string
+  className: string
+  disabled?: boolean
+}
 
 // eslint-disable-next-line react/display-name
 export const SiteButton: React.VFC<SiteButtonProps> = memo(
@@ -17,18 +17,13 @@ export const SiteButton: React.VFC<SiteButtonProps> = memo(
     return (
       <div className={className}>
         <Link href={href}>
-          <Button
-            variant="outlined"
-            onClick={onClick}
-            disabled={disabled}
-            type="submit"
-          >
+          <Button variant='outlined' onClick={onClick} disabled={disabled} type='submit'>
             {text}
           </Button>
         </Link>
       </div>
-    );
-  }
-);
+    )
+  },
+)
 
-SiteButton.displayName = "SiteButton";
+SiteButton.displayName = 'SiteButton'

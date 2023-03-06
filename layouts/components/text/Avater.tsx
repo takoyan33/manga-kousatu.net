@@ -1,6 +1,6 @@
 /* eslint-disable react/display-name */
-import React from "react";
 import Avatar from "@mui/material/Avatar";
+import React from "react";
 
 type Props = {
   photoURL: string;

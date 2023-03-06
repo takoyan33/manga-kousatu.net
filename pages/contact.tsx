@@ -1,14 +1,14 @@
-import React from "react";
-import { SiteHead } from "../layouts/components/ui/SiteHead";
+import React from 'react'
+import { CommonHead } from '../layouts/components/ui/CommonHead'
 
 function Contact() {
   return (
     <div>
-      <SiteHead />
-        <h2 className="m-5 my-12 text-center text-2xl font-semibold">About</h2>
-        <p className="">お問合せ</p>
+      <CommonHead />
+      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>About</h2>
+      <p className=''>お問合せ</p>
     </div>
-  );
+  )
 }
 
-export default Contact;
+export default Contact

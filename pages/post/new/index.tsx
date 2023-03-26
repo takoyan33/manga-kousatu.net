@@ -1,16 +1,12 @@
-import React from 'react'
 import { useState, useEffect } from 'react'
 import { database } from '../../../firebaseConfig'
-import { collection, onSnapshot, setDoc, doc, addDoc } from 'firebase/firestore'
+import { collection, onSnapshot, setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { getAuth } from 'firebase/auth'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { postImage } from '../../../layouts/api/upload'
 import { postContextImage } from '../../../layouts/api/uploadcontext'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import FormControlLabel from '@mui/material/FormControlLabel'
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import FormLabel from '@mui/material/FormLabel'
 import { serverTimestamp } from 'firebase/firestore'
 import 'firebase/firestore'
@@ -19,30 +15,42 @@ import Imageupload from '../../../packages/utils/Imageupload'
 import Imageuploadcontext from '../../../packages/utils/Imageuploadcontext'
 import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from '../../../layouts/components/ui'
-import { Formcontrols } from '../../../layouts/components/ui/Formcontrols'
+import { Categoris, Netabares } from '../../../layouts/components/ui/Formcontrols'
 import { SiteButton } from '../../../layouts/components/button'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAuthContext } from '../../../layouts/context/AuthContext'
 import { query, orderBy } from 'firebase/firestore'
 import { notify, signupmissnotify } from '../../../layouts/components/text/SiteModal'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+// フォームの型
+type SampleFormInput = {
+  title: string
+  categori: string
+  netabare: string
+  context: string
+}
+
+// バリデーションルール
+const schema = yup.object({
+  title: yup.string().required('必須です'),
+})
 
 export default function Post() {
   const [processing, setProcessing] = useState(false)
   const [selected, setSelected] = useState(['最終回'])
-  const [title, setTitle] = useState('')
   const [context, setContext] = useState('')
-  const [categori, setCategori] = useState('')
   const databaseRef = collection(database, 'posts')
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
-
   const [image, setImage] = useState(null)
   const [contextimage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createcontextObjectURL, setCreatecontexObjectURL] = useState('')
   const [userid, setUserid] = useState(null)
   const [result, setResult] = useState('')
-  const [netabare, setNetabare] = useState('')
   const [photoURL, setPhotoURL] = useState('')
   const [firedata, setFiredata] = useState([])
   const [lengthdata, setLengthdata] = useState(null)
@@ -57,12 +65,20 @@ export default function Post() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SampleFormInput>({
+    resolver: yupResolver(schema),
+  })
+
   const getallPost = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
-  console.log(firedata)
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -89,7 +105,7 @@ export default function Post() {
     toLocaleString(timeZone): string
   }
 
-  const addDate = async () => {
+  const addDate: SubmitHandler<SampleFormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる
@@ -106,17 +122,17 @@ export default function Post() {
 
       setResult(result)
       await setDoc(postRef, {
-        title: title,
+        title: data.title,
         context: context.replace(/\r?\n/g, '\n'),
         downloadURL: result,
         contextimage: contextresult,
         email: user.email,
         displayname: user.displayName,
-        categori: categori,
+        categori: data.categori,
         createtime: newdate,
         edittime: '',
         id: (firedata.length + 1).toString(),
-        netabare: netabare,
+        netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
         selected: selected,
@@ -126,10 +142,7 @@ export default function Post() {
         .then(() => {
           notify('記事投稿ができました！')
           setProcessing(false)
-          setTitle('')
           setContext('')
-          setCategori('')
-          setNetabare('')
           setPhotoURL('')
           setSelected([])
           setUserid('')
@@ -179,36 +192,45 @@ export default function Post() {
           </FormLabel>
 
           <TextField
+            {...register('title')}
+            error={'title' in errors}
+            helperText={errors.title?.message}
             id='outlined-basic'
             label='タイトル*（最大20文字)'
             variant='outlined'
-            value={title}
-            helperText='タイトルを入力してください'
             className='m-auto w-full'
-            onChange={(event) => {
-              if (event.target.value.length <= 20) {
-                setTitle(event.target.value)
-              }
-            }}
           />
+
           <div>
             <FormLabel id='demo-radio-buttons-group-label'>
               作品名<span className='text-red-600'>*</span>
             </FormLabel>
           </div>
-          <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-            {Formcontrols.map((Formcontrol) => (
-              <FormControlLabel
-                key={Formcontrol.id}
-                value={Formcontrol.value}
-                control={<Radio />}
-                label={Formcontrol.label}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCategori(event.target.value)
-                }
-              />
-            ))}
-          </RadioGroup>
+          <Controller
+            name='categori'
+            control={control}
+            rules={{
+              required: '必須項目です',
+            }}
+            render={({ field }) => (
+              <RadioGroup
+                aria-labelledby='demo-radio-buttons-group-label'
+                name={field.name}
+                value={field.value}
+              >
+                {Categoris.map((Categori) => (
+                  <FormControlLabel
+                    key={Categori.id}
+                    value={Categori.value}
+                    control={<Radio />}
+                    label={Categori.label}
+                    {...register('categori')}
+                  />
+                ))}
+              </RadioGroup>
+            )}
+          />
+          {errors.categori && <p>{errors.categori.message}</p>}
           <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
 
           <TagsInput
@@ -222,24 +244,27 @@ export default function Post() {
             ネタバレについて<span className='text-red-600'>*</span>
           </FormLabel>
 
-          <RadioGroup aria-labelledby='demo-radio-buttons-group-label' name='radio-buttons-group'>
-            <FormControlLabel
-              value='ネタバレ有'
-              control={<Radio />}
-              label='ネタバレ有(漫画・アニメよりも先行している内容の場合）'
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setNetabare(event.target.value)
-              }
-            />
-            <FormControlLabel
-              value='ネタバレ無'
-              control={<Radio />}
-              label='ネタバレ無'
-              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                setNetabare(event.target.value)
-              }
-            />
-          </RadioGroup>
+          <Controller
+            name='netabare'
+            control={control}
+            rules={{
+              required: '必須項目です',
+            }}
+            render={({ field }) => (
+              <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+                {Netabares.map((Netabare) => (
+                  <FormControlLabel
+                    key={Netabare.id}
+                    value={Netabare.value}
+                    control={<Radio />}
+                    label={Netabare.label}
+                    {...register('netabare')}
+                  />
+                ))}
+              </RadioGroup>
+            )}
+          />
+          {errors.netabare && <p>{errors.netabare.message}</p>}
 
           <FormLabel id='demo-radio-buttons-group-label'>
             内容<span className='text-red-600'>*</span>(最大500文字）
@@ -251,7 +276,10 @@ export default function Post() {
             className='m-auto w-full'
             id='filled-multiline-static'
             multiline
-            rows={14}
+            rows={12}
+            {...register('context')}
+            error={'context' in errors}
+            helperText={errors.context?.message}
             value={context}
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
               if (event.target.value.length <= 500) {
@@ -281,7 +309,7 @@ export default function Post() {
             href=''
             text='投稿する'
             className='text-center m-auto my-10'
-            onClick={addDate}
+            onClick={handleSubmit(addDate)}
           />
         </div>
       </Box>

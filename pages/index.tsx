@@ -21,7 +21,6 @@ import dynamic from 'next/dynamic'
 
 export default function Index() {
   const [firedata, setFiredata] = useState([])
-  // const { getallPost, getallOldpost, getallLikepost } = GetPosts();
   const databaseRef = collection(database, 'posts')
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
 
@@ -47,25 +46,6 @@ export default function Index() {
     setLoading(false)
   }
 
-  console.log(firedata)
-
-  // const getall = async () => {
-  //   const res = await fetch(
-  //     "https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts"
-  //   );
-  //   const data = await res.json();
-  //   var array = Object.keys(data).map(function (key) {
-  //     return data[key];
-  //   });
-  //   // console.log(Array.isArray(data));
-  //   console.log(array[0]);
-
-  //   const paths = array[0].map((post) => {
-  //     return {
-  //       params: { id: post.fields.id.stringValue.toString() },
-  //     };
-  //   });
-  // };
 
   //古い順
   const getallOldpost = async () => {
@@ -84,25 +64,9 @@ export default function Index() {
   useEffect(() => {
     setLoading(true)
     getallPost()
-    // getall();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // const Posts = useMemo(() => {
-  //   return firedata
-  //     .filter((data) => {
-  //       if (searchName === "") {
-  //         return data;
-  //         //そのまま返す
-  //       } else if (
-  //         data.title.toLowerCase().includes(searchName.toLowerCase())
-  //         //data.titleが含んでいたら小文字で返す　含んでいないdataは返さない
-  //       ) {
-  //         return data;
-  //       }
-  //     })
-  //     .slice(0, loadIndex);
-  // }, [firedata]);
 
   const displayMore = () => {
     if (loadIndex > firedata.length) {
@@ -111,6 +75,25 @@ export default function Index() {
       setLoadIndex(loadIndex + 4)
     }
   }
+
+    const menuItems = [
+      {
+        label: '新しい順',
+        value: '新しい順',
+        onClick: getallPost,
+      },
+      {
+        label: '古い順',
+        value: '古い順',
+        onClick: getallOldpost,
+      },
+      {
+        label: 'いいね順',
+        value: 'いいね順',
+        onClick: getallLikepost,
+      },
+    ]
+
 
   return (
     <div>
@@ -161,14 +144,6 @@ export default function Index() {
           </span>
         )
       })}
-      {/* {Categories.map((categori) => (
-          <SiteCategory
-            key={categori.id}
-            className={`p-1 inline-block text-white text-center m-6 + ${categori.className}`}
-            text={categori.title}
-            href={categori.link}
-          />
-        ))} */}
       <h2 className='my-12 text-center text-2xl font-semibold'>新規投稿一覧</h2>
       <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
       <TextField
@@ -182,18 +157,16 @@ export default function Index() {
       />
       <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
         <InputLabel id='demo-select-small'>並び順</InputLabel>
+
         <Select labelId='demo-select-small' id='demo-select-small' label='並び順'>
-          <MenuItem value='新しい順' onClick={getallPost}>
-            新しい順
-          </MenuItem>
-          <MenuItem value='古い順' onClick={getallOldpost}>
-            古い順
-          </MenuItem>
-          <MenuItem value='いいね順' onClick={getallLikepost}>
-            いいね順
-          </MenuItem>
+          {menuItems.map((item) => (
+            <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
+              {item.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
+
       <Grid container className='m-auto'>
         {firedata.length == 0 && <p className='ext-cneter my-2'>読み込み中・・・</p>}
         {firedata

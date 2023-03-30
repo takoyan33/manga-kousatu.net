@@ -28,7 +28,7 @@ export const getStaticPaths = async () => {
   )
   const data = await res.json()
 
-  var array = Object.keys(data).map(function (key) {
+  const array = Object.keys(data).map(function (key) {
     return data[key]
   })
 

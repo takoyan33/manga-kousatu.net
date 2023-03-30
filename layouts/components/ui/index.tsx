@@ -1,4 +1,4 @@
-export * from "./Categories";
+export * from "./Objects";
 export * from "./Formcontrols";
 export * from "./Profileid";
 export * from "./Profilepost";

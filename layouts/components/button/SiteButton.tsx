@@ -5,13 +5,11 @@ import { DOMAttributes, memo } from 'react'
 type SiteButtonProps = {
   href: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
-  // children: React.ReactNode;
   text: string
   className: string
   disabled?: boolean
 }
 
-// eslint-disable-next-line react/display-name
 export const SiteButton: React.VFC<SiteButtonProps> = memo(
   ({ href, onClick, text, className, disabled }) => {
     return (

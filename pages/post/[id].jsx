@@ -4,7 +4,15 @@ import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from '../../firebaseConfig'
-import { collection, getDocs, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  arrayUnion,
+} from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
@@ -46,12 +54,9 @@ const Post = () => {
 
   const router = useRouter()
   const routerid = router.query.id
-  // const { id } = router.query;
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
-
-  // console.log({ id });
 
   const getallPost = async () => {
     const ref = doc(database, 'posts', routerid)
@@ -74,17 +79,6 @@ const Post = () => {
           return { ...data.data(), id: data.id }
           //スプレッド構文で展開して、新しい配列を作成
         }),
-        // .filter((data) => {
-        //   if (data.categori === firedata.categori) {
-        //     return data;
-        //     //そのまま返す
-        //   } else if (
-        //     data.categori.toLowerCase().includes(firedata.categori)
-        //     //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-        //   ) {
-        //     return data;
-        //   }
-        // })
       )
     })
   }
@@ -193,13 +187,12 @@ const Post = () => {
     }
   }
 
-  const handleClick = (id, likes) => {
-    // setLikecount(likes + 1);
-    console.log(likes)
-
-    let fieldToEdit = doc(database, 'posts', id)
+  const LikeAdd = (routerid, likes) => {
+    console.log(routerid)
+    let fieldToEdit = doc(database, 'posts', routerid)
     updateDoc(fieldToEdit, {
       likes: likes + 1,
+      like_email: arrayUnion(user.email),
     })
       .then(() => {
         console.log(likecount)
@@ -209,8 +202,9 @@ const Post = () => {
       .catch((err) => {
         alert('失敗しました')
         console.log(err)
-      })
+      }) 
   }
+
   return (
     <>
       <CommonHead />
@@ -240,7 +234,6 @@ const Post = () => {
               </>
             )}
 
-            {/* <Link href={`/post/edit/${id}`}>編集</Link> */}
             {isUpdate && (
               <Box
                 component='form'
@@ -384,13 +377,14 @@ const Post = () => {
                 {recfiredata.likes}
               </div>
               {user && (
-                <SiteButton
+                <button
                   href=''
                   text='いいねする'
                   className='inline my-2 m-4'
-                  onClick={() => handleClick(routerid, recfiredata.likes)}
-                />
+                  onClick={() => LikeAdd(routerid, recfiredata.likes)}
+                > いいねする</button>
               )}
+
               <div className='cursor-pointer'>
                 {users &&
                   users.map((user) => {

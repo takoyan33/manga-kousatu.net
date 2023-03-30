@@ -29,6 +29,7 @@ export default function Profile() {
   const [users, setUsers] = useState(null)
   //データベースを取得
   const [firedata, setFiredata] = useState([])
+  const [likefiredata, setLikeFiredata] = useState([])
   const [searchName, setSearchName] = useState('')
   const [onpiece, setOnpiece] = useState([])
   const [kingdom, setKingdom] = useState([])
@@ -59,6 +60,8 @@ export default function Profile() {
     where('categori', '==', 'キングダム'),
   )
 
+  const likes = query(databaseRef, where("likes_email", "array-contains", user.email))
+
   const getData = async () => {
     //firestoreからデータ取得
     await getDocs(q).then((querySnapshot) => {
@@ -72,6 +75,21 @@ export default function Profile() {
       )
     })
   }
+
+  const getlikeData = async () => {
+    //firestoreからデータ取得
+    await getDocs(likes).then((querySnapshot) => {
+      //コレクションのドキュメントを取得
+      setLikeFiredata(
+        querySnapshot.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id }
+          //スプレッド構文で展開して、新しい配列を作成
+        }),
+      )
+    })
+  }
+  console.log(likefiredata)
 
   const getDataone = async () => {
     //firestoreからデータ取得
@@ -151,6 +169,7 @@ export default function Profile() {
       getDataone()
       getDatzyu()
       getDatatokyo()
+      getlikeData()
       getDataking()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -313,7 +332,6 @@ export default function Profile() {
       />
 
       <Grid container className='m-auto'>
-        {firedata == [] && <p>まだ投稿していません</p>}
         {firedata
           .filter((data) => {
             if (searchName === '') {
@@ -347,6 +365,32 @@ export default function Profile() {
               </>
             )
           })}
+      </Grid>
+
+      <p className='my-12 text-center text-2xl font-semibold'>いいねした投稿</p>
+      <p className='text-1xl text-center'>投稿数　{likefiredata.length}件</p>
+      <Grid container className='m-auto'>
+        {likefiredata.map((data) => {
+          return (
+            <>
+              <Cardpost
+                key={data.id}
+                downloadURL={data.downloadURL}
+                title={data.title}
+                categori={data.categori}
+                netabare={data.netabare}
+                context={data.context}
+                createtime={data.createtime}
+                displayname={data.displayname}
+                email={data.email}
+                id={data.id}
+                photoURL={data.photoURL}
+                likes={data.likes}
+                selected={data.selected}
+              />
+            </>
+          )
+        })}
       </Grid>
     </>
   )

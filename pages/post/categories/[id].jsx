@@ -20,7 +20,7 @@ export const getStaticPaths = async () => {
   )
   const data = await res.json()
 
-  var array = Object.keys(data).map(function (key) {
+  const array = Object.keys(data).map(function (key) {
     return data[key]
   })
 
@@ -145,6 +145,24 @@ const Daitails = ({ post }) => {
     getallPost()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
+  const menuItems = [
+    {
+      label: '新しい順',
+      value: '新しい順',
+      onClick: getallPost,
+    },
+    {
+      label: '古い順',
+      value: '古い順',
+      onClick: getallOldpost,
+    },
+    {
+      label: 'いいね順',
+      value: 'いいね順',
+      onClick: getallLikepost,
+    },
+  ]
+
   return (
     <>
       <CommonHead />
@@ -171,15 +189,11 @@ const Daitails = ({ post }) => {
       <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
         <InputLabel id='demo-select-small'>並び順</InputLabel>
         <Select labelId='demo-select-small' id='demo-select-small' label='並び順'>
-          <MenuItem value='新しい順' onClick={getallPost}>
-            新しい順
-          </MenuItem>
-          <MenuItem value='古い順' onClick={getallOldpost}>
-            古い順
-          </MenuItem>
-          <MenuItem value='いいね順' onClick={getallLikepost}>
-            いいね順
-          </MenuItem>
+          {menuItems.map((item) => (
+            <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
+              {item.label}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
       <div className='max-w-7xl m-auto'>

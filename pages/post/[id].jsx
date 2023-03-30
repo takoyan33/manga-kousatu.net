@@ -58,7 +58,7 @@ const Post = () => {
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
 
-  const getallPost = async () => {
+  const getPost = async () => {
     const ref = doc(database, 'posts', routerid)
     getDoc(ref)
       .then((snap) => {
@@ -128,7 +128,7 @@ const Post = () => {
 
   useEffect(() => {
     // categoriFiredata();
-    getallPost()
+    getPost()
     usersData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router])
@@ -192,17 +192,18 @@ const Post = () => {
     let fieldToEdit = doc(database, 'posts', routerid)
     updateDoc(fieldToEdit, {
       likes: likes + 1,
-      like_email: arrayUnion(user.email),
+      likes_email: arrayUnion(user.email),
     })
       .then(() => {
-        console.log(likecount)
+        console.log(user.email)
         setLikecount(0)
-        getallPost()
+        alert('成功しました')
+        getPost()
       })
       .catch((err) => {
         alert('失敗しました')
         console.log(err)
-      }) 
+      })
   }
 
   return (
@@ -376,14 +377,24 @@ const Post = () => {
                 <FavoriteIcon />
                 {recfiredata.likes}
               </div>
-              {user && (
-                <button
-                  href=''
-                  text='いいねする'
-                  className='inline my-2 m-4'
-                  onClick={() => LikeAdd(routerid, recfiredata.likes)}
-                > いいねする</button>
-              )}
+
+              {user &&
+                (recfiredata.likes_email ? (
+                  recfiredata.likes_email.includes(user.email) ? (
+                    <p>すでにいいね済みです</p>
+                  ) : (
+                    <button
+                      href=''
+                      text='いいねする'
+                      className='inline my-2 m-4'
+                      onClick={() => LikeAdd(routerid, recfiredata.likes)}
+                    >
+                      いいねする
+                    </button>
+                  )
+                ) : (
+                  <p>ログインするといいねできます</p>
+                ))}
 
               <div className='cursor-pointer'>
                 {users &&

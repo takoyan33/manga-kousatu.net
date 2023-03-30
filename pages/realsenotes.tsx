@@ -3,6 +3,11 @@ import { CommonHead } from '../layouts/components/ui/CommonHead'
 
 const releases = [
   {
+    version: '1.9',
+    date: '2023年3月30日',
+    features: ['いいね機能実装'],
+  },
+  {
     version: '1.8',
     date: '2023年2月22日',
     features: ['リリースノートページの作成'],

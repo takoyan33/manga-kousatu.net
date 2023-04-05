@@ -9,38 +9,45 @@ import {
   getDocs,
   doc,
   getDoc,
+  setDoc,
   updateDoc,
+  onSnapshot,
   deleteDoc,
   arrayUnion,
 } from 'firebase/firestore'
+import { TextField, Box, FormLabel, Button, Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
 import Image from 'react-image-resizer'
-import Avatar from '@mui/material/Avatar'
 import { SiteButton } from '../../layouts/components/button'
 import { SiteCategory } from '../../layouts/components/text'
 import { CommonHead, Cardpost } from '../../layouts/components/ui'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { query, orderBy } from 'firebase/firestore'
+import { query, orderBy, where } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+
+// バリデーションルール
+const schema = yup.object({
+  comment: yup.string().required('必須です'),
+})
 
 const Post = () => {
   const [ID, setID] = useState(null)
   const [context, setContext] = useState('')
+  const [comments, setComments] = useState('')
   const [categori, setCategori] = useState('')
   const [photoURL, setPhotoURL] = useState()
   const [users, setUsers] = useState(null)
-  const [postid, setPostid] = useState('')
   const [createtime, setCreatetime] = useState('')
   const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
+  const commentseRef = collection(database, 'comments')
   //データベースを取得
-  const [firedata, setFiredata] = useState([])
   const [recfiredata, setRecfiredata] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
   const [likecount, setLikecount] = useState(0)
@@ -51,12 +58,22 @@ const Post = () => {
   const [selected, setSelected] = useState(['最終回'])
   //データベースを取得
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  // const c = query(commentseRef, orderBy('createtime', 'desc'))
 
   const router = useRouter()
   const routerid = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
+
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
   const getPost = async () => {
     const ref = doc(database, 'posts', routerid)
@@ -69,19 +86,46 @@ const Post = () => {
       })
   }
 
-  const categoriFiredata = async () => {
+  const c = query(
+    commentseRef,
+    where('postid', '==', recfiredata.id),
+    orderBy('createtime', 'desc'),
+  )
+
+  const getallComment = async () => {
     //firestoreからデータ取得
-    await getDocs(q).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setRecfiredata(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
+    try {
+      const querySnapshot = await getDocs(c)
+      const userData = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      setComments(userData)
+    } catch (error) {
+      console.log('Error fetching user data', error)
+    }
   }
+
+  // const getallComment = async () => {
+  //   await onSnapshot(c, (querySnapshot) => {
+  //     setComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  //   })
+  //   console.log(comments)
+  // }
+
+  // const categoriFiredata = async () => {
+  //   //firestoreからデータ取得
+  //   await getDocs(q).then((querySnapshot) => {
+  //     //コレクションのドキュメントを取得
+  //     setRecfiredata(
+  //       querySnapshot.docs.map((data) => {
+  //         //配列なので、mapで展開する
+  //         return { ...data.data(), id: data.id }
+  //         //スプレッド構文で展開して、新しい配列を作成
+  //       }),
+  //     )
+  //   })
+  // }
 
   const getID = (
     id,
@@ -128,6 +172,7 @@ const Post = () => {
 
   useEffect(() => {
     // categoriFiredata();
+    getallComment()
     getPost()
     usersData()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -142,7 +187,6 @@ const Post = () => {
       title: posttitle,
       context: context.replace(/\r?\n/g, '\n'),
       edittime: newdate,
-      //改行を保存する
     })
       .then(() => {
         alert('記事を更新しました')
@@ -203,6 +247,25 @@ const Post = () => {
       .catch((err) => {
         alert('失敗しました')
         console.log(err)
+      })
+  }
+  const addComment = async (data) => {
+    const newdate = new Date().toLocaleString('ja-JP')
+    const postRef = await doc(database, 'comments', (comments.length + 2).toString())
+
+    await setDoc(postRef, {
+      comment: data.comment,
+      userid: user.uid,
+      postid: recfiredata.id,
+      username: user.displayName,
+      createtime: newdate,
+      id: (comments.length + 2).toString(),
+    })
+      .then(() => {
+        console.error('err')
+      })
+      .catch((err) => {
+        console.error(err)
       })
   }
 
@@ -395,6 +458,68 @@ const Post = () => {
                 ) : (
                   <p>ログインするといいねできます</p>
                 ))}
+
+              <section class='bg-white py-8 lg:py-16'>
+                <div class='max-w-2xl mx-auto px-4'>
+                  <div class='flex justify-between items-center mb-6'>
+                    <h2 class='text-lg lg:text-2xl font-bold text-gray-900 '>
+                      コメント ({comments.length})
+                    </h2>
+                  </div>
+                  <form class='mb-6'>
+                    <div class='py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200  dark:border-gray-700'>
+                      <label for='comment' class='sr-only'>
+                        あなたのコメント
+                      </label>
+                      <textarea
+                        id='comment'
+                        rows='6'
+                        class='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none  dark:placeholder-gray-400 '
+                        placeholder='Write a comment...'
+                        required
+                        {...register('comment')}
+                        error={'comment' in errors}
+                        helperText={errors.comment?.message}
+                        label='コメント*（最大100文字)'
+                      ></textarea>
+                    </div>
+                    <button
+                      type='submit'
+                      onClick={handleSubmit(addComment)}
+                      class='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center  bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800'
+                    >
+                      コメントする
+                    </button>
+                  </form>
+                  {comments &&
+                    comments.map((comment) => {
+                      return (
+                        <>
+                          {/* {comment.postid === recfiredata.id && ( */}
+                          <article
+                            class='p-6 mb-6 text-base border bg-white rounded-lg'
+                            key={comment.id}
+                          >
+                            <footer class='flex justify-between items-center mb-2'>
+                              <div class='flex items-center'>
+                                <p class='inline-flex items-center mr-3 text-sm text-gray-900 '>
+                                  {comment.username}
+                                </p>
+                                <p class='text-sm text-gray-600 dark:text-gray-400'>
+                                  <time pubdate datetime='2022-02-08' title='February 8th, 2022'>
+                                    {comment.createtime}
+                                  </time>
+                                </p>
+                              </div>
+                            </footer>
+                            <p class='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
+                          </article>
+                          {/* )} */}
+                        </>
+                      )
+                    })}
+                </div>
+              </section>
 
               <div className='cursor-pointer'>
                 {users &&

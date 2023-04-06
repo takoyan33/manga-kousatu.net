@@ -29,6 +29,9 @@ import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { notify, signupmissnotify } from '../../layouts/components/text/SiteModal'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 // バリデーションルール
 const schema = yup.object({
@@ -46,7 +49,6 @@ const Post = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
-  const commentseRef = collection(database, 'comments')
   //データベースを取得
   const [recfiredata, setRecfiredata] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
@@ -76,42 +78,31 @@ const Post = () => {
   })
 
   const getPost = async () => {
-    const ref = doc(database, 'posts', routerid)
-    getDoc(ref)
-      .then((snap) => {
-        setRecfiredata(snap.data())
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+    try {
+      const ref = await doc(database, 'posts', routerid)
+      const snap = await getDoc(ref)
+      setRecfiredata(snap.data())
+      console.log('recfiredata', recfiredata)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
-  const c = query(
-    commentseRef,
-    where('postid', '==', recfiredata.id),
-    orderBy('createtime', 'desc'),
-  )
-
   const getallComment = async () => {
-    //firestoreからデータ取得
+    const commentseRef = collection(database, 'comments')
+    const c = await query(commentseRef, where('postid', '==', routerid))
     try {
       const querySnapshot = await getDocs(c)
-      const userData = querySnapshot.docs.map((doc) => ({
+      const allcomments = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
-      setComments(userData)
+      console.log('allcomments', allcomments)
+      await setComments(allcomments)
     } catch (error) {
       console.log('Error fetching user data', error)
     }
   }
-
-  // const getallComment = async () => {
-  //   await onSnapshot(c, (querySnapshot) => {
-  //     setComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  //   })
-  //   console.log(comments)
-  // }
 
   // const categoriFiredata = async () => {
   //   //firestoreからデータ取得
@@ -126,6 +117,27 @@ const Post = () => {
   //     )
   //   })
   // }
+
+  const usersData = async () => {
+    //firestoreからデータ取得
+    await getDocs(usersRef).then((response) => {
+      //コレクションのドキュメントを取得
+      setUsers(
+        response.docs.map((data) => {
+          //配列なので、mapで展開する
+          return { ...data.data(), id: data.id }
+          //スプレッド構文で展開して、新しい配列を作成
+        }),
+      )
+    })
+  }
+
+  useEffect(() => {
+    // categoriFiredata();
+    getPost()
+    usersData()
+    getallComment()
+  }, [router])
 
   const getID = (
     id,
@@ -152,31 +164,7 @@ const Post = () => {
     setUserid(userid)
     setLikes(likes)
     setSelected(selected)
-    console.log(title)
-    console.log(context)
   }
-
-  const usersData = async () => {
-    //firestoreからデータ取得
-    await getDocs(usersRef).then((response) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-
-  useEffect(() => {
-    // categoriFiredata();
-    getallComment()
-    getPost()
-    usersData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router])
 
   const updatefields = () => {
     //更新する
@@ -189,7 +177,7 @@ const Post = () => {
       edittime: newdate,
     })
       .then(() => {
-        alert('記事を更新しました')
+        notify('記事を更新しました')
         setPostTitle('')
         setContext('')
         setIsUpdate(false)
@@ -201,6 +189,7 @@ const Post = () => {
         }, 2000)
       })
       .catch((err) => {
+        signupmissnotify('失敗しました')
         console.log(err)
       })
   }
@@ -215,14 +204,14 @@ const Post = () => {
       deleteDoc(fieldToEdit)
         //記事を削除する
         .then(() => {
-          alert('記事を削除しました')
+          notify('記事を削除しました')
           setTimeout(() => {
             router.push('/')
           }, 2000)
           getallPost()
         })
         .catch((err) => {
-          alert('記事の削除に失敗しました')
+          signupmissnotify('失敗しました')
         })
     } else {
       setTimeout(() => {
@@ -241,17 +230,18 @@ const Post = () => {
       .then(() => {
         console.log(user.email)
         setLikecount(0)
-        alert('成功しました')
+        notify('成功しました')
         getPost()
       })
       .catch((err) => {
-        alert('失敗しました')
+        signupmissnotify('失敗しました')
         console.log(err)
       })
   }
   const addComment = async (data) => {
     const newdate = new Date().toLocaleString('ja-JP')
-    const postRef = await doc(database, 'comments', (comments.length + 2).toString())
+
+    const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())
 
     await setDoc(postRef, {
       comment: data.comment,
@@ -259,19 +249,21 @@ const Post = () => {
       postid: recfiredata.id,
       username: user.displayName,
       createtime: newdate,
-      id: (comments.length + 2).toString(),
+      id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
-        console.error('err')
+        notify('コメントを投稿しました')
+        getallComment()
       })
       .catch((err) => {
-        console.error(err)
+        notify('コメントを投稿しました')
       })
   }
 
   return (
     <>
       <CommonHead />
+      <ToastContainer />
       <div>
         <div>
           <div className='lg:w-full my-4 '>
@@ -382,7 +374,6 @@ const Post = () => {
                       href={categori[recfiredata.categori].link}
                     />
                   ))} */}
-
               {recfiredata.categori == 'ONEPIECE' && (
                 <SiteCategory
                   className='bg-blue-500 p-1 inline-block text-white text-center m-6'
@@ -411,7 +402,6 @@ const Post = () => {
                   href='/post/categories/キングダム'
                 />
               )}
-
               {recfiredata.netabare == 'ネタバレ有' && (
                 <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
                   {recfiredata.netabare}
@@ -440,7 +430,6 @@ const Post = () => {
                 <FavoriteIcon />
                 {recfiredata.likes}
               </div>
-
               {user &&
                 (recfiredata.likes_email ? (
                   recfiredata.likes_email.includes(user.email) ? (
@@ -458,68 +447,77 @@ const Post = () => {
                 ) : (
                   <p>ログインするといいねできます</p>
                 ))}
+              {user && (
+                <section className='bg-white py-8 lg:py-16'>
+                  <div className='max-w-2xl mx-auto px-4'>
+                    <div className='flex justify-between items-center mb-6'>
+                      <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
+                        コメント ({comments.length})
+                      </h2>
+                    </div>
+                    <form className='mb-6'>
+                      <div className='py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200  dark:border-gray-700'>
+                        <label for='comment' className='sr-only'>
+                          あなたのコメント
+                        </label>
+                        <textarea
+                          id='comment'
+                          rows='6'
+                          className='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none  dark:placeholder-gray-400 '
+                          placeholder='コメントを入力してください'
+                          required
+                          {...register('comment')}
+                          error={'comment' in errors}
+                          helperText={errors.comment?.message}
+                          label='コメント*（最大100文字)'
+                        ></textarea>
+                      </div>
+                      <button
+                        type='submit'
+                        onClick={handleSubmit(addComment)}
+                        className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800 m-auto'
+                      >
+                        コメントする
+                      </button>
+                    </form>
+                  </div>
+                </section>
+              )}
 
-              <section class='bg-white py-8 lg:py-16'>
-                <div class='max-w-2xl mx-auto px-4'>
-                  <div class='flex justify-between items-center mb-6'>
-                    <h2 class='text-lg lg:text-2xl font-bold text-gray-900 '>
+              {!user && (
+                <>
+                  <div className='flex justify-between items-center mb-6'>
+                    <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
                       コメント ({comments.length})
                     </h2>
+                    <p className='my-6'>ログインするとコメントできます</p>
                   </div>
-                  <form class='mb-6'>
-                    <div class='py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200  dark:border-gray-700'>
-                      <label for='comment' class='sr-only'>
-                        あなたのコメント
-                      </label>
-                      <textarea
-                        id='comment'
-                        rows='6'
-                        class='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none  dark:placeholder-gray-400 '
-                        placeholder='Write a comment...'
-                        required
-                        {...register('comment')}
-                        error={'comment' in errors}
-                        helperText={errors.comment?.message}
-                        label='コメント*（最大100文字)'
-                      ></textarea>
-                    </div>
-                    <button
-                      type='submit'
-                      onClick={handleSubmit(addComment)}
-                      class='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center  bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800'
+                </>
+              )}
+
+              {comments &&
+                comments.map((comment) => {
+                  return (
+                    <article
+                      className='p-6 mb-6 text-base border bg-white rounded-lg'
+                      key={comment.id}
                     >
-                      コメントする
-                    </button>
-                  </form>
-                  {comments &&
-                    comments.map((comment) => {
-                      return (
-                        <>
-                          {/* {comment.postid === recfiredata.id && ( */}
-                          <article
-                            class='p-6 mb-6 text-base border bg-white rounded-lg'
-                            key={comment.id}
-                          >
-                            <footer class='flex justify-between items-center mb-2'>
-                              <div class='flex items-center'>
-                                <p class='inline-flex items-center mr-3 text-sm text-gray-900 '>
-                                  {comment.username}
-                                </p>
-                                <p class='text-sm text-gray-600 dark:text-gray-400'>
-                                  <time pubdate datetime='2022-02-08' title='February 8th, 2022'>
-                                    {comment.createtime}
-                                  </time>
-                                </p>
-                              </div>
-                            </footer>
-                            <p class='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
-                          </article>
-                          {/* )} */}
-                        </>
-                      )
-                    })}
-                </div>
-              </section>
+                      <footer className='flex justify-between items-center mb-2'>
+                        <div className='flex items-center'>
+                          <p className='inline-flex items-center mr-3 text-sm text-gray-900 '>
+                            {comment.username}
+                          </p>
+                          <p className='text-sm text-gray-600 dark:text-gray-400'>
+                            <time pubdate datetime='2022-02-08' title='February 8th, 2022'>
+                              {comment.createtime}
+                            </time>
+                          </p>
+                        </div>
+                      </footer>
+                      <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
+                    </article>
+                  )
+                })}
 
               <div className='cursor-pointer'>
                 {users &&

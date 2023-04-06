@@ -17,7 +17,6 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Changetab } from '../layouts/components/ui/Changetab'
-import dynamic from 'next/dynamic'
 
 export default function Index() {
   const [firedata, setFiredata] = useState([])

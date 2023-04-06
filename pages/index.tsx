@@ -143,8 +143,15 @@ export default function Index() {
           </span>
         )
       })}
-      <h2 className='my-12 text-center text-2xl font-semibold'>新規投稿一覧</h2>
-      <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
+      <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
+      <p className='text-1xl text-center'>
+        {searchName === ''
+          ? `投稿数 ${firedata.length}件`
+          : `検索結果 ${
+              firedata.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
+                .length
+            }件`}
+      </p>
       <TextField
         id='outlined-basic'
         type='search'
@@ -155,9 +162,9 @@ export default function Index() {
         }}
       />
       <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-        <InputLabel id='demo-select-small'>並び順</InputLabel>
+        <InputLabel id='demo-select-small'>新しい順</InputLabel>
 
-        <Select labelId='demo-select-small' id='demo-select-small' label='並び順'>
+        <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
           {menuItems.map((item) => (
             <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
               {item.label}
@@ -167,22 +174,27 @@ export default function Index() {
       </FormControl>
 
       <Grid container className='m-auto'>
-        {firedata.length == 0 && <p className='ext-cneter my-2'>読み込み中・・・</p>}
-        {firedata
-          .filter((data) => {
+        {firedata.length === 0 ? (
+          <p className='text-center my-2'>読み込み中・・・</p>
+        ) : firedata.filter((data) => {
             if (searchName === '') {
               return data
-              //そのまま返す
-            } else if (
-              data.title.toLowerCase().includes(searchName.toLowerCase())
-              //data.titleが含んでいたら小文字で返す　含んでいないdataは返さない
-            ) {
+            } else if (data.title.toLowerCase().includes(searchName.toLowerCase())) {
               return data
             }
-          })
-          .slice(0, loadIndex)
-          .map((data) => {
-            return (
+          }).length === 0 ? (
+          <p className='text-center m-auto my-10 text-xl'>検索した名前の記事がありませんでした。</p>
+        ) : (
+          firedata
+            .filter((data) => {
+              if (searchName === '') {
+                return data
+              } else if (data.title.toLowerCase().includes(searchName.toLowerCase())) {
+                return data
+              }
+            })
+            .slice(0, loadIndex)
+            .map((data) => (
               <Cardpost
                 key={data.id}
                 downloadURL={data.downloadURL}
@@ -198,9 +210,10 @@ export default function Index() {
                 likes={data.likes}
                 selected={data.selected}
               />
-            )
-          })}
+            ))
+        )}
       </Grid>
+
       <div className='text-center'>
         {firedata.length > 6 && (
           <SiteButton

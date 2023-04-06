@@ -60,7 +60,6 @@ const Post = () => {
   const [selected, setSelected] = useState(['最終回'])
   //データベースを取得
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
-  // const c = query(commentseRef, orderBy('createtime', 'desc'))
 
   const router = useRouter()
   const routerid = router.query.id

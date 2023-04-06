@@ -1,6 +1,5 @@
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { useRouter } from "next/router";
-import TextField from "@mui/material/TextField";
 import { SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
 import * as yup from "yup";
@@ -9,7 +8,7 @@ import { SiteButton } from "../../components/button";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { notify, signupmissnotify } from "../../components/text/SiteModal";
-import { Stack } from "@mui/material";
+import { Stack, TextField } from '@mui/material'
 import { useSignup } from "./useAuth";
 
 // フォームの型

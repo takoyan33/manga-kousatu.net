@@ -16,19 +16,17 @@ const Post = () => {
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
+  const userpost = query(postsRef, where('userid', '==', userid))
   const yourprofile = query(usersRef, where('userid', '==', userid))
 
   const fetchPosts = async () => {
     try {
-      const querySnapshot = await getDocs(postsRef)
+      const querySnapshot = await getDocs(userpost)
       const posts = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
-      const filteredPosts = posts.filter(
-        (post) => post.userid === userid || post.userid.toLowerCase().includes(userid),
-      )
-      setFiredata(filteredPosts)
+      setFiredata(posts)
     } catch (error) {
       console.log('Error fetching posts', error)
     }
@@ -76,6 +74,7 @@ const Post = () => {
                     username={user.username}
                     bio={user.bio}
                     favorite={user.favarite}
+                    id={user.id}
                   />
                 )}
               </>

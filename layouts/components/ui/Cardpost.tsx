@@ -1,41 +1,33 @@
-import React from "react";
-import Link from "next/link";
-import { useEffect, useState, useMemo, useCallback } from "react";
-import { database } from "../../../firebaseConfig";
-import { collection, getDocs, doc, Firestore } from "firebase/firestore";
-import { useRouter } from "next/router";
-import { getAuth } from "firebase/auth";
-import styles from "../../../styles/Home.module.css";
-import { updatePassword } from "firebase/auth";
-import Button from "@mui/material/Button";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import Grid from "@material-ui/core/Grid";
-import { getStorage } from "firebase/storage";
-import Image from "react-image-resizer";
-import Categori from "../text/Categori";
-import Avatar from "@mui/material/Avatar";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import React from 'react'
+import Link from 'next/link'
+import { useEffect, useState, useMemo, useCallback } from 'react'
+import { database } from '../../../firebaseConfig'
+import { collection, getDocs, doc, Firestore } from 'firebase/firestore'
+import { useRouter } from 'next/router'
+import { getAuth } from 'firebase/auth'
+import styles from '../../../styles/Home.module.css'
+import { Card, CardContent, Typography, Avatar } from '@mui/material'
+import Grid from '@material-ui/core/Grid'
+import Image from 'react-image-resizer'
+import Categori from '../text/Categori'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import { query, orderBy, where } from 'firebase/firestore'
 
 type Props = {
-  downloadURL: string;
-  id: number;
-  title: string;
-  categori: string;
-  netabare: string;
-  context: string;
-  email: string;
-  photoURL: string;
-  displayname: string;
-  createtime: string;
-  likes: string;
-  selected: string[];
-};
+  downloadURL: string
+  id: number
+  title: string
+  categori: string
+  netabare: string
+  context: string
+  email: string
+  photoURL: string
+  displayname: string
+  createtime: string
+  likes: string
+  selected: string[]
+}
 
 // eslint-disable-next-line react/display-name
 export const Cardpost: React.VFC<Props> = React.memo(
@@ -53,19 +45,20 @@ export const Cardpost: React.VFC<Props> = React.memo(
     createtime,
     selected,
   }) => {
-    const usersRef = collection(database, "users");
-    const [users, setUsers] = useState(null);
-    const databaseRef = collection(database, "posts");
+    const usersRef = collection(database, 'users')
+    const [users, setUsers] = useState(null)
+    const [comments, setComments] = useState('')
+    const databaseRef = collection(database, 'posts')
     const style: React.CSSProperties = {
-      whiteSpace: "pre-line",
-    };
+      whiteSpace: 'pre-line',
+    }
     const cardstyles: React.CSSProperties = {
-      margin: "10px",
-    };
+      margin: '10px',
+    }
 
-    const router = useRouter();
-    const auth = getAuth();
-    const user = auth.currentUser;
+    const router = useRouter()
+    const auth = getAuth()
+    const user = auth.currentUser
 
     const usersData = async () => {
       //firestoreからデータ取得
@@ -74,89 +67,98 @@ export const Cardpost: React.VFC<Props> = React.memo(
         setUsers(
           response.docs.map((data) => {
             //配列なので、mapで展開する
-            return { ...data.data(), id: data.id };
+            return { ...data.data(), id: data.id }
             //スプレッド構文で展開して、新しい配列を作成
-          })
-        );
-      });
-    };
+          }),
+        )
+      })
+    }
+
+    // const getpostComment = async () => {
+    //   const commentseRef = collection(database, 'comments')
+    //   const c = query(commentseRef, where('postid', '==', id))
+    //   try {
+    //     const querySnapshot = getDocs(c)
+    //     const allcomments = (await querySnapshot).docs.map((doc) => ({ id: doc.id }))
+    //     console.log('allcomments', allcomments)
+    //     setComments(allcomments)
+    //   } catch (error) {
+    //     console.log('Error fetching user data', error)
+    //   }
+    // }
 
     useEffect(() => {
-      usersData();
-    }, []);
+      usersData()
+      // getpostComment()
+    }, [])
 
     return (
-      <div className="cursor-pointer">
+      <div className='cursor-pointer'>
         <Link href={`/post/${id}`}>
-          <Grid key={id} className="flex  m-auto">
-            <Card
-              className="my-8 m-auto hover:shadow-2xl border"
-              style={cardstyles}
-            >
-              <p className="flex justify-center m-auto">
+          <Grid key={id} className='flex  m-auto'>
+            <Card className='my-8 m-auto hover:shadow-2xl border' style={cardstyles}>
+              <p className='flex justify-center m-auto'>
                 <Image
-                  className="m-auto text-center max-w-sm"
+                  className='m-auto text-center max-w-sm'
                   height={300}
                   width={300}
                   src={downloadURL}
-                  alt="画像"
+                  alt='画像'
                 />
               </p>
 
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant='h5' component='div'>
                   {title}
                 </Typography>
                 <Categori categori={categori} />
-                {netabare == "ネタバレ有" && (
+                {netabare == 'ネタバレ有' && (
                   <div>
-                    <p className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center">
+                    <p className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center'>
                       {netabare}
                     </p>
                   </div>
                 )}
-                {netabare == "ネタバレ無" && (
-                  <p className="bg-blue-500 mt-2 p-1 inline-block text-white text-center">
+                {netabare == 'ネタバレ無' && (
+                  <p className='bg-blue-500 mt-2 p-1 inline-block text-white text-center'>
                     {netabare}
                   </p>
                 )}
-                <div className="w-80 m-auto" style={styles}></div>
-                <p className="max-w-xs">
+                <div className='w-80 m-auto' style={styles}></div>
+                <p className='max-w-xs'>
                   {selected &&
                     selected.map((tag, i) => (
                       // <Link href={`/post/tag/${tag}`} key={i}>
-                      <span className="text-cyan-700" key={i}>
+                      <span className='text-cyan-700' key={i}>
                         #{tag}　
                       </span>
                       // </Link>
                     ))}
                 </p>
-                <div key={id} className="cursor-pointer">
+                <div key={id} className='cursor-pointer'>
                   {users &&
                     users.map((user) => {
                       return (
                         <>
                           {email == user.email && (
-                            <div key={user.id} className="">
-                              <div className="bg-slate-200 my-2 py-4 flex m-auto">
-                                <div className="">
+                            <div key={user.id} className=''>
+                              <div className='bg-slate-200 my-2 py-4 flex m-auto'>
+                                <div className=''>
                                   <Avatar
-                                    className="m-auto text-center max-w-sm border"
+                                    className='m-auto text-center max-w-sm border'
                                     sx={{ width: 50, height: 50 }}
-                                    alt="投稿者プロフィール"
+                                    alt='投稿者プロフィール'
                                     src={user.profileimage}
                                   />
                                 </div>
-                                <div className=" pt-2">
-                                  <span className="text-xl my-2 ml-2 ">
-                                    {user.username}
-                                  </span>
+                                <div className=' pt-2'>
+                                  <span className='text-xl my-2 ml-2 '>{user.username}</span>
                                 </div>
                               </div>
                             </div>
                           )}
                         </>
-                      );
+                      )
                     })}
                 </div>
                 <FavoriteIcon /> {likes}　<AccessTimeIcon /> {createtime}
@@ -165,6 +167,6 @@ export const Cardpost: React.VFC<Props> = React.memo(
           </Grid>
         </Link>
       </div>
-    );
-  }
-);
+    )
+  },
+)

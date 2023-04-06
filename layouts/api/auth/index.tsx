@@ -1,4 +1,3 @@
-import { app } from "../../../firebaseConfig.js";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -7,9 +6,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useRouter } from "next/router";
-import Button from "@mui/material/Button";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
+import { Box, TextField } from '@mui/material'
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";

@@ -165,42 +165,14 @@ const Post = () => {
     setSelected(selected)
   }
 
-  const updatefields = () => {
-    //更新する
-    const fieldToEdit = doc(database, 'posts', ID)
-    const newdate = new Date().toLocaleString('ja-JP')
-    //セットしたIDをセットする
-    updateDoc(fieldToEdit, {
-      title: posttitle,
-      context: context.replace(/\r?\n/g, '\n'),
-      edittime: newdate,
-    })
-      .then(() => {
-        notify('記事を更新しました')
-        setPostTitle('')
-        setContext('')
-        setIsUpdate(false)
-        // router.push(`${ID}`);
-        // getallPost();
-        // usersData();
-        setTimeout(() => {
-          router.push('/')
-        }, 2000)
-      })
-      .catch((err) => {
-        signupmissnotify('失敗しました')
-        console.log(err)
-      })
-  }
-
-  const deleteDocument = (id) => {
+  const deleteDocument = () => {
     //data.idを送っているのでidを受け取る
-    let fieldToEdit = doc(database, 'posts', id)
+    let deletepost = doc(database, 'posts', routerid)
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
 
     if (checkSaveFlg) {
-      deleteDoc(fieldToEdit)
+      deleteDoc(deletepost)
         //記事を削除する
         .then(() => {
           notify('記事を削除しました')
@@ -239,7 +211,6 @@ const Post = () => {
   }
   const addComment = async (data) => {
     const newdate = new Date().toLocaleString('ja-JP')
-
     const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())
 
     await setDoc(postRef, {
@@ -270,59 +241,25 @@ const Post = () => {
               <>
                 {user.email == recfiredata.email && (
                   <div>
-                    <SiteButton
-                      href=''
-                      text='更新する'
-                      className=' my-2 m-4'
-                      onClick={() => router.push('/post/edit/' + recfiredata.id)}
-                    />
+                    <Link
+                      href={{
+                        pathname: `/post/edit/${recfiredata.id}`,
+                        state: { data: recfiredata },
+                      }}
+                    >
+                      <SiteButton href='' text='更新する' className=' my-2 m-4' />
+                    </Link>
+
                     <SiteButton
                       href=''
                       text='削除する'
                       className=' my-2 m-4'
-                      onClick={() => deleteDocument(id)}
+                      onClick={deleteDocument}
                     />
                   </div>
                 )}
               </>
             )}
-
-            {/* {isUpdate && (
-              <Box
-                component='form'
-                sx={{
-                  '& > :not(style)': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete='off'
-              >
-                <div>
-                  <TextField
-                    id='outlined-basic'
-                    label='タイトル（最大20文字)'
-                    variant='outlined'
-                    type='text'
-                    value={posttitle}
-                    onChange={(event) => setPostTitle(event.target.value)}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    label='内容(最大500文字）'
-                    className='m-auto w-full'
-                    id='filled-multiline-static'
-                    multiline
-                    rows={14}
-                    type='text'
-                    value={context}
-                    onChange={(event) => setContext(event.target.value)}
-                  />
-                </div>
-                <Button variant='outlined' onClick={updatefields}>
-                  更新する
-                </Button>
-              </Box>
-            )} */}
 
             <div>
               <Link href='/'>トップ</Link>　＞　投稿記事　＞　

@@ -117,7 +117,6 @@ export default function Index() {
           />
           <SiteButton
             href=""
-            // onClick={SignIn}
             onClick={handleSubmit(SignIn)}
             text="ログイン"
             className="m-auto w-80 my-8"

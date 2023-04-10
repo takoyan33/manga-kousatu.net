@@ -78,8 +78,11 @@ export const Cardpost: React.VFC<Props> = React.memo(
     //   const commentseRef = collection(database, 'comments')
     //   const c = query(commentseRef, where('postid', '==', id))
     //   try {
-    //     const querySnapshot = getDocs(c)
-    //     const allcomments = (await querySnapshot).docs.map((doc) => ({ id: doc.id }))
+    //     const querySnapshot = await getDocs(c)
+    //     const allcomments = querySnapshot.docs.map((doc) => ({
+    //       ...doc.data(),
+    //       id: doc.id,
+    //     }))
     //     console.log('allcomments', allcomments)
     //     setComments(allcomments)
     //   } catch (error) {

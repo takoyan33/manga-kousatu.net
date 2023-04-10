@@ -384,7 +384,7 @@ const Post = () => {
                     </button>
                   )
                 ) : (
-                  <p>ログインするといいねできます</p>
+                  <p></p>
                 ))}
               {user && (
                 <section className='bg-white py-8 lg:py-16'>
@@ -425,6 +425,7 @@ const Post = () => {
 
               {!user && (
                 <>
+                  <p className='my-6'>ログインするといいねできます</p>
                   <div className='flex justify-between items-center mb-6'>
                     <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
                       コメント ({comments.length})

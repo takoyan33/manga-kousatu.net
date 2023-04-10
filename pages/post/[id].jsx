@@ -11,7 +11,6 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-  onSnapshot,
   deleteDoc,
   arrayUnion,
 } from 'firebase/firestore'
@@ -32,6 +31,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { notify, signupmissnotify } from '../../layouts/components/text/SiteModal'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import parse from 'html-react-parser'
 
 // バリデーションルール
 const schema = yup.object({
@@ -274,9 +274,7 @@ const Post = () => {
                       href=''
                       text='更新する'
                       className=' my-2 m-4'
-                      onClick={() =>
-                        getID(id, recfiredata.title, recfiredata.context, recfiredata.edittime)
-                      }
+                      onClick={() => router.push('/post/edit/' + recfiredata.id)}
                     />
                     <SiteButton
                       href=''
@@ -289,7 +287,7 @@ const Post = () => {
               </>
             )}
 
-            {isUpdate && (
+            {/* {isUpdate && (
               <Box
                 component='form'
                 sx={{
@@ -324,7 +322,8 @@ const Post = () => {
                   更新する
                 </Button>
               </Box>
-            )}
+            )} */}
+
             <div>
               <Link href='/'>トップ</Link>　＞　投稿記事　＞　
               {recfiredata.title}
@@ -411,9 +410,13 @@ const Post = () => {
                   {recfiredata.netabare}
                 </span>
               )}
-              <p className='text-left' style={styles}>
-                {recfiredata.context}
-              </p>
+
+              {recfiredata.context && (
+                <p className='text-left' style={styles}>
+                  {parse(recfiredata.context)}
+                </p>
+              )}
+
               <br></br>
               {recfiredata.contextimage && (
                 <div className='flex justify-center'>

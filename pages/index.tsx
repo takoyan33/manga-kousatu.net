@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { database } from '../firebaseConfig'
 import { collection, onSnapshot, getDocs } from 'firebase/firestore'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
@@ -17,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Changetab } from '../layouts/components/ui/Changetab'
+import { Button } from '@mui/material'
 
 export default function Index() {
   const [firedata, setFiredata] = useState([])
@@ -45,7 +45,6 @@ export default function Index() {
     setLoading(false)
   }
 
-
   //古い順
   const getallOldpost = async () => {
     await onSnapshot(u, (querySnapshot) => {
@@ -66,7 +65,6 @@ export default function Index() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-
   const displayMore = () => {
     if (loadIndex > firedata.length) {
       setIsEmpty(true)
@@ -75,24 +73,23 @@ export default function Index() {
     }
   }
 
-    const menuItems = [
-      {
-        label: '新しい順',
-        value: '新しい順',
-        onClick: getallPost,
-      },
-      {
-        label: '古い順',
-        value: '古い順',
-        onClick: getallOldpost,
-      },
-      {
-        label: 'いいね順',
-        value: 'いいね順',
-        onClick: getallLikepost,
-      },
-    ]
-
+  const menuItems = [
+    {
+      label: '新しい順',
+      value: '新しい順',
+      onClick: getallPost,
+    },
+    {
+      label: '古い順',
+      value: '古い順',
+      onClick: getallOldpost,
+    },
+    {
+      label: 'いいね順',
+      value: 'いいね順',
+      onClick: getallLikepost,
+    },
+  ]
 
   return (
     <div>

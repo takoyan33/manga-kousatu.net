@@ -23,6 +23,10 @@ import { notify, signupmissnotify } from '../../../layouts/components/text/SiteM
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import dynamic from 'next/dynamic'
+import React from 'react'
+import { stateToHTML } from 'draft-js-export-html'
+import { EditorState, ContentState } from 'draft-js'
 
 // フォームの型
 type SampleFormInput = {
@@ -121,7 +125,7 @@ export default function Post() {
       setResult(result)
       await setDoc(postRef, {
         title: data.title,
-        context: context.replace(/\r?\n/g, '\n'),
+        context: html,
         downloadURL: result,
         contextimage: contextresult,
         email: user.email,
@@ -155,6 +159,22 @@ export default function Post() {
     }
   }
 
+  const Richedita = React.useMemo(
+    () =>
+      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+        loading: () => <p>リッチエディタ is loading</p>,
+        ssr: false,
+      }),
+    [],
+  )
+  const [plainText, setPlainText] = useState('')
+  const [html, setHtml] = useState('')
+
+  const handleEditorChange = (plainText: string, html: string) => {
+    setPlainText(plainText)
+    setHtml(html)
+    console.log(html)
+  }
   return (
     <div>
       <CommonHead />
@@ -269,7 +289,7 @@ export default function Post() {
           </FormLabel>
 
           <p className='my-4'>現在の文字数：{context.length}</p>
-          <TextField
+          {/* <TextField
             label='内容*(最大500文字）'
             className='m-auto w-full'
             id='filled-multiline-static'
@@ -284,7 +304,9 @@ export default function Post() {
                 setContext(event.target.value)
               }
             }}
-          />
+          /> */}
+
+          <Richedita onChange={handleEditorChange} />
           <div>
             <p>他の写真（最大1枚）</p>
           </div>

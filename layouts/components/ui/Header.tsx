@@ -1,9 +1,9 @@
-import Logout from "@mui/icons-material/Logout";
-import Settings from "@mui/icons-material/Settings";
-import Image from "next/image";
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useState } from "react";
+import Logout from '@mui/icons-material/Logout'
+import Settings from '@mui/icons-material/Settings'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 // eslint-disable-next-line import/order
 import {
   AppBar,
@@ -18,14 +18,14 @@ import {
   Tooltip,
   Button,
   Box,
-} from "@mui/material";
-import { useLogout } from "../../api/auth/useAuth";
-import { useAuthContext } from "../../context/AuthContext";
+} from '@mui/material'
+import { useLogout } from '../../api/auth/useAuth'
+import { useAuthContext } from '../../context/AuthContext'
 
 const ACCOUNT_MENU_ITEMS = [
-  { text: "About", href: "/about" },
-  { text: "リリースノート", href: "/realsenotes" },
-];
+  { text: 'About', href: '/about' },
+  { text: 'リリースノート', href: '/realsenotes' },
+]
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
@@ -57,7 +57,7 @@ export const Header = () => {
       >
         <Toolbar className='w-full m-0'>
           <Typography variant='h6' component='div' sx={{ flexGrow: 1, textAlign: 'left' }}>
-            <Link href='/'>
+            <Link href='/top'>
               <Image src='/magastudylogo.png' width='200' height='30' alt='ロゴ' />
             </Link>
           </Typography>

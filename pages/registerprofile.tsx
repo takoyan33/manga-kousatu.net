@@ -62,7 +62,7 @@ export default function Registerprofile() {
         .then(() => {
           notify('プロフィールの登録が完了しました！')
           setTimeout(() => {
-            router.push('/')
+            router.push('/top')
           }, 2000)
         })
         .catch((err) => {

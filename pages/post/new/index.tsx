@@ -149,7 +149,7 @@ export default function Post() {
           setSelected([])
           setUserid('')
           setTimeout(() => {
-            router.push('/')
+            router.push('/top')
           }, 2000)
         })
         .catch((err) => {

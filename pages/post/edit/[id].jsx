@@ -120,7 +120,7 @@ const Post = () => {
         <div>
           <div>
             <div className='lg:w-full my-4 '>
-              <Link href='/'>トップ</Link>　＞　投稿記事　＞　 {firedata.title}　＞　記事の編集
+              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {firedata.title}　＞　記事の編集
               <Stack
                 component='form'
                 className='m-auto'

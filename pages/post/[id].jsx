@@ -177,7 +177,7 @@ const Post = () => {
         .then(() => {
           notify('記事を削除しました')
           setTimeout(() => {
-            router.push('/')
+            router.push('/top')
           }, 2000)
           getallPost()
         })
@@ -186,7 +186,7 @@ const Post = () => {
         })
     } else {
       setTimeout(() => {
-        router.push('/')
+        router.push('/top')
       }, 2000)
     }
   }
@@ -262,7 +262,7 @@ const Post = () => {
             )}
 
             <div>
-              <Link href='/'>トップ</Link>　＞　投稿記事　＞　
+              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
               {recfiredata.title}
             </div>
             <div className='flex justify-center my-6'>

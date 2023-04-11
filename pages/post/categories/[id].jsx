@@ -167,7 +167,7 @@ const Daitails = ({ post }) => {
     <>
       <CommonHead />
       <p className='my-4'>
-        <Link href='/'>トップ</Link>　＞　投稿記事　＞　
+        <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
         {post.fields.title.stringValue}
       </p>
       <h2 className='my-12 text-center text-2xl font-semibold'>

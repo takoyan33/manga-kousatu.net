@@ -60,7 +60,7 @@ export default function Profile() {
     where('categori', '==', 'キングダム'),
   )
 
-  const likes = query(databaseRef, where("likes_email", "array-contains", user.email))
+  const likes = query(databaseRef, where('likes_email', 'array-contains', user.email))
 
   const getData = async () => {
     //firestoreからデータ取得
@@ -184,7 +184,7 @@ export default function Profile() {
           localStorage.removeItem('Token')
           //tokenを削除
           alert('退会しました。TOP画面に戻ります。')
-          router.push('/')
+          router.push('/top')
         })
         .catch((error) => {
           console.log(error)

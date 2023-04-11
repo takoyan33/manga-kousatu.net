@@ -98,7 +98,7 @@ const Daitails = ({ post }) => {
       <CommonHead />
       <div>
         <div>
-          <Link href='/'>トップ</Link>　＞　投稿記事　＞　
+          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
           {post.fields.title.stringValue}
         </div>
         <div className='flex justify-center my-6'>

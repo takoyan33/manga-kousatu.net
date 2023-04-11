@@ -118,7 +118,7 @@ const Category = () => {
       <CommonHead />
       <div className='max-w-7xl m-auto'>
         <p>
-          <Link href='/'>トップ</Link>　＞　投稿記事　＞　#{tag}
+          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　#{tag}
         </p>
         <h2 className='my-12 text-center text-2xl font-semibold'>#{tag}の考察記事一覧</h2>
 

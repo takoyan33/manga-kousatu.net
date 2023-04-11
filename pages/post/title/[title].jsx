@@ -158,7 +158,7 @@ const Post = () => {
         })
     } else {
       setTimeout(() => {
-        router.push('/')
+        router.push('/top')
       }, 2000)
     }
   }
@@ -192,7 +192,7 @@ const Post = () => {
 
       <div className='max-w-5xl m-auto'>
         <p>
-          <Link href='/'>トップ</Link>　＞　投稿記事　＞　{title}
+          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　{title}
         </p>
         <div>
           {firedata.map((data) => {

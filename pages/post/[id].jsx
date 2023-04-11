@@ -39,27 +39,14 @@ const schema = yup.object({
 })
 
 const Post = () => {
-  const [ID, setID] = useState(null)
-  const [context, setContext] = useState('')
   const [comments, setComments] = useState('')
-  const [categori, setCategori] = useState('')
-  const [photoURL, setPhotoURL] = useState()
   const [users, setUsers] = useState(null)
-  const [createtime, setCreatetime] = useState('')
-  const [isUpdate, setIsUpdate] = useState(false)
-  const [posttitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
   //データベースを取得
   const [recfiredata, setRecfiredata] = useState([])
-  const [downloadURL, setDownloadURL] = useState(null)
   const [likecount, setLikecount] = useState(0)
   const usersRef = collection(database, 'users')
   const [userid, setUserid] = useState(null)
-  const [netabare, setNetabare] = useState('')
-  const [likes, setLikes] = useState(null)
-  const [selected, setSelected] = useState(['最終回'])
-  //データベースを取得
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
 
   const router = useRouter()
   const routerid = router.query.id
@@ -69,7 +56,6 @@ const Post = () => {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -117,6 +103,22 @@ const Post = () => {
   //   })
   // }
 
+  // const yourprofile = query(usersRef, where('userid', '==', userid))
+
+  // const fetchUserProfile = async () => {
+  //   //firestoreからデータ取得
+  //   try {
+  //     const querySnapshot = await getDocs(yourprofile)
+  //     const userData = querySnapshot.docs.map((doc) => ({
+  //       ...doc.data(),
+  //       id: doc.id,
+  //     }))
+  //     setUsers(userData)
+  //   } catch (error) {
+  //     console.log('Error fetching user data', error)
+  //   }
+  // }
+
   const usersData = async () => {
     //firestoreからデータ取得
     await getDocs(usersRef).then((response) => {
@@ -138,39 +140,11 @@ const Post = () => {
     getallComment()
   }, [router])
 
-  const getID = (
-    id,
-    title,
-    context,
-    downloadURL,
-    categori,
-    cratetime,
-    netabare,
-    photoURL,
-    userid,
-    likes,
-    selected,
-  ) => {
-    setID(id)
-    setContext(context)
-    setPostTitle(title)
-    setDownloadURL(downloadURL)
-    setIsUpdate(true)
-    setCategori(categori)
-    setCreatetime(cratetime)
-    setNetabare(netabare)
-    setPhotoURL(photoURL)
-    setUserid(userid)
-    setLikes(likes)
-    setSelected(selected)
-  }
-
   const deleteDocument = () => {
     //data.idを送っているのでidを受け取る
     let deletepost = doc(database, 'posts', routerid)
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
-
     if (checkSaveFlg) {
       deleteDoc(deletepost)
         //記事を削除する
@@ -236,7 +210,7 @@ const Post = () => {
       <ToastContainer />
       <div>
         <div>
-          <div className='lg:w-full my-4 '>
+          <div className='lg:w-full my-4'>
             {user && (
               <>
                 {user.email == recfiredata.email && (
@@ -260,100 +234,109 @@ const Post = () => {
                 )}
               </>
             )}
-
-            <div>
-              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-              {recfiredata.title}
-            </div>
-            <div className='flex justify-center my-6'>
-              <Image
-                className='m-auto text-center max-w-sm'
-                height={500}
-                width={500}
-                src={recfiredata.downloadURL}
-              />
-            </div>
-            <div className='text-2xl my-4'>{recfiredata.title}</div>
-            <br></br>
-            <div>
-              <AccessTimeIcon /> 投稿日時：{recfiredata.createtime}
-            </div>
-            <br></br>
-            {recfiredata.edittime && (
+            <div className='border p-10 rounded-xl '>
               <div>
-                <AccessTimeIcon />
-                編集日時：{recfiredata.edittime}
+                <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
+                {recfiredata.title}
               </div>
-            )}
-            <br></br>
-            {recfiredata.selected &&
-              recfiredata.selected.map((tag, i) => (
-                <span className='text-cyan-700' key={i}>
-                  #{tag}　
+              <div className='flex justify-center my-6'>
+                <Image
+                  className='m-auto text-center max-w-sm'
+                  height={500}
+                  width={500}
+                  src={recfiredata.downloadURL}
+                />
+              </div>
+              <div className='text-2xl my-4 font-semibold'>{recfiredata.title}</div>
+              <br></br>
+              <div>
+                <span className='text-gray-500'>
+                  <AccessTimeIcon /> {recfiredata.createtime}
                 </span>
-              ))}
-            <div variant='body2' color='text.secondary'>
-              {/* <SiteCategory
-                    className={Categories[recfiredata.categori].className}
-                    text={Categories[recfiredata.categori].title}
-                    href={Categories[recfiredata.categori].link}
-                  /> */}
-              {/* 
-                  {Categories.map((categori) => (
-                    <SiteCategory
-                      key={categori.id}
-                      className={`p-1 inline-block text-white text-center m-6 + ${
-                        categori[recfiredata.categori].className
-                      }`}
-                      text={categori[recfiredata.categori].title}
-                      href={categori[recfiredata.categori].link}
-                    />
-                  ))} */}
-              {recfiredata.categori == 'ONEPIECE' && (
-                <SiteCategory
-                  className='bg-blue-500 p-1 inline-block text-white text-center m-6'
-                  text='ONE PIECE'
-                  href='/post/categories/ONEPIECE'
-                />
-              )}
-              {recfiredata.categori == '呪術廻戦' && (
-                <SiteCategory
-                  className='bg-purple-500 p-1 inline-block text-white text-center m-6'
-                  text='呪術廻戦'
-                  href='/post/categories/呪術廻戦'
-                />
-              )}
-              {recfiredata.categori == '東京リベンジャーズ' && (
-                <SiteCategory
-                  className='bg-rose-500 p-1 inline-block text-white text-center m-6'
-                  text='東京リベンジャーズ'
-                  href='/post/categories/東京リベンジャーズ'
-                />
-              )}
-              {recfiredata.categori == 'キングダム' && (
-                <SiteCategory
-                  className='bg-yellow-500 p-1 inline-block text-white text-center m-6'
-                  text='キングダム'
-                  href='/post/categories/キングダム'
-                />
-              )}
-              {recfiredata.netabare == 'ネタバレ有' && (
-                <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
-                  {recfiredata.netabare}
+                <span>
+                  　<FavoriteIcon />
+                  {recfiredata.likes}
                 </span>
+              </div>
+              {users &&
+                users.map((user) => {
+                  return (
+                    <>
+                      {recfiredata.email === user.email && (
+                        <Link href={`/profile/${user.userid}`}>
+                          <div key={user.userid}>
+                            <div className='my-4 flex m-auto  px-2'>
+                              <div key={user.id}>
+                                <div>
+                                  <Avatar
+                                    className='m-auto text-center max-w-sm border'
+                                    alt='プロフィール'
+                                    sx={{ width: 60, height: 60 }}
+                                    src={user.profileimage}
+                                  />
+                                </div>
+                              </div>
+                              <div className='ml-6 mt-1'>
+                                <span className='text-sm'>{user.username}</span>
+                                <div className='text-sm mt-2 pb-2 text-gray-500'>{user.bio}</div>
+                              </div>
+                            </div>
+                          </div>
+                        </Link>
+                      )}
+                    </>
+                  )
+                })}
+              {recfiredata.edittime && (
+                <div>
+                  <AccessTimeIcon />
+                  編集日時：{recfiredata.edittime}
+                </div>
               )}
-              {recfiredata.netabare == 'ネタバレ無' && (
-                <span className='bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4'>
-                  {recfiredata.netabare}
-                </span>
-              )}
+              <br></br>
+              {recfiredata.selected &&
+                recfiredata.selected.map((tag, i) => (
+                  <span
+                    className='text-cyan-700 border border-cyan-700 rounded-xl py-1 px-2 text-center'
+                    key={i}
+                  >
+                    #{tag}
+                  </span>
+                ))}
+              <div variant='body2' color='text.secondary'>
+                {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
+                  recfiredata.categori,
+                ) && (
+                  <SiteCategory
+                    className={`bg-${
+                      {
+                        ONEPIECE: 'blue',
+                        呪術廻戦: 'purple',
+                        東京リベンジャーズ: 'rose',
+                        キングダム: 'yellow',
+                      }[recfiredata.categori]
+                    }-500 p-1 inline-block text-white text-center m-6`}
+                    text={recfiredata.categori}
+                    href={`/post/categories/${recfiredata.categori}`}
+                  />
+                )}
 
-              {recfiredata.context && (
-                <p className='text-left' style={styles}>
-                  {parse(recfiredata.context)}
-                </p>
-              )}
+                {recfiredata.netabare == 'ネタバレ有' ? (
+                  <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                    {recfiredata.netabare}
+                  </span>
+                ) : (
+                  <span className='bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                    {recfiredata.netabare}
+                  </span>
+                )}
 
+                {recfiredata.context && (
+                  <p className='text-left' style={styles}>
+                    {parse(recfiredata.context)}
+                  </p>
+                )}
+              </div>
               <br></br>
               {recfiredata.contextimage && (
                 <div className='flex justify-center'>
@@ -414,7 +397,7 @@ const Post = () => {
                       <button
                         type='submit'
                         onClick={handleSubmit(addComment)}
-                        className='inline-flex items-center py-2.5 px-4 text-xs font-medium text-center rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800 m-auto'
+                        className='py-2.5 px-4 text-xs font-medium text-center rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800 m-auto'
                       >
                         コメントする
                       </button>
@@ -458,7 +441,7 @@ const Post = () => {
                     </article>
                   )
                 })}
-
+              <hr className='mt-10'></hr>
               <div className='cursor-pointer'>
                 {users &&
                   users.map((user) => {
@@ -467,22 +450,22 @@ const Post = () => {
                         {recfiredata.email === user.email && (
                           <Link href={`/profile/${user.userid}`}>
                             <div key={user.userid}>
-                              <div className='bg-slate-200 my-8 py-8 flex m-auto'>
+                              <div className='border my-8 py-8 flex m-auto  px-2'>
                                 <div key={user.id}>
                                   <div>
                                     <Avatar
                                       className='m-auto text-center max-w-sm border'
                                       alt='プロフィール'
-                                      sx={{ width: 100, height: 100 }}
+                                      sx={{ width: 80, height: 80 }}
                                       src={user.profileimage}
                                     />
                                   </div>
                                 </div>
-                                <div className='ml-6 mt-4 '>
-                                  <span className='text-xl'>
+                                <div className='ml-6 mt-4'>
+                                  <span className=''>
                                     <AccountBoxIcon /> {user.username}
                                   </span>
-                                  <div className='text-xl my-2'>
+                                  <div className=' mt-2 pb-2 text-gray-500'>
                                     <BorderColorIcon />
                                     {user.bio}
                                   </div>

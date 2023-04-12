@@ -11,8 +11,6 @@ import Grid from '@material-ui/core/Grid'
 import Image from 'react-image-resizer'
 import Categori from '../text/Categori'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import { query, orderBy, where } from 'firebase/firestore'
 
 type Props = {
   downloadURL: string

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { Cardpost } from '../layouts/components/ui/Cardpost'
+import { Cardpost } from '../layouts/components/ui/CardPost'
 import { query, orderBy } from 'firebase/firestore'
 import { SiteButton } from '../layouts/components/button'
 import { SiteCategory } from '../layouts/components/text'
@@ -110,7 +110,6 @@ export default function Index() {
           <SiteButton href='/post/new' text='新規投稿をする' className='m-auto w-50 my-2' />
         </div>
       )}
-      <h2 className='my-12 text-center text-2xl font-semibold'>カテゴリから選ぶ</h2>
       {Categories.map((categori) => {
         // userの情報
         const CategoriesInfo = {

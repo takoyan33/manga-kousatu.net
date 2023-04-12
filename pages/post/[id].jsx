@@ -242,8 +242,8 @@ const Post = () => {
               <div className='flex justify-center my-6'>
                 <Image
                   className='m-auto text-center max-w-sm'
-                  height={500}
-                  width={500}
+                  height={400}
+                  width={400}
                   src={recfiredata.downloadURL}
                 />
               </div>
@@ -342,8 +342,8 @@ const Post = () => {
                 <div className='flex justify-center'>
                   <Image
                     className='m-auto text-center max-w-sm'
-                    height={500}
-                    width={500}
+                    height={300}
+                    width={300}
                     src={recfiredata.contextimage}
                   />
                 </div>

@@ -10,37 +10,37 @@ type Props = {
 //React.memo化
 const Categori: React.VFC<Props> = React.memo(({ categori }) => {
   return (
-    <div className="my-1">
-      {categori == "ONEPIECE" && (
+    <div className='my-1'>
+      {categori == 'ONEPIECE' && (
         <SiteCategory
-          className="bg-blue-500 p-1 inline-block text-white text-center hover:bg-blue-700"
-          text="ONE PIECE"
+          className='p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white border-cyan-500 text-cyan-500 hover:bg-cyan-700'
+          text='ONE PIECE'
           href={`/post/categories/${categori}`}
         />
       )}
-      {categori == "呪術廻戦" && (
+      {categori == '呪術廻戦' && (
         <SiteCategory
-          className="bg-purple-500 p-1 inline-block text-white text-center hover:bg-purple-700"
-          text="呪術廻戦"
+          className='p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white border-purple-500 text-purple-500 hover:bg-purple-700'
+          text='呪術廻戦'
           href={`/post/categories/${categori}`}
         />
       )}
-      {categori == "東京リベンジャーズ" && (
+      {categori == '東京リベンジャーズ' && (
         <SiteCategory
-          className="bg-rose-500 p-1 inline-block text-white text-center hover:bg-yellow-700"
-          text="東京リベンジャーズ"
+          className='p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white border-rose-500 text-rose-500 hover:bg-rose-700'
+          text='東京リベンジャーズ'
           href={`/post/categories/${categori}`}
         />
       )}
-      {categori == "キングダム" && (
+      {categori == 'キングダム' && (
         <SiteCategory
-          className="bg-yellow-500 p-1 inline-block text-white text-center"
-          text="キングダム"
+          className='p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white border-yellow-500 text-yellow-500 hover:bg-yellow-700'
+          text='キングダム'
           href={`/post/categories/${categori}`}
         />
       )}
     </div>
-  );
+  )
 });
 
 export default Categori;

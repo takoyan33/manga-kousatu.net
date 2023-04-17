@@ -32,6 +32,7 @@ import { notify, signupmissnotify } from '../../layouts/components/text/SiteModa
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
+import Categori from '../../layouts/components/text/Categori'
 
 // バリデーションルール
 const schema = yup.object({
@@ -308,25 +309,40 @@ const Post = () => {
                   recfiredata.categori,
                 ) && (
                   <SiteCategory
-                    className={`bg-${
+                    className={`border-${
                       {
-                        ONEPIECE: 'blue',
+                        ONEPIECE: 'cyan',
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
                       }[recfiredata.categori]
-                    }-500 p-1 inline-block text-white text-center m-6`}
+                    }-500 text-${
+                      {
+                        ONEPIECE: 'cyan',
+                        呪術廻戦: 'purple',
+                        東京リベンジャーズ: 'rose',
+                        キングダム: 'yellow',
+                      }[recfiredata.categori]
+                    }-500 hover:bg-${
+                      {
+                        ONEPIECE: 'cyan',
+                        呪術廻戦: 'purple',
+                        東京リベンジャーズ: 'rose',
+                        キングダム: 'yellow',
+                      }[recfiredata.categori]
+                    }-700 p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white my-4`}
                     text={recfiredata.categori}
                     href={`/post/categories/${recfiredata.categori}`}
                   />
                 )}
+                {/* <Categori categori={recfiredata.categori} /> */}
 
                 {recfiredata.netabare == 'ネタバレ有' ? (
-                  <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                  <span className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
                     {recfiredata.netabare}
                   </span>
                 ) : (
-                  <span className='bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                  <span className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
                     {recfiredata.netabare}
                   </span>
                 )}

@@ -118,7 +118,9 @@ export default function Index() {
         }
         return (
           <span key={categori.id}>
-            <span className={`p-1 inline-block text-white text-center m-6 + ${categori.className}`}>
+            <span
+              className={`p-1 inline-block font-bold  border rounded-xl rounded-xltext-center  hover:text-white m-6 + ${categori.className}`}
+            >
               <Link
                 as={`/post/categories/${categori.title}`}
                 href={{

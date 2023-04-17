@@ -114,15 +114,14 @@ export const Cardpost: React.VFC<Props> = React.memo(
                 </Typography>
                 <div className='flex'>
                   <Categori categori={categori} />
-                  {netabare == 'ネタバレ有' && (
+                  {netabare == 'ネタバレ有' ? (
                     <div>
-                      <p className='bg-yellow-500 mx-1 mt-1 p-1 inline-block text-white text-center'>
+                      <p className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
                         {netabare}
                       </p>
                     </div>
-                  )}
-                  {netabare == 'ネタバレ無' && (
-                    <p className='bg-blue-500 mx-1 mt-1 p-1 inline-block text-white text-center'>
+                  ):(
+                    <p className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
                       {netabare}
                     </p>
                   )}

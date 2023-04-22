@@ -33,6 +33,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
 import Categori from '../../layouts/components/text/Categori'
+import green from '@material-ui/core/colors/green'
 
 // バリデーションルール
 const schema = yup.object({
@@ -335,7 +336,6 @@ const Post = () => {
                     href={`/post/categories/${recfiredata.categori}`}
                   />
                 )}
-                {/* <Categori categori={recfiredata.categori} /> */}
 
                 {recfiredata.netabare == 'ネタバレ有' ? (
                   <span className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
@@ -365,7 +365,9 @@ const Post = () => {
                 </div>
               )}
               <div className='my-4'>
-                <FavoriteIcon />
+                <span className='text-pink-400'>
+                  <FavoriteIcon />
+                </span>
                 {recfiredata.likes}
               </div>
               {user &&
@@ -379,7 +381,10 @@ const Post = () => {
                       className='inline my-2 m-4'
                       onClick={() => LikeAdd(routerid, recfiredata.likes)}
                     >
-                      いいねする
+                      <span className='text-pink-400 hover:text-pink-700 p-4'>
+                        <FavoriteIcon />
+                        いいね
+                      </span>
                     </button>
                   )
                 ) : (
@@ -424,7 +429,17 @@ const Post = () => {
 
               {!user && (
                 <>
-                  <p className='my-6'>ログインするといいねできます</p>
+                  <button
+                    href=''
+                    text='いいねする'
+                    className='inline my-2 m-4'
+                    onClick={() => notify('ログインするといいねができます')}
+                  >
+                    <span className='text-pink-400 hover:text-pink-700 p-4'>
+                      <FavoriteIcon />
+                      いいね
+                    </span>
+                  </button>
                   <div className='flex justify-between items-center mb-6'>
                     <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
                       コメント ({comments.length})

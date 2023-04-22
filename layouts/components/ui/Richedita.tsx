@@ -21,7 +21,7 @@ const Richedita: React.VFC<RicheditaProps> = ({ onChange }) => {
 
   return (
     <div className='center-input border pb-20'>
-      <Editor onEditorStateChange={handleEditorChange} />
+      <Editor onEditorStateChange={handleEditorChange}   />
     </div>
   )
 }

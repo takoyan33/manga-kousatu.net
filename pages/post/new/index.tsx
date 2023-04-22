@@ -173,7 +173,7 @@ export default function Post() {
   const handleEditorChange = (plainText: string, html: string) => {
     setPlainText(plainText)
     setHtml(html)
-    console.log(html)
+    setLengthdata(plainText.length)
   }
   return (
     <div>
@@ -288,7 +288,7 @@ export default function Post() {
             内容<span className='text-red-600'>*</span>(最大500文字）
           </FormLabel>
 
-          <p className='my-4'>現在の文字数：{context.length}</p>
+          <p className='my-4'>現在の文字数：{lengthdata && lengthdata}</p>
           {/* <TextField
             label='内容*(最大500文字）'
             className='m-auto w-full'

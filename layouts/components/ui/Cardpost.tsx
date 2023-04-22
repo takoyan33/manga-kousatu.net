@@ -98,78 +98,80 @@ export const Cardpost: React.VFC<Props> = React.memo(
         <Link href={`/post/${id}`}>
           <Grid key={id} className='flex m-auto'>
             <Card className='my-8 m-auto hover:shadow-2xl border' style={cardstyles}>
-              <p className='flex justify-center m-auto'>
-                <Image
-                  className='m-auto text-center max-w-sm'
-                  height={250}
-                  width={250}
-                  src={downloadURL}
-                  alt='画像'
-                />
-              </p>
-
-              <CardContent>
-                <Typography gutterBottom variant='h5' component='div'>
-                  {title}
-                </Typography>
-                <div className='flex'>
-                  <Categori categori={categori} />
-                  {netabare == 'ネタバレ有' ? (
-                    <div>
-                      <p className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
-                        {netabare}
-                      </p>
-                    </div>
-                  ):(
-                    <p className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
-                      {netabare}
-                    </p>
-                  )}
+              <dl>
+                <div className='flex justify-center m-auto'>
+                  <Image
+                    className='m-auto text-center max-w-sm'
+                    height={250}
+                    width={250}
+                    src={downloadURL}
+                    alt='画像'
+                  />
                 </div>
-                <div className='w-80 m-auto' style={styles}></div>
-                <p className='max-w-xs mt-3'>
-                  {selected &&
-                    selected.map((tag, i) => (
-                      // <Link href={`/post/tag/${tag}`} key={i}>
-                      <span
-                        className='text-cyan-700 border border-cyan-700 rounded-xl py-1 px-2 text-center'
-                        key={i}
-                      >
-                        #{tag}
-                      </span>
-                      // </Link>
-                    ))}
-                </p>
-                <div key={id} className='cursor-pointer'>
-                  {users &&
-                    users.map((user) => {
-                      return (
-                        <>
-                          {email == user.email && (
-                            <div key={user.id} className=''>
-                              <div className='my-2 py-4 flex m-auto'>
-                                <div className=''>
-                                  <Avatar
-                                    className='m-auto text-center max-w-sm border'
-                                    sx={{ width: 40, height: 40 }}
-                                    alt='投稿者プロフィール'
-                                    src={user.profileimage}
-                                  />
-                                </div>
-                                <div className='pt-2'>
-                                  <span className='my-2 ml-2 '>
-                                    {user.username}
-                                    <FavoriteIcon /> {likes}
-                                  </span>
+
+                <CardContent>
+                  <Typography gutterBottom variant='h5' component='div'>
+                    {title}
+                  </Typography>
+                  <div className='flex'>
+                    <Categori categori={categori} />
+                    {netabare == 'ネタバレ有' ? (
+                      <div>
+                        <dl className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                          {netabare}
+                        </dl>
+                      </div>
+                    ) : (
+                      <dl className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                        {netabare}
+                      </dl>
+                    )}
+                  </div>
+                  <div className='w-80 m-auto' style={styles}></div>
+                  <div className='max-w-xs mt-3'>
+                    {selected &&
+                      selected.map((tag, i) => (
+                        // <Link href={`/post/tag/${tag}`} key={i}>
+                        <span
+                          className='text-cyan-700 border border-cyan-700 rounded-xl py-1 px-2 text-center'
+                          key={i}
+                        >
+                          #{tag}
+                        </span>
+                        // </Link>
+                      ))}
+                  </div>
+                  <div key={id} className='cursor-pointer'>
+                    {users &&
+                      users.map((user) => {
+                        return (
+                          <>
+                            {email == user.email && (
+                              <div key={user.id} className=''>
+                                <div className='my-2 py-4 flex m-auto'>
+                                  <dl className=''>
+                                    <Avatar
+                                      className='m-auto text-center max-w-sm border'
+                                      sx={{ width: 40, height: 40 }}
+                                      alt='投稿者プロフィール'
+                                      src={user.profileimage}
+                                    />
+                                  </dl>
+                                  <dl className='pt-2'>
+                                    <span className='my-2 ml-2 '>
+                                      {user.username}
+                                      <FavoriteIcon /> {likes}
+                                    </span>
+                                  </dl>
                                 </div>
                               </div>
-                            </div>
-                          )}
-                        </>
-                      )
-                    })}
-                </div>
-              </CardContent>
+                            )}
+                          </>
+                        )
+                      })}
+                  </div>
+                </CardContent>
+              </dl>
             </Card>
           </Grid>
         </Link>

@@ -8,7 +8,7 @@ export default function Top() {
       <CommonHead />
       <div className='flex my-20'>
         <div className='w-6/12'>
-          <h2 className='my-6 text-left text-4xl font-semibold text-sky-600'>Manga Study</h2>
+          <h1 className='my-6 text-left text-4xl font-semibold text-sky-600'>Manga Study</h1>
           <p className='my-6 text-xl '>
             Manga Studyでは、人気漫画の考察を
             <br />

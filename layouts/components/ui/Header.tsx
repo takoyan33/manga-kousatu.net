@@ -1,6 +1,6 @@
 import Logout from '@mui/icons-material/Logout'
 import Settings from '@mui/icons-material/Settings'
-import Image from 'next/image'
+import Image from 'react-image-resizer'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
@@ -55,25 +55,31 @@ export const Header = () => {
         sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
         className='w-full m-0'
       >
-        <Toolbar className='w-full m-0'>
-          <Typography variant='h6' component='div' sx={{ flexGrow: 1, textAlign: 'left' }}>
-            <Link href='/top'>
-              <Image src='/magastudylogo.png' width='200' height='30' alt='ロゴ' />
-            </Link>
-          </Typography>
-          <Tooltip title='Account settings'>
-            <IconButton
-              onClick={handleClick}
-              size='small'
-              sx={{ ml: 2 }}
-              aria-controls={open ? 'account-menu' : undefined}
-              aria-haspopup='true'
-              aria-expanded={open ? 'true' : undefined}
-            >
-              <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-            </IconButton>
-          </Tooltip>
-        </Toolbar>
+        <Link href='/top'>
+          <Toolbar className='w-full m-0'>
+            <Typography variant='h6' component='div' sx={{ flexGrow: 1, textAlign: 'left' }}>
+              <Image
+                className='m-auto text-center max-w-sm'
+                height={100}
+                width={200}
+                src='/logo.png'
+              />
+            </Typography>
+
+            <Tooltip title='Account settings'>
+              <IconButton
+                onClick={handleClick}
+                size='small'
+                sx={{ ml: 2 }}
+                aria-controls={open ? 'account-menu' : undefined}
+                aria-haspopup='true'
+                aria-expanded={open ? 'true' : undefined}
+              >
+                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+              </IconButton>
+            </Tooltip>
+          </Toolbar>
+        </Link>
       </Box>
 
       <Menu

@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { Changetab } from '../layouts/components/ui/Changetab'
+import Image from 'react-image-resizer'
 
 export default function Index() {
   const [firedata, setFiredata] = useState([])
@@ -93,16 +94,12 @@ export default function Index() {
   return (
     <div>
       <CommonHead />
-      <div className='text-center'>
-        <img src='./images/top-home.png' className='w-40  my-6 m-auto' alt='漫画のイラスト' />
-      </div>
-      <div className='my-5 text-center'>
-        <img src='./magastudylogo.png' className='w-80 my-12 m-auto' alt='mangastudyのロゴ' />
+      <div className='my-5 text-center m-auto flex justify-center'>
+        <Image className='m-auto' height={100} width={200} src='/logo.png' />
       </div>
       <p className='my-5 text-center'>
         Manga Studyでは、人気漫画の考察を<br></br>
         自由に投稿・閲覧できるwebサイトです。
-        <br></br> ※非収益サイトです
       </p>
 
       {user && (

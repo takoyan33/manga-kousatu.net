@@ -64,10 +64,10 @@ function RealseNotes() {
   return (
     <div>
       <CommonHead />
-      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - リリースノート</h2>
+      <h1 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - リリースノート</h1>
       {releases.map(({ version, date, features }) => (
         <div key={version}>
-          <h3 className='text-xl mt-8 my-4 font-semibold'>Manga Study {version}</h3>
+          <h2 className='text-xl mt-8 my-4 font-semibold'>Manga Study {version}</h2>
           <p>{date}</p>
           <h4 className='text-lg my-2'>変更点</h4>
           {features.map((feature, index) => (

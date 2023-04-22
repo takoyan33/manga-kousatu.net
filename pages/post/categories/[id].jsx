@@ -170,9 +170,9 @@ const Daitails = ({ post }) => {
         <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
         {post.fields.title.stringValue}
       </p>
-      <h2 className='my-12 text-center text-2xl font-semibold'>
+      <h1 className='my-12 text-center text-2xl font-semibold'>
         {post.fields.title.stringValue}の考察記事一覧
-      </h2>
+      </h1>
 
       <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
 

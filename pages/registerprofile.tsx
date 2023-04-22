@@ -77,7 +77,7 @@ export default function Registerprofile() {
       <CommonHead />
 
       <Stack component='form' className='m-auto' noValidate spacing={2} sx={{ width: '38ch' }}>
-        <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h2>
+        <h1 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h1>
         <p>詳細なプロフィールの記載をお願いします。</p>
         <div>
           <label className='text-center my-4'>

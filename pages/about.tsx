@@ -5,7 +5,7 @@ function About() {
   return (
     <div className='min-h-screen flex flex-col justify-center items-center'>
       <CommonHead />
-      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>About</h2>
+      <h1 className='m-5 my-12 text-center text-2xl font-semibold'>About</h1>
       <div className='max-w-2xl mx-auto text-center'>
         <p className='text-lg mb-6'>
           Manga Studyでは、漫画の考察などを自由に投稿・閲覧できるwebサイトです。

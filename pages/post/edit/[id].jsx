@@ -48,15 +48,10 @@ const Post = () => {
   const routerid = router.query.id
 
   console.log({ routerid })
-  // const { state } = router
-
-  // // stateからデータを取得する
-  // const recfiredata = state?.data
-  // console.log(recfiredata)
-
   const {
     register,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -68,6 +63,7 @@ const Post = () => {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
       await setFiredata(snap.data())
+      await setCategori(firedata.categori)
       console.log('firedata', firedata)
     } catch (error) {
       console.log(error)
@@ -76,28 +72,25 @@ const Post = () => {
 
   useEffect(() => {
     getPost()
-    getID()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categori])
-
-  const getID = () => {
     setID(routerid)
     setContext(firedata.context)
-    console.log({ firedata })
+    console.log('categori', categori)
     setPostTitle(firedata.title)
-    setCategori(firedata.categori)
-  }
-  // usersData();
+  }, [])
 
   const updatefields = (data) => {
     //更新する
     let fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
+    console.log(posttitle)
+    console.log(categori)
+    console.log(data.netabare)
+    console.log(selected)
     //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: posttitle,
       netabare: data.netabare,
-      categori: data.categori,
+      categori: categori,
       context: data.context,
       edittime: newdate,
       selected: selected,
@@ -105,7 +98,7 @@ const Post = () => {
     })
       .then(() => {
         alert('記事を更新しました')
-        router.push(`/`)
+        router.push(`/post/${routerid}`)
       })
       .catch((err) => {
         console.log(err)
@@ -135,11 +128,12 @@ const Post = () => {
                   </FormLabel>
                 </div>
                 <div>
-                  <p>現在：{firedata.title}</p>
-                  <TextField
+                  <input
                     id='outlined-basic'
                     label='タイトル（最大20文字)'
                     variant='outlined'
+                    className='w-30'
+                    defaultValue={firedata.title}
                     type='text'
                     onChange={(event) => setPostTitle(event.target.value)}
                   />
@@ -160,7 +154,11 @@ const Post = () => {
                     <RadioGroup
                       aria-labelledby='demo-radio-buttons-group-label'
                       name={field.name}
-                      value={field.value}
+                      checked={categori}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        setCategori(e.target.value)
+                      }}
                     >
                       {Categoris.map((Categori) => (
                         <FormControlLabel
@@ -168,7 +166,6 @@ const Post = () => {
                           value={Categori.value}
                           control={<Radio />}
                           label={Categori.label}
-                          {...register('categori')}
                         />
                       ))}
                     </RadioGroup>
@@ -176,7 +173,6 @@ const Post = () => {
                 />
 
                 <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
-                <p>現在のタグ：{firedata.selected}</p>
                 <TagsInput
                   value={selected}
                   onChange={setSelected}
@@ -215,15 +211,15 @@ const Post = () => {
                   </FormLabel>
                   <p className='my-4'>文字数：{context && <span>{context.length}</span>}</p>
                 </div>
-                <p>現在の文章：{firedata.context}</p>
-                <TextField
+                <p>現在の文章</p>
+                <textarea
                   label='内容(最大500文字）'
                   className='m-auto w-full'
                   id='filled-multiline-static'
                   multiline
                   rows={14}
                   type='text'
-                  value={context}
+                  defaultValue={firedata.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
                 <SiteButton

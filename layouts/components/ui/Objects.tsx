@@ -33,8 +33,6 @@ export const Categories = [
   },
 ]
 
-
-
 // const { user } = useAuthContext()
 // const databaseRef = collection(database, 'posts')
 // const usersRef = collection(database, 'users')

@@ -91,6 +91,19 @@ export default function Index() {
     },
   ]
 
+  const netabreItems = [
+    {
+      label: 'ネタバレ有',
+      value: 'ネタバレ有',
+      onClick: getallPost,
+    },
+    {
+      label: 'ネタバレ無',
+      value: 'ネタバレ無',
+      onClick: getallOldpost,
+    },
+  ]
+
   return (
     <div>
       <CommonHead />
@@ -140,26 +153,41 @@ export default function Index() {
                 .length
             }件`}
       </p>
-      <TextField
-        id='outlined-basic'
-        type='search'
-        label='考察記事を検索する'
-        variant='outlined'
-        onChange={(event) => {
-          setSearchName(event.target.value)
-        }}
-      />
-      <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-        <InputLabel id='demo-select-small'>新しい順</InputLabel>
+      <div className='m-auto flex justify-center my-10'>
+        <TextField
+          id='outlined-basic'
+          type='search'
+          label='記事を検索する'
+          variant='outlined'
+          onChange={(event) => {
+            setSearchName(event.target.value)
+          }}
+        />
+        <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+          <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
-        <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
-          {menuItems.map((item) => (
-            <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
+            {netabreItems.map((item) => (
+              <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
+      <div className='flex justify-end'>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+          <InputLabel id='demo-select-small'>新しい順</InputLabel>
+
+          <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
+            {menuItems.map((item) => (
+              <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
 
       <Grid container className='m-auto'>
         {firedata.length === 0 ? (

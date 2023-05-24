@@ -1,17 +1,17 @@
-import TextField from "@mui/material/TextField";
-import React from "react";
+import TextField from '@mui/material/TextField'
+import React from 'react'
 
 type Props = {
-  id: any;
-  text: string;
-  label: string;
-  error: any;
-  type: string;
-  helperText: string;
-  className: string;
-  variant?: "standard" | "outlined" | "filled" | undefined;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+  id: any
+  text: string
+  label: string
+  error: any
+  type: string
+  helperText: string
+  className: string
+  variant?: 'standard' | 'outlined' | 'filled' | undefined
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}
 
 // eslint-disable-next-line react/display-name
 export const CommonInput: React.VFC<Props> = React.memo(

@@ -6,105 +6,105 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-} from "firebase/auth";
-import { useState } from "react";
-import { useRouter } from "next/router";
+} from 'firebase/auth'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 //新規登録
 export const useSignup = () => {
-  const [error, setError] = useState(null);
-  const auth = getAuth();
+  const [error, setError] = useState(null)
+  const auth = getAuth()
 
   const signup = (email: string, password: string) => {
-    setError(null);
+    setError(null)
     createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        console.log(res.user);
+        console.log(res.user)
       })
       .catch((err) => {
-        console.log(err.message);
-        setError(err.message);
-      });
-  };
+        console.log(err.message)
+        setError(err.message)
+      })
+  }
 
-  return { error, signup };
-};
+  return { error, signup }
+}
 
 //ログイン
 export const useLogin = () => {
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
-  const auth = getAuth();
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(null)
+  const auth = getAuth()
 
   const login = (email: string, password: string) => {
-    setError(null);
+    setError(null)
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        setSuccess(true);
+        setSuccess(true)
       })
       .catch((err) => {
-        console.log(err.message);
-        setError(err.message);
-      });
-  };
+        console.log(err.message)
+        setError(err.message)
+      })
+  }
 
-  return { success, error, login };
-};
+  return { success, error, login }
+}
 
 //パスワードリセット
 export const usePasswordReset = () => {
-  const router = useRouter();
-  const auth = getAuth();
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(null);
+  const router = useRouter()
+  const auth = getAuth()
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(null)
 
   const passwordReset = (email: string) => {
     sendPasswordResetEmail(auth, email)
       .then(() => {
-        setSuccess(true);
+        setSuccess(true)
         setTimeout(() => {
-          router.push("/login");
-        }, 2000);
+          router.push('/login')
+        }, 2000)
       })
       .catch((err) => {
-        console.log(err.message);
-        setError(err.message);
-      });
-  };
+        console.log(err.message)
+        setError(err.message)
+      })
+  }
 
-  return { success, error, passwordReset };
-};
+  return { success, error, passwordReset }
+}
 
 //ログアウト
 export const useLogout = () => {
-  const auth = getAuth();
+  const auth = getAuth()
   const logout = () => {
     signOut(auth)
       .then(() => {
-        console.log("Sign-out successful.");
+        console.log('Sign-out successful.')
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  };
+        console.log(err.message)
+      })
+  }
 
-  return { logout };
-};
+  return { logout }
+}
 
 //Googleログイン
 export const SignInWithGoogle = () => {
-  const googleProvider = new GoogleAuthProvider();
-  const router = useRouter();
-  const auth = getAuth();
+  const googleProvider = new GoogleAuthProvider()
+  const router = useRouter()
+  const auth = getAuth()
 
   signInWithPopup(auth, googleProvider)
     .then(() => {
       setTimeout(() => {
-        router.push("/");
-      }, 2000);
+        router.push('/')
+      }, 2000)
     })
     .catch((err) => {
-      console.log(err.message);
-    });
-  return { SignInWithGoogle };
-};
+      console.log(err.message)
+    })
+  return { SignInWithGoogle }
+}

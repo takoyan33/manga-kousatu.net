@@ -38,4 +38,3 @@ export const Netabares = [
     value: '不明',
   },
 ]
-

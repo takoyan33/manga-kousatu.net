@@ -1,11 +1,11 @@
 /* eslint-disable react/display-name */
-import React from "react";
-import Link from "next/link";
-import { SiteCategory } from "./SiteCategory";
+import React from 'react'
+import Link from 'next/link'
+import { SiteCategory } from './SiteCategory'
 
 type Props = {
-  categori: String;
-};
+  categori: String
+}
 
 //React.memo化
 const Categori: React.VFC<Props> = React.memo(({ categori }) => {
@@ -41,6 +41,6 @@ const Categori: React.VFC<Props> = React.memo(({ categori }) => {
       )}
     </div>
   )
-});
+})
 
-export default Categori;
+export default Categori

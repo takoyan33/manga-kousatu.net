@@ -50,16 +50,16 @@ export const Header = () => {
   }
 
   return (
-    <AppBar position='static' color='transparent' className='w-full m-0'>
+    <AppBar position='static' color='transparent' className='m-0 w-full'>
       <Box
         sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
-        className='w-full m-0'
+        className='m-0 w-full'
       >
         <Link href='/top'>
-          <Toolbar className='w-full m-0'>
+          <Toolbar className='m-0 w-full'>
             <Typography variant='h6' component='div' sx={{ flexGrow: 1, textAlign: 'left' }}>
               <Image
-                className='m-auto text-center max-w-sm'
+                className='m-auto max-w-sm text-center'
                 height={100}
                 width={200}
                 src='/logo.png'

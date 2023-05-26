@@ -79,12 +79,12 @@ export default function Index() {
     <>
       <Box
         component='form'
-        className='flex justify-center max-w-7xl '
+        className='flex max-w-7xl justify-center '
         noValidate
         autoComplete='off'
       >
         <div>
-          <label className='text-center my-4'>メールアドレス*</label>
+          <label className='my-4 text-center'>メールアドレス*</label>
           <TextField
             id='outlined-basic'
             label='sample@gmail.com'
@@ -96,7 +96,7 @@ export default function Index() {
             helperText={errors.email?.message}
           />
 
-          <label className='text-center my-4'>パスワード（8文字以上)*</label>
+          <label className='my-4 text-center'>パスワード（8文字以上)*</label>
           <TextField
             id='outlined-basic'
             label='Password'
@@ -114,13 +114,13 @@ export default function Index() {
             href=''
             onClick={handleSubmit(SignIn)}
             text='ログイン'
-            className='m-auto w-80 my-8'
+            className='m-auto my-8 w-80'
           />
           <SiteButton
             href=''
             text='Googleでログイン'
             onClick={SignInWithGoogle}
-            className='m-auto w-80 my-8'
+            className='m-auto my-8 w-80'
           />
         </div>
       </Box>

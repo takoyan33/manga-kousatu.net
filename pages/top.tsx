@@ -107,7 +107,7 @@ export default function Index() {
   return (
     <div>
       <CommonHead />
-      <div className='my-5 text-center m-auto flex justify-center'>
+      <div className='m-auto my-5 flex justify-center text-center'>
         <Image className='m-auto' height={100} width={200} src='/logo.png' />
       </div>
       <p className='my-5 text-center'>
@@ -116,8 +116,8 @@ export default function Index() {
       </p>
 
       {user && (
-        <div className='lg:text-right text-center'>
-          <SiteButton href='/post/new' text='新規投稿をする' className='m-auto w-50 my-2' />
+        <div className='text-center lg:text-right'>
+          <SiteButton href='/post/new' text='新規投稿をする' className='w-50 m-auto my-2' />
         </div>
       )}
       {Categories.map((categori) => {
@@ -129,7 +129,7 @@ export default function Index() {
         return (
           <span key={categori.id}>
             <span
-              className={`p-1 inline-block font-bold  border rounded-xl rounded-xltext-center  hover:text-white m-6 + ${categori.className}`}
+              className={`rounded-xltext-center + m-6  inline-block rounded-xl border  p-1 font-bold hover:text-white ${categori.className}`}
             >
               <Link
                 as={`/post/categories/${categori.title}`}
@@ -153,7 +153,7 @@ export default function Index() {
                 .length
             }件`}
       </p>
-      <div className='m-auto flex justify-center my-10'>
+      <div className='m-auto my-10 flex justify-center'>
         <TextField
           id='outlined-basic'
           type='search'
@@ -191,7 +191,7 @@ export default function Index() {
 
       <Grid container className='m-auto'>
         {firedata.length === 0 ? (
-          <p className='text-center my-2'>読み込み中・・・</p>
+          <p className='my-2 text-center'>読み込み中・・・</p>
         ) : firedata.filter((data) => {
             if (searchName === '') {
               return data
@@ -199,7 +199,7 @@ export default function Index() {
               return data
             }
           }).length === 0 ? (
-          <p className='text-center m-auto my-10 text-xl'>検索した名前の記事がありませんでした。</p>
+          <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           firedata
             .filter((data) => {
@@ -237,7 +237,7 @@ export default function Index() {
             text='さらに表示'
             disabled={isEmpty ? true : false}
             onClick={displayMore}
-            className='m-auto w-50 my-2'
+            className='w-50 m-auto my-2'
           />
         )}
       </div>

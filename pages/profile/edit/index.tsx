@@ -108,12 +108,12 @@ export default function Edit() {
               <div key={data.id}>
                 <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
 
-                <p className='my-12 text-center font-semib'>
+                <p className='font-semib my-12 text-center'>
                   現在のプロフィール画像
                   <br></br>
                   <p className='flex justify-center'>
                     <Image
-                      className='m-auto text-center max-w-sm'
+                      className='m-auto max-w-sm text-center'
                       height={100}
                       width={100}
                       src={data.profileimage}
@@ -123,24 +123,24 @@ export default function Edit() {
 
                 <Box component='form' className='' noValidate autoComplete='off'>
                   <>
-                    <p className='text-center my-4'>新しいプロフィール画像</p>
+                    <p className='my-4 text-center'>新しいプロフィール画像</p>
                     <br></br>
                     <div className='flex justify-center'>
                       <Image
-                        className='m-auto text-center max-w-sm'
+                        className='m-auto max-w-sm text-center'
                         height={100}
                         width={100}
                         src={createObjectURL}
                       />
                     </div>
-                    <div className='text-center m-auto my-4'>
+                    <div className='m-auto my-4 text-center'>
                       <label
                         htmlFor='file-input'
-                        className='bg-primary-900 text-white-900 text-center m-auto dark:bg-dark-900 px-4 py-2 rounded mb-6 w-full'
+                        className='bg-primary-900 text-white-900 dark:bg-dark-900 m-auto mb-6 w-full rounded px-4 py-2 text-center'
                       >
                         <svg
                           xmlns='http://www.w3.org/2000/svg'
-                          className='h-10 w-10 hover:cursor-pointer hover:bg-gray-700 text-center m-auto'
+                          className='m-auto h-10 w-10 text-center hover:cursor-pointer hover:bg-gray-700'
                           fill='none'
                           viewBox='0 0 24 24'
                           stroke='currentColor'
@@ -155,7 +155,7 @@ export default function Edit() {
                       </label>
                       <input
                         id='file-input'
-                        className='hidden text-center m-auto'
+                        className='m-auto hidden text-center'
                         type='file'
                         accept='image/*'
                         name='myImage'
@@ -163,10 +163,10 @@ export default function Edit() {
                       />
                     </div>
 
-                    <p className='text-center my-4'>
+                    <p className='my-4 text-center'>
                       現在の名前： <span>{data.username}</span>
                     </p>
-                    <p className='text-center my-4'>新しい名前（最大10文字）</p>
+                    <p className='my-4 text-center'>新しい名前（最大10文字）</p>
                     <div className='text-center'>
                       <TextField
                         id='outlined-basic'
@@ -180,10 +180,10 @@ export default function Edit() {
                       />
                     </div>
                     <br></br>
-                    <p className='text-center my-4'>
+                    <p className='my-4 text-center'>
                       現在のプロフィール： <span>{data.bio}</span>
                     </p>
-                    <p className='text-center my-4'>新しいプロフィール（最大30文字）</p>
+                    <p className='my-4 text-center'>新しいプロフィール（最大30文字）</p>
                     <div className='text-center'>
                       <TextField
                         id='outlined-basic'
@@ -197,11 +197,11 @@ export default function Edit() {
                       />
                     </div>
                     <br></br>
-                    <p className='text-center my-4'>
+                    <p className='my-4 text-center'>
                       現在の好きな漫画： <span>{data.favarite}</span>
                     </p>
-                    <p className='text-center my-4'>好きな漫画（最大10作品）*</p>
-                    <div className='text-center m-auto w-80'>
+                    <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
+                    <div className='m-auto w-80 text-center'>
                       <TagsInput
                         value={data.favarite}
                         onChange={setSelected}

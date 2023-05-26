@@ -185,7 +185,7 @@ export default function Post() {
         sx={{
           '& > :not(style)': { m: 1, width: '50ch' },
         }}
-        className='flex justify-center max-w-7xl '
+        className='flex max-w-7xl justify-center'
         autoComplete='off'
       >
         <div>
@@ -328,7 +328,7 @@ export default function Post() {
           <SiteButton
             href=''
             text='投稿する'
-            className='text-center m-auto my-10'
+            className='m-auto my-10 text-center'
             onClick={handleSubmit(addDate)}
           />
         </div>

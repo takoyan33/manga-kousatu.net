@@ -94,14 +94,14 @@ export const Cardpost: React.VFC<Props> = React.memo(
     }, [])
 
     return (
-      <div className='cursor-pointer w-1/3'>
+      <div className='w-1/3 cursor-pointer'>
         <Link href={`/post/${id}`}>
-          <Grid key={id} className='flex m-auto'>
-            <Card className='my-8 m-auto hover:shadow-2xl border' style={cardstyles}>
+          <Grid key={id} className='m-auto flex'>
+            <Card className='m-auto my-8 border hover:shadow-2xl' style={cardstyles}>
               <dl>
-                <div className='flex justify-center m-auto'>
+                <div className='m-auto flex justify-center'>
                   <Image
-                    className='m-auto text-center max-w-sm'
+                    className='m-auto max-w-sm text-center'
                     height={250}
                     width={250}
                     src={downloadURL}
@@ -117,23 +117,23 @@ export const Cardpost: React.VFC<Props> = React.memo(
                     <Categori categori={categori} />
                     {netabare == 'ネタバレ有' ? (
                       <div>
-                        <dl className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                        <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
                           {netabare}
                         </dl>
                       </div>
                     ) : (
-                      <dl className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                      <dl className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
                         {netabare}
                       </dl>
                     )}
                   </div>
-                  <div className='w-80 m-auto' style={styles}></div>
-                  <div className='max-w-xs mt-3'>
+                  <div className='m-auto w-80' style={styles}></div>
+                  <div className='mt-3 max-w-xs'>
                     {selected &&
                       selected.map((tag, i) => (
                         // <Link href={`/post/tag/${tag}`} key={i}>
                         <span
-                          className='text-cyan-700 border border-cyan-700 rounded-xl py-1 px-2 text-center'
+                          className='rounded-xl border border-cyan-700 py-1 px-2 text-center text-cyan-700'
                           key={i}
                         >
                           #{tag}
@@ -148,10 +148,10 @@ export const Cardpost: React.VFC<Props> = React.memo(
                           <>
                             {email == user.email && (
                               <div key={user.id} className=''>
-                                <div className='my-2 py-4 flex m-auto'>
+                                <div className='m-auto my-2 flex py-4'>
                                   <dl className=''>
                                     <Avatar
-                                      className='m-auto text-center max-w-sm border'
+                                      className='m-auto max-w-sm border text-center'
                                       sx={{ width: 40, height: 40 }}
                                       alt='投稿者プロフィール'
                                       src={user.profileimage}

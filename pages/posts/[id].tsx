@@ -101,15 +101,15 @@ const Daitails = ({ post }) => {
           <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
           {post.fields.title.stringValue}
         </div>
-        <div className='flex justify-center my-6'>
+        <div className='my-6 flex justify-center'>
           <Image
-            className='m-auto text-center max-w-sm'
+            className='m-auto max-w-sm text-center'
             height={500}
             width={500}
             src={post.fields.downloadURL.stringValue}
           />
         </div>
-        <div className='text-2xl my-4'>{post.fields.title.stringValue}</div>
+        <div className='my-4 text-2xl'>{post.fields.title.stringValue}</div>
         <br></br>
         <div>
           <AccessTimeIcon /> 投稿日時：{post.fields.createtime.stringValue}
@@ -131,40 +131,40 @@ const Daitails = ({ post }) => {
         <div color='text.secondary'>
           {post.fields.categori.stringValue == 'ONEPIECE' && (
             <SiteCategory
-              className='bg-blue-500 p-1 inline-block text-white text-center m-6'
+              className='m-6 inline-block bg-blue-500 p-1 text-center text-white'
               text='ONE PIECE'
               href='/post/category/ONEPIECE'
             />
           )}
           {post.fields.categori.stringValue == '呪術廻戦' && (
             <SiteCategory
-              className='bg-purple-500 p-1 inline-block text-white text-center m-6'
+              className='m-6 inline-block bg-purple-500 p-1 text-center text-white'
               text='呪術廻戦'
               href='/post/category/呪術廻戦'
             />
           )}
           {post.fields.categori.stringValue == '東京リベンジャーズ' && (
             <SiteCategory
-              className='bg-rose-500 p-1 inline-block text-white text-center m-6'
+              className='m-6 inline-block bg-rose-500 p-1 text-center text-white'
               text='東京リベンジャーズ'
               href='/post/category/東京リベンジャーズ'
             />
           )}
           {post.fields.categori.stringValue == 'キングダム' && (
             <SiteCategory
-              className='bg-yellow-500 p-1 inline-block text-white text-center m-6'
+              className='m-6 inline-block bg-yellow-500 p-1 text-center text-white'
               text='キングダム'
               href='/post/category/キングダム'
             />
           )}
 
           {post.fields.netabare.stringValue == 'ネタバレ有' && (
-            <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
+            <span className='m-4 mt-2 inline-block bg-yellow-500 p-1 text-center text-white'>
               {post.fields.netabare.stringValue}
             </span>
           )}
           {post.fields.netabare.stringValue == 'ネタバレ無' && (
-            <span className='bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4'>
+            <span className='m-4 mt-2 inline-block bg-blue-500 p-1 text-center text-white'>
               {post.fields.netabare.stringValue}
             </span>
           )}
@@ -175,7 +175,7 @@ const Daitails = ({ post }) => {
           {post.fields.contextimage.stringValue && (
             <div className='flex justify-center'>
               <Image
-                className='m-auto text-center max-w-sm'
+                className='m-auto max-w-sm text-center'
                 height={500}
                 width={500}
                 src={post.fields.contextimage.stringValue}
@@ -193,11 +193,11 @@ const Daitails = ({ post }) => {
                   <>
                     <Link href={`/profile/${user.userid}`}>
                       <div key={user.userid}>
-                        <div className='bg-slate-200 my-8 py-8 flex m-auto'>
+                        <div className='m-auto my-8 flex bg-slate-200 py-8'>
                           <div key={user.id}>
                             <div>
                               <Avatar
-                                className='m-auto text-center max-w-sm border'
+                                className='m-auto max-w-sm border text-center'
                                 alt='プロフィール'
                                 sx={{ width: 100, height: 100 }}
                                 src={user.profileimage}
@@ -208,7 +208,7 @@ const Daitails = ({ post }) => {
                             <span className='text-xl'>
                               <AccountBoxIcon /> {user.username}
                             </span>
-                            <div className='text-xl my-2'>
+                            <div className='my-2 text-xl'>
                               <BorderColorIcon />
                               {user.bio}
                             </div>

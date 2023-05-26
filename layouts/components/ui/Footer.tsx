@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const Footer = () => (
-  <div className='text-center bg-sky-600 text-white py-4'>
+  <div className='bg-sky-600 py-4 text-center text-white'>
     Manga Study ©︎{new Date().getFullYear()}
   </div>
 )

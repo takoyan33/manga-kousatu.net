@@ -80,7 +80,7 @@ export default function Registerprofile() {
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h1>
         <p>詳細なプロフィールの記載をお願いします。</p>
         <div>
-          <label className='text-center my-4'>
+          <label className='my-4 text-center'>
             ユーザーの名前<span className='text-red-600'>*</span>
             （10文字以内）
           </label>
@@ -102,25 +102,25 @@ export default function Registerprofile() {
         </FormControl>
 
         <div>
-          <label className='text-center my-4'>
+          <label className='my-4 text-center'>
             ユーザー画像<span className='text-red-600'>*</span>
           </label>
         </div>
         <div className=''>
           <img
-            className='flex justify-center items-center m-auto w-60'
+            className='m-auto flex w-60 items-center justify-center'
             src={createObjectURL}
             alt='ユーザー画像'
           />
         </div>
-        <div className='text-center m-auto my-4'>
+        <div className='m-auto my-4 text-center'>
           <label
             htmlFor='file-input'
-            className='bg-primary-900 text-white-900 text-center m-auto dark:bg-dark-900 px-4 py-2 rounded mb-6 w-full'
+            className='bg-primary-900 text-white-900 dark:bg-dark-900 m-auto mb-6 w-full rounded px-4 py-2 text-center'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'
-              className='h-10 w-10 hover:cursor-pointer hover:bg-gray-700 text-center m-auto'
+              className='m-auto h-10 w-10 text-center hover:cursor-pointer hover:bg-gray-700'
               fill='none'
               viewBox='0 0 24 24'
               stroke='currentColor'
@@ -135,7 +135,7 @@ export default function Registerprofile() {
           </label>
           <input
             id='file-input'
-            className='hidden text-center m-auto'
+            className='m-auto hidden text-center'
             type='file'
             accept='image/*'
             name='myImage'
@@ -143,7 +143,7 @@ export default function Registerprofile() {
           />
         </div>
         <div>
-          <label className='text-center my-4'>
+          <label className='my-4 text-center'>
             プロフィール<span className='text-red-600'>*</span>（最大50文字）
           </label>
         </div>
@@ -156,7 +156,7 @@ export default function Registerprofile() {
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => setBio(event.target.value)}
         />
         <div>
-          <label className='text-center my-4'>
+          <label className='my-4 text-center'>
             好きな漫画<span className='text-red-600'>*</span>（最大10作品）
           </label>
         </div>
@@ -167,7 +167,7 @@ export default function Registerprofile() {
           placeHolder='タグを追加してください'
         />
         <div>
-          <Button variant='outlined' onClick={addDate} className='m-auto w-80 my-8'>
+          <Button variant='outlined' onClick={addDate} className='m-auto my-8 w-80'>
             新規登録
           </Button>
         </div>

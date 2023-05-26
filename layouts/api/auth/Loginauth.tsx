@@ -76,7 +76,7 @@ export default function Loginauth() {
         <>
           <ToastContainer />
           <div>
-            <label className='text-center my-4'>
+            <label className='my-4 text-center'>
               メールアドレス<span className='text-red-600'>*</span>
             </label>
           </div>
@@ -84,14 +84,14 @@ export default function Loginauth() {
             <TextField
               id='outlined-basic'
               label='sample@gmail.com'
-              className='m-auto w-80 mb-6'
+              className='m-auto mb-6 w-80'
               variant='outlined'
               {...register('email')}
               error={'email' in errors}
               helperText={errors.email?.message}
             />
             <div>
-              <label className='text-center my-4'>
+              <label className='my-4 text-center'>
                 パスワード（8文字以上)<span className='text-red-600'>*</span>
               </label>
             </div>
@@ -102,7 +102,7 @@ export default function Loginauth() {
               label='Password'
               variant='outlined'
               type='password'
-              className='m-auto w-80 mb-6'
+              className='m-auto mb-6 w-80'
               {...register('password')}
               error={'password' in errors}
               helperText={errors.password?.message}
@@ -112,13 +112,13 @@ export default function Loginauth() {
             href=''
             onClick={handleSubmit(handleSignIn)}
             text='ログイン'
-            className='m-auto text-center w-80 my-4'
+            className='m-auto my-4 w-80 text-center'
           />
           <SiteButton
             href=''
             text='Googleでログイン'
             onClick={SignInWithGoogle}
-            className='m-auto text-center w-80 my-4'
+            className='m-auto my-4 w-80 text-center'
           />
           <p className='my-4'>
             ユーザー未登録の方はこちら

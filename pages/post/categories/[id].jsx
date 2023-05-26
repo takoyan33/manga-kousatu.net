@@ -196,7 +196,7 @@ const Daitails = ({ post }) => {
           ))}
         </Select>
       </FormControl>
-      <div className='max-w-7xl m-auto'>
+      <div className='m-auto max-w-7xl'>
         <Grid container spacing={1}>
           {firedata
             .filter((data) => {
@@ -229,7 +229,7 @@ const Daitails = ({ post }) => {
               )
             })}
           {firedata.length == 0 && (
-            <p className='text-center m-auto my-6 text-2xl'>まだ投稿されていません</p>
+            <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
           )}
         </Grid>
       </div>

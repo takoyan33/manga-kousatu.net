@@ -8,7 +8,7 @@ function MyApp({ Component, pageProps }) {
     <AuthProvider>
       <>
         <Header />
-        <div className='max-w-5xl m-auto mt-10'>
+        <div className='m-auto mt-10 max-w-5xl'>
           <Component {...pageProps} />
         </div>
         <Footer />

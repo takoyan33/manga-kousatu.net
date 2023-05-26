@@ -69,7 +69,7 @@ export default function Photoedit() {
         現在のユーザー画像
         {user && (
           <Image
-            className='m-auto text-center max-w-sm'
+            className='m-auto max-w-sm text-center'
             height={100}
             width={100}
             src={user.photoURL}
@@ -87,13 +87,13 @@ export default function Photoedit() {
       >
         <div>
           <img
-            className='flex justify-center items-center m-auto  w-full'
+            className='m-auto flex w-full items-center  justify-center'
             src={createObjectURL}
             alt='画像'
           />
           <label
             htmlFor='file-input'
-            className='bg-primary-900 text-white-900 dark:bg-dark-900 flex justify-center items-center px-4 py-2 rounded mb-6 w-full'
+            className='bg-primary-900 text-white-900 dark:bg-dark-900 mb-6 flex w-full items-center justify-center rounded px-4 py-2'
           >
             <svg
               xmlns='http://www.w3.org/2000/svg'

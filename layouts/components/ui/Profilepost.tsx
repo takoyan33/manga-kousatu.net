@@ -14,7 +14,7 @@ export const Profilepost: React.VFC<Props> = React.memo(
   ({ id, profileimage, username, bio, favarite }) => {
     return (
       <div key={id}>
-        <p className='m-auto text-center max-w-sm'>
+        <p className='m-auto max-w-sm text-center'>
           <Image height={100} width={100} src={profileimage} />
         </p>
         <p className='m-5'>名前：{username}</p>

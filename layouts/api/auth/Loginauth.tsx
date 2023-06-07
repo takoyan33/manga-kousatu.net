@@ -1,19 +1,14 @@
-import {
-  getAuth,
-  signInWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-} from 'firebase/auth'
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { SiteButton } from '../../components/button'
+import { SiteButton } from 'layouts/components/button'
 import Link from 'next/link'
 import { Stack, TextField } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { notify, signupmissnotify } from '../../components/text/SiteModal'
+import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
 import { useLogin } from './useAuth'
 
 // フォームの型

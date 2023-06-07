@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useCallback } from 'react'
-import { app, database } from '../../../firebaseConfig.js'
+import { database } from 'firebaseConfig.js'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { getAuth, updateProfile, deleteUser } from 'firebase/auth'

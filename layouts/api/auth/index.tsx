@@ -10,7 +10,7 @@ import { Box, TextField } from '@mui/material'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { SiteButton } from '../../components/button'
+import { SiteButton } from 'layouts/components/button'
 
 // フォームの型
 interface SampleFormInput {

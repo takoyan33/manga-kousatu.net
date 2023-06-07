@@ -1,7 +1,7 @@
-import '../styles/globals.css'
+import 'styles/globals.css'
 import 'tailwindcss/tailwind.css'
-import { Header, Footer } from '../layouts/components/ui'
-import { AuthProvider } from '../layouts/context/AuthContext'
+import { Header, Footer } from 'layouts/components/ui'
+import { AuthProvider } from 'layouts/context/AuthContext'
 
 function MyApp({ Component, pageProps }) {
   return (

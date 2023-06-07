@@ -1,33 +1,40 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { database } from '../firebaseConfig'
+import { database } from 'firebaseConfig'
 import { collection, onSnapshot, getDocs } from 'firebase/firestore'
 import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { Cardpost } from '../layouts/components/ui/Cardpost'
-import { query, orderBy } from 'firebase/firestore'
-import { SiteButton } from '../layouts/components/button'
-import { SiteCategory } from '../layouts/components/text'
-import { useGetPosts } from '../layouts/components/hooks/useGetPosts'
-import { Categories, CommonHead } from '../layouts/components/ui'
+import { Cardpost } from 'layouts/components/ui/Cardpost'
+import { query, orderBy, where } from 'firebase/firestore'
+import { SiteButton } from 'layouts/components/button'
+import { SiteCategory } from 'layouts/components/text'
+import { useGetPosts } from 'layouts/components/hooks/useGetPosts'
+import { Categories, CommonHead } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import { Changetab } from '../layouts/components/ui/Changetab'
+import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 
 export default function Index() {
   const [firedata, setFiredata] = useState([])
   const databaseRef = collection(database, 'posts')
+  //新しい順
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
 
-  //新しい順
-  const u = query(databaseRef, orderBy('timestamp'))
   //古い順
-  const f = query(databaseRef, orderBy('likes', 'desc'))
+  const u = query(databaseRef, orderBy('timestamp'))
+
   //いいね数順
+  const f = query(databaseRef, orderBy('likes', 'desc'))
+
+  //ネタバレ有り
+  const n = query(databaseRef, where('netabare', '==', 'ネタバレ有'))
+  //ネタバレ無し
+  const none = query(databaseRef, where('netabare', '==', 'ネタバレ無'))
+
   const [searchName, setSearchName] = useState('')
   const [loadIndex, setLoadIndex] = useState(6)
   const [isEmpty, setIsEmpty] = useState(false)
@@ -36,7 +43,7 @@ export default function Index() {
   const auth = getAuth()
   const user = auth.currentUser
 
-  // 新着順…
+  // 新着順
   const getallPost = async () => {
     console.log(loading)
     await onSnapshot(q, (querySnapshot) => {
@@ -55,6 +62,20 @@ export default function Index() {
   //いいね順
   const getallLikepost = async () => {
     await onSnapshot(f, (querySnapshot) => {
+      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
+  //ネタバレ有
+  const getallNetabrepost = async () => {
+    await onSnapshot(n, (querySnapshot) => {
+      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    })
+  }
+
+  //ネタバレ無
+  const getallNetabrenonepost = async () => {
+    await onSnapshot(none, (querySnapshot) => {
       setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
@@ -95,12 +116,12 @@ export default function Index() {
     {
       label: 'ネタバレ有',
       value: 'ネタバレ有',
-      onClick: getallPost,
+      onClick: getallNetabrepost,
     },
     {
       label: 'ネタバレ無',
       value: 'ネタバレ無',
-      onClick: getallOldpost,
+      onClick: getallNetabrenonepost,
     },
   ]
 
@@ -120,6 +141,18 @@ export default function Index() {
           <SiteButton href='/post/new' text='新規投稿をする' className='w-50 m-auto my-2' />
         </div>
       )}
+      <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
+      <p className='text-1xl text-center'>
+        {searchName === ''
+          ? `投稿数 ${firedata.length}件`
+          : `検索結果 ${
+              firedata.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
+                .length
+            }件`}
+      </p>
+
+      <h2 className='my-12 text-center text-xl font-semibold'>カテゴリー</h2>
+
       {Categories.map((categori) => {
         // userの情報
         const CategoriesInfo = {
@@ -144,15 +177,6 @@ export default function Index() {
           </span>
         )
       })}
-      <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
-      <p className='text-1xl text-center'>
-        {searchName === ''
-          ? `投稿数 ${firedata.length}件`
-          : `検索結果 ${
-              firedata.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
-                .length
-            }件`}
-      </p>
       <div className='m-auto my-10 flex justify-center'>
         <TextField
           id='outlined-basic'
@@ -175,6 +199,7 @@ export default function Index() {
           </Select>
         </FormControl>
       </div>
+
       <div className='flex justify-end'>
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
           <InputLabel id='demo-select-small'>新しい順</InputLabel>
@@ -191,7 +216,7 @@ export default function Index() {
 
       <Grid container className='m-auto'>
         {firedata.length === 0 ? (
-          <p className='my-2 text-center'>読み込み中・・・</p>
+          <p className='my-2 text-center'>記事がありません。</p>
         ) : firedata.filter((data) => {
             if (searchName === '') {
               return data

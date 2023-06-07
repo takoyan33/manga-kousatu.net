@@ -2,14 +2,14 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { database } from '../../../firebaseConfig'
+import { database } from 'firebaseConfig'
 import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 import TextField from '@mui/material/TextField'
 import { getAuth } from 'firebase/auth'
 import Grid from '@material-ui/core/Grid'
 import { query, orderBy } from 'firebase/firestore'
-import { SiteButton } from '../../../layouts/components/button'
-import { Cardpost, CommonHead } from '../../../layouts/components/ui'
+import { SiteButton } from 'layouts/components/button'
+import { Cardpost, CommonHead } from 'layouts/components/ui'
 
 const Category = () => {
   const databaseRef = collection(database, 'posts')

@@ -1,4 +1,3 @@
-import Loginauth from '../layouts/api/auth/Loginauth'
 import { CommonHead } from '../layouts/components/ui/CommonHead'
 import { SiteButton } from '../layouts/components/button'
 

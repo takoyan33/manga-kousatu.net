@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { database } from '../../firebaseConfig'
+import { database } from 'firebaseConfig'
 import {
   collection,
   getDocs,
@@ -14,12 +14,12 @@ import {
   deleteDoc,
   arrayUnion,
 } from 'firebase/firestore'
-import { TextField, Box, FormLabel, Button, Avatar } from '@mui/material'
+import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
-import { SiteButton } from '../../layouts/components/button'
-import { SiteCategory } from '../../layouts/components/text'
-import { CommonHead, Cardpost } from '../../layouts/components/ui'
+import { SiteButton } from 'layouts/components/button'
+import { SiteCategory } from 'layouts/components/text'
+import { CommonHead, Cardpost } from 'layouts/components/ui'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -28,12 +28,10 @@ import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import { notify, signupmissnotify } from '../../layouts/components/text/SiteModal'
+import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
-import Categori from '../../layouts/components/text/Categori'
-import green from '@material-ui/core/colors/green'
 
 // バリデーションルール
 const schema = yup.object({
@@ -212,7 +210,7 @@ const Post = () => {
       <ToastContainer />
       <div>
         <div>
-          <div className='lg:w-full my-4'>
+          <div className='my-4 lg:w-full'>
             {user && (
               <>
                 {user.email == recfiredata.email && (
@@ -223,33 +221,33 @@ const Post = () => {
                         state: { data: recfiredata },
                       }}
                     >
-                      <SiteButton href='' text='更新する' className=' my-2 m-4' />
+                      <SiteButton href='' text='更新する' className=' m-4 my-2' />
                     </Link>
 
                     <SiteButton
                       href=''
                       text='削除する'
-                      className=' my-2 m-4'
+                      className=' m-4 my-2'
                       onClick={deleteDocument}
                     />
                   </div>
                 )}
               </>
             )}
-            <div className='border p-10 rounded-xl '>
+            <div className='rounded-xl border p-10 '>
               <div>
                 <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
                 {recfiredata.title}
               </div>
-              <div className='flex justify-center my-6'>
+              <div className='my-6 flex justify-center'>
                 <Image
-                  className='m-auto text-center max-w-sm'
+                  className='m-auto max-w-sm text-center'
                   height={400}
                   width={400}
                   src={recfiredata.downloadURL}
                 />
               </div>
-              <div className='text-2xl my-4 font-semibold'>{recfiredata.title}</div>
+              <div className='my-4 text-2xl font-semibold'>{recfiredata.title}</div>
               <br></br>
               <div>
                 <span className='text-gray-500'>
@@ -267,11 +265,11 @@ const Post = () => {
                       {recfiredata.email === user.email && (
                         <Link href={`/profile/${user.userid}`}>
                           <div key={user.userid}>
-                            <div className='my-4 flex m-auto  px-2'>
+                            <div className='m-auto my-4 flex  px-2'>
                               <div key={user.id}>
                                 <div>
                                   <Avatar
-                                    className='m-auto text-center max-w-sm border'
+                                    className='m-auto max-w-sm border text-center'
                                     alt='プロフィール'
                                     sx={{ width: 60, height: 60 }}
                                     src={user.profileimage}
@@ -280,7 +278,7 @@ const Post = () => {
                               </div>
                               <div className='ml-6 mt-1'>
                                 <span className='text-sm'>{user.username}</span>
-                                <div className='text-sm mt-2 pb-2 text-gray-500'>{user.bio}</div>
+                                <div className='mt-2 pb-2 text-sm text-gray-500'>{user.bio}</div>
                               </div>
                             </div>
                           </div>
@@ -299,7 +297,7 @@ const Post = () => {
               {recfiredata.selected &&
                 recfiredata.selected.map((tag, i) => (
                   <span
-                    className='text-cyan-700 border border-cyan-700 rounded-xl py-1 px-2 text-center'
+                    className='rounded-xl border border-cyan-700 py-1 px-2 text-center text-cyan-700'
                     key={i}
                   >
                     #{tag}
@@ -331,18 +329,18 @@ const Post = () => {
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
                       }[recfiredata.categori]
-                    }-700 p-1 inline-block font-bold  border rounded-xl text-center  hover:text-white my-4`}
+                    }-700 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
                     text={recfiredata.categori}
                     href={`/post/categories/${recfiredata.categori}`}
                   />
                 )}
 
                 {recfiredata.netabare == 'ネタバレ有' ? (
-                  <span className='text-red-500 border border-red-500 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                  <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
                     {recfiredata.netabare}
                   </span>
                 ) : (
-                  <span className='text-gray-500 border border-gray-700 rounded-xl mx-1 mt-1 p-1 inline-block text-center'>
+                  <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
                     {recfiredata.netabare}
                   </span>
                 )}
@@ -357,7 +355,7 @@ const Post = () => {
               {recfiredata.contextimage && (
                 <div className='flex justify-center'>
                   <Image
-                    className='m-auto text-center max-w-sm'
+                    className='m-auto max-w-sm text-center'
                     height={300}
                     width={300}
                     src={recfiredata.contextimage}
@@ -378,10 +376,10 @@ const Post = () => {
                     <button
                       href=''
                       text='いいねする'
-                      className='inline my-2 m-4'
+                      className='m-4 my-2 inline'
                       onClick={() => LikeAdd(routerid, recfiredata.likes)}
                     >
-                      <span className='text-pink-400 hover:text-pink-700 p-4'>
+                      <span className='p-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
                         いいね
                       </span>
@@ -392,21 +390,21 @@ const Post = () => {
                 ))}
               {user && (
                 <section className='bg-white py-8 lg:py-16'>
-                  <div className='max-w-2xl mx-auto px-4'>
-                    <div className='flex justify-between items-center mb-6'>
-                      <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
+                  <div className='mx-auto max-w-2xl px-4'>
+                    <div className='mb-6 flex items-center justify-between'>
+                      <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
                         コメント ({comments.length})
                       </h2>
                     </div>
                     <form className='mb-6'>
-                      <div className='py-2 px-4 mb-4 bg-white rounded-lg rounded-t-lg border border-gray-200  dark:border-gray-700'>
+                      <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
                         <label for='comment' className='sr-only'>
                           あなたのコメント
                         </label>
                         <textarea
                           id='comment'
                           rows='6'
-                          className='px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none  dark:placeholder-gray-400 '
+                          className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
                           placeholder='コメントを入力してください'
                           required
                           {...register('comment')}
@@ -418,7 +416,7 @@ const Post = () => {
                       <button
                         type='submit'
                         onClick={handleSubmit(addComment)}
-                        className='py-2.5 px-4 text-xs font-medium text-center rounded-lg focus:ring-4 focus:ring-primary-200  hover:bg-primary-800 m-auto'
+                        className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
                       >
                         コメントする
                       </button>
@@ -432,16 +430,16 @@ const Post = () => {
                   <button
                     href=''
                     text='いいねする'
-                    className='inline my-2 m-4'
+                    className='m-4 my-2 inline'
                     onClick={() => notify('ログインするといいねができます')}
                   >
-                    <span className='text-pink-400 hover:text-pink-700 p-4'>
+                    <span className='p-4 text-pink-400 hover:text-pink-700'>
                       <FavoriteIcon />
                       いいね
                     </span>
                   </button>
-                  <div className='flex justify-between items-center mb-6'>
-                    <h2 className='text-lg lg:text-2xl font-bold text-gray-900 '>
+                  <div className='mb-6 flex items-center justify-between'>
+                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
                       コメント ({comments.length})
                     </h2>
                     <p className='my-6'>ログインするとコメントできます</p>
@@ -453,12 +451,12 @@ const Post = () => {
                 comments.map((comment) => {
                   return (
                     <article
-                      className='p-6 mb-6 text-base border bg-white rounded-lg'
+                      className='mb-6 rounded-lg border bg-white p-6 text-base'
                       key={comment.id}
                     >
-                      <footer className='flex justify-between items-center mb-2'>
+                      <footer className='mb-2 flex items-center justify-between'>
                         <div className='flex items-center'>
-                          <p className='inline-flex items-center mr-3 text-sm text-gray-900 '>
+                          <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
                             {comment.username}
                           </p>
                           <p className='text-sm text-gray-600 dark:text-gray-400'>
@@ -481,11 +479,11 @@ const Post = () => {
                         {recfiredata.email === user.email && (
                           <Link href={`/profile/${user.userid}`}>
                             <div key={user.userid}>
-                              <div className='border my-8 py-8 flex m-auto  px-2'>
+                              <div className='m-auto my-8 flex border py-8  px-2'>
                                 <div key={user.id}>
                                   <div>
                                     <Avatar
-                                      className='m-auto text-center max-w-sm border'
+                                      className='m-auto max-w-sm border text-center'
                                       alt='プロフィール'
                                       sx={{ width: 80, height: 80 }}
                                       src={user.profileimage}

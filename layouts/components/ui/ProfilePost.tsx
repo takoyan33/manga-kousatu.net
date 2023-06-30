@@ -10,7 +10,7 @@ interface Props {
 }
 
 // eslint-disable-next-line react/display-name
-export const Profilepost: React.VFC<Props> = React.memo(
+export const ProfilePost: React.VFC<Props> = React.memo(
   ({ id, profileimage, username, bio, favarite }) => {
     return (
       <div key={id}>

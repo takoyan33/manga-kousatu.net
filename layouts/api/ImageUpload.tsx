@@ -1,7 +1,4 @@
-import React from 'react'
-import Link from 'next/link'
-import { useEffect, useState } from 'react'
-import { app, database } from '../../firebaseConfig'
+import React, { useEffect, useState } from 'react'
 import { postImage } from './upload'
 
 export default function UploadImage() {

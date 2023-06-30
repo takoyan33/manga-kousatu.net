@@ -1,7 +1,7 @@
 import React from 'react'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 
-const releases = [
+const RELEASE_NOTES = [
   {
     version: '1.9',
     date: '2023年3月30日',
@@ -65,7 +65,7 @@ function RealseNotes() {
     <div>
       <CommonHead />
       <h1 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - リリースノート</h1>
-      {releases.map(({ version, date, features }) => (
+      {RELEASE_NOTES.map(({ version, date, features }) => (
         <div key={version}>
           <h2 className='my-4 mt-8 text-xl font-semibold'>Manga Study {version}</h2>
           <p>{date}</p>

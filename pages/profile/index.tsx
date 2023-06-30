@@ -1,23 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CommonHead } from 'layouts/components/ui'
-import { Profileid } from 'layouts/components/ui/Profileid'
-import { CardPost } from 'layouts/components/ui/CardPost'
+import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import DraftsIcon from '@mui/icons-material/Drafts'
 import SendIcon from '@mui/icons-material/Send'
-import { query, where } from 'firebase/firestore'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
@@ -284,7 +280,7 @@ export default function Profile() {
           users.map((data) => {
             return (
               <>
-                <Profileid
+                <ProfileId
                   key={data.id}
                   profileimage={data.profileimage}
                   username={data.username}

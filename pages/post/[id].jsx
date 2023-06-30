@@ -31,7 +31,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { notify, errorNotify } from 'layouts/components/text/SiteModal'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
@@ -159,7 +159,7 @@ const Post = () => {
           getallPost()
         })
         .catch((err) => {
-          signupmissnotify('失敗しました')
+          errorNotify('失敗しました')
         })
     } else {
       setTimeout(() => {
@@ -182,7 +182,7 @@ const Post = () => {
         getPost()
       })
       .catch((err) => {
-        signupmissnotify('失敗しました')
+        errorNotify('失敗しました')
         console.log(err)
       })
   }

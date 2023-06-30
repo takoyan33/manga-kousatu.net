@@ -15,9 +15,9 @@ import {
 } from '@mui/material'
 import { TagsInput } from 'react-tag-input-component'
 import 'react-toastify/dist/ReactToastify.css'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text/SiteModal'
 
 export default function Registerprofile() {
   const [selected, setSelected] = useState(['ワンピース'])
@@ -60,13 +60,13 @@ export default function Registerprofile() {
         admin: 0,
       })
         .then(() => {
-          notify('プロフィールの登録が完了しました！')
+          successNotify('プロフィールの登録が完了しました！')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
         })
         .catch((err) => {
-          signupmissnotify('登録に失敗しました！')
+          errorNotify('登録に失敗しました！')
           console.error(err)
         })
     }

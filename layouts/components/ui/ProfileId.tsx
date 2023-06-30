@@ -13,10 +13,10 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const Profileid: React.VFC<Props> = React.memo(
+export const ProfileId: React.VFC<Props> = React.memo(
   ({ id, profileimage, username, bio, favorite }) => {
     return (
-      <div className=''>
+      <>
         <h2 className='m-5 my-12 text-center text-2xl font-semibold'>
           {username} さんのプロフィール
         </h2>
@@ -54,7 +54,7 @@ export const Profileid: React.VFC<Props> = React.memo(
           </h2>
           <p className='m-5'>{bio}</p>
         </div>
-      </div>
+      </>
     )
   },
 )

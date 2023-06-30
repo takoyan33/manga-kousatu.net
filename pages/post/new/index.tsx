@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
-import { collection, onSnapshot, setDoc, doc, serverTimestamp } from 'firebase/firestore'
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  doc,
+  serverTimestamp,
+  query,
+  orderBy,
+} from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { TextField, Box, FormLabel } from '@mui/material'
 import { postImage } from 'layouts/api/upload'
@@ -11,13 +19,12 @@ import ImageUpload from 'packages/utils/ImageUpload'
 import ImageUploadContext from 'packages/utils/ImageUploadContext'
 import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from 'layouts/components/ui'
-import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/Formcontrols'
+import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useAuthContext } from 'layouts/context/AuthContext'
-import { query, orderBy } from 'firebase/firestore'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -111,7 +118,7 @@ export default function Post() {
     // 処理中フラグを上げる
     setProcessing(true)
     if (image == null) {
-      signupmissnotify('サムネイルを選んでください')
+      errorNotify('サムネイルを選んでください')
     } else {
       const result = await postImage(image)
       //写真のurlをセットする
@@ -140,7 +147,7 @@ export default function Post() {
         likes: 0,
       })
         .then(() => {
-          notify('記事投稿ができました！')
+          successNotify('記事投稿ができました！')
           setProcessing(false)
           setContext('')
           setPhotoURL('')
@@ -151,7 +158,7 @@ export default function Post() {
           }, 2000)
         })
         .catch((err) => {
-          signupmissnotify('記事投稿に失敗しました！')
+          errorNotify('記事投稿に失敗しました！')
           console.error(err)
         })
     }

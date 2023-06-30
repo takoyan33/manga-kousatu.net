@@ -7,7 +7,7 @@ type Props = {
 }
 
 //React.memo化
-const Openbutton: React.VFC<Props> = React.memo(({ text, onClick }) => {
+const OpenButton: React.VFC<Props> = React.memo(({ text, onClick }) => {
   return (
     <div>
       <button
@@ -21,4 +21,4 @@ const Openbutton: React.VFC<Props> = React.memo(({ text, onClick }) => {
   )
 })
 
-export default Openbutton
+export default OpenButton

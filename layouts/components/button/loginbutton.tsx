@@ -8,7 +8,7 @@ type Context = {
 }
 
 // eslint-disable-next-line react/display-name
-export const Loginbutton = React.memo(() => {
+export const LoginButton = React.memo(() => {
   // const loginContext = useContext<Context>(LoginContext);
   return (
     <div>

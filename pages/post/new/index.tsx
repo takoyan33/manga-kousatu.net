@@ -1,16 +1,14 @@
 import { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
-import { collection, onSnapshot, setDoc, doc } from 'firebase/firestore'
+import { collection, onSnapshot, setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { TextField, Box, FormLabel } from '@mui/material'
 import { postImage } from 'layouts/api/upload'
 import { postContextImage } from 'layouts/api/uploadcontext'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import { serverTimestamp } from 'firebase/firestore'
-import 'firebase/firestore'
 import 'moment/locale/ja'
-import Imageupload from 'packages/utils/Imageupload'
-import Imageuploadcontext from 'packages/utils/Imageuploadcontext'
+import ImageUpload from 'packages/utils/ImageUpload'
+import ImageUploadContext from 'packages/utils/ImageUploadContext'
 import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from 'layouts/components/ui'
 import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/Formcontrols'
@@ -29,7 +27,7 @@ import { stateToHTML } from 'draft-js-export-html'
 import { EditorState, ContentState } from 'draft-js'
 
 // フォームの型
-type SampleFormInput = {
+type FormInput = {
   title: string
   categori: string
   netabare: string
@@ -72,7 +70,7 @@ export default function Post() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<SampleFormInput>({
+  } = useForm<FormInput>({
     resolver: yupResolver(schema),
   })
 
@@ -107,7 +105,7 @@ export default function Post() {
     toLocaleString(timeZone): string
   }
 
-  const addDate: SubmitHandler<SampleFormInput> = async (data) => {
+  const addDate: SubmitHandler<FormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる
@@ -189,7 +187,7 @@ export default function Post() {
         autoComplete='off'
       >
         <div>
-          <Imageupload
+          <ImageUpload
             onChange={uploadToClient}
             createObjectURL={createObjectURL}
             text=''
@@ -294,7 +292,7 @@ export default function Post() {
           <div>
             <p>他の写真（最大1枚）</p>
           </div>
-          <Imageuploadcontext
+          <ImageUploadContext
             onChange={uploadToClientcontext}
             createcontextObjectURL={createcontextObjectURL}
             text={'写真'}

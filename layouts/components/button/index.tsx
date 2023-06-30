@@ -1,3 +1,3 @@
-export * from './loginbutton'
-export * from './Openbutton'
+export * from './LoginButton'
+export * from './OpenButton'
 export * from './SiteButton'

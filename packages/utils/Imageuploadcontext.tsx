@@ -9,7 +9,7 @@ type Props = {
 };
 
 //React.memo化
-const Imageuploadcontext: React.VFC<Props> = ({
+const ImageUploadContext: React.VFC<Props> = ({
   onChange,
   createcontextObjectURL,
 }) => {
@@ -38,4 +38,4 @@ const Imageuploadcontext: React.VFC<Props> = ({
   );
 };
 
-export default Imageuploadcontext;
+export default ImageUploadContext

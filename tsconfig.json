@@ -31,7 +31,7 @@
     "layouts/api/auth/SignUp.tsx",
     "pages/profile/index.tsx",
     "pages/post/[postId].jsx",
-    "layouts/components/button/loginbutton.tsx",
+    "layouts/components/button/LoginButton.tsx",
     "pages/post/title/[title].jsx",
     "pages/edit.jsx",
     "layouts/components/MuiNavbar.jsx",

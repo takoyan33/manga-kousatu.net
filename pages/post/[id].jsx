@@ -13,22 +13,24 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  query,
+  orderBy,
+  where,
 } from 'firebase/firestore'
 import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
-import { CommonHead, Cardpost } from 'layouts/components/ui'
+import { CommonHead, CardPost } from 'layouts/components/ui'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { query, orderBy, where } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { useForm } from 'react-hook-form'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
@@ -46,10 +48,9 @@ const Post = () => {
   const [recfiredata, setRecfiredata] = useState([])
   const [likecount, setLikecount] = useState(0)
   const usersRef = collection(database, 'users')
-  const [userid, setUserid] = useState(null)
 
   const router = useRouter()
-  const routerid = router.query.id
+  const routerId = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
@@ -64,7 +65,7 @@ const Post = () => {
 
   const getPost = async () => {
     try {
-      const ref = await doc(database, 'posts', routerid)
+      const ref = await doc(database, 'posts', routerId)
       const snap = await getDoc(ref)
       setRecfiredata(snap.data())
       console.log('recfiredata', recfiredata)
@@ -75,7 +76,7 @@ const Post = () => {
 
   const getallComment = async () => {
     const commentseRef = collection(database, 'comments')
-    const c = await query(commentseRef, where('postid', '==', routerid))
+    const c = await query(commentseRef, where('postid', '==', routerId))
     try {
       const querySnapshot = await getDocs(c)
       const allcomments = querySnapshot.docs.map((doc) => ({
@@ -142,21 +143,21 @@ const Post = () => {
 
   const deleteDocument = () => {
     //data.idを送っているのでidを受け取る
-    let deletepost = doc(database, 'posts', routerid)
+    let deletepost = doc(database, 'posts', routerId)
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     if (checkSaveFlg) {
       deleteDoc(deletepost)
         //記事を削除する
         .then(() => {
-          notify('記事を削除しました')
+          successNotify('記事を削除しました')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
           getallPost()
         })
         .catch((err) => {
-          signupmissnotify('失敗しました')
+          errorNotify('失敗しました')
         })
     } else {
       setTimeout(() => {
@@ -165,9 +166,9 @@ const Post = () => {
     }
   }
 
-  const LikeAdd = (routerid, likes) => {
-    console.log(routerid)
-    let fieldToEdit = doc(database, 'posts', routerid)
+  const LikeAdd = (routerId, likes) => {
+    console.log(routerId)
+    let fieldToEdit = doc(database, 'posts', routerId)
     updateDoc(fieldToEdit, {
       likes: likes + 1,
       likes_email: arrayUnion(user.email),
@@ -175,17 +176,17 @@ const Post = () => {
       .then(() => {
         console.log(user.email)
         setLikecount(0)
-        notify('成功しました')
+        successNotify('成功しました')
         getPost()
       })
       .catch((err) => {
-        signupmissnotify('失敗しました')
+        errorNotify('失敗しました')
         console.log(err)
       })
   }
   const addComment = async (data) => {
     const newdate = new Date().toLocaleString('ja-JP')
-    const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())
+    const postRef = await doc(database, 'comments', routerId + (comments.length + 1).toString())
 
     await setDoc(postRef, {
       comment: data.comment,
@@ -193,14 +194,14 @@ const Post = () => {
       postid: recfiredata.id,
       username: user.displayName,
       createtime: newdate,
-      id: routerid + (comments.length + 1).toString(),
+      id: routerId + (comments.length + 1).toString(),
     })
       .then(() => {
-        notify('コメントを投稿しました')
+        successNotify('コメントを投稿しました')
         getallComment()
       })
       .catch((err) => {
-        notify('コメントを投稿しました')
+        successNotify('コメントを投稿しました')
       })
   }
 
@@ -377,7 +378,7 @@ const Post = () => {
                       href=''
                       text='いいねする'
                       className='m-4 my-2 inline'
-                      onClick={() => LikeAdd(routerid, recfiredata.likes)}
+                      onClick={() => LikeAdd(routerId, recfiredata.likes)}
                     >
                       <span className='p-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
@@ -431,7 +432,7 @@ const Post = () => {
                     href=''
                     text='いいねする'
                     className='m-4 my-2 inline'
-                    onClick={() => notify('ログインするといいねができます')}
+                    onClick={() => successNotify('ログインするといいねができます')}
                   >
                     <span className='p-4 text-pink-400 hover:text-pink-700'>
                       <FavoriteIcon />
@@ -515,7 +516,7 @@ const Post = () => {
                 <Grid container spacing={1}>
                   {recfiredata.map((data) => {
                     return (
-                      <Cardpost
+                      <CardPost
                         key={data.id}
                         downloadURL={data.downloadURL}
                         title={data.title}

@@ -2,19 +2,27 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { database } from '../../../firebaseConfig'
-import { collection, getDocs, doc, updateDoc } from 'firebase/firestore'
+import { database } from 'firebaseConfig'
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc,
+  query,
+  orderBy,
+  limit,
+  where,
+} from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import Button from '@mui/material/Button'
-import { postImage } from '../../../layouts/api/upload'
+import { postImage } from 'layouts/api/upload'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { query, orderBy, limit, where } from 'firebase/firestore'
 import Image from 'react-image-resizer'
 import { TagsInput } from 'react-tag-input-component'
-import { CommonHead } from '../../../layouts/components/ui/CommonHead'
-import { useAuthContext } from '../../../layouts/context/AuthContext'
-import { notify, signupmissnotify } from '../../../layouts/components/text/SiteModal'
+import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { useAuthContext } from 'layouts/context/AuthContext'
+import { successNotify, errorNotify } from 'layouts/components/text'
 
 export default function Edit() {
   const [image, setImage] = useState<string>()
@@ -80,11 +88,11 @@ export default function Edit() {
       email: user.email,
       profileimage: result,
       userid: user.uid,
-      favarite: selected,
+      favorite: selected,
       //改行を保存する
     })
       .then(() => {
-        notify('ユーザー情報が更新されました')
+        successNotify('ユーザー情報が更新されました')
         setUsername('')
         setBio('')
         setTimeout(() => {
@@ -92,7 +100,7 @@ export default function Edit() {
         }, 2000)
       })
       .catch((err) => {
-        signupmissnotify('ユーザー情報が更新に失敗しました')
+        errorNotify('ユーザー情報が更新に失敗しました')
         console.log(err)
       })
   }
@@ -198,12 +206,12 @@ export default function Edit() {
                     </div>
                     <br></br>
                     <p className='my-4 text-center'>
-                      現在の好きな漫画： <span>{data.favarite}</span>
+                      現在の好きな漫画： <span>{data.favorite}</span>
                     </p>
                     <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
                     <div className='m-auto w-80 text-center'>
                       <TagsInput
-                        value={data.favarite}
+                        value={data.favorite}
                         onChange={setSelected}
                         name='selected'
                         placeHolder='タグを追加してください'

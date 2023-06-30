@@ -81,7 +81,7 @@ export const useLogout = () => {
   const logout = () => {
     signOut(auth)
       .then(() => {
-        console.log('Sign-out successful.')
+        alert('ログアウトに成功しました')
       })
       .catch((err) => {
         console.log(err.message)

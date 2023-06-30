@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { database } from '../../firebaseConfig'
+import { database } from 'firebaseConfig'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { CommonHead, Profileid, Cardpost } from '../../layouts/components/ui'
+import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
 
 const Post = () => {
@@ -11,17 +11,16 @@ const Post = () => {
   const postsRef = collection(database, 'posts')
   const [firedata, setFiredata] = useState([])
   const usersRef = collection(database, 'users')
-  const [likes, setLikes] = useState(null)
   const router = useRouter()
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
-  const userpost = query(postsRef, where('userid', '==', userid))
-  const yourprofile = query(usersRef, where('userid', '==', userid))
+  const userPost = query(postsRef, where('userid', '==', userid))
+  const yourProfile = query(usersRef, where('userid', '==', userid))
 
   const fetchPosts = async () => {
     try {
-      const querySnapshot = await getDocs(userpost)
+      const querySnapshot = await getDocs(userPost)
       const posts = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -48,7 +47,7 @@ const Post = () => {
   const fetchUserProfile = async () => {
     //firestoreからデータ取得
     try {
-      const querySnapshot = await getDocs(yourprofile)
+      const querySnapshot = await getDocs(yourProfile)
       const userData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
@@ -68,12 +67,12 @@ const Post = () => {
             return (
               <>
                 {userid == user.userid && (
-                  <Profileid
+                  <ProfileId
                     key={user.id}
                     profileimage={user.profileimage}
                     username={user.username}
                     bio={user.bio}
-                    favorite={user.favarite}
+                    favorite={user.favorite}
                     id={user.id}
                   />
                 )}
@@ -88,7 +87,7 @@ const Post = () => {
           firedata.map((data) => {
             return (
               <>
-                <Cardpost
+                <CardPost
                   key={data.id}
                   downloadURL={data.downloadURL}
                   title={data.title}

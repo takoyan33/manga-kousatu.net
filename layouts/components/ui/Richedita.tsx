@@ -4,11 +4,11 @@ import { EditorState, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import { stateToHTML } from 'draft-js-export-html'
 
-type RicheditaProps = {
+type RichEditaProps = {
   onChange: (plainText: string, html: string) => void
 }
 
-export const RichEdita: React.VFC<RicheditaProps> = ({ onChange }) => {
+export const RichEdita: React.VFC<RichEditaProps> = ({ onChange }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   const handleEditorChange = (editorState: EditorState) => {

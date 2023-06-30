@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { Stack, TextField } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { useLogin } from './useAuth'
 
 // フォームの型
@@ -41,12 +41,12 @@ export default function Loginauth() {
   const handleSignIn: SubmitHandler<SampleFormInput> = async (data: any) => {
     try {
       await login(data.email, data.password)
-      notify('ログインしました')
+      successNotify('ログインしました')
       setTimeout(() => {
         router.push('/')
       }, 2000)
     } catch (e) {
-      signupmissnotify('ログインに失敗しました')
+      errorNotify('ログインに失敗しました')
       console.log(e)
     }
   }
@@ -54,13 +54,13 @@ export default function Loginauth() {
   const SignInWithGoogle = async () => {
     await signInWithPopup(auth, googleProvider)
       .then(() => {
-        notify('ログインしました')
+        successNotify('ログインしました')
         setTimeout(() => {
           router.push('/')
         }, 2000)
       })
       .catch((e) => {
-        signupmissnotify('ログインに失敗しました')
+        errorNotify('ログインに失敗しました')
         console.log(e)
       })
   }

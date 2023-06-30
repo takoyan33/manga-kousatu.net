@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export const notify = (text: string) =>
+export const successNotify = (text: string) =>
   toast.success(text, {
     position: 'top-center',
     autoClose: 5000,
@@ -13,7 +13,7 @@ export const notify = (text: string) =>
     theme: 'light',
   })
 
-export const signupmissnotify = (text: string) =>
+export const errorNotify = (text: string) =>
   toast.error(text, {
     position: 'top-center',
     autoClose: 5000,

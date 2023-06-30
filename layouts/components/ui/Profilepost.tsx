@@ -6,12 +6,12 @@ interface Props {
   profileimage: string
   username: string
   bio: string
-  favarite: string[]
+  favorite: string[]
 }
 
 // eslint-disable-next-line react/display-name
 export const ProfilePost: React.VFC<Props> = React.memo(
-  ({ id, profileimage, username, bio, favarite }) => {
+  ({ id, profileimage, username, bio, favorite }) => {
     return (
       <div key={id}>
         <p className='m-auto max-w-sm text-center'>
@@ -19,7 +19,7 @@ export const ProfilePost: React.VFC<Props> = React.memo(
         </p>
         <p className='m-5'>名前：{username}</p>
         <p className='m-5'>プロフィール：{bio}</p>
-        <p className='m-5'>好きな漫画：{favarite.join(', ')}</p>
+        <p className='m-5'>好きな漫画：{favorite.join(', ')}</p>
       </div>
     )
   },

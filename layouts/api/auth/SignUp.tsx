@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { Stack, TextField } from '@mui/material'
 import { useSignup } from './useAuth'
 
@@ -45,13 +45,13 @@ export default function SignUp() {
   const handleSignUp = async (data: SampleFormInput) => {
     const { email, password } = data
     await signup(email, password)
-    notify('ユーザー登録完了しました')
+    successNotify('ユーザー登録完了しました')
     setTimeout(() => {
       router.push('/registerprofile')
     }, 2000)
 
     if (error) {
-      signupmissnotify('ユーザー登録失敗しました')
+      errorNotify('ユーザー登録失敗しました')
     }
   }
 
@@ -60,13 +60,13 @@ export default function SignUp() {
     await signInWithPopup(auth, googleProvider)
       .then(() => {
         //googleで登録する
-        notify('ユーザー登録完了しました')
+        successNotify('ユーザー登録完了しました')
         setTimeout(() => {
           router.push('/registerprofile')
         }, 2000)
       })
       .catch(() => {
-        signupmissnotify('ユーザー登録失敗しました')
+        errorNotify('ユーザー登録失敗しました')
       })
   }
 

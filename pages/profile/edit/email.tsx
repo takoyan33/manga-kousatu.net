@@ -1,13 +1,12 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
-import { app, database } from '../../../firebaseConfig'
+import React, { useEffect, useState } from 'react'
+import { app, database } from 'firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { getAuth, sendEmailVerification } from 'firebase/auth'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { CommonHead } from '../../../layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function Emaildedit() {
   const [email, setEmail] = useState<string>('')

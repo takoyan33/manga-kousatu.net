@@ -18,7 +18,7 @@ import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 
 export default function Index() {
-  const [firedata, setFiredata] = useState([])
+  const [postData, setPostData] = useState([])
   const databaseRef = collection(database, 'posts')
   //新しい順
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
@@ -43,84 +43,84 @@ export default function Index() {
   const user = auth.currentUser
 
   // 新着順
-  const getallPost = async () => {
+  const getPosts = async () => {
     console.log(loading)
     await onSnapshot(q, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
     setLoading(false)
   }
 
   //古い順
-  const getallOldpost = async () => {
+  const getOldPosts = async () => {
     await onSnapshot(u, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   //いいね順
-  const getallLikepost = async () => {
+  const getLikePosts = async () => {
     await onSnapshot(f, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   //ネタバレ有
-  const getallNetabrepost = async () => {
+  const getNetabrePosts = async () => {
     await onSnapshot(n, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   //ネタバレ無
-  const getallNetabrenonepost = async () => {
+  const getNoNetabrePosts = async () => {
     await onSnapshot(none, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
   useEffect(() => {
     setLoading(true)
-    getallPost()
+    getPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const displayMore = () => {
-    if (loadIndex > firedata.length) {
+    if (loadIndex > postData.length) {
       setIsEmpty(true)
     } else {
       setLoadIndex(loadIndex + 4)
     }
   }
 
-  const menuItems = [
+  const SORT_LIST = [
     {
       label: '新しい順',
       value: '新しい順',
-      onClick: getallPost,
+      onClick: getPosts,
     },
     {
       label: '古い順',
       value: '古い順',
-      onClick: getallOldpost,
+      onClick: getOldPosts,
     },
     {
       label: 'いいね順',
       value: 'いいね順',
-      onClick: getallLikepost,
+      onClick: getLikePosts,
     },
   ]
 
-  const netabreItems = [
+  const NETABARE_LIST = [
     {
       label: 'ネタバレ有',
       value: 'ネタバレ有',
-      onClick: getallNetabrepost,
+      onClick: getNetabrePosts,
     },
     {
       label: 'ネタバレ無',
       value: 'ネタバレ無',
-      onClick: getallNetabrenonepost,
+      onClick: getNoNetabrePosts,
     },
   ]
 
@@ -143,9 +143,9 @@ export default function Index() {
       <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
       <p className='text-1xl text-center'>
         {searchName === ''
-          ? `投稿数 ${firedata.length}件`
+          ? `投稿数 ${postData.length}件`
           : `検索結果 ${
-              firedata.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
+              postData.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
                 .length
             }件`}
       </p>
@@ -190,7 +190,7 @@ export default function Index() {
           <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
-            {netabreItems.map((item) => (
+            {NETABARE_LIST.map((item) => (
               <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
                 {item.label}
               </MenuItem>
@@ -204,9 +204,9 @@ export default function Index() {
           <InputLabel id='demo-select-small'>新しい順</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
-            {menuItems.map((item) => (
-              <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
-                {item.label}
+            {SORT_LIST.map((sort) => (
+              <MenuItem key={sort.value} value={sort.value} onClick={sort.onClick}>
+                {sort.label}
               </MenuItem>
             ))}
           </Select>
@@ -214,48 +214,48 @@ export default function Index() {
       </div>
 
       <Grid container className='m-auto'>
-        {firedata.length === 0 ? (
+        {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
-        ) : firedata.filter((data) => {
+        ) : postData.filter((post) => {
             if (searchName === '') {
-              return data
-            } else if (data.title.toLowerCase().includes(searchName.toLowerCase())) {
-              return data
+              return post
+            } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+              return post
             }
           }).length === 0 ? (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
-          firedata
-            .filter((data) => {
+          postData
+            .filter((post) => {
               if (searchName === '') {
-                return data
-              } else if (data.title.toLowerCase().includes(searchName.toLowerCase())) {
-                return data
+                return post
+              } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+                return post
               }
             })
             .slice(0, loadIndex)
-            .map((data) => (
+            .map((post) => (
               <CardPost
-                key={data.id}
-                downloadURL={data.downloadURL}
-                title={data.title}
-                categori={data.categori}
-                netabare={data.netabare}
-                context={data.context}
-                createtime={data.createtime}
-                displayname={data.displayname}
-                email={data.email}
-                id={data.id}
-                photoURL={data.photoURL}
-                likes={data.likes}
-                selected={data.selected}
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                categori={post.categori}
+                netabare={post.netabare}
+                context={post.context}
+                createtime={post.createtime}
+                displayname={post.displayname}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
               />
             ))
         )}
       </Grid>
 
       <div className='text-center'>
-        {firedata.length > 6 && (
+        {postData.length > 6 && (
           <SiteButton
             href=''
             text='さらに表示'

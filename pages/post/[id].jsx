@@ -26,12 +26,11 @@ import { CommonHead, CardPost } from 'layouts/components/ui'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import { notify, errorNotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
@@ -44,9 +43,7 @@ const schema = yup.object({
 const Post = () => {
   const [comments, setComments] = useState('')
   const [users, setUsers] = useState(null)
-  const databaseRef = collection(database, 'posts')
-  //データベースを取得
-  const [recfiredata, setRecfiredata] = useState([])
+  const [singlePost, setSinglePost] = useState([])
   const [likecount, setLikecount] = useState(0)
   const usersRef = collection(database, 'users')
   const [userid, setUserid] = useState(null)
@@ -69,14 +66,14 @@ const Post = () => {
     try {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
-      setRecfiredata(snap.data())
-      console.log('recfiredata', recfiredata)
+      setSinglePost(snap.data())
+      console.log('singlePost', singlePost)
     } catch (error) {
       console.log(error)
     }
   }
 
-  const getallComment = async () => {
+  const getComments = async () => {
     const commentseRef = collection(database, 'comments')
     const c = await query(commentseRef, where('postid', '==', routerid))
     try {
@@ -96,7 +93,7 @@ const Post = () => {
   //   //firestoreからデータ取得
   //   await getDocs(q).then((querySnapshot) => {
   //     //コレクションのドキュメントを取得
-  //     setRecfiredata(
+  //     setSinglePost(
   //       querySnapshot.docs.map((data) => {
   //         //配列なので、mapで展開する
   //         return { ...data.data(), id: data.id }
@@ -140,19 +137,19 @@ const Post = () => {
     // categoriFiredata();
     getPost()
     usersData()
-    getallComment()
+    getComments()
   }, [router])
 
-  const deleteDocument = () => {
+  const deletePost = () => {
     //data.idを送っているのでidを受け取る
-    let deletepost = doc(database, 'posts', routerid)
+    let deletePost = doc(database, 'posts', routerid)
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     if (checkSaveFlg) {
-      deleteDoc(deletepost)
+      deleteDoc(deletePost)
         //記事を削除する
         .then(() => {
-          notify('記事を削除しました')
+          successNotify('記事を削除しました')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
@@ -178,7 +175,7 @@ const Post = () => {
       .then(() => {
         console.log(user.email)
         setLikecount(0)
-        notify('成功しました')
+        successNotify('成功しました')
         getPost()
       })
       .catch((err) => {
@@ -187,23 +184,23 @@ const Post = () => {
       })
   }
   const addComment = async (data) => {
-    const newdate = new Date().toLocaleString('ja-JP')
+    const newDate = new Date().toLocaleString('ja-JP')
     const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())
 
     await setDoc(postRef, {
       comment: data.comment,
       userid: user.uid,
-      postid: recfiredata.id,
+      postid: singlePost.id,
       username: user.displayName,
-      createtime: newdate,
+      createtime: newDate,
       id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
-        notify('コメントを投稿しました')
-        getallComment()
+        successNotify('コメントを投稿しました')
+        getComments()
       })
       .catch((err) => {
-        notify('コメントを投稿しました')
+        errorNotify('コメントの投稿に失敗しました')
       })
   }
 
@@ -216,12 +213,12 @@ const Post = () => {
           <div className='my-4 lg:w-full'>
             {user && (
               <>
-                {user.email == recfiredata.email && (
+                {user.email == singlePost.email && (
                   <div>
                     <Link
                       href={{
-                        pathname: `/post/edit/${recfiredata.id}`,
-                        state: { data: recfiredata },
+                        pathname: `/post/edit/${singlePost.id}`,
+                        state: { data: singlePost },
                       }}
                     >
                       <SiteButton href='' text='更新する' className=' m-4 my-2' />
@@ -231,7 +228,7 @@ const Post = () => {
                       href=''
                       text='削除する'
                       className=' m-4 my-2'
-                      onClick={deleteDocument}
+                      onClick={deletePost}
                     />
                   </div>
                 )}
@@ -240,32 +237,32 @@ const Post = () => {
             <div className='rounded-xl border p-10 '>
               <div>
                 <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-                {recfiredata.title}
+                {singlePost.title}
               </div>
               <div className='my-6 flex justify-center'>
                 <Image
                   className='m-auto max-w-sm text-center'
                   height={400}
                   width={400}
-                  src={recfiredata.downloadURL}
+                  src={singlePost.downloadURL}
                 />
               </div>
-              <div className='my-4 text-2xl font-semibold'>{recfiredata.title}</div>
+              <div className='my-4 text-2xl font-semibold'>{singlePost.title}</div>
               <br></br>
               <div>
                 <span className='text-gray-500'>
-                  <AccessTimeIcon /> {recfiredata.createtime}
+                  <AccessTimeIcon /> {singlePost.createtime}
                 </span>
                 <span>
                   　<FavoriteIcon />
-                  {recfiredata.likes}
+                  {singlePost.likes}
                 </span>
               </div>
               {users &&
                 users.map((user) => {
                   return (
                     <>
-                      {recfiredata.email === user.email && (
+                      {singlePost.email === user.email && (
                         <Link href={`/profile/${user.userid}`}>
                           <div key={user.userid}>
                             <div className='m-auto my-4 flex  px-2'>
@@ -290,15 +287,15 @@ const Post = () => {
                     </>
                   )
                 })}
-              {recfiredata.edittime && (
+              {singlePost.edittime && (
                 <div>
                   <AccessTimeIcon />
-                  編集日時：{recfiredata.edittime}
+                  編集日時：{singlePost.edittime}
                 </div>
               )}
               <br></br>
-              {recfiredata.selected &&
-                recfiredata.selected.map((tag, i) => (
+              {singlePost.selected &&
+                singlePost.selected.map((tag, i) => (
                   <span
                     className='rounded-xl border border-cyan-700 py-1 px-2 text-center text-cyan-700'
                     key={i}
@@ -308,7 +305,7 @@ const Post = () => {
                 ))}
               <div variant='body2' color='text.secondary'>
                 {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
-                  recfiredata.categori,
+                  singlePost.categori,
                 ) && (
                   <SiteCategory
                     className={`border-${
@@ -317,51 +314,51 @@ const Post = () => {
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[recfiredata.categori]
+                      }[singlePost.categori]
                     }-500 text-${
                       {
                         ONEPIECE: 'cyan',
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[recfiredata.categori]
+                      }[singlePost.categori]
                     }-500 hover:bg-${
                       {
                         ONEPIECE: 'cyan',
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[recfiredata.categori]
+                      }[singlePost.categori]
                     }-700 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
-                    text={recfiredata.categori}
-                    href={`/post/categories/${recfiredata.categori}`}
+                    text={singlePost.categori}
+                    href={`/post/categories/${singlePost.categori}`}
                   />
                 )}
 
-                {recfiredata.netabare == 'ネタバレ有' ? (
+                {singlePost.netabare == 'ネタバレ有' ? (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
-                    {recfiredata.netabare}
+                    {singlePost.netabare}
                   </span>
                 ) : (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
-                    {recfiredata.netabare}
+                    {singlePost.netabare}
                   </span>
                 )}
 
-                {recfiredata.context && (
+                {singlePost.context && (
                   <p className='text-left' style={styles}>
-                    {parse(recfiredata.context)}
+                    {parse(singlePost.context)}
                   </p>
                 )}
               </div>
               <br></br>
-              {recfiredata.contextimage && (
+              {singlePost.contextimage && (
                 <div className='flex justify-center'>
                   <Image
                     className='m-auto max-w-sm text-center'
                     height={300}
                     width={300}
-                    src={recfiredata.contextimage}
+                    src={singlePost.contextimage}
                   />
                 </div>
               )}
@@ -369,18 +366,18 @@ const Post = () => {
                 <span className='text-pink-400'>
                   <FavoriteIcon />
                 </span>
-                {recfiredata.likes}
+                {singlePost.likes}
               </div>
               {user &&
-                (recfiredata.likes_email ? (
-                  recfiredata.likes_email.includes(user.email) ? (
+                (singlePost.likes_email ? (
+                  singlePost.likes_email.includes(user.email) ? (
                     <p>すでにいいね済みです</p>
                   ) : (
                     <button
                       href=''
                       text='いいねする'
                       className='m-4 my-2 inline'
-                      onClick={() => LikeAdd(routerid, recfiredata.likes)}
+                      onClick={() => LikeAdd(routerid, singlePost.likes)}
                     >
                       <span className='p-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
@@ -434,7 +431,7 @@ const Post = () => {
                     href=''
                     text='いいねする'
                     className='m-4 my-2 inline'
-                    onClick={() => notify('ログインするといいねができます')}
+                    onClick={() => successNotify('ログインするといいねができます')}
                   >
                     <span className='p-4 text-pink-400 hover:text-pink-700'>
                       <FavoriteIcon />
@@ -479,7 +476,7 @@ const Post = () => {
                   users.map((user) => {
                     return (
                       <>
-                        {recfiredata.email === user.email && (
+                        {singlePost.email === user.email && (
                           <Link href={`/profile/${user.userid}`}>
                             <div key={user.userid}>
                               <div className='m-auto my-8 flex border py-8  px-2'>
@@ -516,7 +513,7 @@ const Post = () => {
             {/* <h2 className="text-2xl">こちらもおすすめ</h2>
               <div className="max-w-7xl m-auto">
                 <Grid container spacing={1}>
-                  {recfiredata.map((data) => {
+                  {singlePost.map((data) => {
                     return (
                       <CardPost
                         key={data.id}
@@ -534,7 +531,7 @@ const Post = () => {
                       />
                     );
                   })}
-                  {recfiredata.length == 0 && (
+                  {singlePost.length == 0 && (
                     <p className="text-center m-auto my-6 text-2xl">
                       まだ投稿されていません
                     </p>

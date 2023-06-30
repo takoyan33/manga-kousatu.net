@@ -19,7 +19,7 @@ export const CommonInput: React.VFC<Props> = React.memo(
     return (
       <>
         <div>
-          <label className='text-center my-4'>{text}</label>
+          <label className='my-4 text-center'>{text}</label>
         </div>
         <TextField
           id={id}

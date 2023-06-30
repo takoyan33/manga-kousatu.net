@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React ,{ useEffect, useState } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import {
@@ -20,9 +19,9 @@ import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Image from 'react-image-resizer'
 import { TagsInput } from 'react-tag-input-component'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
-import { successNotify, errorNotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 
 export default function Edit() {
   const [image, setImage] = useState<string>()

@@ -1,16 +1,15 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { database, auth } from '../../../firebaseConfig'
+import { database, auth } from 'firebaseConfig'
 import { collection } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
 import Button from '@mui/material/Button'
-import { postImage } from '../../../layouts/api/upload'
+import { postImage } from 'layouts/api/upload'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { CommonHead } from '../../../layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 import Image from 'react-image-resizer'
 
 export default function Photoedit() {
@@ -23,7 +22,6 @@ export default function Photoedit() {
   const [firedata, setFiredata] = useState([])
   const user = auth.currentUser
 
-  console.log(user)
   useEffect(() => {
     let token = localStorage.getItem('Token')
     if (token) {

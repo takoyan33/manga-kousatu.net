@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore'
@@ -97,7 +96,7 @@ const Post = () => {
       //改行を保存する
     })
       .then(() => {
-        alert('記事を更新しました')
+        successNotify('記事を更新しました')
         router.push(`/post/${routerid}`)
       })
       .catch((err) => {

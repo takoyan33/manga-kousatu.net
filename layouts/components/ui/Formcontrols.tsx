@@ -1,4 +1,4 @@
-export const Categoris = [
+export const FORM_CATEGORIES = [
   {
     id: 1,
     label: 'ONE PIECE',
@@ -21,7 +21,7 @@ export const Categoris = [
   },
 ]
 
-export const Netabares = [
+export const FORM_NETABARE = [
   {
     id: 1,
     label: 'ネタバレ有(漫画・アニメよりも先行している内容の場合）',

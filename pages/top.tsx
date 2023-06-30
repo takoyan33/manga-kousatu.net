@@ -5,12 +5,12 @@ import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { Cardpost } from 'layouts/components/ui/Cardpost'
+import { CardPost } from 'layouts/components/ui/CardPost'
 import { query, orderBy, where } from 'firebase/firestore'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 import { useGetPosts } from 'layouts/components/hooks/useGetPosts'
-import { Categories, CommonHead } from 'layouts/components/ui'
+import { POST_CATEGORIES, CommonHead } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -153,7 +153,7 @@ export default function Index() {
 
       <h2 className='my-12 text-center text-xl font-semibold'>カテゴリー</h2>
 
-      {Categories.map((categori) => {
+      {POST_CATEGORIES.map((categori) => {
         // userの情報
         const CategoriesInfo = {
           id: categori.id,
@@ -236,7 +236,7 @@ export default function Index() {
             })
             .slice(0, loadIndex)
             .map((data) => (
-              <Cardpost
+              <CardPost
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}

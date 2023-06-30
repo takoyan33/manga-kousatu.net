@@ -13,17 +13,20 @@ import {
   updateDoc,
   deleteDoc,
   arrayUnion,
+  query,
+  orderBy,
+  where,
 } from 'firebase/firestore'
 import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
-import { CommonHead, Cardpost } from 'layouts/components/ui'
+import { CommonHead, CardPost } from 'layouts/components/ui'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { query, orderBy, where } from 'firebase/firestore'
+import { } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -515,7 +518,7 @@ const Post = () => {
                 <Grid container spacing={1}>
                   {recfiredata.map((data) => {
                     return (
-                      <Cardpost
+                      <CardPost
                         key={data.id}
                         downloadURL={data.downloadURL}
                         title={data.title}

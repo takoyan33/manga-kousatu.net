@@ -2,15 +2,15 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { app, database, storage } from '../../../firebaseConfig'
-import { collection, getDocs, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import { database } from 'firebaseConfig'
+import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { Stack, FormLabel, TextField, Avatar } from '@mui/material'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import Image from 'react-image-resizer'
-import { SiteButton } from '../../../layouts/components/button'
-import { Categories, CommonHead } from '../../../layouts/components/ui'
-import { Categoris, Netabares } from '../../../layouts/components/ui/Formcontrols'
+import { SiteButton } from 'layouts/components/button'
+import { Categories, CommonHead } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/Formcontrols'
 import { TagsInput } from 'react-tag-input-component'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
@@ -109,10 +109,10 @@ const Post = () => {
     <>
       <CommonHead />
 
-      <div className='max-w-5xl m-auto'>
+      <div className='m-auto max-w-5xl'>
         <div>
           <div>
-            <div className='lg:w-full my-4 '>
+            <div className='my-4 lg:w-full '>
               <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {firedata.title}　＞　記事の編集
               <Stack
                 component='form'
@@ -226,7 +226,7 @@ const Post = () => {
                   href=''
                   onClick={updatefields}
                   text='更新する'
-                  className='m-auto w-80 my-8'
+                  className='m-auto my-8 w-80'
                 />
               </Stack>
             </div>

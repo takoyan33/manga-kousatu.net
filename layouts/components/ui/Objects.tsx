@@ -6,7 +6,7 @@
 // import { useAuthContext } from '../../../layouts/context/AuthContext'
 
 //投稿のcategoriesのデータ
-export const Categories = [
+export const POST_CATEGORIES = [
   {
     id: 1,
     className: 'border-cyan-500 text-cyan-500 hover:bg-cyan-700',

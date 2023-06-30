@@ -13,7 +13,7 @@ import Imageupload from 'packages/utils/Imageupload'
 import Imageuploadcontext from 'packages/utils/Imageuploadcontext'
 import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from 'layouts/components/ui'
-import { Categoris, Netabares } from 'layouts/components/ui/Formcontrols'
+import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/Formcontrols'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -236,7 +236,7 @@ export default function Post() {
                 name={field.name}
                 value={field.value}
               >
-                {Categoris.map((Categori) => (
+                {FORM_CATEGORIES.map((Categori) => (
                   <FormControlLabel
                     key={Categori.id}
                     value={Categori.value}
@@ -270,7 +270,7 @@ export default function Post() {
             }}
             render={({ field }) => (
               <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
-                {Netabares.map((Netabare) => (
+                {FORM_NETABARE.map((Netabare) => (
                   <FormControlLabel
                     key={Netabare.id}
                     value={Netabare.value}
@@ -289,22 +289,6 @@ export default function Post() {
           </FormLabel>
 
           <p className='my-4'>現在の文字数：{lengthdata && lengthdata}</p>
-          {/* <TextField
-            label='内容*(最大500文字）'
-            className='m-auto w-full'
-            id='filled-multiline-static'
-            multiline
-            rows={12}
-            {...register('context')}
-            error={'context' in errors}
-            helperText={errors.context?.message}
-            value={context}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              if (event.target.value.length <= 500) {
-                setContext(event.target.value)
-              }
-            }}
-          /> */}
 
           <Richedita onChange={handleEditorChange} />
           <div>

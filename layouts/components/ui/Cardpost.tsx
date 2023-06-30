@@ -1,11 +1,11 @@
 import React from 'react'
 import Link from 'next/link'
 import { useEffect, useState, useMemo, useCallback } from 'react'
-import { database } from '../../../firebaseConfig'
-import { collection, getDocs, doc, Firestore } from 'firebase/firestore'
+import { database } from 'firebaseConfig'
+import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { getAuth } from 'firebase/auth'
-import styles from '../../../styles/Home.module.css'
+import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
 import Grid from '@material-ui/core/Grid'
 import Image from 'react-image-resizer'
@@ -28,7 +28,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const Cardpost: React.VFC<Props> = React.memo(
+export const CardPost: React.VFC<Props> = React.memo(
   ({
     downloadURL,
     id,

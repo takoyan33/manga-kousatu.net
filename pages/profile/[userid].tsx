@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { database } from '../../firebaseConfig'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { CommonHead, Profileid, Cardpost } from '../../layouts/components/ui'
+import { CommonHead, Profileid, CardPost } from '../../layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
 
 const Post = () => {
@@ -88,7 +88,7 @@ const Post = () => {
           firedata.map((data) => {
             return (
               <>
-                <Cardpost
+                <CardPost
                   key={data.id}
                   downloadURL={data.downloadURL}
                   title={data.title}

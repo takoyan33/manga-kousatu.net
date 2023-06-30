@@ -3,13 +3,12 @@ import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
-import { collection, getDocs, onSnapshot } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
 import TextField from '@mui/material/TextField'
 import { getAuth } from 'firebase/auth'
 import Grid from '@material-ui/core/Grid'
-import { query, orderBy } from 'firebase/firestore'
 import { SiteButton } from 'layouts/components/button'
-import { Cardpost, CommonHead } from 'layouts/components/ui'
+import { CardPost, CommonHead } from 'layouts/components/ui'
 
 const Category = () => {
   const databaseRef = collection(database, 'posts')
@@ -116,7 +115,7 @@ const Category = () => {
   return (
     <>
       <CommonHead />
-      <div className='max-w-7xl m-auto'>
+      <div className='m-auto max-w-7xl'>
         <p>
           <Link href='/top'>トップ</Link>　＞　投稿記事　＞　#{tag}
         </p>
@@ -134,18 +133,18 @@ const Category = () => {
           }}
         />
 
-        <div className='flex mt-4'>
-          <SiteButton href='' text='新しい順' className='inline my-2 m-4' onClick={getallPost} />
-          <SiteButton href='' text='古い順' className='inline my-2 m-4' onClick={getallOldpost} />
+        <div className='mt-4 flex'>
+          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={getallPost} />
+          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={getallOldpost} />
           <SiteButton
             href=''
             text='いいね順'
-            className='inline my-2 m-4'
+            className='m-4 my-2 inline'
             onClick={getallLikepost}
           />
         </div>
 
-        <div className='max-w-7xl m-auto'>
+        <div className='m-auto max-w-7xl'>
           <Grid container spacing={1}>
             {firedata
               .filter((data) => {
@@ -161,7 +160,7 @@ const Category = () => {
               })
               .map((data) => {
                 return (
-                  <Cardpost
+                  <CardPost
                     key={data.id}
                     downloadURL={data.downloadURL}
                     title={data.title}
@@ -178,7 +177,7 @@ const Category = () => {
                 )
               })}
             {firedata.length == 0 && (
-              <p className='text-center m-auto my-6 text-2xl'>まだ投稿されていません</p>
+              <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
             )}
           </Grid>
         </div>

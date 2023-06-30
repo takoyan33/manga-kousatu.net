@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead } from '../../layouts/components/ui'
 import { Profileid } from '../../layouts/components/ui/Profileid'
-import { Cardpost } from '../../layouts/components/ui/Cardpost'
+import { CardPost } from '../../layouts/components/ui/CardPost'
 import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -347,7 +347,7 @@ export default function Profile() {
           .map((data) => {
             return (
               <>
-                <Cardpost
+                <CardPost
                   key={data.id}
                   downloadURL={data.downloadURL}
                   title={data.title}
@@ -373,7 +373,7 @@ export default function Profile() {
         {likefiredata.map((data) => {
           return (
             <>
-              <Cardpost
+              <CardPost
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}

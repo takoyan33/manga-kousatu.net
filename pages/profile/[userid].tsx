@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { database } from '../../firebaseConfig'
+import { database } from 'firebaseConfig'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { CommonHead, Profileid, CardPost } from '../../layouts/components/ui'
+import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
 
 const Post = () => {
@@ -68,7 +68,7 @@ const Post = () => {
             return (
               <>
                 {userid == user.userid && (
-                  <Profileid
+                  <ProfileId
                     key={user.id}
                     profileimage={user.profileimage}
                     username={user.username}

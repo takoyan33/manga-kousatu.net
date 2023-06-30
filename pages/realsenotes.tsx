@@ -4,13 +4,15 @@ import { CommonHead } from 'layouts/components/ui'
 const RELEASE_NOTES = [
   {
     version: '1.9',
-    date: '2023年3月30日',
-    features: ['いいね機能実装'],
+    date: '2023年7月1日',
+    features: [
+      'コードのリファクタリング（変数名をキャメルケースに、定数名をアッパースネークケースに変更）',
+    ],
   },
   {
     version: '1.8',
     date: '2023年2月22日',
-    features: ['リリースノートページの作成'],
+    features: ['更新履歴ページの作成'],
   },
   {
     version: '1.7',
@@ -64,7 +66,7 @@ function RealseNotes() {
   return (
     <div>
       <CommonHead />
-      <h1 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - リリースノート</h1>
+      <h1 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - 更新履歴</h1>
       {RELEASE_NOTES.map(({ version, date, features }) => (
         <div key={version}>
           <h2 className='my-4 mt-8 text-xl font-semibold'>Manga Study {version}</h2>

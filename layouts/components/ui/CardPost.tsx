@@ -28,7 +28,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const CardPost: React.VFC<Props> = React.memo(
+const CardPost: React.VFC<Props> = React.memo(
   ({
     downloadURL,
     id,
@@ -179,3 +179,5 @@ export const CardPost: React.VFC<Props> = React.memo(
     )
   },
 )
+
+export default CardPost

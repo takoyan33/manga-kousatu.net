@@ -7,7 +7,7 @@ import { collection, getDocs, onSnapshot } from 'firebase/firestore'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { query, orderBy } from 'firebase/firestore'
-import { CommonHead, Cardpost } from 'layouts/components/ui'
+import { CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -211,7 +211,7 @@ const Daitails = ({ post }) => {
             })
             .map((data) => {
               return (
-                <Cardpost
+                <CardPost
                   key={data.id}
                   downloadURL={data.downloadURL}
                   title={data.title}

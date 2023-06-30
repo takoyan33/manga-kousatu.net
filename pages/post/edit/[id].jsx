@@ -9,7 +9,7 @@ import { Stack, FormLabel, TextField, Avatar } from '@mui/material'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { SiteButton } from 'layouts/components/button'
 import { POST_CATEGORIES, CommonHead } from 'layouts/components/ui'
-import { Categoris, Netabares } from 'layouts/components/ui/FormControls'
+import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui'
 import { TagsInput } from 'react-tag-input-component'
 import { useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
@@ -159,7 +159,7 @@ const Post = () => {
                         setCategori(e.target.value)
                       }}
                     >
-                      {Categoris.map((Categori) => (
+                      {FORM_CATEGORIES.map((Categori) => (
                         <FormControlLabel
                           key={Categori.id}
                           value={Categori.value}
@@ -190,7 +190,7 @@ const Post = () => {
                   }}
                   render={({ field }) => (
                     <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
-                      {Netabares.map((Netabare) => (
+                      {FORM_NETABARE.map((Netabare) => (
                         <FormControlLabel
                           key={Netabare.id}
                           value={Netabare.value}

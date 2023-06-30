@@ -45,8 +45,8 @@
     "layouts/context/AuthContext.js",
     "pages/post/[id].jsx",
     "layouts/components/ui/Cardpost.jsx",
-    "layouts/components/ui/Cardpost.jsx",
-    "pages/post/edit/[id].jsx"
+    "pages/post/edit/[id].jsx",
+    "layouts/components/ui/Richedita.tsx"
   ],
   "exclude": ["node_modules"]
 }

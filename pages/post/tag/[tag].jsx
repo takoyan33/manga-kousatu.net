@@ -9,7 +9,7 @@ import { getAuth } from 'firebase/auth'
 import Grid from '@material-ui/core/Grid'
 import { query, orderBy } from 'firebase/firestore'
 import { SiteButton } from 'layouts/components/button'
-import { Cardpost, CommonHead } from 'layouts/components/ui'
+import { CardPost, CommonHead } from 'layouts/components/ui'
 
 const Category = () => {
   const databaseRef = collection(database, 'posts')
@@ -161,7 +161,7 @@ const Category = () => {
               })
               .map((data) => {
                 return (
-                  <Cardpost
+                  <CardPost
                     key={data.id}
                     downloadURL={data.downloadURL}
                     title={data.title}

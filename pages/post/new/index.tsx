@@ -1,19 +1,17 @@
 import { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
-import { collection, onSnapshot, setDoc, doc } from 'firebase/firestore'
+import { collection, onSnapshot, setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { TextField, Box, FormLabel } from '@mui/material'
 import { postImage } from 'layouts/api/upload'
 import { postContextImage } from 'layouts/api/uploadcontext'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import { serverTimestamp } from 'firebase/firestore'
-import 'firebase/firestore'
 import 'moment/locale/ja'
 import ImageUpload from 'packages/utils/ImageUpload'
 import ImageUploadContext from 'packages/utils/ImageUploadContext'
 import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from 'layouts/components/ui'
-import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/FormControls'
+import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -25,6 +23,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import dynamic from 'next/dynamic'
 import React from 'react'
+import { stateToHTML } from 'draft-js-export-html'
+import { EditorState, ContentState } from 'draft-js'
 
 // フォームの型
 type FormInput = {
@@ -157,10 +157,10 @@ export default function Post() {
     }
   }
 
-  const RichEdita = React.useMemo(
+  const Richedita = React.useMemo(
     () =>
-      dynamic(() => import('layouts/components/ui/RichEdita'), {
-        loading: () => <p>リッチエディタは読み込む中です</p>,
+      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+        loading: () => <p>リッチエディタ is loading</p>,
         ssr: false,
       }),
     [],
@@ -288,7 +288,7 @@ export default function Post() {
 
           <p className='my-4'>現在の文字数：{lengthdata && lengthdata}</p>
 
-          <RichEdita onChange={handleEditorChange} />
+          <Richedita onChange={handleEditorChange} />
           <div>
             <p>他の写真（最大1枚）</p>
           </div>

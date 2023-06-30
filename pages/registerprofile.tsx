@@ -15,11 +15,11 @@ import {
 } from '@mui/material'
 import { TagsInput } from 'react-tag-input-component'
 import 'react-toastify/dist/ReactToastify.css'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { notify, signupmissnotify } from 'layouts/components/text/SiteModal'
 
-export default function Registerprofile() {
+export default function RegisterProfile() {
   const [selected, setSelected] = useState(['ワンピース'])
   const databaseRef = collection(database, 'users')
   const [image, setImage] = useState(null)

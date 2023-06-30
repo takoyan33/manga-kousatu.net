@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 // import { LoginContext } from "../../../pages/index";
-import Link from 'next/link'
 import Button from '@mui/material/Button'
 
 type Context = {
@@ -8,7 +7,7 @@ type Context = {
 }
 
 // eslint-disable-next-line react/display-name
-export const Loginbutton = React.memo(() => {
+export const LoginButton = React.memo(() => {
   // const loginContext = useContext<Context>(LoginContext);
   return (
     <div>

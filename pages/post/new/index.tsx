@@ -159,7 +159,7 @@ export default function Post() {
 
   const Richedita = React.useMemo(
     () =>
-      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+      dynamic(() => import('../../../layouts/components/ui/RichEdita'), {
         loading: () => <p>リッチエディタ is loading</p>,
         ssr: false,
       }),

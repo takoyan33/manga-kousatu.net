@@ -28,7 +28,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const Cardpost: React.VFC<Props> = React.memo(
+export const CardPost: React.VFC<Props> = React.memo(
   ({
     downloadURL,
     id,

@@ -8,7 +8,7 @@ type RicheditaProps = {
   onChange: (plainText: string, html: string) => void
 }
 
-const Richedita: React.VFC<RicheditaProps> = ({ onChange }) => {
+export const RichEdita: React.VFC<RicheditaProps> = ({ onChange }) => {
   const [editorState, setEditorState] = useState(EditorState.createEmpty())
 
   const handleEditorChange = (editorState: EditorState) => {
@@ -25,5 +25,3 @@ const Richedita: React.VFC<RicheditaProps> = ({ onChange }) => {
     </div>
   )
 }
-
-export default Richedita

@@ -1,6 +1,5 @@
 import { DOMAttributes, FC, memo, ReactNode } from 'react'
 import Link from 'next/link'
-import Button from '@mui/material/Button'
 
 type Props = {
   href: string

@@ -1,21 +1,19 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import { database } from 'firebaseConfig'
-import { collection, onSnapshot } from 'firebase/firestore'
 import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { Cardpost } from 'layouts/components/ui/Cardpost'
-import { query, orderBy, where } from 'firebase/firestore'
+import { query, orderBy, where, collection, onSnapshot } from 'firebase/firestore'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 // import { useGetPosts } from 'layouts/components/hooks/useGetPosts'
-import { POST_CATEGORIES, CommonHead } from 'layouts/components/ui'
+// import { Changetab } from 'layouts/components/ui/Changetab'
+import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-// import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 
 export default function Index() {
@@ -235,7 +233,7 @@ export default function Index() {
             })
             .slice(0, loadIndex)
             .map((data) => (
-              <Cardpost
+              <CardPost
                 key={data.id}
                 downloadURL={data.downloadURL}
                 title={data.title}

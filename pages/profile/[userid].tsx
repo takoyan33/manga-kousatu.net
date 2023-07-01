@@ -9,26 +9,26 @@ import Grid from '@material-ui/core/Grid'
 const Post = () => {
   const [users, setUsers] = useState([])
   const postsRef = collection(database, 'posts')
-  const [firedata, setFiredata] = useState([])
+  const [postsData, setPostsData] = useState([])
   const usersRef = collection(database, 'users')
   const [likes, setLikes] = useState(null)
   const router = useRouter()
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
-  const userpost = query(postsRef, where('userid', '==', userid))
-  const yourprofile = query(usersRef, where('userid', '==', userid))
+  const userPost = query(postsRef, where('userid', '==', userid))
+  const yourProfile = query(usersRef, where('userid', '==', userid))
 
-  const fetchPosts = async () => {
+  const getPosts = async () => {
     try {
-      const querySnapshot = await getDocs(userpost)
+      const querySnapshot = await getDocs(userPost)
       const posts = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
-      setFiredata(posts)
+      setPostsData(posts)
     } catch (error) {
-      console.log('Error fetching posts', error)
+      console.log('失敗しました', error)
     }
   }
 
@@ -40,22 +40,22 @@ const Post = () => {
   }, [user, userid, router])
 
   useEffect(() => {
-    fetchUserProfile()
-    fetchPosts()
+    getUserProfile()
+    getPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const fetchUserProfile = async () => {
+  const getUserProfile = async () => {
     //firestoreからデータ取得
     try {
-      const querySnapshot = await getDocs(yourprofile)
+      const querySnapshot = await getDocs(yourProfile)
       const userData = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
       setUsers(userData)
     } catch (error) {
-      console.log('Error fetching user data', error)
+      console.log('失敗しました', error)
     }
   }
 
@@ -83,9 +83,9 @@ const Post = () => {
       </>
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>過去の投稿</h2>
       <Grid container className='m-auto'>
-        {firedata.length === 0 && <p>まだ投稿していません</p>}
-        {firedata &&
-          firedata.map((data) => {
+        {postsData.length === 0 && <p>まだ投稿していません</p>}
+        {postsData &&
+          postsData.map((data) => {
             return (
               <>
                 <CardPost

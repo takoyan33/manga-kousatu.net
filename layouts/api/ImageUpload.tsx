@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { postImage } from './upload'
 
 export default function UploadImage() {
@@ -17,16 +17,16 @@ export default function UploadImage() {
     }
   }
 
-  const uploadToServer = async () => {
+  const uploadImage = async () => {
     //非同期処理
     const result = await postImage(image)
     console.log(result)
-    alert('データを送りました')
+    alert('画像データを送信しました')
   }
 
   return (
     <div title='upload image'>
-      <div className='mb-4'>this is upload image screen</div>
+      <div className='mb-4'>ここで画像にアップロードしてください</div>
       <img
         className='flex items-center justify-center'
         src={createObjectURL}
@@ -59,7 +59,7 @@ export default function UploadImage() {
         name='myImage'
         onChange={uploadToClient}
       />
-      <button className='btn btn-primary' type='submit' onClick={uploadToServer}>
+      <button className='btn btn-primary' type='submit' onClick={uploadImage}>
         投稿する
       </button>
     </div>

@@ -76,7 +76,7 @@ export const usePasswordReset = () => {
 }
 
 //ログアウト
-export const useLogout = () => {
+export const useLogOut = () => {
   const auth = getAuth()
   const logout = () => {
     signOut(auth)

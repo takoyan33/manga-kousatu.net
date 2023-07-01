@@ -4,7 +4,6 @@ import Image from 'react-image-resizer'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-// eslint-disable-next-line import/order
 import {
   AppBar,
   Toolbar,
@@ -19,19 +18,19 @@ import {
   Button,
   Box,
 } from '@mui/material'
-import { useLogout } from '../../api/auth/useAuth'
-import { useAuthContext } from '../../context/AuthContext'
+import { useLogOut } from 'layouts/api/auth/useAuth'
+import { useAuthContext } from 'layouts/context/AuthContext'
 
 const ACCOUNT_MENU_ITEMS = [
   { text: 'About', href: '/about' },
-  { text: 'リリースノート', href: '/realsenotes' },
+  { text: '更新履歴', href: '/realsenotes' },
 ]
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { user } = useAuthContext()
   const router = useRouter()
-  const { logout } = useLogout()
+  const { logout } = useLogOut()
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

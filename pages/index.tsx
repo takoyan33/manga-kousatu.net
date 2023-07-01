@@ -1,5 +1,5 @@
-import { CommonHead } from '../layouts/components/ui/CommonHead'
-import { SiteButton } from '../layouts/components/button'
+import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { SiteButton } from 'layouts/components/button'
 
 export default function Top() {
   return (

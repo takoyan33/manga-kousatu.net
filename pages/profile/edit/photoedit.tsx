@@ -16,7 +16,6 @@ export default function Photoedit() {
   const [image, setImage] = useState<string>()
   const [result, setResult] = useState('')
   const router = useRouter()
-  const databaseRef = collection(database, 'posts')
   const [createObjectURL, setCreateObjectURL] = useState<string>(null)
   const [downloadURL, setDownloadURL] = useState<string>(null)
   const [firedata, setFiredata] = useState([])
@@ -41,7 +40,7 @@ export default function Photoedit() {
     }
   }
 
-  const updatename = async () => {
+  const updateName = async () => {
     const result = await postImage(image)
     setResult(result)
     updateProfile(auth.currentUser, {
@@ -119,7 +118,7 @@ export default function Photoedit() {
         />
       </Box>
 
-      <Button variant='outlined' className='m-5' onClick={updatename}>
+      <Button variant='outlined' className='m-5' onClick={updateName}>
         画像を更新する
       </Button>
       <Button variant='outlined' className='m-5'>

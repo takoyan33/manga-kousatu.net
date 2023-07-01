@@ -11,15 +11,13 @@ import {
 } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { TextField, Box, FormLabel } from '@mui/material'
-import { postImage } from 'layouts/api/upload'
-import { postContextImage } from 'layouts/api/uploadcontext'
+import { postImage, postContextImage } from 'layouts/api'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import 'moment/locale/ja'
 import ImageUpload from 'packages/utils/ImageUpload'
 import ImageUploadContext from 'packages/utils/ImageUploadContext'
 import { TagsInput } from 'react-tag-input-component'
-import { CommonHead } from 'layouts/components/ui'
-import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead } from 'layouts/components/ui'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -53,14 +51,14 @@ export default function Post() {
   const databaseRef = collection(database, 'posts')
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState(null)
-  const [contextimage, setContextImage] = useState<File[]>([])
+  const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createcontextObjectURL, setCreatecontexObjectURL] = useState('')
-  const [userid, setUserid] = useState(null)
+  const [userid, setUserId] = useState(null)
   const [result, setResult] = useState('')
   const [photoURL, setPhotoURL] = useState('')
-  const [firedata, setFiredata] = useState([])
-  const [lengthdata, setLengthdata] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [lengthData, setPostsLength] = useState(null)
   const { user } = useAuthContext()
 
   useEffect(() => {
@@ -83,7 +81,7 @@ export default function Post() {
 
   const getallPost = async () => {
     await onSnapshot(q, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
@@ -100,7 +98,7 @@ export default function Post() {
   const uploadToClientcontext = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-      console.log(contextimage)
+      console.log(contextImage)
       setContextImage(file)
       setCreatecontexObjectURL(URL.createObjectURL(file))
     }
@@ -108,11 +106,11 @@ export default function Post() {
 
   const router = useRouter()
 
-  type addDate = {
+  type addPost = {
     toLocaleString(timeZone): string
   }
 
-  const addDate: SubmitHandler<FormInput> = async (data) => {
+  const addPost: SubmitHandler<FormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる
@@ -122,23 +120,23 @@ export default function Post() {
     } else {
       const result = await postImage(image)
       //写真のurlをセットする
-      const contextresult = await postContextImage(contextimage)
+      const contextSetImage = await postContextImage(contextImage)
       //日本時間を代入
-      const newdate = new Date().toLocaleString('ja-JP')
-      const postRef = await doc(database, 'posts', (firedata.length + 1).toString())
+      const newDate = new Date().toLocaleString('ja-JP')
+      const postRef = await doc(database, 'posts', (posts.length + 1).toString())
 
       setResult(result)
       await setDoc(postRef, {
         title: data.title,
         context: html,
         downloadURL: result,
-        contextimage: contextresult,
+        contextImage: contextSetImage,
         email: user.email,
         displayname: user.displayName,
         categori: data.categori,
-        createtime: newdate,
+        createtime: newDate,
         edittime: '',
-        id: (firedata.length + 1).toString(),
+        id: (posts.length + 1).toString(),
         netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
@@ -152,7 +150,7 @@ export default function Post() {
           setContext('')
           setPhotoURL('')
           setSelected([])
-          setUserid('')
+          setUserId('')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
@@ -178,7 +176,7 @@ export default function Post() {
   const handleEditorChange = (plainText: string, html: string) => {
     setPlainText(plainText)
     setHtml(html)
-    setLengthdata(plainText.length)
+    setPostsLength(plainText.length)
   }
   return (
     <div>
@@ -293,7 +291,7 @@ export default function Post() {
             内容<span className='text-red-600'>*</span>(最大500文字）
           </FormLabel>
 
-          <p className='my-4'>現在の文字数：{lengthdata && lengthdata}</p>
+          <p className='my-4'>現在の文字数：{lengthData && lengthData}</p>
 
           <Richedita onChange={handleEditorChange} />
           <div>
@@ -318,7 +316,7 @@ export default function Post() {
             href=''
             text='投稿する'
             className='m-auto my-10 text-center'
-            onClick={handleSubmit(addDate)}
+            onClick={handleSubmit(addPost)}
           />
         </div>
       </Box>

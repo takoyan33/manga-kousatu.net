@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React ,{ useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import {
@@ -59,7 +59,7 @@ export default function Edit() {
     })
   }
 
-  const uploadToClient = (event) => {
+  const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       if (event == '') {
         setImage('')
@@ -75,7 +75,7 @@ export default function Edit() {
     }
   }
 
-  const updatefields = async (id) => {
+  const updateUserData = async (id) => {
     //更新する
     let fieldToEdit = doc(database, 'users', id)
     //セットしたIDをセットする
@@ -88,7 +88,6 @@ export default function Edit() {
       profileimage: result,
       userid: user.uid,
       favarite: selected,
-      //改行を保存する
     })
       .then(() => {
         successNotify('ユーザー情報が更新されました')
@@ -109,10 +108,10 @@ export default function Edit() {
       <CommonHead />
 
       {users &&
-        users.map((data) => {
+        users.map((user) => {
           return (
             <>
-              <div key={data.id}>
+              <div key={user.id}>
                 <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
 
                 <p className='font-semib my-12 text-center'>
@@ -123,7 +122,7 @@ export default function Edit() {
                       className='m-auto max-w-sm text-center'
                       height={100}
                       width={100}
-                      src={data.profileimage}
+                      src={user.profileimage}
                     />
                   </p>
                 </p>
@@ -166,18 +165,18 @@ export default function Edit() {
                         type='file'
                         accept='image/*'
                         name='myImage'
-                        onChange={uploadToClient}
+                        onChange={uploadImage}
                       />
                     </div>
 
                     <p className='my-4 text-center'>
-                      現在の名前： <span>{data.username}</span>
+                      現在の名前： <span>{user.username}</span>
                     </p>
                     <p className='my-4 text-center'>新しい名前（最大10文字）</p>
                     <div className='text-center'>
                       <TextField
                         id='outlined-basic'
-                        value={data.username}
+                        value={user.username}
                         label='名前'
                         variant='outlined'
                         className='m-auto w-80'
@@ -188,14 +187,14 @@ export default function Edit() {
                     </div>
                     <br></br>
                     <p className='my-4 text-center'>
-                      現在のプロフィール： <span>{data.bio}</span>
+                      現在のプロフィール： <span>{user.bio}</span>
                     </p>
                     <p className='my-4 text-center'>新しいプロフィール（最大30文字）</p>
                     <div className='text-center'>
                       <TextField
                         id='outlined-basic'
                         label='名前'
-                        value={data.bio}
+                        value={user.bio}
                         variant='outlined'
                         className='m-auto w-80'
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
@@ -205,12 +204,12 @@ export default function Edit() {
                     </div>
                     <br></br>
                     <p className='my-4 text-center'>
-                      現在の好きな漫画： <span>{data.favarite}</span>
+                      現在の好きな漫画： <span>{user.favarite}</span>
                     </p>
                     <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
                     <div className='m-auto w-80 text-center'>
                       <TagsInput
-                        value={data.favarite}
+                        value={user.favarite}
                         onChange={setSelected}
                         name='selected'
                         placeHolder='タグを追加してください'
@@ -220,9 +219,9 @@ export default function Edit() {
                     <div className='text-center'>
                       <Button
                         variant='outlined'
-                        key={data.id}
+                        key={user.id}
                         className='m-auto w-80 text-center'
-                        onClick={() => updatefields(data.id)}
+                        onClick={() => updateUserData(user.id)}
                       >
                         プロフィールを更新する
                       </Button>

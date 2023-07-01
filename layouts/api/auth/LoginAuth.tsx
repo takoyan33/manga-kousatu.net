@@ -12,7 +12,7 @@ import { successNotify, errorNotify } from 'layouts/components/text/SiteModal'
 import { useLogin } from './useAuth'
 
 // フォームの型
-type SampleFormInput = {
+type FormInput = {
   email: string
   password: string
 }
@@ -23,7 +23,7 @@ const schema = yup.object({
   password: yup.string().required('必須です').min(8, '文字数が足りません'),
 })
 
-export default function Loginauth() {
+export default function LoginAuth() {
   const auth = getAuth()
   const router = useRouter()
   const googleProvider = new GoogleAuthProvider()
@@ -32,13 +32,13 @@ export default function Loginauth() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SampleFormInput>({
+  } = useForm<FormInput>({
     resolver: yupResolver(schema),
   })
 
   const { login, success, error } = useLogin()
 
-  const handleSignIn: SubmitHandler<SampleFormInput> = async (data: any) => {
+  const handleSignIn: SubmitHandler<FormInput> = async (data: any) => {
     try {
       await login(data.email, data.password)
       successNotify('ログインしました')

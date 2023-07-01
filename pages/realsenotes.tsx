@@ -1,4 +1,3 @@
-import React from 'react'
 import { CommonHead } from 'layouts/components/ui'
 
 const RELEASE_NOTES = [

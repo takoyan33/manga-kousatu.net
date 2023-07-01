@@ -1,12 +1,11 @@
-import React from 'react'
-import { useState, useCallback } from 'react'
+import React, { useState, useCallback } from 'react'
 import { database } from 'firebaseConfig.js'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { getAuth, updateProfile, deleteUser } from 'firebase/auth'
 import { Button, Box, TextField } from '@mui/material'
 
-export default function Nameauth() {
+export default function NameAuth() {
   const [ID, setID] = useState(null)
   const [title, setTitle] = useState<string>('')
   const [context, setContext] = useState<string>('')
@@ -16,13 +15,12 @@ export default function Nameauth() {
   const router = useRouter()
   const [createtime, setCreatetime] = useState<string>('')
   const [isUpdate, setIsUpdate] = useState<boolean>(false)
-  const databaseRef = collection(database, 'posts')
-  const [createObjectURL, setCreateObjectURL] = useState(null)
+  const postsData = collection(database, 'posts')
   const [firedata, setFiredata] = useState([])
   const [downloadURL, setDownloadURL] = useState<string>(null)
   const [result, setResult] = useState<string>('')
 
-  const updatename = async () => {
+  const updateName = async () => {
     updateProfile(auth.currentUser, {
       displayName: displayName,
     })
@@ -39,7 +37,7 @@ export default function Nameauth() {
   }
 
   const getallPost = async () => {
-    await getDocs(databaseRef).then((response) => {
+    await getDocs(postsData).then((response) => {
       setFiredata(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id }
@@ -80,7 +78,7 @@ export default function Nameauth() {
           }
         />
       </Box>
-      <Button variant='outlined' className='m-5' onClick={updatename}>
+      <Button variant='outlined' className='m-5' onClick={updateName}>
         名前を更新する
       </Button>
     </>

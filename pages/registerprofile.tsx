@@ -17,11 +17,10 @@ import { TagsInput } from 'react-tag-input-component'
 import 'react-toastify/dist/ReactToastify.css'
 import { CommonHead } from 'layouts/components/ui'
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import { successNotify, errorNotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 
 export default function Registerprofile() {
   const [selected, setSelected] = useState(['ワンピース'])
-  const databaseRef = collection(database, 'users')
   const [image, setImage] = useState(null)
   const [username, setUsername] = useState(null)
   const [bio, setBio] = useState(null)
@@ -32,7 +31,7 @@ export default function Registerprofile() {
   const auth = getAuth()
   const user = auth.currentUser
 
-  const uploadToClient = (event) => {
+  const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
 
@@ -139,7 +138,7 @@ export default function Registerprofile() {
             type='file'
             accept='image/*'
             name='myImage'
-            onChange={uploadToClient}
+            onChange={uploadImage}
           />
         </div>
         <div>

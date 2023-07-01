@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { CommonHead } from '../../../layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/ui'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { usePasswordReset } from '../../../layouts/api/auth/useAuth'
+import { usePasswordReset } from 'layouts/api/auth/useAuth'
 import { Alert, Grid, Link } from '@mui/material'
 
 export default function Password() {

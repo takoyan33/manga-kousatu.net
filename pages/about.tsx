@@ -1,4 +1,3 @@
-import React from 'react'
 import { CommonHead } from 'layouts/components/ui/CommonHead'
 
 function About() {

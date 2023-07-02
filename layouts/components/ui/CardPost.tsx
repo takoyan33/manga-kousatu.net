@@ -46,7 +46,6 @@ export const CardPost: React.VFC<Props> = React.memo(
     const usersRef = collection(database, 'users')
     const [users, setUsers] = useState(null)
     const [comments, setComments] = useState('')
-    const databaseRef = collection(database, 'posts')
     const style: React.CSSProperties = {
       whiteSpace: 'pre-line',
     }
@@ -54,9 +53,7 @@ export const CardPost: React.VFC<Props> = React.memo(
       margin: '10px',
     }
 
-    const router = useRouter()
     const auth = getAuth()
-    const user = auth.currentUser
 
     const usersData = async () => {
       //firestoreからデータ取得

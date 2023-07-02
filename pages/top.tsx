@@ -1,87 +1,37 @@
 import React, { useEffect, useState, useMemo } from 'react'
-import { database } from 'firebaseConfig'
-import { collection, onSnapshot, query, orderBy, where } from 'firebase/firestore'
 import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CardPost } from 'layouts/components/ui/CardPost'
 import { SiteButton } from 'layouts/components/button'
 // import { SiteCategory } from 'layouts/components/text'
-// import { useGetPosts } from 'layouts/components/hooks/useGetPosts'
-import { POST_CATEGORIES, CommonHead } from 'layouts/components/ui'
+import {
+  getPosts,
+  getOldPosts,
+  getLikePosts,
+  getNetabrePosts,
+  getNoNetabrePosts,
+} from 'layouts/components/hooks/useGetPosts'
+import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
 import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 
 export default function Index() {
   const [postData, setPostData] = useState([])
-  const databaseRef = collection(database, 'posts')
-  //新しい順
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
-
-  //古い順
-  const u = query(databaseRef, orderBy('timestamp'))
-
-  //いいね数順
-  const f = query(databaseRef, orderBy('likes', 'desc'))
-
-  //ネタバレ有り
-  const n = query(databaseRef, where('netabare', '==', 'ネタバレ有'))
-  //ネタバレ無し
-  const none = query(databaseRef, where('netabare', '==', 'ネタバレ無'))
-
   const [searchName, setSearchName] = useState('')
   const [loadIndex, setLoadIndex] = useState(6)
   const [isEmpty, setIsEmpty] = useState(false)
   const [loading, setLoading] = useState(false)
-
   const auth = getAuth()
   const user = auth.currentUser
 
-  // 新着順
-  const getPosts = async () => {
-    console.log(loading)
-    await onSnapshot(q, (querySnapshot) => {
-      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-    setLoading(false)
-  }
-
-  //古い順
-  const getOldPosts = async () => {
-    await onSnapshot(u, (querySnapshot) => {
-      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
-  //いいね順
-  const getLikePosts = async () => {
-    await onSnapshot(f, (querySnapshot) => {
-      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
-  //ネタバレ有
-  const getNetabrePosts = async () => {
-    await onSnapshot(n, (querySnapshot) => {
-      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
-  //ネタバレ無
-  const getNoNetabrePosts = async () => {
-    await onSnapshot(none, (querySnapshot) => {
-      setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
   useEffect(() => {
     setLoading(true)
-    getPosts()
+    getPosts(setPostData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -95,32 +45,37 @@ export default function Index() {
 
   const SORT_LIST = [
     {
+      sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: getPosts,
+      onClick: () => getPosts(setPostData),
     },
     {
+      sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: getOldPosts,
+      onClick: () => getOldPosts(setPostData),
     },
     {
+      sortId: 3,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: getLikePosts,
+      onClick: () => getLikePosts(setPostData),
     },
   ]
 
   const NETABARE_LIST = [
     {
+      sortId: 1,
       label: 'ネタバレ有',
       value: 'ネタバレ有',
-      onClick: getNetabrePosts,
+      onClick: () => getNetabrePosts(setPostData),
     },
     {
+      sortId: 2,
       label: 'ネタバレ無',
       value: 'ネタバレ無',
-      onClick: getNoNetabrePosts,
+      onClick: () => getNoNetabrePosts(setPostData),
     },
   ]
 
@@ -190,9 +145,9 @@ export default function Index() {
           <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
-            {NETABARE_LIST.map((item) => (
-              <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
-                {item.label}
+            {NETABARE_LIST.map((netabare) => (
+              <MenuItem key={netabare.sortId} value={netabare.value} onClick={netabare.onClick}>
+                {netabare.label}
               </MenuItem>
             ))}
           </Select>
@@ -205,7 +160,7 @@ export default function Index() {
 
           <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
             {SORT_LIST.map((sort) => (
-              <MenuItem key={sort.value} value={sort.value} onClick={sort.onClick}>
+              <MenuItem key={sort.sortId} value={sort.value} onClick={sort.onClick}>
                 {sort.label}
               </MenuItem>
             ))}

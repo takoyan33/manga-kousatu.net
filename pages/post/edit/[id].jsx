@@ -2,16 +2,15 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
-import { collection, getDocs, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
-import { Stack, FormLabel, TextField, Avatar } from '@mui/material'
+import { Stack, FormLabel } from '@mui/material'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import Image from 'react-image-resizer'
 import { SiteButton } from 'layouts/components/button'
-import { Categories, CommonHead } from 'layouts/components/ui'
-import { FORM_CATEGORIES, FORM_NETABARE } from 'layouts/components/ui/FormControls'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead } from 'layouts/components/ui'
 import { TagsInput } from 'react-tag-input-component'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -24,11 +23,6 @@ const Post = () => {
   const [ID, setID] = useState(null)
   const [context, setContext] = useState('')
   const [categori, setCategori] = useState('')
-  const [photoURL, setPhotoURL] = useState()
-  const [users, setUsers] = useState(null)
-  const [displayName, setDisplayName] = useState('')
-  const [createtime, setCreatetime] = useState('')
-  const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
   //データベースを取得
@@ -38,7 +32,6 @@ const Post = () => {
   const usersRef = collection(database, 'users')
   const [userid, setUserid] = useState(null)
   const [netabare, setNetabare] = useState('')
-  const [likes, setLikes] = useState(null)
   const [selected, setSelected] = useState(['最終回'])
 
   const auth = getAuth()
@@ -77,7 +70,7 @@ const Post = () => {
     setPostTitle(firedata.title)
   }, [])
 
-  const updatefields = (data) => {
+  const updatePost = (data) => {
     //更新する
     let fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
@@ -159,7 +152,7 @@ const Post = () => {
                         setCategori(e.target.value)
                       }}
                     >
-                      {Categoris.map((Categori) => (
+                      {FORM_CATEGORIES.map((Categori) => (
                         <FormControlLabel
                           key={Categori.id}
                           value={Categori.value}
@@ -190,12 +183,12 @@ const Post = () => {
                   }}
                   render={({ field }) => (
                     <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
-                      {Netabares.map((Netabare) => (
+                      {FORM_NETABARE.map((netabare) => (
                         <FormControlLabel
-                          key={Netabare.id}
-                          value={Netabare.value}
+                          key={netabare.id}
+                          value={netabare.value}
                           control={<Radio />}
-                          label={Netabare.label}
+                          label={netabare.label}
                           {...register('netabare')}
                         />
                       ))}
@@ -223,7 +216,7 @@ const Post = () => {
                 />
                 <SiteButton
                   href=''
-                  onClick={updatefields}
+                  onClick={updatePost}
                   text='更新する'
                   className='m-auto my-8 w-80'
                 />

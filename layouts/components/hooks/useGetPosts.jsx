@@ -1,29 +1,53 @@
-import { useEffect, useState } from 'react'
-import { query, orderBy, limit } from 'firebase/firestore'
-import { app, database } from '../../../firebaseConfig'
-import { collection, getDocs, doc, updateDoc, onSnapshot } from 'firebase/firestore'
+import { onSnapshot, collection, query, orderBy, where } from 'firebase/firestore'
+import { database } from 'firebaseConfig'
 
-// type Type = {
-//   getallPost: () => Promise<void>,
-//   getallOldpost: () => Promise<void>,
-//   getallLikepost: () => Promise<void>,
-//   firedata: any,
-// };
-
-export const useGetPosts = () => {
-  const [firedata, setFiredata] = useState([])
+//新しいpostを取得
+export const getPosts = async (setPostData) => {
   const databaseRef = collection(database, 'posts')
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const descPost = query(databaseRef, orderBy('timestamp', 'desc'))
 
-  //新着順
-  const getallPost = async () => {
-    await onSnapshot(q, (querySnapshot) => {
-      setFiredata(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-  useEffect(() => {
-    getallPost()
-  }, [])
+  onSnapshot(descPost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    console.log('成功')
+  })
+}
 
-  return { firedata }
+//古いpostを取得
+export const getOldPosts = async (setPostData) => {
+  const databaseRef = collection(database, 'posts')
+  const oldPost = query(databaseRef, orderBy('timestamp'))
+
+  onSnapshot(oldPost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//いいね順でpostを取得
+export const getLikePosts = async (setPostData) => {
+  const databaseRef = collection(database, 'posts')
+  const likePost = query(databaseRef, orderBy('likes', 'desc'))
+
+  onSnapshot(likePost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//ネタバレ有りでpostを取得
+export const getNetabrePosts = async (setPostData) => {
+  const databaseRef = collection(database, 'posts')
+  const netabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ有'))
+
+  onSnapshot(netabarePost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//ネタバレなしでpostを取得
+export const getNoNetabrePosts = async (setPostData) => {
+  const databaseRef = collection(database, 'posts')
+  const noNetabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ無'))
+
+  onSnapshot(noNetabarePost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
 }

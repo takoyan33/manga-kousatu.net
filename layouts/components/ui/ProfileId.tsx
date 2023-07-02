@@ -31,7 +31,7 @@ export const ProfileId: React.VFC<Props> = React.memo(
               />
             </p>
           </div>
-          <div className=''>
+          <div>
             <p className='m-5 text-lg'>
               <AccountBoxIcon /> {username}
             </p>

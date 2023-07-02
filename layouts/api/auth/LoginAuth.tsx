@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { Stack, TextField } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { successNotify, errorNotify } from 'layouts/components/text/SiteModal'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { useLogin } from './useAuth'
 
 // フォームの型

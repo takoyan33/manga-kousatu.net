@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useRouter } from 'next/router'
-import React from 'react'
-import { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import {

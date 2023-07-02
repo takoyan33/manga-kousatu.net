@@ -46,7 +46,7 @@ const schema = yup.object({
 
 export default function Post() {
   const [processing, setProcessing] = useState(false)
-  const [selected, setSelected] = useState(['最終回'])
+  const [tags, setTags] = useState(['最終回'])
   const [context, setContext] = useState('')
   const databaseRef = collection(database, 'posts')
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
@@ -65,7 +65,7 @@ export default function Post() {
     if (!user) {
       router.push('/register')
     } else {
-      getallPost()
+      getPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -79,13 +79,13 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
-  const getallPost = async () => {
+  const getPosts = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
 
-  const uploadToClient = (event) => {
+  const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
 
@@ -140,7 +140,7 @@ export default function Post() {
         netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
-        selected: selected,
+        selected: tags,
         timestamp: serverTimestamp(),
         likes: 0,
       })
@@ -149,7 +149,7 @@ export default function Post() {
           setProcessing(false)
           setContext('')
           setPhotoURL('')
-          setSelected([])
+          setTags([])
           setUserId('')
           setTimeout(() => {
             router.push('/top')
@@ -193,7 +193,7 @@ export default function Post() {
       >
         <div>
           <ImageUpload
-            onChange={uploadToClient}
+            onChange={uploadImage}
             createObjectURL={createObjectURL}
             text=''
             event={undefined}
@@ -205,7 +205,7 @@ export default function Post() {
             type='file'
             accept='image/*,.png,.jpg,.jpeg,.gif'
             name='myImage'
-            onChange={uploadToClient}
+            onChange={uploadImage}
           />
 
           <FormLabel id='demo-radio-buttons-group-label'>
@@ -239,12 +239,12 @@ export default function Post() {
                 name={field.name}
                 value={field.value}
               >
-                {FORM_CATEGORIES.map((Categori) => (
+                {FORM_CATEGORIES.map((categori) => (
                   <FormControlLabel
-                    key={Categori.id}
-                    value={Categori.value}
+                    key={categori.id}
+                    value={categori.value}
                     control={<Radio />}
-                    label={Categori.label}
+                    label={categori.label}
                     {...register('categori')}
                   />
                 ))}
@@ -255,9 +255,9 @@ export default function Post() {
           <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
 
           <TagsInput
-            value={selected}
-            onChange={setSelected}
-            name='selected'
+            value={tags}
+            onChange={setTags}
+            name='tags'
             placeHolder='タグを追加してください'
           />
 
@@ -273,12 +273,12 @@ export default function Post() {
             }}
             render={({ field }) => (
               <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
-                {FORM_NETABARE.map((Netabare) => (
+                {FORM_NETABARE.map((netabare) => (
                   <FormControlLabel
-                    key={Netabare.id}
-                    value={Netabare.value}
+                    key={netabare.id}
+                    value={netabare.value}
                     control={<Radio />}
-                    label={Netabare.label}
+                    label={netabare.label}
                     {...register('netabare')}
                   />
                 ))}

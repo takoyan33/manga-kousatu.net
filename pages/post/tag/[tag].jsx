@@ -10,15 +10,15 @@ import { SiteButton } from 'layouts/components/button'
 import { CardPost, CommonHead } from 'layouts/components/ui'
 
 const Category = () => {
-  const databaseRef = collection(database, 'posts')
+  const posts = collection(database, 'posts')
   //データベースを取得
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const q = query(posts, orderBy('timestamp', 'desc'))
   //新しい順
-  const u = query(databaseRef, orderBy('timestamp'))
+  const u = query(posts, orderBy('timestamp'))
   //古い順
-  const f = query(databaseRef, orderBy('likes', 'desc'))
+  const f = query(posts, orderBy('likes', 'desc'))
   //いいね数順
-  const [firedata, setFiredata] = useState([])
+  const [postsData, setPostsData] = useState([])
   const [likecount, setLikecount] = useState(0)
 
   const styles = { whiteSpace: 'pre-line' }
@@ -28,13 +28,11 @@ const Category = () => {
   const user = auth.currentUser
   const [searchName, setSearchName] = useState('')
 
-  console.log({ tag })
-
-  const getallPost = async () => {
+  const getPosts = async () => {
     //firestoreからデータ取得
     await getDocs(q).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setFiredata(
+      setPostsData(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -57,9 +55,9 @@ const Category = () => {
   }
 
   //古い順
-  const getallOldpost = async () => {
+  const getOldPosts = async () => {
     await onSnapshot(u, (querySnapshot) => {
-      setFiredata(
+      setPostsData(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -82,9 +80,9 @@ const Category = () => {
   }
 
   //いいね順
-  const getallLikepost = async () => {
+  const getLikePosts = async () => {
     await onSnapshot(f, (querySnapshot) => {
-      setFiredata(
+      setPostsData(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -107,7 +105,7 @@ const Category = () => {
   }
 
   useEffect(() => {
-    getallPost()
+    getPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likecount])
 
@@ -120,7 +118,7 @@ const Category = () => {
         </p>
         <h2 className='my-12 text-center text-2xl font-semibold'>#{tag}の考察記事一覧</h2>
 
-        <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
+        <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
 
         <TextField
           id='outlined-basic'
@@ -133,49 +131,44 @@ const Category = () => {
         />
 
         <div className='mt-4 flex'>
-          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={getallPost} />
-          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={getallOldpost} />
-          <SiteButton
-            href=''
-            text='いいね順'
-            className='m-4 my-2 inline'
-            onClick={getallLikepost}
-          />
+          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={getPosts} />
+          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={getOldPosts} />
+          <SiteButton href='' text='いいね順' className='m-4 my-2 inline' onClick={getLikePosts} />
         </div>
 
         <div className='m-auto max-w-7xl'>
           <Grid container spacing={1}>
-            {firedata
-              .filter((data) => {
+            {postsData
+              .filter((post) => {
                 if (searchName === '') {
-                  return data
+                  return post
                   //そのまま返す
                 } else if (
-                  data.title.toLowerCase().includes(searchName.toLowerCase())
+                  post.title.toLowerCase().includes(searchName.toLowerCase())
                   //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
                 ) {
-                  return data
+                  return post
                 }
               })
-              .map((data) => {
+              .map((post) => {
                 return (
                   <CardPost
-                    key={data.id}
-                    downloadURL={data.downloadURL}
-                    title={data.title}
-                    categori={data.categori}
-                    netabare={data.netabare}
-                    context={data.context}
-                    createtime={data.createtime}
-                    displayname={data.displayname}
-                    email={data.email}
-                    id={data.id}
-                    photoURL={data.photoURL}
-                    selected={data.selected}
+                    key={post.id}
+                    downloadURL={post.downloadURL}
+                    title={post.title}
+                    categori={post.categori}
+                    netabare={post.netabare}
+                    context={post.context}
+                    createtime={post.createtime}
+                    displayname={post.displayname}
+                    email={post.email}
+                    id={post.id}
+                    photoURL={post.photoURL}
+                    selected={post.selected}
                   />
                 )
               })}
-            {firedata.length == 0 && (
+            {postsData.length == 0 && (
               <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
             )}
           </Grid>

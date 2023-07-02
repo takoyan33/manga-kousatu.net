@@ -3,10 +3,9 @@ import React from 'react'
 import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
-import { collection, getDocs, onSnapshot } from 'firebase/firestore'
+import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { query, orderBy } from 'firebase/firestore'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
@@ -50,7 +49,7 @@ export const getStaticProps = async (context) => {
   }
 }
 
-const Daitails = ({ post }) => {
+const Details = ({ post }) => {
   const databaseRef = collection(database, 'posts')
   //データベースを取得
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
@@ -59,16 +58,15 @@ const Daitails = ({ post }) => {
   //古い順
   const f = query(databaseRef, orderBy('likes', 'desc'))
   //いいね数順
-  const [firedata, setFiredata] = useState([])
+  const [posts, setPosts] = useState([])
 
   const router = useRouter()
   const [searchName, setSearchName] = useState('')
 
-  const getallPost = async () => {
-    //firestoreからデータ取得
+  const getPosts = async () => {
     await getDocs(q).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setFiredata(
+      setPosts(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -91,9 +89,9 @@ const Daitails = ({ post }) => {
   }
 
   //古い順
-  const getallOldpost = async () => {
+  const getOldPosts = async () => {
     await onSnapshot(u, (querySnapshot) => {
-      setFiredata(
+      setPosts(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -116,9 +114,9 @@ const Daitails = ({ post }) => {
   }
 
   //いいね順
-  const getallLikepost = async () => {
+  const getLikePosts = async () => {
     await onSnapshot(f, (querySnapshot) => {
-      setFiredata(
+      setPosts(
         querySnapshot.docs
           .map((data) => {
             //配列なので、mapで展開する
@@ -141,24 +139,24 @@ const Daitails = ({ post }) => {
   }
 
   useEffect(() => {
-    getallPost()
+    getPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
   const menuItems = [
     {
       label: '新しい順',
       value: '新しい順',
-      onClick: getallPost,
+      onClick: getPosts,
     },
     {
       label: '古い順',
       value: '古い順',
-      onClick: getallOldpost,
+      onClick: getOldPosts,
     },
     {
       label: 'いいね順',
       value: 'いいね順',
-      onClick: getallLikepost,
+      onClick: getLikePosts,
     },
   ]
 
@@ -173,7 +171,7 @@ const Daitails = ({ post }) => {
         {post.fields.title.stringValue}の考察記事一覧
       </h1>
 
-      <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
+      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
 
       <TextField
         id='outlined-basic'
@@ -197,37 +195,37 @@ const Daitails = ({ post }) => {
       </FormControl>
       <div className='m-auto max-w-7xl'>
         <Grid container spacing={1}>
-          {firedata
-            .filter((data) => {
+          {posts
+            .filter((post) => {
               if (searchName === '') {
-                return data
+                return post
                 //そのまま返す
               } else if (
-                data.title.toLowerCase().includes(searchName.toLowerCase())
+                post.title.toLowerCase().includes(searchName.toLowerCase())
                 //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
               ) {
-                return data
+                return post
               }
             })
-            .map((data) => {
+            .map((post) => {
               return (
                 <CardPost
-                  key={data.id}
-                  downloadURL={data.downloadURL}
-                  title={data.title}
-                  categori={data.categori}
-                  netabare={data.netabare}
-                  context={data.context}
-                  createtime={data.createtime}
-                  displayname={data.displayname}
-                  email={data.email}
-                  id={data.id}
-                  photoURL={data.photoURL}
-                  selected={data.selected}
+                  key={post.id}
+                  downloadURL={post.downloadURL}
+                  title={post.title}
+                  categori={post.categori}
+                  netabare={post.netabare}
+                  context={post.context}
+                  createtime={post.createtime}
+                  displayname={post.displayname}
+                  email={post.email}
+                  id={post.id}
+                  photoURL={post.photoURL}
+                  selected={post.selected}
                 />
               )
             })}
-          {firedata.length == 0 && (
+          {posts.length == 0 && (
             <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
           )}
         </Grid>
@@ -236,4 +234,4 @@ const Daitails = ({ post }) => {
   )
 }
 
-export default Daitails
+export default Details

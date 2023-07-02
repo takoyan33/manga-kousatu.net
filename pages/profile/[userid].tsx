@@ -85,23 +85,23 @@ const Post = () => {
       <Grid container className='m-auto'>
         {postsData.length === 0 && <p>まだ投稿していません</p>}
         {postsData &&
-          postsData.map((data) => {
+          postsData.map((post) => {
             return (
               <>
                 <CardPost
-                  key={data.id}
-                  downloadURL={data.downloadURL}
-                  title={data.title}
-                  categori={data.categori}
-                  netabare={data.netabare}
-                  context={data.context}
-                  createtime={data.createtime}
-                  displayname={data.displayname}
-                  email={data.email}
-                  id={data.id}
-                  photoURL={data.photoURL}
-                  likes={data.likes}
-                  selected={data.selected}
+                  key={post.id}
+                  downloadURL={post.downloadURL}
+                  title={post.title}
+                  categori={post.categori}
+                  netabare={post.netabare}
+                  context={post.context}
+                  createtime={post.createtime}
+                  displayname={post.displayname}
+                  email={post.email}
+                  id={post.id}
+                  photoURL={post.photoURL}
+                  likes={post.likes}
+                  selected={post.selected}
                 />
               </>
             )

@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
+import { CommonHead, ProfileId, CardPost, COLORS } from 'layouts/components/ui'
 import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -24,45 +24,45 @@ export default function Profile() {
   const usersRef = collection(database, 'users')
   const [users, setUsers] = useState(null)
   //データベースを取得
-  const [firedata, setFiredata] = useState([])
-  const [likefiredata, setLikeFiredata] = useState([])
+  const [posts, setPosts] = useState([])
+  const [likedPosts, setLikedPosts] = useState([])
   const [searchName, setSearchName] = useState('')
   const [onpiece, setOnpiece] = useState([])
   const [kingdom, setKingdom] = useState([])
   const [tokyo, setTokyo] = useState([])
   const [kaisen, setKaisen] = useState([])
 
-  const q = query(databaseRef, where('email', '==', user.email))
-  const my = query(usersRef, where('email', '==', user.email))
+  const myPosts = query(databaseRef, where('email', '==', user.email))
+  const myUser = query(usersRef, where('email', '==', user.email))
 
-  const o = query(
+  const myOnePosts = query(
     databaseRef,
     where('email', '==', user.email),
     where('categori', '==', 'ONEPIECE'),
   )
-  const z = query(
+  const myKaisenPosts = query(
     databaseRef,
     where('email', '==', user.email),
     where('categori', '==', '呪術廻戦'),
   )
-  const t = query(
+  const myTokyoPosts = query(
     databaseRef,
     where('email', '==', user.email),
     where('categori', '==', '東京リベンジャーズ'),
   )
-  const k = query(
+  const MyKingPosts = query(
     databaseRef,
     where('email', '==', user.email),
     where('categori', '==', 'キングダム'),
   )
 
-  const likes = query(databaseRef, where('likes_email', 'array-contains', user.email))
+  const myLikedPosts = query(databaseRef, where('likes_email', 'array-contains', user.email))
 
-  const getData = async () => {
+  const getMyPosts = async () => {
     //firestoreからデータ取得
-    await getDocs(q).then((querySnapshot) => {
+    await getDocs(myPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setFiredata(
+      setPosts(
         querySnapshot.docs.map((data) => {
           //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
@@ -72,11 +72,11 @@ export default function Profile() {
     })
   }
 
-  const getlikeData = async () => {
+  const getLikedPosts = async () => {
     //firestoreからデータ取得
-    await getDocs(likes).then((querySnapshot) => {
+    await getDocs(myLikedPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setLikeFiredata(
+      setLikedPosts(
         querySnapshot.docs.map((data) => {
           //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
@@ -85,11 +85,11 @@ export default function Profile() {
       )
     })
   }
-  console.log(likefiredata)
+  console.log(likedPosts)
 
   const getDataone = async () => {
     //firestoreからデータ取得
-    await getDocs(o).then((querySnapshot) => {
+    await getDocs(myOnePosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setOnpiece(
         querySnapshot.docs.map((data) => {
@@ -101,9 +101,9 @@ export default function Profile() {
     })
   }
 
-  const getDatzyu = async () => {
+  const getKaisenPost = async () => {
     //firestoreからデータ取得
-    await getDocs(z).then((querySnapshot) => {
+    await getDocs(myKaisenPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setKaisen(
         querySnapshot.docs.map((data) => {
@@ -115,9 +115,9 @@ export default function Profile() {
     })
   }
 
-  const getDatatokyo = async () => {
+  const getTokyoPosts = async () => {
     //firestoreからデータ取得
-    await getDocs(t).then((querySnapshot) => {
+    await getDocs(myTokyoPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setTokyo(
         querySnapshot.docs.map((data) => {
@@ -129,9 +129,9 @@ export default function Profile() {
     })
   }
 
-  const getDataking = async () => {
+  const getKingPosts = async () => {
     //firestoreからデータ取得
-    await getDocs(k).then((querySnapshot) => {
+    await getDocs(MyKingPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setKingdom(
         querySnapshot.docs.map((data) => {
@@ -142,9 +142,9 @@ export default function Profile() {
       )
     })
   }
-  const usersData = async () => {
+  const getMyUser = async () => {
     //firestoreからデータ取得
-    await getDocs(my).then((querySnapshot) => {
+    await getDocs(myUser).then((querySnapshot) => {
       //コレクションのドキュメントを取得
       setUsers(
         querySnapshot.docs.map((data) => {
@@ -160,13 +160,13 @@ export default function Profile() {
     if (!user) {
       router.push('/register')
     } else {
-      getData()
-      usersData()
+      getMyPosts()
+      getMyUser()
       getDataone()
-      getDatzyu()
-      getDatatokyo()
-      getlikeData()
-      getDataking()
+      getKaisenPost()
+      getTokyoPosts()
+      getLikedPosts()
+      getKingPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -206,14 +206,13 @@ export default function Profile() {
   //   }
   // }, []);
 
-  const sample_data = [
+  const MANGA_DATA = [
     { name: 'ONE PIECE', value: onpiece.length },
     { name: '呪術廻戦', value: kaisen.length },
     { name: 'キングダム', value: kingdom.length },
     { name: '東京リベンジャーズ', value: tokyo.length },
   ]
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#ff6361', '#8884d8', '#C1C1C1']
   const RADIAN = Math.PI / 180
   const renderCustomizedLabel = ({
     cx,
@@ -277,15 +276,15 @@ export default function Profile() {
 
       <>
         {users &&
-          users.map((data) => {
+          users.map((user) => {
             return (
               <>
                 <ProfileId
-                  key={data.id}
-                  profileimage={data.profileimage}
-                  username={data.username}
-                  bio={data.bio}
-                  favorite={data.favarite}
+                  key={user.id}
+                  profileimage={user.profileimage}
+                  username={user.username}
+                  bio={user.bio}
+                  favorite={user.favarite}
                   id={0}
                 />
               </>
@@ -294,13 +293,13 @@ export default function Profile() {
       </>
 
       <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
-      <p className='text-1xl text-center'>投稿数　{firedata.length}件</p>
+      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
       <div>
         <ResponsiveContainer height={256}>
           <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
             <Pie
               dataKey='value'
-              data={sample_data}
+              data={MANGA_DATA}
               cx='50%'
               cy='50%'
               outerRadius={80}
@@ -308,7 +307,7 @@ export default function Profile() {
               label={renderCustomizedLabel}
               isAnimationActive={true}
             >
-              {sample_data.map((entry, index) => (
+              {MANGA_DATA.map((entry, index) => (
                 <Cell fill={COLORS[index % COLORS.length]} key={index} />
               ))}
             </Pie>
@@ -328,35 +327,35 @@ export default function Profile() {
       />
 
       <Grid container className='m-auto'>
-        {firedata
-          .filter((data) => {
+        {posts
+          .filter((post) => {
             if (searchName === '') {
-              return data
+              return post
               //そのまま返す
             } else if (
-              data.title.toLowerCase().includes(searchName.toLowerCase())
+              post.title.toLowerCase().includes(searchName.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
-              return data
+              return post
             }
           })
-          .map((data) => {
+          .map((post) => {
             return (
               <>
                 <CardPost
-                  key={data.id}
-                  downloadURL={data.downloadURL}
-                  title={data.title}
-                  categori={data.categori}
-                  netabare={data.netabare}
-                  context={data.context}
-                  createtime={data.createtime}
-                  displayname={data.displayname}
-                  email={data.email}
-                  id={data.id}
-                  photoURL={data.photoURL}
-                  likes={data.likes}
-                  selected={data.selected}
+                  key={post.id}
+                  downloadURL={post.downloadURL}
+                  title={post.title}
+                  categori={post.categori}
+                  netabare={post.netabare}
+                  context={post.context}
+                  createtime={post.createtime}
+                  displayname={post.displayname}
+                  email={post.email}
+                  id={post.id}
+                  photoURL={post.photoURL}
+                  likes={post.likes}
+                  selected={post.selected}
                 />
               </>
             )
@@ -364,25 +363,25 @@ export default function Profile() {
       </Grid>
 
       <p className='my-12 text-center text-2xl font-semibold'>いいねした投稿</p>
-      <p className='text-1xl text-center'>投稿数　{likefiredata.length}件</p>
+      <p className='text-1xl text-center'>投稿数　{likedPosts.length}件</p>
       <Grid container className='m-auto'>
-        {likefiredata.map((data) => {
+        {likedPosts.map((post) => {
           return (
             <>
               <CardPost
-                key={data.id}
-                downloadURL={data.downloadURL}
-                title={data.title}
-                categori={data.categori}
-                netabare={data.netabare}
-                context={data.context}
-                createtime={data.createtime}
-                displayname={data.displayname}
-                email={data.email}
-                id={data.id}
-                photoURL={data.photoURL}
-                likes={data.likes}
-                selected={data.selected}
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                categori={post.categori}
+                netabare={post.netabare}
+                context={post.context}
+                createtime={post.createtime}
+                displayname={post.displayname}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
               />
             </>
           )

@@ -8,6 +8,7 @@ import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, ProfileId, CardPost, COLORS } from 'layouts/components/ui'
+import { getMyPosts, getLikedPosts, getMyUser } from 'layouts/components/hooks'
 import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -21,19 +22,15 @@ export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
   const databaseRef = collection(database, 'posts')
-  const usersRef = collection(database, 'users')
   const [users, setUsers] = useState(null)
   //データベースを取得
-  const [posts, setPosts] = useState([])
+  const [posts, setPostData] = useState([])
   const [likedPosts, setLikedPosts] = useState([])
   const [searchName, setSearchName] = useState('')
   const [onpiece, setOnpiece] = useState([])
   const [kingdom, setKingdom] = useState([])
   const [tokyo, setTokyo] = useState([])
   const [kaisen, setKaisen] = useState([])
-
-  const myPosts = query(databaseRef, where('email', '==', user.email))
-  const myUser = query(usersRef, where('email', '==', user.email))
 
   const myOnePosts = query(
     databaseRef,
@@ -55,37 +52,6 @@ export default function Profile() {
     where('email', '==', user.email),
     where('categori', '==', 'キングダム'),
   )
-
-  const myLikedPosts = query(databaseRef, where('likes_email', 'array-contains', user.email))
-
-  const getMyPosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(myPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setPosts(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-
-  const getLikedPosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(myLikedPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setLikedPosts(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-  console.log(likedPosts)
 
   const getDataone = async () => {
     //firestoreからデータ取得
@@ -142,30 +108,17 @@ export default function Profile() {
       )
     })
   }
-  const getMyUser = async () => {
-    //firestoreからデータ取得
-    await getDocs(myUser).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
 
   useEffect(() => {
     if (!user) {
       router.push('/register')
     } else {
-      getMyPosts()
-      getMyUser()
+      getMyPosts(setPostData, user.email)
+      getLikedPosts(setLikedPosts, user.email)
+      getMyUser(setUsers, user.email)
       getDataone()
       getKaisenPost()
       getTokyoPosts()
-      getLikedPosts()
       getKingPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

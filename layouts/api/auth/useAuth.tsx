@@ -108,3 +108,5 @@ export const SignInWithGoogle = () => {
     })
   return { SignInWithGoogle }
 }
+
+//アカウント削除

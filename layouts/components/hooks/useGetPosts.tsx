@@ -1,4 +1,4 @@
-import { onSnapshot, collection, query, orderBy, where } from 'firebase/firestore'
+import { onSnapshot, collection, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
 import { database } from 'firebaseConfig'
 
 //新しいpostを取得
@@ -51,3 +51,50 @@ export const getNoNetabrePosts = async (setPostData) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
+
+//ユーザーの投稿データを取得
+export const getMyPosts = async (setPostData, myEmail) => {
+  const databaseRef = collection(database, 'posts')
+  const myPosts = query(databaseRef, where('email', '==', myEmail))
+
+  onSnapshot(myPosts, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//自分がいいねした投稿データを取得
+export const getLikedPosts = async (setLikedPosts, myEmail) => {
+  const databaseRef = collection(database, 'posts')
+  const myLikedPosts = query(databaseRef, where('likes_email', 'array-contains', myEmail))
+
+  onSnapshot(myLikedPosts, (querySnapshot) => {
+    setLikedPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//特定のpostを取得
+export const getPost = async (setSinglePost, routerId) => {
+  try {
+    const ref = await doc(database, 'posts', routerId)
+    const snap = await getDoc(ref)
+    setSinglePost(snap.data())
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+//同じカテゴリの投稿を取得
+
+// export const categoriFiredata = async () => {
+//   //firestoreからデータ取得
+//   await getDocs(q).then((querySnapshot) => {
+//     //コレクションのドキュメントを取得
+//     setSinglePost(
+//       querySnapshot.docs.map((data) => {
+//         //配列なので、mapで展開する
+//         return { ...data.data(), id: data.id }
+//         //スプレッド構文で展開して、新しい配列を作成
+//       }),
+//     )
+//   })
+// }

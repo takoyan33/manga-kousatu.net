@@ -142,23 +142,42 @@ const Details = ({ post }) => {
     getPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
-  const menuItems = [
+
+  const SORT_LIST = [
     {
+      sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: getPosts,
+      onClick: () => getPosts(setPostData),
     },
     {
+      sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: getOldPosts,
+      onClick: () => getOldPosts(setPostData),
     },
     {
+      sortId: 3,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: getLikePosts,
+      onClick: () => getLikePosts(setPostData),
     },
   ]
+
+  // const NETABARE_LIST = [
+  //   {
+  //     sortId: 1,
+  //     label: 'ネタバレ有',
+  //     value: 'ネタバレ有',
+  //     onClick: () => getNetabrePosts(setPostData),
+  //   },
+  //   {
+  //     sortId: 2,
+  //     label: 'ネタバレ無',
+  //     value: 'ネタバレ無',
+  //     onClick: () => getNoNetabrePosts(setPostData),
+  //   },
+  // ]
 
   return (
     <>
@@ -173,26 +192,42 @@ const Details = ({ post }) => {
 
       <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
 
-      <TextField
-        id='outlined-basic'
-        type='search'
-        label='考察記事を検索する'
-        variant='outlined'
-        onChange={(event) => {
-          setSearchName(event.target.value)
-        }}
-      />
+      <div className='m-auto my-10 flex justify-center'>
+        <TextField
+          id='outlined-basic'
+          type='search'
+          label='記事を検索する'
+          variant='outlined'
+          onChange={(event) => {
+            setSearchName(event.target.value)
+          }}
+        />
+        {/* <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+          <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
-      <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
-        <InputLabel id='demo-select-small'>並び順</InputLabel>
-        <Select labelId='demo-select-small' id='demo-select-small' label='並び順'>
-          {menuItems.map((item) => (
-            <MenuItem key={item.value} value={item.value} onClick={item.onClick}>
-              {item.label}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
+            {NETABARE_LIST.map((netabare) => (
+              <MenuItem key={netabare.sortId} value={netabare.value} onClick={netabare.onClick}>
+                {netabare.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl> */}
+      </div>
+
+      <div className='flex justify-end'>
+        <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
+          <InputLabel id='demo-select-small'>新しい順</InputLabel>
+
+          <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
+            {SORT_LIST.map((sort) => (
+              <MenuItem key={sort.sortId} value={sort.value} onClick={sort.onClick}>
+                {sort.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+      </div>
       <div className='m-auto max-w-7xl'>
         <Grid container spacing={1}>
           {posts

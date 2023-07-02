@@ -1,53 +1,29 @@
-import { onSnapshot, collection, query, orderBy, where } from 'firebase/firestore'
+import { onSnapshot, collection, query, orderBy, where, getDocs } from 'firebase/firestore'
 import { database } from 'firebaseConfig'
 
-//新しいpostを取得
-export const getPosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const descPost = query(databaseRef, orderBy('timestamp', 'desc'))
+//自分のuserを取得
+export const getMyUser = async (setUsers, userEmail) => {
+  const usersRef = collection(database, 'users')
+  const myUser = query(usersRef, where('email', '==', userEmail))
 
-  onSnapshot(descPost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  onSnapshot(myUser, (querySnapshot) => {
+    setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     console.log('成功')
   })
 }
 
-//古いpostを取得
-export const getOldPosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const oldPost = query(databaseRef, orderBy('timestamp'))
+//user全体を取得
+export const getUsers = async (setUsers) => {
+  const usersRef = collection(database, 'users')
 
-  onSnapshot(oldPost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
-}
-
-//いいね順でpostを取得
-export const getLikePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const likePost = query(databaseRef, orderBy('likes', 'desc'))
-
-  onSnapshot(likePost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
-}
-
-//ネタバレ有りでpostを取得
-export const getNetabrePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const netabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ有'))
-
-  onSnapshot(netabarePost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
-}
-
-//ネタバレなしでpostを取得
-export const getNoNetabrePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const noNetabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ無'))
-
-  onSnapshot(noNetabarePost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  await getDocs(usersRef).then((response) => {
+    //コレクションのドキュメントを取得
+    setUsers(
+      response.docs.map((data) => {
+        //配列なので、mapで展開する
+        return { ...data.data(), id: data.id }
+        //スプレッド構文で展開して、新しい配列を作成
+      }),
+    )
   })
 }

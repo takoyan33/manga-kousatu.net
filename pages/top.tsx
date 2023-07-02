@@ -11,7 +11,7 @@ import {
   getLikePosts,
   getNetabrePosts,
   getNoNetabrePosts,
-} from 'layouts/components/hooks/useGetPosts'
+} from 'layouts/components/hooks'
 import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'

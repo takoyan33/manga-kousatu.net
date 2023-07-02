@@ -1,63 +1,27 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { getMyPosts, getMyUser } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
 
 const Post = () => {
   const [users, setUsers] = useState([])
-  const postsRef = collection(database, 'posts')
-  const [postsData, setPostsData] = useState([])
-  const usersRef = collection(database, 'users')
+  const [postsData, setPostData] = useState([])
   const [likes, setLikes] = useState(null)
   const router = useRouter()
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
-  const userPost = query(postsRef, where('userid', '==', userid))
-  const yourProfile = query(usersRef, where('userid', '==', userid))
-
-  const getPosts = async () => {
-    try {
-      const querySnapshot = await getDocs(userPost)
-      const posts = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      setPostsData(posts)
-    } catch (error) {
-      console.log('失敗しました', error)
-    }
-  }
 
   useEffect(() => {
     if (user && userid == user.uid) {
       router.push('/profile')
     }
+    getMyUser(setUsers, userid)
+    getMyPosts(setPostData, userid)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, userid, router])
-
-  useEffect(() => {
-    getUserProfile()
-    getPosts()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const getUserProfile = async () => {
-    //firestoreからデータ取得
-    try {
-      const querySnapshot = await getDocs(yourProfile)
-      const userData = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      setUsers(userData)
-    } catch (error) {
-      console.log('失敗しました', error)
-    }
-  }
 
   return (
     <>

@@ -105,7 +105,7 @@ export default function Registerprofile() {
             ユーザー画像<span className='text-red-600'>*</span>
           </label>
         </div>
-        <div className=''>
+        <div>
           <img
             className='m-auto flex w-60 items-center justify-center'
             src={createObjectURL}

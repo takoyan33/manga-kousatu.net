@@ -19,6 +19,7 @@ import {
 import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
+import { getPost, getUsers } from 'layouts/components/hooks'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
@@ -61,81 +62,25 @@ const Post = () => {
     resolver: yupResolver(schema),
   })
 
-  const getPost = async () => {
-    try {
-      const ref = await doc(database, 'posts', routerid)
-      const snap = await getDoc(ref)
-      setSinglePost(snap.data())
-      console.log('singlePost', singlePost)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   const getComments = async () => {
     const commentseRef = collection(database, 'comments')
-    const c = await query(commentseRef, where('postid', '==', routerid))
+    const postComments = await query(commentseRef, where('postid', '==', routerid))
     try {
-      const querySnapshot = await getDocs(c)
+      const querySnapshot = await getDocs(postComments)
       const allcomments = querySnapshot.docs.map((doc) => ({
         ...doc.data(),
         id: doc.id,
       }))
-      console.log('allcomments', allcomments)
       await setComments(allcomments)
     } catch (error) {
       console.log('Error fetching user data', error)
     }
   }
 
-  // const categoriFiredata = async () => {
-  //   //firestoreからデータ取得
-  //   await getDocs(q).then((querySnapshot) => {
-  //     //コレクションのドキュメントを取得
-  //     setSinglePost(
-  //       querySnapshot.docs.map((data) => {
-  //         //配列なので、mapで展開する
-  //         return { ...data.data(), id: data.id }
-  //         //スプレッド構文で展開して、新しい配列を作成
-  //       }),
-  //     )
-  //   })
-  // }
-
-  // const yourprofile = query(usersRef, where('userid', '==', userid))
-
-  // const fetchUserProfile = async () => {
-  //   //firestoreからデータ取得
-  //   try {
-  //     const querySnapshot = await getDocs(yourprofile)
-  //     const userData = querySnapshot.docs.map((doc) => ({
-  //       ...doc.data(),
-  //       id: doc.id,
-  //     }))
-  //     setUsers(userData)
-  //   } catch (error) {
-  //     console.log('Error fetching user data', error)
-  //   }
-  // }
-
-  const usersData = async () => {
-    //firestoreからデータ取得
-    await getDocs(usersRef).then((response) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-
   useEffect(() => {
     // categoriFiredata();
-    getPost()
-    usersData()
+    getPost(setSinglePost, routerid)
+    getUsers(setUsers)
     getComments()
   }, [router])
 
@@ -182,6 +127,7 @@ const Post = () => {
         console.log(err)
       })
   }
+  //コメントの追加
   const addComment = async (data) => {
     const newDate = new Date().toLocaleString('ja-JP')
     const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())

@@ -86,7 +86,8 @@ export default function Index() {
         <Image className='m-auto' height={100} width={200} src='/logo.png' />
       </div>
       <p className='my-5 text-center'>
-        Manga Studyでは、人気漫画の考察を<br></br>
+        Manga Studyでは、人気漫画の考察を
+        <br />
         自由に投稿・閲覧できるwebサイトです。
       </p>
 

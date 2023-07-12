@@ -122,7 +122,8 @@ export default function LoginAuth() {
             </Link>
           </p>
           <p className='my-4'>
-            パスワードを忘れた方はこちら<br></br>
+            パスワードを忘れた方はこちら
+            <br />
             <Link href='/profile/edit/password'>
               <span className='text-blue-500 underline'>パスワード再設定</span>
             </Link>

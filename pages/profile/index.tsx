@@ -1,20 +1,13 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CommonHead, ProfileId, CardPost, COLORS } from 'layouts/components/ui'
+import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
 import { getMyPosts, getLikedPosts, getMyUser } from 'layouts/components/hooks'
-import ListSubheader from '@mui/material/ListSubheader'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import DraftsIcon from '@mui/icons-material/Drafts'
-import SendIcon from '@mui/icons-material/Send'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
@@ -192,40 +185,7 @@ export default function Profile() {
       <CommonHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
 
-      <List
-        sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
-        component='nav'
-        aria-labelledby='nested-list-subheader'
-        subheader={
-          <ListSubheader component='div' id='nested-list-subheader'>
-            アカウントメニュー
-          </ListSubheader>
-        }
-      >
-        <ListItemButton>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <Link href='/profile/edit'> プロフィールを変更する</Link>
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <button className='' onClick={deleteuser}>
-            アカウントを退会する
-          </button>
-        </ListItemButton>
-        {/* <button className="m-5">
-          <Link href="/profile/emailedit">メールアドレスを変更する</Link>
-        </button> */}
-        <ListItemButton>
-          <ListItemIcon>
-            <SendIcon />
-          </ListItemIcon>
-          <Link href='/profile/edit/password'>パスワードを変更する</Link>
-        </ListItemButton>
-      </List>
+      <AccountMenu onClick={deleteuser} />
 
       <>
         {users &&

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
 import {
   collection,
@@ -27,9 +27,6 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import dynamic from 'next/dynamic'
-import React from 'react'
-import { stateToHTML } from 'draft-js-export-html'
-import { EditorState, ContentState } from 'draft-js'
 
 // フォームの型
 type FormInput = {
@@ -207,111 +204,113 @@ export default function Post() {
             name='myImage'
             onChange={uploadImage}
           />
+          <div className='my-8'>
+            <FormLabel id='demo-radio-buttons-group-label' htmlFor='input-title' className='mb-2'>
+              タイトル（最大20文字) <span className='text-red-600'>*</span>
+            </FormLabel>
 
-          <FormLabel id='demo-radio-buttons-group-label'>
-            タイトル<span className='text-red-600'>*</span>
-          </FormLabel>
-
-          <TextField
-            {...register('title')}
-            error={'title' in errors}
-            helperText={errors.title?.message}
-            id='outlined-basic'
-            label='タイトル*（最大20文字)'
-            variant='outlined'
-            className='m-auto w-full'
-          />
-
-          <div>
+            <TextField
+              {...register('title')}
+              error={'title' in errors}
+              helperText={errors.title?.message}
+              id='input-title'
+              label='最新話の考察'
+              variant='outlined'
+              className='m-auto w-full'
+            />
+          </div>
+          <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label'>
               作品名<span className='text-red-600'>*</span>
             </FormLabel>
+            <Controller
+              name='categori'
+              control={control}
+              rules={{
+                required: '必須項目です',
+              }}
+              render={({ field }) => (
+                <RadioGroup
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  name={field.name}
+                  value={field.value}
+                >
+                  {FORM_CATEGORIES.map((categori) => (
+                    <FormControlLabel
+                      key={categori.id}
+                      value={categori.value}
+                      control={<Radio />}
+                      label={categori.label}
+                      {...register('categori')}
+                    />
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors.categori && <p>{errors.categori.message}</p>}
           </div>
-          <Controller
-            name='categori'
-            control={control}
-            rules={{
-              required: '必須項目です',
-            }}
-            render={({ field }) => (
-              <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                name={field.name}
-                value={field.value}
-              >
-                {FORM_CATEGORIES.map((categori) => (
-                  <FormControlLabel
-                    key={categori.id}
-                    value={categori.value}
-                    control={<Radio />}
-                    label={categori.label}
-                    {...register('categori')}
-                  />
-                ))}
-              </RadioGroup>
-            )}
-          />
-          {errors.categori && <p>{errors.categori.message}</p>}
-          <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
-
-          <TagsInput
-            value={tags}
-            onChange={setTags}
-            name='tags'
-            placeHolder='タグを追加してください'
-          />
-
-          <FormLabel id='demo-radio-buttons-group-label'>
-            ネタバレについて<span className='text-red-600'>*</span>
-          </FormLabel>
-
-          <Controller
-            name='netabare'
-            control={control}
-            rules={{
-              required: '必須項目です',
-            }}
-            render={({ field }) => (
-              <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
-                {FORM_NETABARE.map((netabare) => (
-                  <FormControlLabel
-                    key={netabare.id}
-                    value={netabare.value}
-                    control={<Radio />}
-                    label={netabare.label}
-                    {...register('netabare')}
-                  />
-                ))}
-              </RadioGroup>
-            )}
-          />
-          {errors.netabare && <p>{errors.netabare.message}</p>}
-
-          <FormLabel id='demo-radio-buttons-group-label'>
-            内容<span className='text-red-600'>*</span>(最大500文字）
-          </FormLabel>
-
-          <p className='my-4'>現在の文字数：{lengthData && lengthData}</p>
-
-          <Richedita onChange={handleEditorChange} />
-          <div>
-            <p>他の写真（最大1枚）</p>
+          <div className='my-8'>
+            <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
+            <TagsInput
+              value={tags}
+              onChange={setTags}
+              name='tags'
+              placeHolder='タグを追加してください'
+            />
           </div>
-          <ImageUploadContext
-            onChange={uploadToClientcontext}
-            createcontextObjectURL={createcontextObjectURL}
-            text={'写真'}
-            event={undefined}
-          />
-          <input
-            id='file-input'
-            className='hidden'
-            type='file'
-            multiple
-            accept='image/*,.png,.jpg,.jpeg,.gif'
-            name='myImage'
-            onChange={uploadToClientcontext}
-          />
+          <div className='my-8'>
+            <FormLabel id='demo-radio-buttons-group-label'>
+              ネタバレについて<span className='text-red-600'>*</span>
+            </FormLabel>
+            <Controller
+              name='netabare'
+              control={control}
+              rules={{
+                required: '必須項目です',
+              }}
+              render={({ field }) => (
+                <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+                  {FORM_NETABARE.map((netabare) => (
+                    <FormControlLabel
+                      key={netabare.id}
+                      value={netabare.value}
+                      control={<Radio />}
+                      label={netabare.label}
+                      {...register('netabare')}
+                    />
+                  ))}
+                </RadioGroup>
+              )}
+            />
+            {errors.netabare && <p>{errors.netabare.message}</p>}
+          </div>
+          <div className='my-8'>
+            <FormLabel id='demo-radio-buttons-group-label'>
+              内容<span className='text-red-600'>*</span>(最大500文字）
+            </FormLabel>
+
+            <Richedita onChange={handleEditorChange} />
+            <p className='my-4 text-right'>現在の文字数：{lengthData && lengthData}</p>
+          </div>
+          <div className='my-8'>
+            <label htmlFor='file-input'>他の写真（最大1枚）</label>
+
+            <ImageUploadContext
+              onChange={uploadToClientcontext}
+              createcontextObjectURL={createcontextObjectURL}
+              text={'写真'}
+              event={undefined}
+            />
+            <input
+              id='file-input'
+              className='hidden'
+              type='file'
+              multiple
+              accept='image/*,.png,.jpg,.jpeg,.gif'
+              name='myImage'
+              onChange={uploadToClientcontext}
+            />
+          </div>
           <SiteButton
             href=''
             text='投稿する'

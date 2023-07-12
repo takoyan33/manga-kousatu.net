@@ -27,14 +27,14 @@ export default function Top() {
           <img src='./images/top-1.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
           <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h2>
           <p className='my-6 px-4'>
-            語りたい漫画の考察があったら、 <br></br>ログインをして、 記事を投稿しましょう。
+            語りたい漫画の考察があったら、 <br />ログインをして、 記事を投稿しましょう。
           </p>
         </div>
         <div className='w-1/3'>
           <img src='./images/top-2.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
           <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h2>
           <p className='my-6 px-4'>
-            Manga Studyでは、様々な記事が投稿されているため、<br></br>
+            Manga Studyでは、様々な記事が投稿されているため、<br />
             記事の閲覧や好きな漫画の考察を検索できます
           </p>
         </div>
@@ -42,7 +42,7 @@ export default function Top() {
           <img src='./images/top-3.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
           <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h2>
           <p className='my-6 px-4'>
-            コメント機能で、考察の内容について語ることができ、<br></br>
+            コメント機能で、考察の内容について語ることができ、<br />
             より考察を深められます
           </p>
         </div>

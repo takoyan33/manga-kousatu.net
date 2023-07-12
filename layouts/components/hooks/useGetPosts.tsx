@@ -1,4 +1,13 @@
-import { onSnapshot, collection, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
+import {
+  onSnapshot,
+  collection,
+  query,
+  orderBy,
+  where,
+  doc,
+  getDoc,
+  getDocs,
+} from 'firebase/firestore'
 import { database } from 'firebaseConfig'
 
 //新しいpostを取得
@@ -85,7 +94,7 @@ export const getPost = async (setSinglePost, routerId) => {
 
 //同じカテゴリの投稿を取得
 
-// export const categoriFiredata = async () => {
+// export const categoriPost = async (setSinglePost) => {
 //   //firestoreからデータ取得
 //   await getDocs(q).then((querySnapshot) => {
 //     //コレクションのドキュメントを取得
@@ -98,3 +107,42 @@ export const getPost = async (setSinglePost, routerId) => {
 //     )
 //   })
 // }
+
+//リロード時にエラーになる
+//特定カテゴリの新しい投稿を取得
+export const getCategoriPosts = async (setPostData, postCategori) => {
+  const postRef = collection(database, 'posts')
+  const categoriPosts = query(
+    postRef,
+    where('categori', '==', postCategori),
+    orderBy('timestamp', 'desc'),
+  )
+
+  onSnapshot(categoriPosts, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//特定カテゴリの古い投稿を取得
+export const getCategoriOldPosts = async (setPostData, postCategori) => {
+  const postRef = collection(database, 'posts')
+  const categoriPosts = query(postRef, where('categori', '==', postCategori), orderBy('timestamp'))
+
+  onSnapshot(categoriPosts, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//特定カテゴリのいいね順の投稿を取得
+export const getCategoriLikePosts = async (setPostData, postCategori) => {
+  const postRef = collection(database, 'posts')
+  const categoriPosts = query(
+    postRef,
+    where('categori', '==', postCategori),
+    orderBy('likes', 'desc'),
+  )
+
+  onSnapshot(categoriPosts, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}

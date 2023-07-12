@@ -7,6 +7,11 @@ import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firest
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, CardPost } from 'layouts/components/ui'
+import {
+  getCategoriPosts,
+  getCategoriOldPosts,
+  getCategoriLikePosts,
+} from 'layouts/components/hooks'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -139,7 +144,7 @@ const Details = ({ post }) => {
   }
 
   useEffect(() => {
-    getPosts()
+    getCategoriPosts(setPosts, post.fields.id.stringValue)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
 
@@ -148,19 +153,19 @@ const Details = ({ post }) => {
       sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: () => getPosts(setPostData),
+      onClick: () => getCategoriPosts(setPosts, post.fields.id.stringValue),
     },
     {
       sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: () => getOldPosts(setPostData),
+      onClick: () => getCategoriOldPosts(setPosts, post.fields.id.stringValue),
     },
     {
       sortId: 3,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: () => getLikePosts(setPostData),
+      onClick: () => getCategoriLikePosts(setPosts, post.fields.id.stringValue),
     },
   ]
 

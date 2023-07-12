@@ -34,6 +34,12 @@ import { successNotify, errorNotify } from 'layouts/components/text'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import parse from 'html-react-parser'
+import ListSubheader from '@mui/material/ListSubheader'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import DraftsIcon from '@mui/icons-material/Drafts'
+import SendIcon from '@mui/icons-material/Send'
 
 // バリデーションルール
 const schema = yup.object({
@@ -159,23 +165,38 @@ const Post = () => {
             {user && (
               <>
                 {user.email == singlePost.email && (
-                  <div>
-                    <Link
-                      href={{
-                        pathname: `/post/edit/${singlePost.id}`,
-                        state: { data: singlePost },
-                      }}
+                  <>
+                    <List
+                      sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
+                      component='nav'
+                      aria-labelledby='nested-list-subheader'
+                      subheader={
+                        <ListSubheader component='div' id='nested-list-subheader'>
+                          投稿編集
+                        </ListSubheader>
+                      }
                     >
-                      <SiteButton href='' text='更新する' className=' m-4 my-2' />
-                    </Link>
-
-                    <SiteButton
-                      href=''
-                      text='削除する'
-                      className=' m-4 my-2'
-                      onClick={deletePost}
-                    />
-                  </div>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <SendIcon />
+                        </ListItemIcon>
+                        <Link
+                          href={{
+                            pathname: `/post/edit/${singlePost.id}`,
+                            state: { data: singlePost },
+                          }}
+                        >
+                          記事を編集する
+                        </Link>
+                      </ListItemButton>
+                      <ListItemButton>
+                        <ListItemIcon>
+                          <SendIcon />
+                        </ListItemIcon>
+                        <button onClick={deletePost}>記事を削除する</button>
+                      </ListItemButton>
+                    </List>
+                  </>
                 )}
               </>
             )}
@@ -193,7 +214,7 @@ const Post = () => {
                 />
               </div>
               <div className='my-4 text-2xl font-semibold'>{singlePost.title}</div>
-              <br></br>
+              <br />
               <div>
                 <span className='text-gray-500'>
                   <AccessTimeIcon /> {singlePost.createtime}
@@ -238,7 +259,7 @@ const Post = () => {
                   編集日時：{singlePost.edittime}
                 </div>
               )}
-              <br></br>
+              <br />
               {singlePost.selected &&
                 singlePost.selected.map((tag, i) => (
                   <span
@@ -296,7 +317,7 @@ const Post = () => {
                   </p>
                 )}
               </div>
-              <br></br>
+              <br />
               {singlePost.contextimage && (
                 <div className='flex justify-center'>
                   <Image

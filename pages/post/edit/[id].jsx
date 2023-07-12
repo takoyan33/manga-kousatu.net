@@ -13,7 +13,8 @@ import { TagsInput } from 'react-tag-input-component'
 import { useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-
+import { successNotify, errorNotify } from 'layouts/components/text'
+import dynamic from 'next/dynamic'
 // バリデーションルール
 const schema = yup.object({
   title: yup.string().required('必須です'),
@@ -39,7 +40,6 @@ const Post = () => {
   const router = useRouter()
   const routerid = router.query.id
 
-  console.log({ routerid })
   const {
     register,
     control,
@@ -74,16 +74,11 @@ const Post = () => {
     //更新する
     let fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
-    console.log(posttitle)
-    console.log(categori)
-    console.log(data.netabare)
-    console.log(selected)
-    //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: posttitle,
       netabare: data.netabare,
       categori: categori,
-      context: data.context,
+      context: context,
       edittime: newdate,
       selected: selected,
       //改行を保存する
@@ -93,9 +88,19 @@ const Post = () => {
         router.push(`/post/${routerid}`)
       })
       .catch((err) => {
+        errorNotify('記事の更新に失敗しました')
         console.log(err)
       })
   }
+
+  const Richedita = React.useMemo(
+    () =>
+      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+        loading: () => <p>リッチエディタ is loading</p>,
+        ssr: false,
+      }),
+    [],
+  )
 
   return (
     <>
@@ -123,8 +128,7 @@ const Post = () => {
                   <input
                     id='outlined-basic'
                     label='タイトル（最大20文字)'
-                    variant='outlined'
-                    className='w-30'
+                    className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                     defaultValue={firedata.title}
                     type='text'
                     onChange={(event) => setPostTitle(event.target.value)}
@@ -201,19 +205,22 @@ const Post = () => {
                   <FormLabel id='demo-radio-buttons-group-label'>
                     内容<span className='text-red-600'>*</span>(最大500文字）
                   </FormLabel>
-                  <p className='my-4'>文字数：{context && <span>{context.length}</span>}</p>
                 </div>
                 <p>現在の文章</p>
-                <textarea
+                {/* <textarea
                   label='内容(最大500文字）'
-                  className='m-auto w-full'
+                  className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                   id='filled-multiline-static'
                   multiline
                   rows={14}
                   type='text'
                   defaultValue={firedata.context}
                   onChange={(event) => setContext(event.target.value)}
-                />
+                /> */}
+                <Richedita onChange={handleEditorChange} />
+                <p className='my-4 text-right'>
+                  現在の文字数：{context && <span>{context.length}</span>}
+                </p>
                 <SiteButton
                   href=''
                   onClick={updatePost}

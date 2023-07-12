@@ -116,7 +116,7 @@ export default function Edit() {
 
                 <p className='font-semib my-12 text-center'>
                   現在のプロフィール画像
-                  <br></br>
+                  <br />
                   <p className='flex justify-center'>
                     <Image
                       className='m-auto max-w-sm text-center'
@@ -130,7 +130,7 @@ export default function Edit() {
                 <Box component='form' className='' noValidate autoComplete='off'>
                   <>
                     <p className='my-4 text-center'>新しいプロフィール画像</p>
-                    <br></br>
+                    <br />
                     <div className='flex justify-center'>
                       <Image
                         className='m-auto max-w-sm text-center'
@@ -185,7 +185,7 @@ export default function Edit() {
                         }
                       />
                     </div>
-                    <br></br>
+                    <br />
                     <p className='my-4 text-center'>
                       現在のプロフィール： <span>{user.bio}</span>
                     </p>
@@ -202,7 +202,7 @@ export default function Edit() {
                         }
                       />
                     </div>
-                    <br></br>
+                    <br />
                     <p className='my-4 text-center'>
                       現在の好きな漫画： <span>{user.favarite}</span>
                     </p>
@@ -215,7 +215,7 @@ export default function Edit() {
                         placeHolder='タグを追加してください'
                       />
                     </div>
-                    <br></br>
+                    <br />
                     <div className='text-center'>
                       <Button
                         variant='outlined'
@@ -226,7 +226,7 @@ export default function Edit() {
                         プロフィールを更新する
                       </Button>
                     </div>
-                    <br></br>
+                    <br />
                     <div className='text-center'>
                       <Button variant='outlined' className='m-auto w-80 '>
                         <Link href='/profile'>戻る</Link>

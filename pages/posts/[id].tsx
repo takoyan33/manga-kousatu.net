@@ -107,18 +107,18 @@ const Daitails = ({ post }) => {
           />
         </div>
         <div className='my-4 text-2xl'>{post.fields.title.stringValue}</div>
-        <br></br>
+        <br />
         <div>
           <AccessTimeIcon /> 投稿日時：{post.fields.createtime.stringValue}
         </div>
-        <br></br>
+        <br />
         {post.fields.edittime.stringValue && (
           <div>
             <AccessTimeIcon />
             編集日時：{post.fields.edittime.stringValue}
           </div>
         )}
-        <br></br>
+        <br />
         {post.fields.selected.stringValue &&
           post.fields.selected.stringValue.map((tag, i) => (
             <span className='text-cyan-700' key={i}>
@@ -168,7 +168,7 @@ const Daitails = ({ post }) => {
           <p className='text-left' style={{ whiteSpace: 'pre-line' }}>
             {post.fields.context.stringValue}
           </p>
-          <br></br>
+          <br />
           {post.fields.contextimage.stringValue && (
             <div className='flex justify-center'>
               <Image

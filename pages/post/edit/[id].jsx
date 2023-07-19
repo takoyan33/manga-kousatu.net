@@ -15,12 +15,13 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import dynamic from 'next/dynamic'
+
 // バリデーションルール
 const schema = yup.object({
   title: yup.string().required('必須です'),
 })
 
-const Post = () => {
+const PostEdit = () => {
   const [ID, setID] = useState(null)
   const [context, setContext] = useState('')
   const [categori, setCategori] = useState('')
@@ -29,7 +30,7 @@ const Post = () => {
   //データベースを取得
   const [firedata, setFiredata] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
-  const [likecount, setLikecount] = useState(0)
+  const [lengthData, setPostsLength] = useState(null)
   const usersRef = collection(database, 'users')
   const [userid, setUserid] = useState(null)
   const [netabare, setNetabare] = useState('')
@@ -101,6 +102,15 @@ const Post = () => {
       }),
     [],
   )
+
+  const [plainText, setPlainText] = useState('')
+  const [html, setHtml] = useState('')
+
+  const handleEditorChange = (plainText, html) => {
+    setPlainText(plainText)
+    setHtml(html)
+    setPostsLength(plainText.length)
+  }
 
   return (
     <>
@@ -219,7 +229,7 @@ const Post = () => {
                 /> */}
                 <Richedita onChange={handleEditorChange} />
                 <p className='my-4 text-right'>
-                  現在の文字数：{context && <span>{context.length}</span>}
+                  現在の文字数：{lengthData && <span>{lengthData.length}</span>}
                 </p>
                 <SiteButton
                   href=''
@@ -236,4 +246,4 @@ const Post = () => {
   )
 }
 
-export default Post
+export default PostEdit

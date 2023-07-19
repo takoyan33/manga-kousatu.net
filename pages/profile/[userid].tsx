@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getMyPosts, getMyUser } from 'layouts/components/hooks'
+import { getMyPosts, getUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
@@ -18,9 +18,7 @@ const Post = () => {
     if (user && userid == user.uid) {
       router.push('/profile')
     }
-    getMyUser(setUsers, userid)
-    getMyPosts(setPostData, userid)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getUsers(setUsers)
   }, [user, userid, router])
 
   return (

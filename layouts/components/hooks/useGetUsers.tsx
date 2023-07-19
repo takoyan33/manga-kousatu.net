@@ -8,7 +8,7 @@ export const getMyUser = async (setUsers, userEmail) => {
 
   onSnapshot(myUser, (querySnapshot) => {
     setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    console.log('成功')
+    console.log('user取得成功')
   })
 }
 

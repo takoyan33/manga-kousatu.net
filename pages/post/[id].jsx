@@ -7,22 +7,25 @@ import {
   collection,
   getDocs,
   doc,
-  getDoc,
   setDoc,
   updateDoc,
   deleteDoc,
   arrayUnion,
   query,
+  arrayRemove,
   orderBy,
+  serverTimestamp,
   where,
+  onSnapshot,
 } from 'firebase/firestore'
 import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
-import { getPost, getUsers } from 'layouts/components/hooks'
+import { getPost, getUsers, getMyUser, LikeDelete } from 'layouts/components/hooks'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
+import { deletePost } from 'layouts/api/auth'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -51,8 +54,7 @@ const Post = () => {
   const [users, setUsers] = useState(null)
   const [singlePost, setSinglePost] = useState([])
   const [likecount, setLikecount] = useState(0)
-  const usersRef = collection(database, 'users')
-  const [userid, setUserid] = useState(null)
+  const [userEmail, setUserEmail] = useState(null)
 
   const router = useRouter()
   const routerid = router.query.id
@@ -69,24 +71,19 @@ const Post = () => {
   })
 
   const getComments = async () => {
-    const commentseRef = collection(database, 'comments')
-    const postComments = await query(commentseRef, where('postid', '==', routerid))
-    try {
-      const querySnapshot = await getDocs(postComments)
-      const allcomments = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      await setComments(allcomments)
-    } catch (error) {
-      console.log('Error fetching user data', error)
-    }
+    const commentsRef = collection(database, 'comments')
+    const postComments = await query(commentsRef, where('postid', '==', routerid))
+    onSnapshot(postComments, (querySnapshot) => {
+      setComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    })
   }
 
   useEffect(() => {
     // categoriFiredata();
     getPost(setSinglePost, routerid)
+    setUserEmail(singlePost.email)
     getUsers(setUsers)
+    // getMyUser(setUsers,)
     getComments()
   }, [router])
 
@@ -116,23 +113,39 @@ const Post = () => {
   }
 
   const LikeAdd = (routerid, likes) => {
-    console.log(routerid)
     let fieldToEdit = doc(database, 'posts', routerid)
     updateDoc(fieldToEdit, {
       likes: likes + 1,
       likes_email: arrayUnion(user.email),
     })
       .then(() => {
-        console.log(user.email)
         setLikecount(0)
+        getPost(setSinglePost, routerid)
         successNotify('成功しました')
-        getPost()
       })
       .catch((err) => {
         errorNotify('失敗しました')
         console.log(err)
       })
   }
+
+  const LikeDelete = (routerid, likes) => {
+    let fieldToEdit = doc(database, 'posts', routerid)
+    updateDoc(fieldToEdit, {
+      likes: likes - 1,
+      likes_email: arrayRemove(user.email),
+    })
+      .then(() => {
+        setLikecount(0)
+        getPost(setSinglePost, routerid)
+        successNotify('いいねを解除しました')
+      })
+      .catch((err) => {
+        errorNotify('失敗しました')
+        console.log(err)
+      })
+  }
+
   //コメントの追加
   const addComment = async (data) => {
     const newDate = new Date().toLocaleString('ja-JP')
@@ -144,6 +157,9 @@ const Post = () => {
       postid: singlePost.id,
       username: user.displayName,
       createtime: newDate,
+      timestamp: serverTimestamp(),
+      userEmail: user.email,
+      userPhoto: user.photoURL,
       id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
@@ -152,6 +168,19 @@ const Post = () => {
       })
       .catch((err) => {
         errorNotify('コメントの投稿に失敗しました')
+      })
+  }
+
+  //コメントの削除
+  const deleteComment = async (commentId) => {
+    let deleteComment = doc(database, 'comments', commentId)
+    deleteDoc(deleteComment)
+      //記事を削除する
+      .then(() => {
+        successNotify('コメントを削除しました')
+      })
+      .catch((err) => {
+        errorNotify('失敗しました')
       })
   }
 
@@ -334,26 +363,54 @@ const Post = () => {
                 </span>
                 {singlePost.likes}
               </div>
-              {user &&
-                (singlePost.likes_email ? (
-                  singlePost.likes_email.includes(user.email) ? (
-                    <p>すでにいいね済みです</p>
-                  ) : (
+              {singlePost.likes_email ? (
+                singlePost.likes_email.includes(user.email) ? (
+                  <>
+                    <p>いいね済み</p>
                     <button
                       href=''
-                      text='いいねする'
+                      text='いいね解除する'
                       className='m-4 my-2 inline'
-                      onClick={() => LikeAdd(routerid, singlePost.likes)}
+                      onClick={() => LikeDelete(routerid, singlePost.likes)}
                     >
                       <span className='p-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
-                        いいね
+                        いいね解除する
                       </span>
                     </button>
-                  )
+                  </>
                 ) : (
-                  <p></p>
-                ))}
+                  <button
+                    href=''
+                    text='いいねする'
+                    className='m-4 my-2 inline'
+                    onClick={() => LikeAdd(routerid, singlePost.likes)}
+                  >
+                    <span className='p-4 text-pink-400 hover:text-pink-700'>
+                      <FavoriteIcon />
+                      いいねする
+                    </span>
+                  </button>
+                )
+              ) : (
+                <></>
+              )}
+              {!user && (
+                <>
+                  <button text='ログインするといいねができます' className='m-4 my-2 inline'>
+                    <span className='p-4 text-pink-400 hover:text-pink-700'>
+                      <FavoriteIcon />
+                      いいね
+                    </span>
+                  </button>
+                  <div className='mb-6 flex items-center justify-between'>
+                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                      コメント ({comments.length})
+                    </h2>
+                    <p className='my-6'>ログインするとコメントできます</p>
+                  </div>
+                </>
+              )}
               {user && (
                 <section className='bg-white py-8 lg:py-16'>
                   <div className='mx-auto max-w-2xl px-4'>
@@ -362,7 +419,7 @@ const Post = () => {
                         コメント ({comments.length})
                       </h2>
                     </div>
-                    <form className='mb-6'>
+                    <form className='mb-6' id='aa'>
                       <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
                         <label for='comment' className='sr-only'>
                           あなたのコメント
@@ -390,29 +447,6 @@ const Post = () => {
                   </div>
                 </section>
               )}
-
-              {!user && (
-                <>
-                  <button
-                    href=''
-                    text='いいねする'
-                    className='m-4 my-2 inline'
-                    onClick={() => successNotify('ログインするといいねができます')}
-                  >
-                    <span className='p-4 text-pink-400 hover:text-pink-700'>
-                      <FavoriteIcon />
-                      いいね
-                    </span>
-                  </button>
-                  <div className='mb-6 flex items-center justify-between'>
-                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                      コメント ({comments.length})
-                    </h2>
-                    <p className='my-6'>ログインするとコメントできます</p>
-                  </div>
-                </>
-              )}
-
               {comments &&
                 comments.map((comment) => {
                   return (
@@ -433,6 +467,16 @@ const Post = () => {
                         </div>
                       </footer>
                       <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
+                      {comment.userEmail == user.email && (
+                        <>
+                          <span
+                            onClick={() => deleteComment(comment.id)}
+                            className='text-primary-500 hover:text-primary-800 cursor-pointer'
+                          >
+                            削除する
+                          </span>
+                        </>
+                      )}
                     </article>
                   )
                 })}

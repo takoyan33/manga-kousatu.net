@@ -43,7 +43,7 @@ export default function LoginAuth() {
       await login(data.email, data.password)
       successNotify('ログインしました')
       setTimeout(() => {
-        router.push('/')
+        router.push('/top')
       }, 2000)
     } catch (e) {
       errorNotify('ログインに失敗しました')
@@ -56,7 +56,7 @@ export default function LoginAuth() {
       .then(() => {
         successNotify('ログインしました')
         setTimeout(() => {
-          router.push('/')
+          router.push('/top')
         }, 2000)
       })
       .catch((e) => {

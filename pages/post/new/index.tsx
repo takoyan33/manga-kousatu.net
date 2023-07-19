@@ -137,6 +137,7 @@ export default function Post() {
         netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
+        likes_email: [],
         selected: tags,
         timestamp: serverTimestamp(),
         likes: 0,

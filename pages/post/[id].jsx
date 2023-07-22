@@ -49,6 +49,16 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import DraftsIcon from '@mui/icons-material/Drafts'
 import SendIcon from '@mui/icons-material/Send'
+import {
+  FacebookShareButton,
+  HatenaShareButton,
+  LineShareButton,
+  TwitterShareButton,
+  FacebookIcon,
+  HatenaIcon,
+  LineIcon,
+  TwitterIcon,
+} from 'react-share'
 
 // バリデーションルール
 const schema = yup.object({
@@ -67,6 +77,9 @@ const Post = () => {
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
+
+  const URL = `http://localhost:8080/post/${routerid}`
+  const QUOTE = `記事をシェアしました。　${singlePost.title}　漫画考察.net`
 
   const {
     register,
@@ -346,6 +359,18 @@ const Post = () => {
                     {singlePost.netabare}
                   </span>
                 )}
+
+                <div className='mt-2 mb-8'>
+                  <FacebookShareButton url={URL} quote={QUOTE}>
+                    <FacebookIcon size={24} round />
+                  </FacebookShareButton>
+                  <TwitterShareButton url={URL} title={QUOTE}>
+                    <TwitterIcon size={24} round />
+                  </TwitterShareButton>
+                  <LineShareButton url={URL} title={QUOTE}>
+                    <LineIcon size={24} round />
+                  </LineShareButton>
+                </div>
 
                 {singlePost.context && (
                   <p className='text-left' style={styles}>

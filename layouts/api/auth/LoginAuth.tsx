@@ -9,7 +9,7 @@ import { Stack, TextField } from '@mui/material'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { useLogin } from './useAuth'
+import { useLogin, SignInWithGoogle } from './useAuth'
 
 // フォームの型
 type FormInput = {
@@ -36,9 +36,9 @@ export default function LoginAuth() {
     resolver: yupResolver(schema),
   })
 
-  const { login, success, error } = useLogin()
+  const { success, error, login } = useLogin()
 
-  const handleSignIn: SubmitHandler<FormInput> = async (data: any) => {
+  const handleSignIn = async (data: FormInput) => {
     try {
       await login(data.email, data.password)
       successNotify('ログインしました')

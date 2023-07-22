@@ -21,7 +21,13 @@ import {
 import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
-import { getPost, getUsers, getMyUser, LikeDelete } from 'layouts/components/hooks'
+import {
+  getPost,
+  getUsers,
+  getMyUser,
+  LikeDelete,
+  getCategoriPosts,
+} from 'layouts/components/hooks'
 import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
@@ -55,7 +61,7 @@ const Post = () => {
   const [singlePost, setSinglePost] = useState([])
   const [likecount, setLikecount] = useState(0)
   const [userEmail, setUserEmail] = useState(null)
-
+  const [categoriPosts, setCategoriPosts] = useState(null)
   const router = useRouter()
   const routerid = router.query.id
   const auth = getAuth()
@@ -85,6 +91,7 @@ const Post = () => {
     getUsers(setUsers)
     // getMyUser(setUsers,)
     getComments()
+    // getCategoriPosts(setCategoriPosts, singlePost.categori)
   }, [router])
 
   const deletePost = () => {
@@ -363,7 +370,7 @@ const Post = () => {
                 </span>
                 {singlePost.likes}
               </div>
-              {singlePost.likes_email ? (
+              {singlePost.likes_email && user ? (
                 singlePost.likes_email.includes(user.email) ? (
                   <>
                     <p>いいね済み</p>
@@ -400,7 +407,7 @@ const Post = () => {
                   <button text='ログインするといいねができます' className='m-4 my-2 inline'>
                     <span className='p-4 text-pink-400 hover:text-pink-700'>
                       <FavoriteIcon />
-                      いいね
+                      ログインするといいねができます
                     </span>
                   </button>
                   <div className='mb-6 flex items-center justify-between'>
@@ -467,14 +474,18 @@ const Post = () => {
                         </div>
                       </footer>
                       <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
-                      {comment.userEmail == user.email && (
+                      {user && (
                         <>
-                          <span
-                            onClick={() => deleteComment(comment.id)}
-                            className='text-primary-500 hover:text-primary-800 cursor-pointer'
-                          >
-                            削除する
-                          </span>
+                          {user.email == comment.userEmail && (
+                            <>
+                              <span
+                                onClick={() => deleteComment(comment.id)}
+                                className='text-primary-500 hover:text-primary-800 cursor-pointer'
+                              >
+                                削除する
+                              </span>
+                            </>
+                          )}
                         </>
                       )}
                     </article>

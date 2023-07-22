@@ -6,6 +6,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  UserCredential,
 } from 'firebase/auth'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
@@ -48,22 +49,39 @@ export const useSignup = () => {
 //ログイン
 export const useLogin = () => {
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState(null)
+  const [error, setError] = useState<string | null>(null)
   const auth = getAuth()
 
-  const login = (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<UserCredential> => {
     setError(null)
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setSuccess(true)
-      })
-      .catch((err) => {
-        console.log(err.message)
-        setError(err.message)
-      })
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password)
+      setSuccess(true)
+      return userCredential
+    } catch (err) {
+      console.log(err.message)
+      setError(err.message)
+      throw err
+    }
   }
 
   return { success, error, login }
+}
+
+//ログアウト
+export const useLogOut = () => {
+  const auth = getAuth()
+  const logout = () => {
+    signOut(auth)
+      .then(() => {
+        console.log('Sign-out successful.')
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }
+
+  return { logout }
 }
 
 //パスワードリセット
@@ -90,23 +108,7 @@ export const usePasswordReset = () => {
   return { success, error, passwordReset }
 }
 
-//ログアウト
-export const useLogOut = () => {
-  const auth = getAuth()
-  const logout = () => {
-    signOut(auth)
-      .then(() => {
-        console.log('Sign-out successful.')
-      })
-      .catch((err) => {
-        console.log(err.message)
-      })
-  }
-
-  return { logout }
-}
-
-//Googleログイン
+//Googleログインまだ動いていない
 export const SignInWithGoogle = () => {
   const googleProvider = new GoogleAuthProvider()
   const router = useRouter()
@@ -115,7 +117,7 @@ export const SignInWithGoogle = () => {
   signInWithPopup(auth, googleProvider)
     .then(() => {
       setTimeout(() => {
-        router.push('/')
+        router.push('/top')
       }, 2000)
     })
     .catch((err) => {

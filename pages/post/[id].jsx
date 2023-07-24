@@ -47,7 +47,6 @@ import ListSubheader from '@mui/material/ListSubheader'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import DraftsIcon from '@mui/icons-material/Drafts'
 import SendIcon from '@mui/icons-material/Send'
 import {
   FacebookShareButton,
@@ -462,12 +461,13 @@ const Post = () => {
                           className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
                           placeholder='コメントを入力してください'
                           required
-                          {...register('comment')}
+                          {...register('comment', { required: 'コメントは必須です' })}
                           error={'comment' in errors}
                           helperText={errors.comment?.message}
                           label='コメント*（最大100文字)'
                         ></textarea>
                       </div>
+                      {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
                       <button
                         type='submit'
                         onClick={handleSubmit(addComment)}
@@ -518,40 +518,39 @@ const Post = () => {
                 })}
               <hr className='mt-10'></hr>
               <div className='cursor-pointer'>
-                {users &&
-                  users.map((user) => {
-                    return (
-                      <>
-                        {singlePost.email === user.email && (
-                          <Link href={`/profile/${user.userid}`}>
-                            <div key={user.userid}>
-                              <div className='m-auto my-8 flex border py-8  px-2'>
-                                <div key={user.id}>
-                                  <div>
-                                    <Avatar
-                                      className='m-auto max-w-sm border text-center'
-                                      alt='プロフィール'
-                                      sx={{ width: 80, height: 80 }}
-                                      src={user.profileimage}
-                                    />
-                                  </div>
+                {users?.map((user) => {
+                  return (
+                    <div className='hover:shadow-2xl'>
+                      {singlePost.email === user.email && (
+                        <Link href={`/profile/${user.userid}`}>
+                          <div key={user.userid}>
+                            <div className='m-auto my-8 flex border py-8  px-2'>
+                              <div key={user.id}>
+                                <div>
+                                  <Avatar
+                                    className='m-auto max-w-sm border text-center'
+                                    alt='プロフィール'
+                                    sx={{ width: 80, height: 80 }}
+                                    src={user.profileimage}
+                                  />
                                 </div>
-                                <div className='ml-6 mt-4'>
-                                  <span className=''>
-                                    <AccountBoxIcon /> {user.username}
-                                  </span>
-                                  <div className=' mt-2 pb-2 text-gray-500'>
-                                    <BorderColorIcon />
-                                    {user.bio}
-                                  </div>
+                              </div>
+                              <div className='ml-6 mt-4'>
+                                <span className=''>
+                                  <AccountBoxIcon /> {user.username}
+                                </span>
+                                <div className=' mt-2 pb-2 text-gray-500'>
+                                  <BorderColorIcon />
+                                  {user.bio}
                                 </div>
                               </div>
                             </div>
-                          </Link>
-                        )}
-                      </>
-                    )
-                  })}
+                          </div>
+                        </Link>
+                      )}
+                    </div>
+                  )
+                })}
               </div>
             </div>
           </div>

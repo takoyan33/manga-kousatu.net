@@ -104,7 +104,7 @@ export default function Edit() {
   }
 
   return (
-    <div>
+    <div className='m-auto max-w-5xl'>
       <CommonHead />
 
       {users &&
@@ -117,14 +117,17 @@ export default function Edit() {
                 <p className='font-semib my-12 text-center'>
                   現在のプロフィール画像
                   <br />
-                  <p className='flex justify-center'>
+                  <div className='flex justify-center'>
                     <Image
                       className='m-auto max-w-sm text-center'
                       height={100}
                       width={100}
                       src={user.profileimage}
                     />
-                  </p>
+                  </div>
+                  {user.profileimage === '' && (
+                    <p className='my-8 text-center'>設定している画像はありません</p>
+                  )}
                 </p>
 
                 <Box component='form' className='' noValidate autoComplete='off'>
@@ -168,44 +171,30 @@ export default function Edit() {
                         onChange={uploadImage}
                       />
                     </div>
-
-                    <p className='my-4 text-center'>
-                      現在の名前： <span>{user.username}</span>
-                    </p>
-                    <p className='my-4 text-center'>新しい名前（最大10文字）</p>
+                    <label className='my-4 text-center' htmlFor='outlined-name'>
+                      名前（最大10文字）
+                    </label>
                     <div className='text-center'>
-                      <TextField
-                        id='outlined-basic'
-                        value={user.username}
-                        label='名前'
-                        variant='outlined'
-                        className='m-auto w-80'
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                          setUsername(event.target.value)
-                        }
+                      <input
+                        id='outlined-name'
+                        className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                        defaultValue={user.username}
+                        type='text'
+                        onChange={(event) => setUsername(event.target.value)}
                       />
                     </div>
                     <br />
-                    <p className='my-4 text-center'>
-                      現在のプロフィール： <span>{user.bio}</span>
-                    </p>
-                    <p className='my-4 text-center'>新しいプロフィール（最大30文字）</p>
+                    <label className='my-4 text-center'>現在のプロフィール：（最大30文字）</label>
                     <div className='text-center'>
-                      <TextField
-                        id='outlined-basic'
-                        label='名前'
-                        value={user.bio}
-                        variant='outlined'
-                        className='m-auto w-80'
-                        onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-                          setBio(event.target.value)
-                        }
+                      <input
+                        id='outlined-name'
+                        className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                        defaultValue={user.bio}
+                        type='text'
+                        onChange={(event) => setBio(event.target.value)}
                       />
                     </div>
                     <br />
-                    <p className='my-4 text-center'>
-                      現在の好きな漫画： <span>{user.favarite}</span>
-                    </p>
                     <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
                     <div className='m-auto w-80 text-center'>
                       <TagsInput

@@ -32,7 +32,7 @@ const Post = () => {
                 {userid == user.userid && (
                   <ProfileId
                     key={user.id}
-                    profileimage={user.profileimage}
+                    profileImage={user.profileimage}
                     username={user.username}
                     bio={user.bio}
                     favorite={user.favarite}

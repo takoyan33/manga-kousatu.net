@@ -5,7 +5,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 
 type Props = {
-  profileimage: string
+  profileImage: string
   id: number
   username: string
   bio: string
@@ -14,7 +14,7 @@ type Props = {
 
 // eslint-disable-next-line react/display-name
 export const ProfileId: React.VFC<Props> = React.memo(
-  ({ id, profileimage, username, bio, favorite }) => {
+  ({ id, profileImage, username, bio, favorite }) => {
     return (
       <>
         <h2 className='m-5 my-12 text-center text-2xl font-semibold'>
@@ -27,7 +27,7 @@ export const ProfileId: React.VFC<Props> = React.memo(
                 className='m-auto max-w-sm border text-center'
                 alt='プロフィール'
                 sx={{ width: 150, height: 150 }}
-                src={profileimage}
+                src={profileImage}
               />
             </p>
           </div>

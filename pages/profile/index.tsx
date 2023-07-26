@@ -194,7 +194,7 @@ export default function Profile() {
               <>
                 <ProfileId
                   key={user.id}
-                  profileimage={user.profileimage}
+                  profileImage={user.profileimage}
                   username={user.username}
                   bio={user.bio}
                   favorite={user.favarite}

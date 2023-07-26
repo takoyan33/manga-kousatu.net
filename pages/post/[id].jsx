@@ -194,7 +194,6 @@ const Post = () => {
   const deleteComment = async (commentId) => {
     let deleteComment = doc(database, 'comments', commentId)
     deleteDoc(deleteComment)
-      //記事を削除する
       .then(() => {
         successNotify('コメントを削除しました')
       })

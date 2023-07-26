@@ -67,7 +67,7 @@ export default function NameAuth() {
         noValidate
         autoComplete='off'
       >
-        <p>名前の更新</p>
+        <h2>名前の更新</h2>
 
         <TextField
           id='outlined-basic'

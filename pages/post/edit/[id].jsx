@@ -25,10 +25,10 @@ const PostEdit = () => {
   const [ID, setID] = useState(null)
   const [context, setContext] = useState('')
   const [categori, setCategori] = useState('')
-  const [posttitle, setPostTitle] = useState('')
+  const [postTitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
   //データベースを取得
-  const [firedata, setFiredata] = useState([])
+  const [post, setPost] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
   const [lengthData, setPostsLength] = useState(null)
   const usersRef = collection(database, 'users')
@@ -55,9 +55,9 @@ const PostEdit = () => {
     try {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
-      await setFiredata(snap.data())
-      await setCategori(firedata.categori)
-      console.log('firedata', firedata)
+      await setPost(snap.data())
+      await setCategori(post.categori)
+      console.log('post', post)
     } catch (error) {
       console.log(error)
     }
@@ -66,9 +66,9 @@ const PostEdit = () => {
   useEffect(() => {
     getPost()
     setID(routerid)
-    setContext(firedata.context)
+    setContext(post.context)
     console.log('categori', categori)
-    setPostTitle(firedata.title)
+    setPostTitle(post.title)
   }, [])
 
   const updatePost = (data) => {
@@ -76,7 +76,7 @@ const PostEdit = () => {
     let fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
     updateDoc(fieldToEdit, {
-      title: posttitle,
+      title: postTitle,
       netabare: data.netabare,
       categori: categori,
       context: context,
@@ -120,7 +120,7 @@ const PostEdit = () => {
         <div>
           <div>
             <div className='my-4 lg:w-full '>
-              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {firedata.title}　＞　記事の編集
+              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {post.title}　＞　記事の編集
               <Stack
                 component='form'
                 className='m-auto'
@@ -139,7 +139,7 @@ const PostEdit = () => {
                     id='outlined-basic'
                     label='タイトル（最大20文字)'
                     className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                    defaultValue={firedata.title}
+                    defaultValue={post.title}
                     type='text'
                     onChange={(event) => setPostTitle(event.target.value)}
                   />
@@ -149,7 +149,7 @@ const PostEdit = () => {
                     作品名<span className='text-red-600'>*</span>
                   </FormLabel>
                 </div>
-                <p>現在の作品：{firedata.categori}</p>
+                <p>現在の作品：{post.categori}</p>
                 <Controller
                   name='categori'
                   control={control}
@@ -188,7 +188,7 @@ const PostEdit = () => {
                 <FormLabel id='demo-radio-buttons-group-label'>
                   ネタバレについて<span className='text-red-600'>*</span>
                 </FormLabel>
-                <p>現在のネタバレ：{firedata.netabare}</p>
+                <p>現在のネタバレ：{post.netabare}</p>
                 <Controller
                   name='netabare'
                   control={control}
@@ -224,7 +224,7 @@ const PostEdit = () => {
                   multiline
                   rows={14}
                   type='text'
-                  defaultValue={firedata.context}
+                  defaultValue={post.context}
                   onChange={(event) => setContext(event.target.value)}
                 /> */}
                 <Richedita onChange={handleEditorChange} />

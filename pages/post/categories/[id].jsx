@@ -144,7 +144,10 @@ const Details = ({ post }) => {
   }
 
   useEffect(() => {
-    getCategoriPosts(setPosts, post.fields.id.stringValue)
+    // getCategoriPosts(setPosts, post.fields.id.stringValue)
+    getPosts()
+    getOldPosts()
+    getLikePosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
 
@@ -153,36 +156,21 @@ const Details = ({ post }) => {
       sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: () => getCategoriPosts(setPosts, post.fields.id.stringValue),
+      onClick: () => getPosts(),
     },
     {
       sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: () => getCategoriOldPosts(setPosts, post.fields.id.stringValue),
+      onClick: () => getOldPosts(),
     },
     {
       sortId: 3,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: () => getCategoriLikePosts(setPosts, post.fields.id.stringValue),
+      onClick: () => getLikePosts(),
     },
   ]
-
-  // const NETABARE_LIST = [
-  //   {
-  //     sortId: 1,
-  //     label: 'ネタバレ有',
-  //     value: 'ネタバレ有',
-  //     onClick: () => getNetabrePosts(setPostData),
-  //   },
-  //   {
-  //     sortId: 2,
-  //     label: 'ネタバレ無',
-  //     value: 'ネタバレ無',
-  //     onClick: () => getNoNetabrePosts(setPostData),
-  //   },
-  // ]
 
   return (
     <>
@@ -239,11 +227,7 @@ const Details = ({ post }) => {
             .filter((post) => {
               if (searchName === '') {
                 return post
-                //そのまま返す
-              } else if (
-                post.title.toLowerCase().includes(searchName.toLowerCase())
-                //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-              ) {
+              } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
                 return post
               }
             })

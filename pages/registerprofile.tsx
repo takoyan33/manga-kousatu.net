@@ -19,7 +19,7 @@ import { CommonHead } from 'layouts/components/ui'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { successNotify, errorNotify } from 'layouts/components/text'
 
-export default function Registerprofile() {
+export default function RegisterProfile() {
   const [selected, setSelected] = useState(['ワンピース'])
   const [image, setImage] = useState(null)
   const [username, setUsername] = useState(null)

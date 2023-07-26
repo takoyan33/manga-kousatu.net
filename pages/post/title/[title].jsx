@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import React from 'react'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { database } from '../../../firebaseConfig'
+import { database } from 'firebaseConfig'
 import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { getAuth, updateProfile, deleteUser } from 'firebase/auth'
 import Button from '@mui/material/Button'
@@ -190,7 +190,7 @@ const Post = () => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <div className='max-w-5xl m-auto'>
+      <div className='m-auto max-w-5xl'>
         <p>
           <Link href='/top'>トップ</Link>　＞　投稿記事　＞　{title}
         </p>
@@ -198,7 +198,7 @@ const Post = () => {
           {firedata.map((data) => {
             return (
               <div key={data.id}>
-                <div className='lg:w-full my-4 '>
+                <div className='my-4 lg:w-full '>
                   {user && (
                     <>
                       {user.email == data.email && (
@@ -259,7 +259,7 @@ const Post = () => {
                   )}
                   <p className='flex justify-center'>
                     <Image
-                      className='m-auto text-center max-w-sm'
+                      className='m-auto max-w-sm text-center'
                       height={500}
                       width={500}
                       src={data.downloadURL}
@@ -279,32 +279,32 @@ const Post = () => {
                       ))}
                     <div variant='body2' color='text.secondary'>
                       {data.categori == 'ONEPIECE' && (
-                        <span className='bg-blue-500 p-2 inline-block text-white text-center'>
+                        <span className='inline-block bg-blue-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
                       {data.categori == '呪術廻戦' && (
-                        <span className='bg-purple-500 p-2 inline-block text-white text-center'>
+                        <span className='inline-block bg-purple-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
                       {data.categori == '東京リベンジャーズ' && (
-                        <span className='bg-rose-500 p-2 inline-block text-white text-center'>
+                        <span className='inline-block bg-rose-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
                       {data.categori == 'キングダム' && (
-                        <span className='bg-yellow-500 p-2 inline-block text-white text-center'>
+                        <span className='inline-block bg-yellow-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
                       {data.netabare == 'ネタバレ有' && (
-                        <span className='bg-yellow-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                        <span className='m-4 mt-2 inline-block bg-yellow-500 p-1 text-center text-white'>
                           {data.netabare}
                         </span>
                       )}
                       {data.netabare == 'ネタバレ無' && (
-                        <span className='bg-blue-500 mt-2 p-1 inline-block text-white text-center m-4'>
+                        <span className='m-4 mt-2 inline-block bg-blue-500 p-1 text-center text-white'>
                           {data.netabare}
                         </span>
                       )}
@@ -320,14 +320,14 @@ const Post = () => {
                       {data.contextimage && (
                         <p className='flex justify-center'>
                           <Image
-                            className='m-auto text-center max-w-sm'
+                            className='m-auto max-w-sm text-center'
                             height={500}
                             width={500}
                             src={data.contextimage}
                           />
                         </p>
                       )}
-                      <div className='bg-slate-200 my-8 py-8'>
+                      <div className='my-8 bg-slate-200 py-8'>
                         <Avatar alt='Remy Sharp' src={data.photoURL} />
 
                         <span className='text-xl'>投稿者名：{data.displayname}</span>

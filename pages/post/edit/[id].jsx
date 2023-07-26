@@ -15,8 +15,8 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import dynamic from 'next/dynamic'
+import ImageUpload from 'layouts/utils/ImageUpload'
 
-// バリデーションルール
 const schema = yup.object({
   title: yup.string().required('必須です'),
 })
@@ -27,6 +27,7 @@ const PostEdit = () => {
   const [categori, setCategori] = useState('')
   const [postTitle, setPostTitle] = useState('')
   const databaseRef = collection(database, 'posts')
+  const [createObjectURL, setCreateObjectURL] = useState('')
   //データベースを取得
   const [post, setPost] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
@@ -50,6 +51,16 @@ const PostEdit = () => {
   } = useForm({
     resolver: yupResolver(schema),
   })
+
+  const uploadImage = (event) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0]
+
+      setImage(file)
+      setCreateObjectURL(URL.createObjectURL(file))
+      console.log(image)
+    }
+  }
 
   const getPost = async () => {
     try {
@@ -120,7 +131,7 @@ const PostEdit = () => {
         <div>
           <div>
             <div className='my-4 lg:w-full '>
-              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {post.title}　＞　記事の編集
+              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {post.title}　＞　考察記事の編集
               <Stack
                 component='form'
                 className='m-auto'
@@ -130,6 +141,27 @@ const PostEdit = () => {
               >
                 <div>
                   <h2 className='my-12 text-center text-2xl font-semibold'>考察記事の編集</h2>
+                  <div>
+                    <FormLabel id='demo-radio-buttons-group-label'>
+                      サムネイル<span className='text-red-600'>*</span>
+                    </FormLabel>
+                    <img src={post.downloadURL} className='w-100' />
+                    <ImageUpload
+                      onChange={uploadImage}
+                      createObjectURL={createObjectURL}
+                      text=''
+                      event={undefined}
+                    />
+                    <input
+                      id='file-input'
+                      className='hidden'
+                      type='file'
+                      accept='image/*,.png,.jpg,.jpeg,.gif'
+                      name='myImage'
+                      onChang
+                      e={uploadImage}
+                    />
+                  </div>
                   <FormLabel id='demo-radio-buttons-group-label'>
                     タイトル<span className='text-red-600'>*</span>
                   </FormLabel>

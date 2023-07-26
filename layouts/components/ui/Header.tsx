@@ -23,7 +23,7 @@ import { useAuthContext } from 'layouts/context/AuthContext'
 
 const ACCOUNT_MENU_ITEMS = [
   { text: 'About', href: '/about' },
-  { text: '更新履歴', href: '/realsenotes' },
+  { text: '更新履歴', href: '/releasenotes' },
 ]
 
 export const Header = () => {

@@ -61,7 +61,7 @@ const RELEASE_NOTES = [
   },
 ]
 
-function RealseNotes() {
+function ReleaseNotes() {
   return (
     <div>
       <CommonHead />
@@ -78,7 +78,7 @@ function RealseNotes() {
       ))}
       <h3 className='my-4'>Github</h3>
       <p className='mb-8 font-semibold'>
-        <a href='https://github.com/takoyan33/manga-kousatu.net'>
+        <a href='https://github.com/takoyan33/manga-kousatu.net' target='_blank'>
           https://github.com/takoyan33/manga-kousatu.net
         </a>
       </p>
@@ -86,4 +86,4 @@ function RealseNotes() {
   )
 }
 
-export default RealseNotes
+export default ReleaseNotes

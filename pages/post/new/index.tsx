@@ -82,7 +82,7 @@ export default function Post() {
     })
   }
 
-  const uploadImage = (event) => {
+  const uploadImage = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setImage(file)
@@ -90,7 +90,7 @@ export default function Post() {
     }
   }
 
-  const uploadToClientContext = (event) => {
+  const uploadToClientContext = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       console.log(contextImage)
@@ -102,7 +102,7 @@ export default function Post() {
   const router = useRouter()
 
   type addPost = {
-    toLocaleString(timeZone): string
+    toLocaleString(timeZone: any): string
   }
 
   const addPost: SubmitHandler<FormInput> = async (data) => {

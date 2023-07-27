@@ -16,6 +16,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import dynamic from 'next/dynamic'
 import ImageUpload from 'layouts/utils/ImageUpload'
+import { postImage } from 'layouts/api'
 
 const schema = yup.object({
   title: yup.string().required('必須です'),
@@ -23,6 +24,7 @@ const schema = yup.object({
 
 const PostEdit = () => {
   const [ID, setID] = useState(null)
+  const [image, setImage] = useState(null)
   const [context, setContext] = useState('')
   const [categori, setCategori] = useState('')
   const [postTitle, setPostTitle] = useState('')
@@ -55,10 +57,8 @@ const PostEdit = () => {
   const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-
       setImage(file)
       setCreateObjectURL(URL.createObjectURL(file))
-      console.log(image)
     }
   }
 
@@ -82,11 +82,12 @@ const PostEdit = () => {
     setPostTitle(post.title)
   }, [])
 
-  const updatePost = (data) => {
-    //更新する
+  const updatePost = async (data) => {
+    const result = await postImage(image)
     let fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
     updateDoc(fieldToEdit, {
+      downloadURL: result,
       title: postTitle,
       netabare: data.netabare,
       categori: categori,
@@ -249,7 +250,7 @@ const PostEdit = () => {
                   </FormLabel>
                 </div>
                 <p>現在の文章</p>
-                {/* <textarea
+                <textarea
                   label='内容(最大500文字）'
                   className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                   id='filled-multiline-static'
@@ -258,11 +259,8 @@ const PostEdit = () => {
                   type='text'
                   defaultValue={post.context}
                   onChange={(event) => setContext(event.target.value)}
-                /> */}
-                <Richedita onChange={handleEditorChange} />
-                <p className='my-4 text-right'>
-                  現在の文字数：{lengthData && <span>{lengthData.length}</span>}
-                </p>
+                />
+                {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
                 <SiteButton
                   href=''
                   onClick={updatePost}

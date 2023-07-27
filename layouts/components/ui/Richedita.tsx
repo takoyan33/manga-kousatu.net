@@ -6,9 +6,10 @@ import { stateToHTML } from 'draft-js-export-html'
 
 type RicheditaProps = {
   onChange: (plainText: string, html: string) => void
+  value: string
 }
 
-const Richedita: React.VFC<RicheditaProps> = ({ onChange }) => {
+const Richedita: React.VFC<RicheditaProps> = ({ onChange, value }) => {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText('デフォルトのテキスト')),
   )
@@ -22,9 +23,26 @@ const Richedita: React.VFC<RicheditaProps> = ({ onChange }) => {
   }
 
   return (
-    <div className='center-input border pb-20'>
-      <Editor onEditorStateChange={handleEditorChange} />
-    </div>
+    <>
+      <div className='center-input border pb-20'>
+        <Editor
+          onEditorStateChange={handleEditorChange}
+          localization={{
+            locale: 'ja',
+          }}
+          hashtag={{
+            separator: ' ',
+            trigger: '#',
+          }}
+          placeholder='文字を入力してください'
+        />
+      </div>
+      <>
+        <p className='my-4 text-right'>
+          現在の文字数：<span>{value && value.length}</span>
+        </p>
+      </>
+    </>
   )
 }
 

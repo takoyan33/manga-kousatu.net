@@ -85,14 +85,12 @@ export default function Post() {
   const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-
       setImage(file)
       setCreateObjectURL(URL.createObjectURL(file))
-      console.log(image)
     }
   }
 
-  const uploadToClientcontext = (event) => {
+  const uploadToClientContext = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       console.log(contextImage)
@@ -290,14 +288,14 @@ export default function Post() {
               内容<span className='text-red-600'>*</span>(最大500文字）
             </FormLabel>
 
-            <Richedita onChange={handleEditorChange} />
+            <Richedita onChange={handleEditorChange} value='' />
             <p className='my-4 text-right'>現在の文字数：{lengthData && lengthData}</p>
           </div>
           <div className='my-8'>
             <label htmlFor='file-input'>他の写真（最大1枚）</label>
 
             <ImageUploadContext
-              onChange={uploadToClientcontext}
+              onChange={uploadToClientContext}
               createcontextObjectURL={createcontextObjectURL}
               text={'写真'}
               event={undefined}
@@ -309,7 +307,7 @@ export default function Post() {
               multiple
               accept='image/*,.png,.jpg,.jpeg,.gif'
               name='myImage'
-              onChange={uploadToClientcontext}
+              onChange={uploadToClientContext}
             />
           </div>
           <SiteButton

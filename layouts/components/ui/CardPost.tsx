@@ -91,9 +91,9 @@ export const CardPost: React.VFC<Props> = React.memo(
     }, [])
 
     return (
-      <div className='w-1/3 cursor-pointer'>
+      <div className='w-full cursor-pointer md:w-1/3'>
         <Link href={`/post/${id}`}>
-          <Grid key={id} className='m-auto flex'>
+          <div key={id} className='m-auto w-4/5'>
             <Card className='m-auto my-8 border hover:shadow-2xl' style={cardstyles}>
               <dl>
                 <div className='m-auto flex justify-center'>
@@ -170,7 +170,7 @@ export const CardPost: React.VFC<Props> = React.memo(
                 </CardContent>
               </dl>
             </Card>
-          </Grid>
+          </div>
         </Link>
       </div>
     )

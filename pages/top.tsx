@@ -169,7 +169,7 @@ export default function Index() {
         </FormControl>
       </div>
 
-      <Grid container className='m-auto'>
+      <div className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : postData.filter((post) => {
@@ -208,7 +208,7 @@ export default function Index() {
               />
             ))
         )}
-      </Grid>
+      </div>
 
       <div className='text-center'>
         {postData.length > 6 && (

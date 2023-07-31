@@ -58,6 +58,7 @@ import {
   LineIcon,
   TwitterIcon,
 } from 'react-share'
+import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
 
 // バリデーションルール
 const schema = yup.object({
@@ -138,12 +139,13 @@ const Post = () => {
       likes_email: arrayUnion(user.email),
     })
       .then(() => {
+        setOn((prev) => !prev)
         setLikecount(0)
-        getPost(setSinglePost, routerid)
-        successNotify('成功しました')
+        setTimeout(() => {
+          getPost(setSinglePost, routerid)
+        }, 2000)
       })
       .catch((err) => {
-        errorNotify('失敗しました')
         console.log(err)
       })
   }
@@ -157,10 +159,8 @@ const Post = () => {
       .then(() => {
         setLikecount(0)
         getPost(setSinglePost, routerid)
-        successNotify('いいねを解除しました')
       })
       .catch((err) => {
-        errorNotify('失敗しました')
         console.log(err)
       })
   }
@@ -201,6 +201,8 @@ const Post = () => {
         errorNotify('失敗しました')
       })
   }
+
+  const [on, setOn] = useState(false)
 
   return (
     <>
@@ -393,38 +395,32 @@ const Post = () => {
                 </span>
                 {singlePost.likes}
               </div>
+
               {singlePost.likes_email && user ? (
                 singlePost.likes_email.includes(user.email) ? (
                   <>
                     <p>いいね済み</p>
                     <button
-                      href=''
                       text='いいね解除する'
-                      className='m-4 my-2 inline'
+                      className='my-2 inline'
                       onClick={() => LikeDelete(routerid, singlePost.likes)}
                     >
-                      <span className='p-4 text-pink-400 hover:text-pink-700'>
+                      <span className='py-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
                         いいね解除する
                       </span>
                     </button>
                   </>
                 ) : (
-                  <button
-                    href=''
-                    text='いいねする'
-                    className='m-4 my-2 inline'
-                    onClick={() => LikeAdd(routerid, singlePost.likes)}
-                  >
-                    <span className='p-4 text-pink-400 hover:text-pink-700'>
-                      <FavoriteIcon />
-                      いいねする
-                    </span>
+                  <button onClick={() => LikeAdd(routerid, singlePost.likes)}>
+                    <FavoriteIconAnim on={on} />
+                    <span>いいねする</span>
                   </button>
                 )
               ) : (
                 <></>
               )}
+              
               {!user && (
                 <>
                   <button text='ログインするといいねができます' className='m-4 my-2 inline'>

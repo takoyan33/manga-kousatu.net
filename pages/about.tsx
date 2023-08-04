@@ -1,6 +1,6 @@
 import { CommonHead } from 'layouts/components/ui/CommonHead'
 
-function About() {
+export default function About() {
   return (
     <div className='flex min-h-screen flex-col items-center justify-center'>
       <CommonHead />
@@ -24,5 +24,3 @@ function About() {
     </div>
   )
 }
-
-export default About

@@ -420,20 +420,22 @@ const Post = () => {
               ) : (
                 <></>
               )}
-              
+
               {!user && (
                 <>
-                  <button text='ログインするといいねができます' className='m-4 my-2 inline'>
+                  <Link href='/login'>
                     <span className='p-4 text-pink-400 hover:text-pink-700'>
                       <FavoriteIcon />
                       ログインするといいねができます
                     </span>
-                  </button>
+                  </Link>
                   <div className='mb-6 flex items-center justify-between'>
                     <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
                       コメント ({comments.length})
                     </h2>
-                    <p className='my-6'>ログインするとコメントできます</p>
+                    <Link href='/login'>
+                      <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
+                    </Link>
                   </div>
                 </>
               )}

@@ -7,7 +7,7 @@ import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
-import { getMyPosts, getMyUser } from 'layouts/components/hooks'
+import { getMyPosts, getLikedPosts, getMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
@@ -18,6 +18,7 @@ export default function Profile() {
   const [users, setUsers] = useState(null)
   //データベースを取得
   const [posts, setPostData] = useState([])
+  const [likedPosts, setLikedPosts] = useState([])
   const [searchName, setSearchName] = useState('')
   const [onpiece, setOnpiece] = useState([])
   const [kingdom, setKingdom] = useState([])
@@ -105,7 +106,7 @@ export default function Profile() {
     if (!user) {
       router.push('/register')
     } else {
-      getMyPosts(setPostData, user.email)
+      getLikedPosts(setLikedPosts, user.email)
       getMyUser(setUsers, user.email)
       getDataone()
       getKaisenPost()
@@ -114,41 +115,6 @@ export default function Profile() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const deleteuser = async () => {
-    //userを削除する
-    if (user) {
-      deleteUser(user)
-        //user削除
-        .then(() => {
-          localStorage.removeItem('Token')
-          //tokenを削除
-          alert('退会しました。TOP画面に戻ります。')
-          router.push('/top')
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }
-
-  // const deleteDocument = useCallback((id) => {
-  //   let fieldToEdit = doc(database, "posts", id);
-  //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
-
-  //   if (checkSaveFlg) {
-  //     deleteDoc(fieldToEdit)
-  //       .then(() => {
-  //         alert("記事を削除しました");
-  //         getData();
-  //       })
-  //       .catch((err) => {
-  //         alert("記事の削除に失敗しました");
-  //       });
-  //   } else {
-  //     router.push("/profile");
-  //   }
-  // }, []);
 
   const MANGA_DATA = [
     { name: 'ONE PIECE', value: onpiece.length },
@@ -181,30 +147,8 @@ export default function Profile() {
   return (
     <>
       <CommonHead />
-      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
+      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>いいねした投稿</h2>
 
-      <AccountMenu onClick={deleteuser} />
-
-      <>
-        {users &&
-          users.map((user) => {
-            return (
-              <>
-                <ProfileId
-                  key={user.id}
-                  profileImage={user.profileimage}
-                  username={user.username}
-                  bio={user.bio}
-                  favorite={user.favarite}
-                  id={0}
-                />
-              </>
-            )
-          })}
-      </>
-
-      <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
-      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
       <div>
         <ResponsiveContainer height={256}>
           <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
@@ -236,41 +180,29 @@ export default function Profile() {
           setSearchName(event.target.value)
         }}
       />
-
+      <p className='text-1xl text-center'>投稿数　{likedPosts.length}件</p>
       <Grid container className='m-auto'>
-        {posts
-          .filter((post) => {
-            if (searchName === '') {
-              return post
-              //そのまま返す
-            } else if (
-              post.title.toLowerCase().includes(searchName.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-            ) {
-              return post
-            }
-          })
-          .map((post) => {
-            return (
-              <>
-                <CardPost
-                  key={post.id}
-                  downloadURL={post.downloadURL}
-                  title={post.title}
-                  categori={post.categori}
-                  netabare={post.netabare}
-                  context={post.context}
-                  createtime={post.createtime}
-                  displayname={post.displayname}
-                  email={post.email}
-                  id={post.id}
-                  photoURL={post.photoURL}
-                  likes={post.likes}
-                  selected={post.selected}
-                />
-              </>
-            )
-          })}
+        {likedPosts.map((post) => {
+          return (
+            <>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                categori={post.categori}
+                netabare={post.netabare}
+                context={post.context}
+                createtime={post.createtime}
+                displayname={post.displayname}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+              />
+            </>
+          )
+        })}
       </Grid>
     </>
   )

@@ -4,6 +4,8 @@ import { getMyPosts, getUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
+import { collection, getDocs, query, where } from 'firebase/firestore'
+import { database } from 'firebaseConfig'
 
 const Post = () => {
   const [users, setUsers] = useState([])
@@ -13,12 +15,28 @@ const Post = () => {
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
+  const postsRef = collection(database, 'posts')
+  const userPost = query(postsRef, where('userid', '==', userid))
+
+  const fetchPosts = async () => {
+    try {
+      const querySnapshot = await getDocs(userPost)
+      const posts = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }))
+      setPostData(posts)
+    } catch (error) {
+      console.log('Error fetching posts', error)
+    }
+  }
 
   useEffect(() => {
     if (user && userid == user.uid) {
       router.push('/profile')
     }
     getUsers(setUsers)
+    fetchPosts()
   }, [user, userid, router])
 
   return (

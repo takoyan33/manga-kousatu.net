@@ -22,8 +22,13 @@ import { useLogOut } from 'layouts/api/auth/useAuth'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
 const ACCOUNT_MENU_ITEMS = [
-  { text: 'About', href: '/about' },
   { text: '更新履歴', href: '/releasenotes' },
+  { text: 'About', href: '/about' },
+]
+
+const LOGIN_ADMIN_MENU_ITEMS = [
+  { text: 'プロフィール', href: '/profile' },
+  { text: 'いいねした投稿', href: '/profile/likespost' },
 ]
 
 export const Header = () => {
@@ -117,19 +122,6 @@ export const Header = () => {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <Divider />
-        {user && (
-          <>
-            <MenuItem>
-              <Link href='/profile'>プロフィール</Link>
-            </MenuItem>
-            <MenuItem>
-              <Button color='inherit' onClick={handleLogout}>
-                <Logout fontSize='small' />
-                ログアウト
-              </Button>
-            </MenuItem>
-          </>
-        )}
         {!user && (
           <>
             <MenuItem>
@@ -154,6 +146,24 @@ export const Header = () => {
             <Link href={item.href}>{item.text}</Link>
           </MenuItem>
         ))}
+        {user && (
+          <>
+            {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
+              <MenuItem key={item.text} onClick={handleClose}>
+                <ListItemIcon>
+                  <Settings fontSize='small' />
+                </ListItemIcon>
+                <Link href={item.href}>{item.text}</Link>
+              </MenuItem>
+            ))}
+            <MenuItem>
+              <Button color='inherit' onClick={handleLogout}>
+                <Logout fontSize='small' />
+                ログアウト
+              </Button>
+            </MenuItem>
+          </>
+        )}
       </Menu>
     </AppBar>
   )

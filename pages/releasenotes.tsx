@@ -61,7 +61,7 @@ const RELEASE_NOTES = [
   },
 ]
 
-function ReleaseNotes() {
+export default function ReleaseNotes() {
   return (
     <div>
       <CommonHead />
@@ -85,5 +85,3 @@ function ReleaseNotes() {
     </div>
   )
 }
-
-export default ReleaseNotes

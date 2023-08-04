@@ -93,7 +93,7 @@ export default function Index() {
 
       {user && (
         <div className='text-center lg:text-right'>
-          <SiteButton href='/post/new' text='新規投稿をする' className='w-50 m-auto my-2' />
+          <SiteButton href='/post/new' text='新規投稿' className='w-50 m-auto my-2' />
         </div>
       )}
       <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>

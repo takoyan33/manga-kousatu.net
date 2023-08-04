@@ -28,7 +28,6 @@ import {
   LikeDelete,
   getCategoriPosts,
 } from 'layouts/components/hooks'
-import { SiteButton } from 'layouts/components/button'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 import { deletePost } from 'layouts/api/auth'
@@ -98,12 +97,11 @@ const Post = () => {
   }
 
   useEffect(() => {
-    // categoriFiredata();
     getPost(setSinglePost, routerid)
     setUserEmail(singlePost.email)
     getUsers(setUsers)
-    // getMyUser(setUsers,)
     getComments()
+    // getMyUser(setUsers,)
     // getCategoriPosts(setCategoriPosts, singlePost.categori)
   }, [router])
 

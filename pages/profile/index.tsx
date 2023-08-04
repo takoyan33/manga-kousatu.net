@@ -19,7 +19,7 @@ export default function Profile() {
   //データベースを取得
   const [posts, setPostData] = useState([])
   const [searchName, setSearchName] = useState('')
-  const [onpiece, setOnpiece] = useState([])
+  const [onePiece, setOnePiece] = useState([])
   const [kingdom, setKingdom] = useState([])
   const [tokyo, setTokyo] = useState([])
   const [kaisen, setKaisen] = useState([])
@@ -49,7 +49,7 @@ export default function Profile() {
     //firestoreからデータ取得
     await getDocs(myOnePosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setOnpiece(
+      setOnePiece(
         querySnapshot.docs.map((data) => {
           //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
@@ -132,26 +132,8 @@ export default function Profile() {
     }
   }
 
-  // const deleteDocument = useCallback((id) => {
-  //   let fieldToEdit = doc(database, "posts", id);
-  //   let checkSaveFlg = window.confirm("削除しても大丈夫ですか？");
-
-  //   if (checkSaveFlg) {
-  //     deleteDoc(fieldToEdit)
-  //       .then(() => {
-  //         alert("記事を削除しました");
-  //         getData();
-  //       })
-  //       .catch((err) => {
-  //         alert("記事の削除に失敗しました");
-  //       });
-  //   } else {
-  //     router.push("/profile");
-  //   }
-  // }, []);
-
   const MANGA_DATA = [
-    { name: 'ONE PIECE', value: onpiece.length },
+    { name: 'ONE PIECE', value: onePiece.length },
     { name: '呪術廻戦', value: kaisen.length },
     { name: 'キングダム', value: kingdom.length },
     { name: '東京リベンジャーズ', value: tokyo.length },
@@ -182,9 +164,7 @@ export default function Profile() {
     <>
       <CommonHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
-
       <AccountMenu onClick={deleteuser} />
-
       <>
         {users &&
           users.map((user) => {

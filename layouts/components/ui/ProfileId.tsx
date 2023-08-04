@@ -17,9 +17,6 @@ export const ProfileId: React.VFC<Props> = React.memo(
   ({ id, profileImage, username, bio, favorite }) => {
     return (
       <>
-        <h2 className='m-5 my-12 text-center text-2xl font-semibold'>
-          {username} さんのプロフィール
-        </h2>
         <div className='m-auto flex max-w-md'>
           <div key={id}>
             <p>
@@ -45,6 +42,7 @@ export const ProfileId: React.VFC<Props> = React.memo(
                     ＃{favorite}　
                   </p>
                 ))}
+              {favorite.length === 0 && <p>好きな漫画はありません</p>}
             </div>
           </div>
         </div>
@@ -52,7 +50,7 @@ export const ProfileId: React.VFC<Props> = React.memo(
           <h2 className='m-5'>
             <BorderColorIcon className='mr-2' /> プロフィール
           </h2>
-          <p className='m-5'>{bio}</p>
+          <p className='m-5'>{bio ? bio : 'プロフィールはまだありません'}</p>
         </div>
       </>
     )

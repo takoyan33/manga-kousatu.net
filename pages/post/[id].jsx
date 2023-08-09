@@ -394,29 +394,35 @@ const Post = () => {
                 {singlePost.likes}
               </div>
 
-              {singlePost.likes_email && user ? (
-                singlePost.likes_email.includes(user.email) ? (
-                  <>
-                    <p>いいね済み</p>
-                    <button
-                      text='いいね解除する'
-                      className='my-2 inline'
-                      onClick={() => LikeDelete(routerid, singlePost.likes)}
-                    >
-                      <span className='py-4 text-pink-400 hover:text-pink-700'>
-                        <FavoriteIcon />
-                        いいね解除する
-                      </span>
-                    </button>
-                  </>
-                ) : (
-                  <button onClick={() => LikeAdd(routerid, singlePost.likes)}>
-                    <FavoriteIconAnim on={on} />
-                    <span>いいねする</span>
-                  </button>
-                )
+              {user && singlePost.likes_email && user.email == singlePost.email ? (
+                <>自分の投稿なのでいいねできません</>
               ) : (
-                <></>
+                <>
+                  {singlePost.likes_email && user ? (
+                    singlePost.likes_email.includes(user.email) ? (
+                      <>
+                        <p>いいね済み</p>
+                        <button
+                          text='いいね解除する'
+                          className='my-2 inline'
+                          onClick={() => LikeDelete(routerid, singlePost.likes)}
+                        >
+                          <span className='py-4 text-pink-400 hover:text-pink-700'>
+                            <FavoriteIcon />
+                            いいね解除する
+                          </span>
+                        </button>
+                      </>
+                    ) : (
+                      <button onClick={() => LikeAdd(routerid, singlePost.likes)}>
+                        <FavoriteIconAnim on={on} />
+                        <span>いいねする</span>
+                      </button>
+                    )
+                  ) : (
+                    <></>
+                  )}
+                </>
               )}
 
               {!user && (

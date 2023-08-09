@@ -132,7 +132,11 @@ const PostEdit = () => {
         <div>
           <div>
             <div className='my-4 lg:w-full '>
-              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　 {post.title}　＞　考察記事の編集
+              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
+              <Link href={`/post/${routerid}`}>
+                <span>{post.title}</span>
+              </Link>
+              　＞　考察記事の編集
               <Stack
                 component='form'
                 className='m-auto'

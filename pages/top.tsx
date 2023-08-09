@@ -2,9 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
-import Grid from '@material-ui/core/Grid'
 import { SiteButton } from 'layouts/components/button'
-// import { SiteCategory } from 'layouts/components/text'
 import {
   getPosts,
   getOldPosts,

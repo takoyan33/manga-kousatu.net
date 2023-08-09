@@ -1,11 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState, useCallback } from 'react'
 import { database } from 'firebaseConfig'
+import Link from 'next/link'
 import { collection, getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
-import Grid from '@material-ui/core/Grid'
 import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
 import { getMyPosts, getMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
@@ -217,41 +217,123 @@ export default function Profile() {
         }}
       />
 
-      <Grid container className='m-auto'>
-        {posts
-          .filter((post) => {
-            if (searchName === '') {
-              return post
-              //そのまま返す
-            } else if (
-              post.title.toLowerCase().includes(searchName.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
-            ) {
-              return post
-            }
-          })
-          .map((post) => {
-            return (
-              <>
-                <CardPost
-                  key={post.id}
-                  downloadURL={post.downloadURL}
-                  title={post.title}
-                  categori={post.categori}
-                  netabare={post.netabare}
-                  context={post.context}
-                  createtime={post.createtime}
-                  displayname={post.displayname}
-                  email={post.email}
-                  id={post.id}
-                  photoURL={post.photoURL}
-                  likes={post.likes}
-                  selected={post.selected}
-                />
-              </>
-            )
-          })}
-      </Grid>
+      <div className='relative my-10 overflow-x-auto shadow-md sm:rounded-lg'>
+        <table className='w-full text-left text-sm text-gray-500 '>
+          <thead className='bg-gray-50 text-xs uppercase text-gray-700 '>
+            <tr>
+              <th scope='col' className='px-6 py-3'>
+                タイトル
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                <div className='flex items-center'>
+                  カテゴリ
+                  <a href='#'>
+                    <svg
+                      className='ml-1.5 h-3 w-3'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z' />
+                    </svg>
+                  </a>
+                </div>
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                <div className='flex items-center'>
+                  投稿日時
+                  <a href='#'>
+                    <svg
+                      className='ml-1.5 h-3 w-3'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z' />
+                    </svg>
+                  </a>
+                </div>
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                <div className='flex items-center'>
+                  いいね数
+                  <a href='#'>
+                    <svg
+                      className='ml-1.5 h-3 w-3'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z' />
+                    </svg>
+                  </a>
+                </div>
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                <div className='flex items-center'>
+                  公開状態
+                  <a href='#'>
+                    <svg
+                      className='ml-1.5 h-3 w-3'
+                      aria-hidden='true'
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='currentColor'
+                      viewBox='0 0 24 24'
+                    >
+                      <path d='M8.574 11.024h6.852a2.075 2.075 0 0 0 1.847-1.086 1.9 1.9 0 0 0-.11-1.986L13.736 2.9a2.122 2.122 0 0 0-3.472 0L6.837 7.952a1.9 1.9 0 0 0-.11 1.986 2.074 2.074 0 0 0 1.847 1.086Zm6.852 1.952H8.574a2.072 2.072 0 0 0-1.847 1.087 1.9 1.9 0 0 0 .11 1.985l3.426 5.05a2.123 2.123 0 0 0 3.472 0l3.427-5.05a1.9 1.9 0 0 0 .11-1.985 2.074 2.074 0 0 0-1.846-1.087Z' />
+                    </svg>
+                  </a>
+                </div>
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                <span className='sr-only'>Edit</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {posts
+              .filter((post) => {
+                if (searchName === '') {
+                  return post
+                  //そのまま返す
+                } else if (
+                  post.title.toLowerCase().includes(searchName.toLowerCase())
+                  //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+                ) {
+                  return post
+                }
+              })
+              .map((post) => {
+                return (
+                  <>
+                    <tr className='border-b bg-white' key={post.id}>
+                      <Link href={`/post/${post.id}`}>
+                        <th
+                          scope='row'
+                          className='whitespace-nowrap px-6 py-4 font-medium text-gray-900  hover:text-blue-600'
+                        >
+                          {post.title}
+                        </th>
+                      </Link>
+                      <td className='px-6 py-4'>{post.categori}</td>
+                      <td className='px-6 py-4'> {post.createtime}</td>
+                      <td className='px-6 py-4'> {post.likes}</td>
+                      <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>非公開</p>}</td>
+                      <td className='px-6 py-4 text-right'>
+                        <a href='#' className='font-medium text-blue-600 hover:underline'>
+                          <Link href={`/post/edit/${post.id}`}>編集する</Link>
+                        </a>
+                      </td>
+                    </tr>
+                  </>
+                )
+              })}
+          </tbody>
+        </table>
+      </div>
     </>
   )
 }

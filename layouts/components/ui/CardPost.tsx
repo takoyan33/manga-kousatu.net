@@ -4,6 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react'
 import { database } from 'firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
+import { getPost, getUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
@@ -37,13 +38,11 @@ export const CardPost: React.VFC<Props> = React.memo(
     categori,
     netabare,
     displayname,
-    context,
     email,
     photoURL,
     createtime,
     selected,
   }) => {
-    const usersRef = collection(database, 'users')
     const [users, setUsers] = useState(null)
     const [comments, setComments] = useState('')
     const style: React.CSSProperties = {
@@ -54,20 +53,6 @@ export const CardPost: React.VFC<Props> = React.memo(
     }
 
     const auth = getAuth()
-
-    const usersData = async () => {
-      //firestoreからデータ取得
-      await getDocs(usersRef).then((response) => {
-        //コレクションのドキュメントを取得
-        setUsers(
-          response.docs.map((data) => {
-            //配列なので、mapで展開する
-            return { ...data.data(), id: data.id }
-            //スプレッド構文で展開して、新しい配列を作成
-          }),
-        )
-      })
-    }
 
     // const getpostComment = async () => {
     //   const commentseRef = collection(database, 'comments')
@@ -86,7 +71,7 @@ export const CardPost: React.VFC<Props> = React.memo(
     // }
 
     useEffect(() => {
-      usersData()
+      getUsers(setUsers)
       // getpostComment()
     }, [])
 

@@ -13,11 +13,10 @@ import { database } from 'firebaseConfig'
 //新しいpostを取得
 export const getPosts = async (setPostData) => {
   const databaseRef = collection(database, 'posts')
-  const descPost = query(databaseRef, orderBy('timestamp', 'desc'))
+  const descPost = query(databaseRef, where('display', '==', true))
 
   onSnapshot(descPost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    console.log('成功')
   })
 }
 
@@ -121,11 +120,7 @@ export const getUsersPosts = async (setPostData, userid) => {
 //特定カテゴリの新しい投稿を取得
 export const getCategoriPosts = async (setPostData, postCategori) => {
   const postRef = collection(database, 'posts')
-  const categoriPosts = query(
-    postRef,
-    where('categori', '==', postCategori),
-    orderBy('timestamp', 'desc'),
-  )
+  const categoriPosts = query(postRef, where('categori', '==', postCategori))
 
   onSnapshot(categoriPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))

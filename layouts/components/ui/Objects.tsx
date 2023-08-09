@@ -27,3 +27,16 @@ export const POST_CATEGORIES = [
 ]
 
 export const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#ff6361', '#8884d8', '#C1C1C1']
+
+export const DISPLAY_DATA = [
+  {
+    id: 1,
+    label: '公開',
+    value: true,
+  },
+  {
+    id: 2,
+    label: '下書き',
+    value: false,
+  },
+]

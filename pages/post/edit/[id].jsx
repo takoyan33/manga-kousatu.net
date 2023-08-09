@@ -8,7 +8,7 @@ import { Stack, FormLabel } from '@mui/material'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import Image from 'react-image-resizer'
 import { SiteButton } from 'layouts/components/button'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { TagsInput } from 'react-tag-input-component'
 import { useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
@@ -78,7 +78,6 @@ const PostEdit = () => {
     getPost()
     setID(routerid)
     setContext(post.context)
-    console.log('categori', categori)
     setPostTitle(post.title)
   }, [])
 
@@ -94,7 +93,7 @@ const PostEdit = () => {
       context: context,
       edittime: newdate,
       selected: selected,
-      //改行を保存する
+      display: data.display,
     })
       .then(() => {
         successNotify('記事を更新しました')
@@ -247,7 +246,6 @@ const PostEdit = () => {
                   )}
                 />
                 {errors.netabare && <p>{errors.netabare.message}</p>}
-
                 <div>
                   <FormLabel id='demo-radio-buttons-group-label'>
                     内容<span className='text-red-600'>*</span>(最大500文字）
@@ -264,6 +262,34 @@ const PostEdit = () => {
                   defaultValue={post.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
+
+                <FormLabel id='demo-radio-buttons-group-label'>
+                  公開について<span className='text-red-600'>*</span>
+                </FormLabel>
+                <p>現在の公開：{post.display ? <p>公開</p> : <p>下書き</p>}</p>
+                <Controller
+                  name='display'
+                  control={control}
+                  rules={{
+                    required: '必須項目です',
+                  }}
+                  render={({ field }) => (
+                    <RadioGroup aria-label='公開' name={field.name} value={field.value}>
+                      {DISPLAY_DATA.map((display) => (
+                        <FormControlLabel
+                          key={display.id}
+                          value={display.value}
+                          control={<Radio />}
+                          label={display.label}
+                          {...register('display')}
+                        />
+                      ))}
+                    </RadioGroup>
+                  )}
+                />
+
+                {errors.display && <p>{errors.display.message}</p>}
+
                 {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
                 <SiteButton
                   href=''

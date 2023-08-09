@@ -321,7 +321,7 @@ export default function Profile() {
                       <td className='px-6 py-4'>{post.categori}</td>
                       <td className='px-6 py-4'> {post.createtime}</td>
                       <td className='px-6 py-4'> {post.likes}</td>
-                      <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>非公開</p>}</td>
+                      <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>下書き</p>}</td>
                       <td className='px-6 py-4 text-right'>
                         <a href='#' className='font-medium text-blue-600 hover:underline'>
                           <Link href={`/post/edit/${post.id}`}>編集する</Link>

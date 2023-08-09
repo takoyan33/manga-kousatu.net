@@ -1,42 +1,24 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getMyPosts, getUsers } from 'layouts/components/hooks'
+import { getOtherUser, getUsersPosts } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { database } from 'firebaseConfig'
 
 const Post = () => {
   const [users, setUsers] = useState([])
   const [postsData, setPostData] = useState([])
-  const [likes, setLikes] = useState(null)
   const router = useRouter()
   const { userid } = router.query
   const auth = getAuth()
   const user = auth.currentUser
-  const postsRef = collection(database, 'posts')
-  const userPost = query(postsRef, where('userid', '==', userid))
-
-  const fetchPosts = async () => {
-    try {
-      const querySnapshot = await getDocs(userPost)
-      const posts = querySnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id,
-      }))
-      setPostData(posts)
-    } catch (error) {
-      console.log('Error fetching posts', error)
-    }
-  }
 
   useEffect(() => {
     if (user && userid == user.uid) {
       router.push('/profile')
     }
-    getUsers(setUsers)
-    fetchPosts()
+    getOtherUser(setUsers, userid)
+    getUsersPosts(setPostData, userid)
   }, [user, userid, router])
 
   return (
@@ -47,23 +29,21 @@ const Post = () => {
           users.map((user) => {
             return (
               <>
-                {userid == user.userid && (
-                  <ProfileId
-                    key={user.id}
-                    profileImage={user.profileimage}
-                    username={user.username}
-                    bio={user.bio}
-                    favorite={user.favarite}
-                    id={user.id}
-                  />
-                )}
+                <ProfileId
+                  key={user.id}
+                  profileImage={user.profileimage}
+                  username={user.username}
+                  bio={user.bio}
+                  favorite={user.favarite}
+                  id={user.id}
+                />
               </>
             )
           })}
       </>
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>過去の投稿</h2>
       <Grid container className='m-auto'>
-        {postsData.length === 0 && <p>まだ投稿していません</p>}
+        {postsData.length === 0 && <p className='text-center'>まだ投稿していません</p>}
         {postsData &&
           postsData.map((post) => {
             return (

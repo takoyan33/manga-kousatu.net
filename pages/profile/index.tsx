@@ -45,7 +45,7 @@ export default function Profile() {
     where('categori', '==', 'キングダム'),
   )
 
-  const getDataone = async () => {
+  const getOnePosts = async () => {
     //firestoreからデータ取得
     await getDocs(myOnePosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -59,7 +59,7 @@ export default function Profile() {
     })
   }
 
-  const getKaisenPost = async () => {
+  const getKaisenPosts = async () => {
     //firestoreからデータ取得
     await getDocs(myKaisenPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -107,8 +107,8 @@ export default function Profile() {
     } else {
       getMyPosts(setPostData, user.email)
       getMyUser(setUsers, user.email)
-      getDataone()
-      getKaisenPost()
+      getOnePosts()
+      getKaisenPosts()
       getTokyoPosts()
       getKingPosts()
     }

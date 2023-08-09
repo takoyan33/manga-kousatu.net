@@ -8,7 +8,16 @@ export const getMyUser = async (setUsers, userEmail) => {
 
   onSnapshot(myUser, (querySnapshot) => {
     setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    console.log('user取得成功')
+  })
+}
+
+//他のuserを取得
+export const getOtherUser = async (setUsers, userid) => {
+  const usersRef = collection(database, 'users')
+  const otherUser = query(usersRef, where('userid', '==', userid))
+
+  onSnapshot(otherUser, (querySnapshot) => {
+    setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
 

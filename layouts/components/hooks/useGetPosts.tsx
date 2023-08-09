@@ -91,6 +91,15 @@ export const getPost = async (setSinglePost, routerId) => {
     console.log(error)
   }
 }
+//特定ユーザーのpostsを取得
+export const getUsersPosts = async (setPostData, userid) => {
+  const postsRef = collection(database, 'posts')
+  const userPosts = query(postsRef, where('userid', '==', userid))
+
+  onSnapshot(userPosts, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
 
 //同じカテゴリの投稿を取得
 

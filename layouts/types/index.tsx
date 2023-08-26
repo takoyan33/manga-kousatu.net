@@ -17,7 +17,6 @@ export type SinglePost = {
 //ImageUpload
 export type ImageUploadProps = {
   text: string
-  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   createObjectURL: string
   createcontextObjectURL: string
   onChange: any

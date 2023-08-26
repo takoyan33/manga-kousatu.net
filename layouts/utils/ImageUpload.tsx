@@ -1,14 +1,8 @@
 import React from 'react'
-
-type Props = {
-  text: string
-  event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  createObjectURL: string
-  onChange: any
-}
+import { ImageUploadProps } from 'layouts/types'
 
 //React.memo化
-const ImageUpload: React.VFC<Props> = ({ onChange, createObjectURL }) => {
+const ImageUpload = ({ onChange, createObjectURL }: ImageUploadProps) => {
   return (
     <div>
       <p>サムネイル*</p>

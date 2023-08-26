@@ -9,7 +9,7 @@ type RicheditaProps = {
   value: string
 }
 
-const Richedita: React.VFC<RicheditaProps> = ({ onChange, value }) => {
+const Richedita = ({ onChange, value }: RicheditaProps) => {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText('デフォルトのテキスト')),
   )

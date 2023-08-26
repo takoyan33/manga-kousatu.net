@@ -8,7 +8,7 @@ type Props = {
 }
 
 //React.memo化
-const Avater: React.VFC<Props> = React.memo(({ photoURL, displayname }) => {
+const CommonAvatar = React.memo(({ photoURL, displayname }: Props) => {
   return (
     <>
       <Avatar alt='Remy Sharp' src={photoURL} />
@@ -17,4 +17,4 @@ const Avater: React.VFC<Props> = React.memo(({ photoURL, displayname }) => {
   )
 })
 
-export default Avater
+export default CommonAvatar

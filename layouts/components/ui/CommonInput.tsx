@@ -14,8 +14,8 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const CommonInput: React.VFC<Props> = React.memo(
-  ({ onChange, error, text, type, helperText, label, id, className, variant }) => {
+export const CommonInput = React.memo(
+  ({ onChange, error, text, type, helperText, label, id, className, variant }: Props) => {
     return (
       <>
         <div>

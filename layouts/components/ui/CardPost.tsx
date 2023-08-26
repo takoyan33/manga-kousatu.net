@@ -8,28 +8,13 @@ import { getPost, getUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
-import Grid from '@material-ui/core/Grid'
 import Image from 'react-image-resizer'
 import Categori from '../text/Categori'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-
-type Props = {
-  downloadURL: string
-  id: number
-  title: string
-  categori: string
-  netabare: string
-  context: string
-  email: string
-  photoURL: string
-  displayname: string
-  createtime: string
-  likes: string
-  selected: string[]
-}
+import { SinglePost } from 'layouts/types'
 
 // eslint-disable-next-line react/display-name
-export const CardPost: React.VFC<Props> = React.memo(
+export const CardPost = React.memo(
   ({
     downloadURL,
     id,
@@ -42,13 +27,13 @@ export const CardPost: React.VFC<Props> = React.memo(
     photoURL,
     createtime,
     selected,
-  }) => {
+  }: SinglePost) => {
     const [users, setUsers] = useState(null)
     const [comments, setComments] = useState('')
     const style: React.CSSProperties = {
       whiteSpace: 'pre-line',
     }
-    const cardstyles: React.CSSProperties = {
+    const cardStyle: React.CSSProperties = {
       margin: '10px',
     }
 
@@ -79,7 +64,7 @@ export const CardPost: React.VFC<Props> = React.memo(
       <div className='w-full cursor-pointer md:w-1/3'>
         <Link href={`/post/${id}`}>
           <div key={id} className='m-auto w-4/5'>
-            <Card className='m-auto my-8 border hover:shadow-2xl' style={cardstyles}>
+            <Card className='m-auto my-8 border hover:shadow-2xl' style={cardStyle}>
               <dl>
                 <div className='m-auto flex justify-center'>
                   <Image

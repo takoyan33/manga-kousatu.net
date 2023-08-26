@@ -8,7 +8,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const SiteCategory: React.VFC<Props> = memo(({ href, text, className }) => {
+export const SiteCategory = memo(({ href, text, className }: Props) => {
   return (
     <span className={className}>
       <Link href={href}>{text}</Link>

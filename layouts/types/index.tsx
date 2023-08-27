@@ -17,7 +17,7 @@ export type SinglePost = {
 //ImageUpload
 export type ImageUploadProps = {
   text: string
-  createObjectURL: string
-  createcontextObjectURL: string
+  createObjectURL?: string
+  createcontextObjectURL?: string
   onChange: any
 }

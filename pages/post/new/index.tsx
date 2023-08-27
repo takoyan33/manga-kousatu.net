@@ -192,7 +192,7 @@ export default function Post() {
             onChange={uploadImage}
             createObjectURL={createObjectURL}
             text=''
-            createcontextObjectURL={''}
+            createcontextObjectURL=''
           />
 
           <input
@@ -298,7 +298,7 @@ export default function Post() {
               onChange={uploadToClientContext}
               createcontextObjectURL={createcontextObjectURL}
               text={'写真'}
-              createObjectURL={''}
+              createObjectURL=''
             />
             <input
               id='file-input'

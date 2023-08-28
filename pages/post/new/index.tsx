@@ -50,7 +50,7 @@ export default function Post() {
   const [image, setImage] = useState(null)
   const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [createcontextObjectURL, setCreatecontexObjectURL] = useState('')
+  const [createContextObjectURL, setCreateContextObjectURL] = useState('')
   const [userid, setUserId] = useState(null)
   const [result, setResult] = useState('')
   const [photoURL, setPhotoURL] = useState('')
@@ -82,7 +82,7 @@ export default function Post() {
     })
   }
 
-  const uploadImage = (event: any) => {
+  const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setImage(file)
@@ -90,19 +90,18 @@ export default function Post() {
     }
   }
 
-  const uploadToClientContext = (event: any) => {
+  const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-      console.log(contextImage)
-      setContextImage(file)
-      setCreatecontexObjectURL(URL.createObjectURL(file))
+      setContextImage((prevContextImages) => [...prevContextImages, file])
+      setCreateContextObjectURL(URL.createObjectURL(file))
     }
   }
 
   const router = useRouter()
 
   type addPost = {
-    toLocaleString(timeZone: any): string
+    toLocaleString(timeZone): string
   }
 
   const addPost: SubmitHandler<FormInput> = async (data) => {
@@ -139,6 +138,7 @@ export default function Post() {
         selected: tags,
         timestamp: serverTimestamp(),
         likes: 0,
+        display: true,
       })
         .then(() => {
           successNotify('記事投稿ができました！')
@@ -296,7 +296,7 @@ export default function Post() {
 
             <ImageUploadContext
               onChange={uploadToClientContext}
-              createcontextObjectURL={createcontextObjectURL}
+              createcontextObjectURL={createContextObjectURL}
               text={'写真'}
               createObjectURL=''
             />

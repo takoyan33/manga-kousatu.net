@@ -39,17 +39,17 @@ export default function Index() {
     resolver: yupResolver(schema),
   })
 
-  const SignIn: SubmitHandler<SampleFormInput> = (email: any) => {
+  const SignIn: SubmitHandler<SampleFormInput> = (formData) => {
     alert('ログインしました')
-    console.log(email.email)
-    console.log(email.password)
-    signInWithEmailAndPassword(auth, email.email, email.password)
-      .then((userCredential: any) => {
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
+      .then((userCredential) => {
         const user = userCredential.user
-        localStorage.setItem('Token', user.accessToken)
-        setTimeout(() => {
-          router.push('/')
-        }, 2000)
+        user.getIdToken().then((accessToken) => {
+          localStorage.setItem('Token', accessToken)
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
+        })
       })
       .catch((err) => {
         alert('ログインできません')

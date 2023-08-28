@@ -2,10 +2,10 @@ import TextField from '@mui/material/TextField'
 import React from 'react'
 
 type Props = {
-  id: any
+  id: string
   text: string
   label: string
-  error: any
+  error: boolean
   type: string
   helperText: string
   className: string

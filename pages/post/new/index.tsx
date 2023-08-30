@@ -17,7 +17,7 @@ import 'moment/locale/ja'
 import ImageUpload from 'layouts/utils/ImageUpload'
 import ImageUploadContext from 'layouts/utils/ImageUploadContext'
 import { TagsInput } from 'react-tag-input-component'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { SiteButton } from 'layouts/components/button'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -310,8 +310,32 @@ export default function Post() {
               onChange={uploadToClientContext}
             />
           </div>
+
+          {/* <FormLabel id='demo-radio-buttons-group-label'>
+            公開について<span className='text-red-600'>*</span>
+          </FormLabel>
+
+          <Controller
+            name='display'
+            control={control}
+            rules={{
+              required: '必須項目です',
+            }}
+            render={({ field }) => (
+              <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+                {DISPLAY_DATA.map((display) => (
+                  <FormControlLabel
+                    key={display.id}
+                    value={display.value}
+                    control={<Radio />}
+                    label={display.label}
+                    {...register('display')}
+                  />
+                ))}
+              </RadioGroup>
+            )}
+          /> */}
           <SiteButton
-            href=''
             text='投稿する'
             className='m-auto my-10 text-center'
             onClick={handleSubmit(addPost)}

@@ -37,11 +37,6 @@ const Richedita = ({ onChange, value }: RicheditaProps) => {
           placeholder='文字を入力してください'
         />
       </div>
-      <>
-        <p className='my-4 text-right'>
-          現在の文字数：<span>{value && value.length}</span>
-        </p>
-      </>
     </>
   )
 }

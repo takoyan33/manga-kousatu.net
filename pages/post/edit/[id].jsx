@@ -37,6 +37,7 @@ const PostEdit = () => {
   const usersRef = collection(database, 'users')
   const [userid, setUserid] = useState(null)
   const [netabare, setNetabare] = useState('')
+  const [display, setDisplay] = useState('')
   const [selected, setSelected] = useState(['最終回'])
 
   const auth = getAuth()
@@ -47,7 +48,6 @@ const PostEdit = () => {
   const {
     register,
     control,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -88,12 +88,12 @@ const PostEdit = () => {
     updateDoc(fieldToEdit, {
       downloadURL: result,
       title: postTitle,
-      netabare: data.netabare,
+      netabare: netabare,
       categori: categori,
       context: context,
       edittime: newdate,
       selected: selected,
-      display: data.display,
+      display: JSON.parse(display),
     })
       .then(() => {
         successNotify('記事を更新しました')
@@ -232,7 +232,15 @@ const PostEdit = () => {
                     required: '必須項目です',
                   }}
                   render={({ field }) => (
-                    <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+                    <RadioGroup
+                      aria-label='ネタバレ'
+                      name={field.name}
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        setNetabare(e.target.value)
+                      }}
+                    >
                       {FORM_NETABARE.map((netabare) => (
                         <FormControlLabel
                           key={netabare.id}
@@ -267,6 +275,7 @@ const PostEdit = () => {
                   公開について<span className='text-red-600'>*</span>
                 </FormLabel>
                 <p>現在の公開：{post.display ? <p>公開</p> : <p>下書き</p>}</p>
+
                 <Controller
                   name='display'
                   control={control}
@@ -274,29 +283,50 @@ const PostEdit = () => {
                     required: '必須項目です',
                   }}
                   render={({ field }) => (
-                    <RadioGroup aria-label='公開' name={field.name} value={field.value}>
+                    <RadioGroup
+                      aria-label='ネタバレ'
+                      name={field.name}
+                      value={field.value}
+                      onChange={(e) => {
+                        field.onChange(e)
+                        setDisplay(e.target.value)
+                      }}
+                    >
                       {DISPLAY_DATA.map((display) => (
                         <FormControlLabel
                           key={display.id}
-                          value={display.value}
+                          value={display.value.toString()}
                           control={<Radio />}
                           label={display.label}
-                          {...register('display')}
                         />
                       ))}
                     </RadioGroup>
                   )}
                 />
-
+                {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
                 {errors.display && <p>{errors.display.message}</p>}
 
-                {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
-                <SiteButton
-                  href=''
-                  onClick={updatePost}
-                  text='更新する'
-                  className='m-auto my-8 w-80'
-                />
+                <div className='my-8'>
+                  <label htmlFor='file-input'>他の写真（最大1枚）</label>
+
+                  {/* <ImageUploadContext
+                    onChange={uploadToClientContext}
+                    createcontextObjectURL={createContextObjectURL}
+                    text={'写真'}
+                    createObjectURL=''
+                  />
+                  <input
+                    id='file-input'
+                    className='hidden'
+                    type='file'
+                    multiple
+                    accept='image/*,.png,.jpg,.jpeg,.gif'
+                    name='myImage'
+                    onChange={uploadToClientContext}
+                  /> */}
+                </div>
+
+                <SiteButton onClick={updatePost} text='更新する' className='m-auto my-8 w-80' />
               </Stack>
             </div>
           </div>

@@ -42,7 +42,7 @@ export default function RegisterProfile() {
   }
 
   const addDate = async () => {
-    if (image == null) {
+    if (image === null) {
       alert('プロフィール画像を選んでください')
     } else {
       const result = await postImage(image)

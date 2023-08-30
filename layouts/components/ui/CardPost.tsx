@@ -82,7 +82,7 @@ export const CardPost = React.memo(
                   </Typography>
                   <div className='flex'>
                     <Categori categori={categori} />
-                    {netabare == 'ネタバレ有' ? (
+                    {netabare === 'ネタバレ有' ? (
                       <div>
                         <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
                           {netabare}
@@ -113,7 +113,7 @@ export const CardPost = React.memo(
                       users.map((user) => {
                         return (
                           <>
-                            {email == user.email && (
+                            {email === user.email && (
                               <div key={user.id} className=''>
                                 <div className='m-auto my-2 flex py-4'>
                                   <dl className=''>

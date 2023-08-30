@@ -126,28 +126,28 @@ const Daitails = ({ post }) => {
             </span>
           ))}
         <div color='text.secondary'>
-          {post.fields.categori.stringValue == 'ONEPIECE' && (
+          {post.fields.categori.stringValue === 'ONEPIECE' && (
             <SiteCategory
               className='m-6 inline-block bg-blue-500 p-1 text-center text-white'
               text='ONE PIECE'
               href='/post/category/ONEPIECE'
             />
           )}
-          {post.fields.categori.stringValue == '呪術廻戦' && (
+          {post.fields.categori.stringValue === '呪術廻戦' && (
             <SiteCategory
               className='m-6 inline-block bg-purple-500 p-1 text-center text-white'
               text='呪術廻戦'
               href='/post/category/呪術廻戦'
             />
           )}
-          {post.fields.categori.stringValue == '東京リベンジャーズ' && (
+          {post.fields.categori.stringValue === '東京リベンジャーズ' && (
             <SiteCategory
               className='m-6 inline-block bg-rose-500 p-1 text-center text-white'
               text='東京リベンジャーズ'
               href='/post/category/東京リベンジャーズ'
             />
           )}
-          {post.fields.categori.stringValue == 'キングダム' && (
+          {post.fields.categori.stringValue === 'キングダム' && (
             <SiteCategory
               className='m-6 inline-block bg-yellow-500 p-1 text-center text-white'
               text='キングダム'
@@ -155,12 +155,12 @@ const Daitails = ({ post }) => {
             />
           )}
 
-          {post.fields.netabare.stringValue == 'ネタバレ有' && (
+          {post.fields.netabare.stringValue === 'ネタバレ有' && (
             <span className='m-4 mt-2 inline-block bg-yellow-500 p-1 text-center text-white'>
               {post.fields.netabare.stringValue}
             </span>
           )}
-          {post.fields.netabare.stringValue == 'ネタバレ無' && (
+          {post.fields.netabare.stringValue === 'ネタバレ無' && (
             <span className='m-4 mt-2 inline-block bg-blue-500 p-1 text-center text-white'>
               {post.fields.netabare.stringValue}
             </span>

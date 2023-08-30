@@ -13,7 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SiteButton } from 'layouts/components/button'
 
 // フォームの型
-interface SampleFormInput {
+type SampleFormInput = {
   email: string
   password: string
 }

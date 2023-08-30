@@ -61,7 +61,7 @@ export default function Edit() {
 
   const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
-      if (event == '') {
+      if (event === '') {
         setImage('')
         setCreateObjectURL('')
       } else {

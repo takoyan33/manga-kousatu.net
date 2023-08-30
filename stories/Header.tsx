@@ -5,7 +5,7 @@ type User = {
   name: string
 }
 
-interface HeaderProps {
+type HeaderProps = {
   user?: User
   onLogin: () => void
   onLogout: () => void

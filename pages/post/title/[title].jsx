@@ -201,7 +201,7 @@ const Post = () => {
                 <div className='my-4 lg:w-full '>
                   {user && (
                     <>
-                      {user.email == data.email && (
+                      {user.email === data.email && (
                         <div>
                           <Button
                             variant='outlined'
@@ -278,32 +278,32 @@ const Post = () => {
                         </span>
                       ))}
                     <div variant='body2' color='text.secondary'>
-                      {data.categori == 'ONEPIECE' && (
+                      {data.categori === 'ONEPIECE' && (
                         <span className='inline-block bg-blue-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
-                      {data.categori == '呪術廻戦' && (
+                      {data.categori === '呪術廻戦' && (
                         <span className='inline-block bg-purple-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
-                      {data.categori == '東京リベンジャーズ' && (
+                      {data.categori === '東京リベンジャーズ' && (
                         <span className='inline-block bg-rose-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
-                      {data.categori == 'キングダム' && (
+                      {data.categori === 'キングダム' && (
                         <span className='inline-block bg-yellow-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>
                         </span>
                       )}
-                      {data.netabare == 'ネタバレ有' && (
+                      {data.netabare === 'ネタバレ有' && (
                         <span className='m-4 mt-2 inline-block bg-yellow-500 p-1 text-center text-white'>
                           {data.netabare}
                         </span>
                       )}
-                      {data.netabare == 'ネタバレ無' && (
+                      {data.netabare === 'ネタバレ無' && (
                         <span className='m-4 mt-2 inline-block bg-blue-500 p-1 text-center text-white'>
                           {data.netabare}
                         </span>

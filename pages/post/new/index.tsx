@@ -109,7 +109,7 @@ export default function Post() {
     if (processing) return
     // 処理中フラグを上げる
     setProcessing(true)
-    if (image == null) {
+    if (image === null) {
       errorNotify('サムネイルを選んでください')
     } else {
       const result = await postImage(image)

@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'react-image-resizer'
 
-interface Props {
+type Props = {
   id: number
   profileImage: string
   username: string

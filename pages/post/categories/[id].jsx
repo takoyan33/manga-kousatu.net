@@ -249,7 +249,7 @@ const Details = ({ post }) => {
                 />
               )
             })}
-          {posts.length == 0 && (
+          {posts.length === 0 && (
             <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
           )}
         </Grid>

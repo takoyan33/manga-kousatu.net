@@ -211,7 +211,7 @@ const Post = () => {
           <div className='my-4 lg:w-full'>
             {user && (
               <>
-                {user.email == singlePost.email && (
+                {user.email === singlePost.email && (
                   <>
                     <List
                       sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
@@ -348,7 +348,7 @@ const Post = () => {
                   />
                 )}
 
-                {singlePost.netabare == 'ネタバレ有' ? (
+                {singlePost.netabare === 'ネタバレ有' ? (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
                     {singlePost.netabare}
                   </span>
@@ -502,7 +502,7 @@ const Post = () => {
                       <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
                       {user && (
                         <>
-                          {user.email == comment.userEmail && (
+                          {user.email === comment.userEmail && (
                             <>
                               <span
                                 onClick={() => deleteComment(comment.id)}
@@ -577,7 +577,7 @@ const Post = () => {
                       />
                     );
                   })}
-                  {singlePost.length == 0 && (
+                  {singlePost.length === 0 && (
                     <p className="text-center m-auto my-6 text-2xl">
                       まだ投稿されていません
                     </p>

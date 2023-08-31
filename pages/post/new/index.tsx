@@ -34,6 +34,7 @@ type FormInput = {
   categori: string
   netabare: string
   context: string
+  display: boolean
 }
 
 // バリデーションルール
@@ -57,6 +58,7 @@ export default function Post() {
   const [posts, setPosts] = useState([])
   const [lengthData, setPostsLength] = useState(null)
   const { user } = useAuthContext()
+  const [display, setDisplay] = useState('')
 
   useEffect(() => {
     if (!user) {
@@ -118,7 +120,7 @@ export default function Post() {
       //日本時間を代入
       const newDate = new Date().toLocaleString('ja-JP')
       const postRef = await doc(database, 'posts', (posts.length + 1).toString())
-
+      console.log(display)
       setResult(result)
       await setDoc(postRef, {
         title: data.title,
@@ -138,7 +140,7 @@ export default function Post() {
         selected: tags,
         timestamp: serverTimestamp(),
         likes: 0,
-        display: true,
+        display: JSON.parse(display),
       })
         .then(() => {
           successNotify('記事投稿ができました！')
@@ -311,7 +313,7 @@ export default function Post() {
             />
           </div>
 
-          {/* <FormLabel id='demo-radio-buttons-group-label'>
+          <FormLabel id='demo-radio-buttons-group-label'>
             公開について<span className='text-red-600'>*</span>
           </FormLabel>
 
@@ -322,19 +324,26 @@ export default function Post() {
               required: '必須項目です',
             }}
             render={({ field }) => (
-              <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+              <RadioGroup
+                aria-label='ネタバレ'
+                name={field.name}
+                value={field.value}
+                onChange={(e) => {
+                  field.onChange(e)
+                  setDisplay(e.target.value)
+                }}
+              >
                 {DISPLAY_DATA.map((display) => (
                   <FormControlLabel
                     key={display.id}
-                    value={display.value}
+                    value={display.value.toString()}
                     control={<Radio />}
                     label={display.label}
-                    {...register('display')}
                   />
                 ))}
               </RadioGroup>
             )}
-          /> */}
+          />
           <SiteButton
             text='投稿する'
             className='m-auto my-10 text-center'

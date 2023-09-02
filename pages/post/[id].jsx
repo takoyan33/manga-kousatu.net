@@ -49,15 +49,14 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import SendIcon from '@mui/icons-material/Send'
 import {
   FacebookShareButton,
-  HatenaShareButton,
-  LineShareButton,
   TwitterShareButton,
   FacebookIcon,
-  HatenaIcon,
+  LineShareButton,
   LineIcon,
   TwitterIcon,
 } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
+import Modal from 'react-modal'
 
 // バリデーションルール
 const schema = yup.object({
@@ -202,6 +201,16 @@ const Post = () => {
 
   const [on, setOn] = useState(false)
 
+  const [isModalOpen, setIsModalOpen] = useState(false) // モーダルの状態を管理
+
+  const openModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+  }
+
   return (
     <>
       <CommonHead />
@@ -253,13 +262,26 @@ const Post = () => {
                 {singlePost.title}
               </div>
               <div className='my-6 flex justify-center'>
-                <Image
-                  className='m-auto max-w-sm text-center'
-                  height={400}
-                  width={400}
-                  src={singlePost.downloadURL}
-                />
+                <button onClick={openModal}>
+                  <Image
+                    className='m-auto max-w-sm text-center'
+                    height={400}
+                    width={400}
+                    src={singlePost.downloadURL}
+                  />
+                </button>
               </div>
+              <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
+                <div className='my-6 flex justify-center'>
+                  <Image
+                    className='m-auto max-w-sm text-center'
+                    height={400}
+                    width={400}
+                    src={singlePost.downloadURL}
+                  />
+                </div>
+                　<button onClick={closeModal}>閉じる</button>
+              </Modal>
               <div className='my-4 text-2xl font-semibold'>{singlePost.title}</div>
               <br />
               <div>

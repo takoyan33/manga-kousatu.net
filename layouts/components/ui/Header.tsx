@@ -1,5 +1,9 @@
 import Logout from '@mui/icons-material/Logout'
 import Settings from '@mui/icons-material/Settings'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import CachedIcon from '@mui/icons-material/Cached'
+import PersonIcon from '@mui/icons-material/Person'
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import Image from 'react-image-resizer'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -20,15 +24,20 @@ import {
 } from '@mui/material'
 import { useLogOut } from 'layouts/api/auth/useAuth'
 import { useAuthContext } from 'layouts/context/AuthContext'
+import { NotificationModal } from 'layouts/components/ui'
 
 const ACCOUNT_MENU_ITEMS = [
-  { text: '更新履歴', href: '/releasenotes' },
-  { text: 'About', href: '/about' },
+  { text: '更新履歴', href: '/releasenotes', icon: <CachedIcon fontSize='small' /> },
+  { text: 'About', href: '/about', icon: <Settings fontSize='small' /> },
 ]
 
 const LOGIN_ADMIN_MENU_ITEMS = [
-  { text: 'プロフィール', href: '/profile' },
-  { text: 'いいねした投稿', href: '/profile/likespost' },
+  { text: 'プロフィール', href: '/profile', icon: <PersonIcon fontSize='small' /> },
+  {
+    text: 'いいねした投稿',
+    href: '/profile/likespost',
+    icon: <FavoriteBorderIcon fontSize='small' />,
+  },
 ]
 
 export const Header = () => {
@@ -36,6 +45,7 @@ export const Header = () => {
   const { user } = useAuthContext()
   const router = useRouter()
   const { logout } = useLogOut()
+  const [notificationOpen, setNotificationOpen] = useState(false)
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -51,6 +61,15 @@ export const Header = () => {
     setTimeout(() => {
       router.push('/login')
     }, 2000)
+  }
+
+  const handleNotificationOpen = () => {
+    setNotificationOpen(true)
+    handleClose()
+  }
+
+  const handleNotificationClose = () => {
+    setNotificationOpen(false)
   }
 
   return (
@@ -69,7 +88,10 @@ export const Header = () => {
                 src='/logo.png'
               />
             </Typography>
-
+            <button onClick={handleNotificationOpen}>
+              <NotificationsIcon fontSize='small' />
+            </button>
+            <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
             <Tooltip title='Account settings'>
               <IconButton
                 onClick={handleClick}
@@ -140,9 +162,7 @@ export const Header = () => {
         )}
         {ACCOUNT_MENU_ITEMS.map((item) => (
           <MenuItem key={item.text} onClick={handleClose}>
-            <ListItemIcon>
-              <Settings fontSize='small' />
-            </ListItemIcon>
+            <ListItemIcon>{item.icon}</ListItemIcon>
             <Link href={item.href}>{item.text}</Link>
           </MenuItem>
         ))}
@@ -150,9 +170,7 @@ export const Header = () => {
           <>
             {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
               <MenuItem key={item.text} onClick={handleClose}>
-                <ListItemIcon>
-                  <Settings fontSize='small' />
-                </ListItemIcon>
+                <ListItemIcon>{item.icon}</ListItemIcon>
                 <Link href={item.href}>{item.text}</Link>
               </MenuItem>
             ))}

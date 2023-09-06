@@ -399,13 +399,13 @@ const Post = () => {
                 )}
               </div>
               <br />
-              {singlePost.contextimage && (
+              {singlePost.contextImage && (
                 <div className='flex justify-center'>
                   <Image
                     className='m-auto max-w-sm text-center'
                     height={300}
                     width={300}
-                    src={singlePost.contextimage}
+                    src={singlePost.contextImage}
                   />
                 </div>
               )}

@@ -105,6 +105,7 @@ export default function Post() {
   type addPost = {
     toLocaleString(timeZone): string
   }
+  console.log(posts.length)
 
   const addPost: SubmitHandler<FormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
@@ -114,18 +115,18 @@ export default function Post() {
     if (image === null) {
       errorNotify('サムネイルを選んでください')
     } else {
-      const result = await postImage(image)
+      const topImage = await postImage(image)
       //写真のurlをセットする
       const contextSetImage = await postContextImage(contextImage)
+      console.log('contextSetImage', contextSetImage)
       //日本時間を代入
       const newDate = new Date().toLocaleString('ja-JP')
-      const postRef = await doc(database, 'posts', (posts.length + 1).toString())
-      console.log(display)
-      setResult(result)
+      const postRef = await doc(database, 'posts', (posts.length + 3).toString())
       await setDoc(postRef, {
         title: data.title,
         context: html,
-        downloadURL: result,
+        downloadURL: topImage,
+        //topのimage
         contextImage: contextSetImage,
         email: user.email,
         displayname: user.displayName,

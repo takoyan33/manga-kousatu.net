@@ -87,7 +87,7 @@ export default function Edit() {
       email: user.email,
       profileimage: result,
       userid: user.uid,
-      favarite: selected,
+      favorite: selected,
     })
       .then(() => {
         successNotify('ユーザー情報が更新されました')
@@ -198,7 +198,7 @@ export default function Edit() {
                     <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
                     <div className='m-auto w-80 text-center'>
                       <TagsInput
-                        value={user.favarite}
+                        value={user.favorite}
                         onChange={setSelected}
                         name='selected'
                         placeHolder='タグを追加してください'

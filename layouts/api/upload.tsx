@@ -17,7 +17,7 @@ export const postImage = async (image = null) => {
     // 'file' comes from the Blob or File API
     await uploadBytes(uploadRef, image).then(async function (result) {
       console.log(result)
-      console.log('Uploaded a blob or file!')
+      console.log('top画像がupされました')
 
       await getDownloadURL(uploadRef).then(function (url) {
         uploadResult = url

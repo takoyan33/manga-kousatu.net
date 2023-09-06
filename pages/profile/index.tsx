@@ -175,7 +175,7 @@ export default function Profile() {
                   profileImage={user.profileimage}
                   username={user.username}
                   bio={user.bio}
-                  favorite={user.favarite}
+                  favorite={user.favorite}
                   id={0}
                 />
               </>

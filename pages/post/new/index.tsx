@@ -105,7 +105,6 @@ export default function Post() {
   type addPost = {
     toLocaleString(timeZone): string
   }
-  console.log(posts.length)
 
   const addPost: SubmitHandler<FormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける

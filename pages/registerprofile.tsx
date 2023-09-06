@@ -55,7 +55,7 @@ export default function RegisterProfile() {
         email: user.email,
         profileimage: result,
         userid: user.uid,
-        favarite: selected,
+        favorite: selected,
         admin: 0,
       })
         .then(() => {

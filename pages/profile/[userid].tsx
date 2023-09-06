@@ -34,7 +34,7 @@ const Post = () => {
                   profileImage={user.profileimage}
                   username={user.username}
                   bio={user.bio}
-                  favorite={user.favarite}
+                  favorite={user.favorite}
                   id={user.id}
                 />
               </>

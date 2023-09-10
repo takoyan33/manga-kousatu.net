@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/alt-text */
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useCallback } from 'react'
+import { Stack, FormLabel } from '@mui/material'
+import { SiteButton } from 'layouts/components/button'
 import Link from 'next/link'
 import { database } from 'firebaseConfig'
 import {
@@ -64,20 +66,22 @@ const schema = yup.object({
 })
 
 const Post = () => {
+  const [comment, setComment] = useState('')
   const [comments, setComments] = useState('')
   const [users, setUsers] = useState(null)
   const [singlePost, setSinglePost] = useState([])
   const [likecount, setLikecount] = useState(0)
   const [userEmail, setUserEmail] = useState(null)
   const [categoriPosts, setCategoriPosts] = useState(null)
+  const [on, setOn] = useState(false)
   const router = useRouter()
   const routerid = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
 
-  const URL = `http://localhost:8080/post/${routerid}`
-  const QUOTE = `記事をシェアしました。　${singlePost.title}　漫画考察.net`
+  // const URL = `http://localhost:8080/post/${routerid}`
+  // const QUOTE = `記事をシェアしました。　${singlePost.title}　漫画考察.net`
 
   const {
     register,
@@ -104,6 +108,7 @@ const Post = () => {
     // getCategoriPosts(setCategoriPosts, singlePost.categori)
   }, [router])
 
+  //記事の削除
   const deletePost = () => {
     //data.idを送っているのでidを受け取る
     let deletePost = doc(database, 'posts', routerid)
@@ -129,9 +134,10 @@ const Post = () => {
     }
   }
 
+  //いいねの追加
   const LikeAdd = (routerid, likes) => {
-    let fieldToEdit = doc(database, 'posts', routerid)
-    updateDoc(fieldToEdit, {
+    let post = doc(database, 'posts', routerid)
+    updateDoc(post, {
       likes: likes + 1,
       likes_email: arrayUnion(user.email),
     })
@@ -147,9 +153,10 @@ const Post = () => {
       })
   }
 
+  //いいねの削除
   const LikeDelete = (routerid, likes) => {
-    let fieldToEdit = doc(database, 'posts', routerid)
-    updateDoc(fieldToEdit, {
+    let post = doc(database, 'posts', routerid)
+    updateDoc(post, {
       likes: likes - 1,
       likes_email: arrayRemove(user.email),
     })
@@ -175,6 +182,7 @@ const Post = () => {
       createtime: newDate,
       timestamp: serverTimestamp(),
       userEmail: user.email,
+      isEdit: false,
       userPhoto: user.photoURL,
       id: routerid + (comments.length + 1).toString(),
     })
@@ -199,16 +207,66 @@ const Post = () => {
       })
   }
 
-  const [on, setOn] = useState(false)
+  //コメントの編集
+  const updateComment = () => {
+    let comment = doc(database, 'comments', routerid)
+    updateDoc(comment, {
+      comment: comment,
+      userid: user.uid,
+      postid: singlePost.id,
+      username: user.displayName,
+      userEmail: user.email,
+      userPhoto: user.photoURL,
+      isEdit: true,
+    })
+      .then(() => {
+        successNotify('コメントを更新しました')
+        router.push(`/post/${routerid}`)
+      })
+      .catch((err) => {
+        errorNotify('コメントの更新に失敗しました')
+        console.log(err)
+      })
+  }
 
-  const [isModalOpen, setIsModalOpen] = useState(false) // モーダルの状態を管理
-
+  //コメントのいいね
+  // const LikeCommentAdd = (routerid, likes) => {
+  //   let comment = doc(database, 'comments', routerid)
+  //   updateDoc(comment, {
+  //     likes: likes + 1,
+  //     likes_email: arrayUnion(user.email),
+  //   })
+  //     .then(() => {
+  //       setOn((prev) => !prev)
+  //       setLikecount(0)
+  //       setTimeout(() => {
+  //         getPost(setSinglePost, routerid)
+  //       }, 2000)
+  //     })
+  //     .catch((err) => {
+  //       console.log(err)
+  //     })
+  // }
+  //画像のモーダルの開
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  //画像のモーダルの開
   const openModal = () => {
     setIsModalOpen(true)
   }
-
+  //画像のモーダルの締
   const closeModal = () => {
     setIsModalOpen(false)
+  }
+
+  //コメント編集のモーダルの開
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false)
+  //コメント編集のモーダルの開
+  const openCommentModal = () => {
+    setIsCommentModalOpen(true)
+  }
+  //コメント編集のモーダルの締
+  const closeCommentModal = () => {
+    setIsCommentModalOpen(false)
   }
 
   return (
@@ -380,7 +438,7 @@ const Post = () => {
                   </span>
                 )}
 
-                <div className='mt-2 mb-8'>
+                {/* <div className='mt-2 mb-8'>
                   <FacebookShareButton url={URL} quote={QUOTE}>
                     <FacebookIcon size={24} round />
                   </FacebookShareButton>
@@ -390,7 +448,7 @@ const Post = () => {
                   <LineShareButton url={URL} title={QUOTE}>
                     <LineIcon size={24} round />
                   </LineShareButton>
-                </div>
+                </div> */}
 
                 {singlePost.context && (
                   <p className='text-left' style={styles}>
@@ -525,21 +583,48 @@ const Post = () => {
                       {user && (
                         <>
                           {user.email === comment.userEmail && (
-                            <>
-                              <span
-                                onClick={() => deleteComment(comment.id)}
-                                className='text-primary-500 hover:text-primary-800 cursor-pointer'
-                              >
-                                削除する
-                              </span>
-                            </>
+                            <div className='flex'>
+                              <button onClick={openCommentModal} className='mx-2'>
+                                編集
+                              </button>
+                              <button onClick={() => deleteComment(comment.id)}>削除</button>
+                            </div>
                           )}
                         </>
                       )}
+                      <Modal
+                        isOpen={isCommentModalOpen}
+                        onRequestClose={closeCommentModal}
+                        contentLabel='comment Modal'
+                      >
+                        <div>
+                          <FormLabel id='demo-radio-buttons-group-label'>
+                            コメント<span className='text-red-600'>*</span>
+                          </FormLabel>
+                        </div>
+                        <div>
+                          <input
+                            id='outlined-basic'
+                            label='タイトル（最大20文字)'
+                            className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                            defaultValue={comment.comment}
+                            type='text'
+                            onChange={(event) => setComment(event.target.value)}
+                          />
+                          <button
+                            onClick={() => updateComment(comment.id)}
+                            className='m-auto my-8 w-80'
+                          >
+                            更新する
+                          </button>
+                        </div>
+                        <button onClick={closeCommentModal}>閉じる</button>
+                      </Modal>
                     </article>
                   )
                 })}
               <hr className='mt-10'></hr>
+
               <div className='cursor-pointer'>
                 {users?.map((user) => {
                   return (

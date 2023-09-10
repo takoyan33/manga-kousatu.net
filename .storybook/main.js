@@ -4,11 +4,15 @@ module.exports = {
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-viewport', 
-    "@storybook/addon-controls",
-    "@storybook/addon-docs", 
+    '@storybook/addon-viewport',
+    '@storybook/addon-controls',
+    '@storybook/addon-docs',
     {
       name: '@storybook/addon-postcss',
+      // NOTE: これ消したらコンポーネント出てこなくなる
+      features: {
+        emotionAlias: false,
+      },
       options: {
         postcssLoaderOptions: {
           implementation: require('postcss'),

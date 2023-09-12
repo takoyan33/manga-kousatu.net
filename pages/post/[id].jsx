@@ -208,9 +208,10 @@ const Post = () => {
   }
 
   //コメントの編集
-  const updateComment = () => {
-    let comment = doc(database, 'comments', routerid)
-    updateDoc(comment, {
+  const updateComment = (commentId) => {
+    let commentDate = doc(database, 'comments', commentId)
+    console.log(commentDate)
+    updateDoc(commentDate, {
       comment: comment,
       userid: user.uid,
       postid: singlePost.id,
@@ -222,6 +223,7 @@ const Post = () => {
       .then(() => {
         successNotify('コメントを更新しました')
         router.push(`/post/${routerid}`)
+        setIsCommentModalOpen(false)
       })
       .catch((err) => {
         errorNotify('コメントの更新に失敗しました')
@@ -579,6 +581,7 @@ const Post = () => {
                           </p>
                         </div>
                       </footer>
+
                       <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
                       {user && (
                         <>

@@ -26,7 +26,7 @@ import Image from 'react-image-resizer'
 import {
   useGetPost,
   getUsers,
-  getMyUser,
+  useGetMyUser,
   LikeDelete,
   useGetCategoriPosts,
 } from 'layouts/components/hooks'
@@ -104,7 +104,7 @@ const Post = () => {
     setUserEmail(singlePost.email)
     getUsers(setUsers)
     getComments()
-    // getMyUser(setUsers,)
+    // useGetMyUser(setUsers,)
     // useGetCategoriPosts(setCategoriPosts, singlePost.categori)
   }, [router])
 

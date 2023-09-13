@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
-import { useGetLikedPosts, getMyUser } from 'layouts/components/hooks'
+import { useGetLikedPosts, useGetMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
@@ -106,7 +106,7 @@ export default function Profile() {
       router.push('/register')
     } else {
       useGetLikedPosts(setLikedPosts, user.email)
-      getMyUser(setUsers, user.email)
+      useGetMyUser(setUsers, user.email)
       getDataone()
       getKaisenPost()
       getTokyoPosts()

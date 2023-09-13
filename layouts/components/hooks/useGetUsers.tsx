@@ -2,7 +2,7 @@ import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestor
 import { database } from 'firebaseConfig'
 
 //自分のuserを取得
-export const getMyUser = async (setUsers, userEmail) => {
+export const useGetMyUser = async (setUsers, userEmail) => {
   const usersRef = collection(database, 'users')
   const myUser = query(usersRef, where('email', '==', userEmail))
 

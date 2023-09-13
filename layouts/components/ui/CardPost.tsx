@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react'
 import { database } from 'firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { getPost, getUsers } from 'layouts/components/hooks'
+import { useGetPost, getUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
@@ -39,7 +39,7 @@ export const CardPost = React.memo(
 
     const auth = getAuth()
 
-    // const getpostComment = async () => {
+    // const useGetPostComment = async () => {
     //   const commentseRef = collection(database, 'comments')
     //   const c = query(commentseRef, where('postid', '==', id))
     //   try {
@@ -57,7 +57,7 @@ export const CardPost = React.memo(
 
     useEffect(() => {
       getUsers(setUsers)
-      // getpostComment()
+      // useGetPostComment()
     }, [])
 
     return (

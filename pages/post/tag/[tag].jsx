@@ -28,7 +28,7 @@ const Category = () => {
   const user = auth.currentUser
   const [searchName, setSearchName] = useState('')
 
-  const getPosts = async () => {
+  const useFetchPosts = async () => {
     //firestoreからデータ取得
     await getDocs(q).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -55,7 +55,7 @@ const Category = () => {
   }
 
   //古い順
-  const getOldPosts = async () => {
+  const useGetOldPosts = async () => {
     await onSnapshot(u, (querySnapshot) => {
       setPostsData(
         querySnapshot.docs
@@ -80,7 +80,7 @@ const Category = () => {
   }
 
   //いいね順
-  const getLikePosts = async () => {
+  const useGetLikePosts = async () => {
     await onSnapshot(f, (querySnapshot) => {
       setPostsData(
         querySnapshot.docs
@@ -105,7 +105,7 @@ const Category = () => {
   }
 
   useEffect(() => {
-    getPosts()
+    useFetchPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [likecount])
 
@@ -131,9 +131,9 @@ const Category = () => {
         />
 
         <div className='mt-4 flex'>
-          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={getPosts} />
-          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={getOldPosts} />
-          <SiteButton href='' text='いいね順' className='m-4 my-2 inline' onClick={getLikePosts} />
+          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={useFetchPosts} />
+          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={useGetOldPosts} />
+          <SiteButton href='' text='いいね順' className='m-4 my-2 inline' onClick={useGetLikePosts} />
         </div>
 
         <div className='m-auto max-w-7xl'>

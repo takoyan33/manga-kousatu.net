@@ -24,11 +24,11 @@ import { Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
 import {
-  getPost,
+  useGetPost,
   getUsers,
   getMyUser,
   LikeDelete,
-  getCategoriPosts,
+  useGetCategoriPosts,
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
@@ -100,12 +100,12 @@ const Post = () => {
   }
 
   useEffect(() => {
-    getPost(setSinglePost, routerid)
+    useGetPost(setSinglePost, routerid)
     setUserEmail(singlePost.email)
     getUsers(setUsers)
     getComments()
     // getMyUser(setUsers,)
-    // getCategoriPosts(setCategoriPosts, singlePost.categori)
+    // useGetCategoriPosts(setCategoriPosts, singlePost.categori)
   }, [router])
 
   //記事の削除
@@ -145,7 +145,7 @@ const Post = () => {
         setOn((prev) => !prev)
         setLikecount(0)
         setTimeout(() => {
-          getPost(setSinglePost, routerid)
+          useGetPost(setSinglePost, routerid)
         }, 2000)
       })
       .catch((err) => {
@@ -162,7 +162,7 @@ const Post = () => {
     })
       .then(() => {
         setLikecount(0)
-        getPost(setSinglePost, routerid)
+        useGetPost(setSinglePost, routerid)
       })
       .catch((err) => {
         console.log(err)
@@ -242,7 +242,7 @@ const Post = () => {
   //       setOn((prev) => !prev)
   //       setLikecount(0)
   //       setTimeout(() => {
-  //         getPost(setSinglePost, routerid)
+  //         useGetPost(setSinglePost, routerid)
   //       }, 2000)
   //     })
   //     .catch((err) => {

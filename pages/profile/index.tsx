@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
-import { getMyPosts, getMyUser } from 'layouts/components/hooks'
+import { useGetMyPosts, getMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 
@@ -105,7 +105,7 @@ export default function Profile() {
     if (!user) {
       router.push('/register')
     } else {
-      getMyPosts(setPostData, user.email)
+      useGetMyPosts(setPostData, user.email)
       getMyUser(setUsers, user.email)
       getOnePosts()
       getKaisenPosts()

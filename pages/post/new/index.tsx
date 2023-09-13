@@ -64,7 +64,7 @@ export default function Post() {
     if (!user) {
       router.push('/register')
     } else {
-      getPosts()
+      useFetchPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -78,7 +78,7 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
-  const getPosts = async () => {
+  const useFetchPosts = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })

@@ -1,4 +1,4 @@
-import { onSnapshot, collection, query, orderBy, where, getDocs } from 'firebase/firestore'
+import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore'
 import { database } from 'firebaseConfig'
 
 //自分のuserを取得

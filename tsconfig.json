@@ -35,7 +35,7 @@
     "pages/post/title/[title].jsx",
     "pages/edit.jsx",
     "layouts/components/MuiNavbar.jsx",
-    "layouts/components/hooks/useGetPosts.tsx",
+    "layouts/components/hooks/useFetchPosts.tsx",
     "layouts/components/ui/Changetab.jsx",
     "pages/profile/[userid].tsx",
     "pages/profile/edit/email.tsx",

@@ -4,11 +4,11 @@ import { getAuth } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
 import { SiteButton } from 'layouts/components/button'
 import {
-  getPosts,
-  getOldPosts,
-  getLikePosts,
-  getNetabrePosts,
-  getNoNetabrePosts,
+  useFetchPosts,
+  useGetOldPosts,
+  useGetLikePosts,
+  useGetNetabrePosts,
+  useGetNoNetabrePosts,
 } from 'layouts/components/hooks'
 import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
@@ -29,7 +29,7 @@ export default function Index() {
 
   useEffect(() => {
     setLoading(true)
-    getPosts(setPostData)
+    useFetchPosts(setPostData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -46,19 +46,19 @@ export default function Index() {
       sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: () => getPosts(setPostData),
+      onClick: () => useFetchPosts(setPostData),
     },
     {
       sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: () => getOldPosts(setPostData),
+      onClick: () => useGetOldPosts(setPostData),
     },
     {
       sortId: 3,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: () => getLikePosts(setPostData),
+      onClick: () => useGetLikePosts(setPostData),
     },
   ]
 
@@ -67,13 +67,13 @@ export default function Index() {
       sortId: 1,
       label: 'ネタバレ有',
       value: 'ネタバレ有',
-      onClick: () => getNetabrePosts(setPostData),
+      onClick: () => useGetNetabrePosts(setPostData),
     },
     {
       sortId: 2,
       label: 'ネタバレ無',
       value: 'ネタバレ無',
-      onClick: () => getNoNetabrePosts(setPostData),
+      onClick: () => useGetNoNetabrePosts(setPostData),
     },
   ]
 

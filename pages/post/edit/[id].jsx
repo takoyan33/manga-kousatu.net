@@ -62,7 +62,7 @@ const PostEdit = () => {
     }
   }
 
-  const getPost = async () => {
+  const useuseGetPost = async () => {
     try {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
@@ -75,7 +75,7 @@ const PostEdit = () => {
   }
 
   useEffect(() => {
-    getPost()
+    useGetPost()
     setID(routerid)
     setContext(post.context)
     setPostTitle(post.title)

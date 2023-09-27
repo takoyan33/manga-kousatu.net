@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import { getOtherUser, getUsersPosts } from 'layouts/components/hooks'
+import { useGetOtherUser, useGetUsersPosts } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
@@ -17,8 +17,8 @@ const Post = () => {
     if (user && userid == user.uid) {
       router.push('/profile')
     }
-    getOtherUser(setUsers, userid)
-    getUsersPosts(setPostData, userid)
+    useGetOtherUser(setUsers, userid)
+    useGetUsersPosts(setPostData, userid)
   }, [user, userid, router])
 
   return (

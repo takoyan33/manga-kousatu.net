@@ -92,7 +92,7 @@ export const useGetPost = async (setSinglePost, routerId) => {
   }
 }
 //特定ユーザーのpostsを取得
-export const getUsersPosts = async (setPostData, userid) => {
+export const useGetUsersPosts = async (setPostData, userid) => {
   const postsRef = collection(database, 'posts')
   const userPosts = query(postsRef, where('userid', '==', userid))
 

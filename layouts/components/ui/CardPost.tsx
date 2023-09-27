@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react'
 import { database } from 'firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { useGetPost, getUsers } from 'layouts/components/hooks'
+import { useGetPost, useGetUsers } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
@@ -56,7 +56,7 @@ export const CardPost = React.memo(
     // }
 
     useEffect(() => {
-      getUsers(setUsers)
+      useGetUsers(setUsers)
       // useGetPostComment()
     }, [])
 

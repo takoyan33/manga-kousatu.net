@@ -12,7 +12,7 @@ export const useGetMyUser = async (setUsers, userEmail) => {
 }
 
 //他のuserを取得
-export const getOtherUser = async (setUsers, userid) => {
+export const useGetOtherUser = async (setUsers, userid) => {
   const usersRef = collection(database, 'users')
   const otherUser = query(usersRef, where('userid', '==', userid))
 
@@ -22,7 +22,7 @@ export const getOtherUser = async (setUsers, userid) => {
 }
 
 //user全体を取得
-export const getUsers = async (setUsers) => {
+export const useGetUsers = async (setUsers) => {
   const usersRef = collection(database, 'users')
 
   await getDocs(usersRef).then((response) => {

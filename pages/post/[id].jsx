@@ -25,7 +25,7 @@ import { getAuth } from 'firebase/auth'
 import Image from 'react-image-resizer'
 import {
   useGetPost,
-  getUsers,
+  useGetUsers,
   useGetMyUser,
   LikeDelete,
   useGetCategoriPosts,
@@ -102,7 +102,7 @@ const Post = () => {
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
     setUserEmail(singlePost.email)
-    getUsers(setUsers)
+    useGetUsers(setUsers)
     getComments()
     // useGetMyUser(setUsers,)
     // useGetCategoriPosts(setCategoriPosts, singlePost.categori)

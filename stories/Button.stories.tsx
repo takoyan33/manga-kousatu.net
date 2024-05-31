@@ -1,8 +1,8 @@
-import Button from "./Button";
+import Button from './Button'
 
 export default {
-  text: "Button",
+  text: 'Button',
   component: Button,
-};
+}
 
-export const HelloButton = () => <Button>Hello World!</Button>;
+export const HelloButton = () => <Button>Hello World!</Button>

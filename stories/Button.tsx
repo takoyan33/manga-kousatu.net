@@ -1,14 +1,11 @@
 function Button({ children }) {
   return (
     <div>
-      <button
-        type="button"
-        className="bg-yellow-500 mt-2 p-1 inline-block text-white text-center"
-      >
+      <button type='button' className='mt-2 inline-block bg-yellow-500 p-1 text-center text-white'>
         {children}
       </button>
     </div>
-  );
+  )
 }
 
-export default Button;
+export default Button

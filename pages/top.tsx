@@ -21,7 +21,7 @@ import Image from 'react-image-resizer'
 export default function Index() {
   const [postData, setPostData] = useState([])
   const [searchName, setSearchName] = useState('')
-  const [loadIndex, setLoadIndex] = useState(6)
+  const [loadIndex, setLoadIndex] = useState(3)
   const [isEmpty, setIsEmpty] = useState(false)
   const [loading, setLoading] = useState(false)
   const auth = getAuth()
@@ -32,12 +32,11 @@ export default function Index() {
     useFetchPosts(setPostData)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
   const displayMore = () => {
     if (loadIndex > postData.length) {
       setIsEmpty(true)
     } else {
-      setLoadIndex(loadIndex + 4)
+      setLoadIndex(loadIndex + 3)
     }
   }
 
@@ -76,6 +75,23 @@ export default function Index() {
       onClick: () => useGetNoNetabrePosts(setPostData),
     },
   ]
+
+  const filterPostData = () => {
+    console.log('postData', postData)
+    return postData
+      .filter((post) => {
+        if (searchName === '') {
+          return true
+        } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+          return true
+        }
+        return false
+      })
+      .slice(0, loadIndex)
+  }
+
+  const filteredPosts = filterPostData()
+  console.log('filteredPosts', filteredPosts)
 
   return (
     <div>
@@ -179,37 +195,28 @@ export default function Index() {
           }).length === 0 ? (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
-          postData
-            .filter((post) => {
-              if (searchName === '') {
-                return post
-              } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-                return post
-              }
-            })
-            .slice(0, loadIndex)
-            .map((post) => (
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                categori={post.categori}
-                netabare={post.netabare}
-                context={post.context}
-                createtime={post.createtime}
-                displayname={post.displayname}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-              />
-            ))
+          filteredPosts.map((post) => (
+            <CardPost
+              key={post.id}
+              downloadURL={post.downloadURL}
+              title={post.title}
+              categori={post.categori}
+              netabare={post.netabare}
+              context={post.context}
+              createtime={post.createtime}
+              displayname={post.displayname}
+              email={post.email}
+              id={post.id}
+              photoURL={post.photoURL}
+              likes={post.likes}
+              selected={post.selected}
+            />
+          ))
         )}
       </div>
 
       <div className='text-center'>
-        {postData.length > 6 && (
+        {postData.length > 3 && (
           <SiteButton
             href=''
             text='さらに表示'

@@ -133,7 +133,12 @@ const Category = () => {
         <div className='mt-4 flex'>
           <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={useFetchPosts} />
           <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={useGetOldPosts} />
-          <SiteButton href='' text='いいね順' className='m-4 my-2 inline' onClick={useGetLikePosts} />
+          <SiteButton
+            href=''
+            text='いいね順'
+            className='m-4 my-2 inline'
+            onClick={useGetLikePosts}
+          />
         </div>
 
         <div className='m-auto max-w-7xl'>

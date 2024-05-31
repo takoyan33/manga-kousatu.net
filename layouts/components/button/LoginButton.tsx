@@ -12,7 +12,7 @@ export const LoginButton = React.memo(() => {
   // const loginContext = useContext<Context>(LoginContext);
   return (
     <div>
-      <Button variant='outlined' className='m-auto w-50 my-2'>
+      <Button variant='outlined' className='w-50 m-auto my-2'>
         {/* <Link href="/login">{loginContext.text}</Link> */}
       </Button>
     </div>

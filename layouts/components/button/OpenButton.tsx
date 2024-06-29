@@ -1,13 +1,13 @@
 /* eslint-disable react/display-name */
 import React from 'react'
 
-type Props = {
+interface buttonParams {
   text: string
   onClick: () => void
 }
 
 //React.memo化
-const OpenButton = React.memo(({ text, onClick }: Props) => {
+const OpenButton = React.memo(({ text, onClick }: buttonParams) => {
   return (
     <div>
       <button

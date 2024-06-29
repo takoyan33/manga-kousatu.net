@@ -10,13 +10,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { Stack, TextField } from '@mui/material'
 import { useSignup } from './useAuth'
-
-// フォームの型
-type FormInput = {
-  email: string
-  password: string
-  confirmPassword: string
-}
+import { RegisterUserFormInput } from 'types/auth'
 
 // バリデーションルール
 const schema = yup.object({
@@ -36,13 +30,13 @@ export default function SignUp() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<FormInput>({
+  } = useForm<RegisterUserFormInput>({
     resolver: yupResolver(schema),
   })
 
   const { signup, error } = useSignup()
 
-  const handleSignUp = async (data: FormInput) => {
+  const handleSignUp = async (data: RegisterUserFormInput) => {
     const { email, password } = data
     await signup(email, password)
     successNotify('ユーザー登録完了しました')

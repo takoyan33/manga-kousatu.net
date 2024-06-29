@@ -19,28 +19,31 @@ import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 
 export default function Index() {
-  const [postData, setPostData] = useState([])
-  const [searchName, setSearchName] = useState('')
-  const [loadIndex, setLoadIndex] = useState(3)
-  const [isEmpty, setIsEmpty] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [postData, setPostData] = useState<Array<any>>([])
+  const [searchName, setSearchName] = useState<string>('')
+  const [loadIndex, setLoadIndex] = useState<number>(3)
+  const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
+  const { posts, loading } = useFetchPosts()
+  console.log(posts)
 
-  useEffect(() => {
-    setLoading(true)
-    useFetchPosts(setPostData)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
   const displayMore = () => {
-    if (loadIndex > postData.length) {
+    if (loadIndex > posts.length) {
       setIsEmpty(true)
     } else {
       setLoadIndex(loadIndex + 3)
     }
   }
 
-  const SORT_LIST = [
+  interface NetabareItem {
+    sortId: number
+    label: string
+    value: string
+    onClick: () => void
+  }
+
+  const SORT_LIST: NetabareItem[] = [
     {
       sortId: 1,
       label: '新しい順',
@@ -61,7 +64,7 @@ export default function Index() {
     },
   ]
 
-  const NETABARE_LIST = [
+  const NETABARE_LIST: NetabareItem[] = [
     {
       sortId: 1,
       label: 'ネタバレ有',
@@ -77,8 +80,7 @@ export default function Index() {
   ]
 
   const filterPostData = () => {
-    console.log('postData', postData)
-    return postData
+    return posts
       .filter((post) => {
         if (searchName === '') {
           return true
@@ -91,7 +93,6 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
-  console.log('filteredPosts', filteredPosts)
 
   return (
     <div>
@@ -113,9 +114,9 @@ export default function Index() {
       <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
       <p className='text-1xl text-center'>
         {searchName === ''
-          ? `投稿数 ${postData.length}件`
+          ? `投稿数 ${posts.length}件`
           : `検索結果 ${
-              postData.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
+              posts.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
                 .length
             }件`}
       </p>
@@ -184,12 +185,10 @@ export default function Index() {
       </div>
 
       <div className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'>
-        {postData.length === 0 ? (
+        {posts.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
-        ) : postData.filter((post) => {
-            if (searchName === '') {
-              return post
-            } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+        ) : posts.filter((post) => {
+            if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
               return post
             }
           }).length === 0 ? (
@@ -216,7 +215,7 @@ export default function Index() {
       </div>
 
       <div className='text-center'>
-        {postData.length > 3 && (
+        {posts.length > 3 && (
           <SiteButton
             href=''
             text='さらに表示'

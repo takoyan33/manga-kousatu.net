@@ -29,7 +29,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import dynamic from 'next/dynamic'
 
 // フォームの型
-type FormInput = {
+interface PreviewFormInput {
   title: string
   categori: string
   netabare: string
@@ -74,7 +74,7 @@ export default function Post() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInput>({
+  } = useForm<PreviewFormInput>({
     resolver: yupResolver(schema),
   })
 

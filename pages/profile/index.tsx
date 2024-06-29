@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect, useState, useCallback } from 'react'
 import { database } from 'firebaseConfig'
 import Link from 'next/link'

@@ -9,16 +9,29 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import useSWR from 'swr'
+import { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
 
 //新しいpostを取得
-export const useFetchPosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const descPost = query(databaseRef, where('display', '==', true))
+export const useFetchPosts = () => {
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  onSnapshot(descPost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+  useEffect(() => {
+    const databaseRef = collection(database, 'posts')
+    const descPost = query(databaseRef, where('display', '==', true))
+
+    const unsubscribe = onSnapshot(descPost, (querySnapshot) => {
+      const postsData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      setPosts(postsData)
+      setLoading(false)
+    })
+
+    // クリーンアップ関数として購読解除
+    return () => unsubscribe()
+  }, [])
+
+  return { posts, loading }
 }
 
 //古いpostを取得

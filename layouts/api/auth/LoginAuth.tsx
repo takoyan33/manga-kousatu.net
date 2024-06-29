@@ -10,12 +10,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { useLogin, SignInWithGoogle } from './useAuth'
-
-// フォームの型
-type FormInput = {
-  email: string
-  password: string
-}
+import { LoginUserFormInput } from 'types/auth'
 
 // バリデーションルール
 const schema = yup.object({
@@ -32,13 +27,13 @@ export default function LoginAuth() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInput>({
+  } = useForm<LoginUserFormInput>({
     resolver: yupResolver(schema),
   })
 
   const { success, error, login } = useLogin()
 
-  const handleSignIn = async (data: FormInput) => {
+  const handleSignIn = async (data: LoginUserFormInput) => {
     try {
       await login(data.email, data.password)
       successNotify('ログインしました')

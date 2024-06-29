@@ -29,12 +29,16 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import dynamic from 'next/dynamic'
 
 // フォームの型
-type FormInput = {
+interface RegisterPostParams {
   title: string
   categori: string
   netabare: string
   context: string
   display: boolean
+}
+
+interface addPost {
+  toLocaleString(timeZone): string
 }
 
 // バリデーションルール
@@ -43,22 +47,22 @@ const schema = yup.object({
 })
 
 export default function Post() {
-  const [processing, setProcessing] = useState(false)
-  const [tags, setTags] = useState(['最終回'])
-  const [context, setContext] = useState('')
+  const [processing, setProcessing] = useState<boolean>(false)
+  const [tags, setTags] = useState<string[]>(['最終回'])
+  const [context, setContext] = useState<string>('')
   const databaseRef = collection(database, 'posts')
   const q = query(databaseRef, orderBy('timestamp', 'desc'))
-  const [image, setImage] = useState(null)
+  const [image, setImage] = useState<File | null>(null)
   const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [createContextObjectURL, setCreateContextObjectURL] = useState('')
-  const [userid, setUserId] = useState(null)
-  const [result, setResult] = useState('')
-  const [photoURL, setPhotoURL] = useState('')
-  const [posts, setPosts] = useState([])
-  const [lengthData, setPostsLength] = useState(null)
+  const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
+  const [userid, setUserId] = useState<string | null>(null)
+  const [result, setResult] = useState<string>('')
+  const [photoURL, setPhotoURL] = useState<string>('')
+  const [posts, setPosts] = useState<any[]>([])
+  const [lengthData, setPostsLength] = useState<number | null>(null)
   const { user } = useAuthContext()
-  const [display, setDisplay] = useState('')
+  const [display, setDisplay] = useState<string>('')
 
   useEffect(() => {
     if (!user) {
@@ -74,7 +78,7 @@ export default function Post() {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInput>({
+  } = useForm<RegisterPostParams>({
     resolver: yupResolver(schema),
   })
 
@@ -84,7 +88,7 @@ export default function Post() {
     })
   }
 
-  const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setImage(file)
@@ -92,7 +96,7 @@ export default function Post() {
     }
   }
 
-  const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setContextImage((prevContextImages) => [...prevContextImages, file])
@@ -102,11 +106,7 @@ export default function Post() {
 
   const router = useRouter()
 
-  type addPost = {
-    toLocaleString(timeZone): string
-  }
-
-  const addPost: SubmitHandler<FormInput> = async (data) => {
+  const addPost: SubmitHandler<RegisterPostParams> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる
@@ -114,18 +114,17 @@ export default function Post() {
     if (image === null) {
       errorNotify('サムネイルを選んでください')
     } else {
-      const topImage = await postImage(image)
+      const topImage: string = await postImage(image)
       //写真のurlをセットする
-      const contextSetImage = await postContextImage(contextImage)
+      const contextSetImage: string = await postContextImage(contextImage)
       console.log('contextSetImage', contextSetImage)
       //日本時間を代入
-      const newDate = new Date().toLocaleString('ja-JP')
+      const newDate: string = new Date().toLocaleString('ja-JP')
       const postRef = await doc(database, 'posts', (posts.length + 3).toString())
       await setDoc(postRef, {
         title: data.title,
         context: html,
         downloadURL: topImage,
-        //topのimage
         contextImage: contextSetImage,
         email: user.email,
         displayname: user.displayName,
@@ -168,10 +167,10 @@ export default function Post() {
       }),
     [],
   )
-  const [plainText, setPlainText] = useState('')
-  const [html, setHtml] = useState('')
+  const [plainText, setPlainText] = useState<string>('')
+  const [html, setHtml] = useState<string>('')
 
-  const handleEditorChange = (plainText: string, html: string) => {
+  const handleEditorChange = (plainText: string, html: string): void => {
     setPlainText(plainText)
     setHtml(html)
     setPostsLength(plainText.length)

@@ -13,7 +13,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SiteButton } from 'layouts/components/button'
 
 // フォームの型
-type SampleFormInput = {
+interface FormParams {
   email: string
   password: string
 }
@@ -35,11 +35,11 @@ export default function Index() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SampleFormInput>({
+  } = useForm<FormParams>({
     resolver: yupResolver(schema),
   })
 
-  const SignIn: SubmitHandler<SampleFormInput> = (formData) => {
+  const SignIn: SubmitHandler<FormParams> = (formData) => {
     alert('ログインしました')
     signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {

@@ -20,18 +20,18 @@ import AccountCircle from '@mui/icons-material/AccountCircle'
 import { successNotify, errorNotify } from 'layouts/components/text'
 
 export default function RegisterProfile() {
-  const [selected, setSelected] = useState(['ワンピース'])
-  const [image, setImage] = useState(null)
-  const [username, setUsername] = useState(null)
-  const [bio, setBio] = useState(null)
+  const [selected, setSelected] = useState<string[]>(['ワンピース'])
+  const [image, setImage] = useState<number>(null)
+  const [username, setUsername] = useState<number>(null)
+  const [bio, setBio] = useState<number>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [result, setResult] = useState('')
+  const [result, setResult] = useState<string>('')
 
   const router = useRouter()
   const auth = getAuth()
   const user = auth.currentUser
 
-  const uploadImage = (event) => {
+  const uploadImage = (event): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
 

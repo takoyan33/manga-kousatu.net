@@ -2,13 +2,13 @@
 import Avatar from '@mui/material/Avatar'
 import React from 'react'
 
-type Props = {
+interface AvatarParams {
   photoURL: string
   displayname: string
 }
 
 //React.memo化
-const CommonAvatar = React.memo(({ photoURL, displayname }: Props) => {
+const CommonAvatar = React.memo(({ photoURL, displayname }: AvatarParams) => {
   return (
     <>
       <Avatar alt='Remy Sharp' src={photoURL} />

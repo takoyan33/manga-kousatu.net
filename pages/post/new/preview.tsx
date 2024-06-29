@@ -102,11 +102,11 @@ export default function Post() {
 
   const router = useRouter()
 
-  type addPost = {
+  interface addPost  {
     toLocaleString(timeZone): string
   }
 
-  const addPost: SubmitHandler<FormInput> = async (data) => {
+  const addPost: SubmitHandler<PreviewFormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる

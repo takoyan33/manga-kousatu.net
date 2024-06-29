@@ -4,17 +4,17 @@ import { EditorState, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
 import { stateToHTML } from 'draft-js-export-html'
 
-type RicheditaProps = {
+interface RicheditaProps {
   onChange: (plainText: string, html: string) => void
   value: string
 }
 
-const Richedita = ({ onChange, value }: RicheditaProps) => {
+const Richedita = ({ onChange }: RicheditaProps) => {
   const [editorState, setEditorState] = useState(
     EditorState.createWithContent(ContentState.createFromText('デフォルトのテキスト')),
   )
 
-  const handleEditorChange = (editorState: EditorState) => {
+  const handleEditorChange = (editorState: EditorState): void => {
     setEditorState(editorState)
     const contentState = editorState.getCurrentContent()
     const plainText = contentState.getPlainText()

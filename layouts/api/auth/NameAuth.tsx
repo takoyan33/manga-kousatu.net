@@ -6,7 +6,7 @@ import { getAuth, updateProfile, deleteUser } from 'firebase/auth'
 import { Button, Box, TextField } from '@mui/material'
 
 export default function NameAuth() {
-  const [ID, setID] = useState(null)
+  const [ID, setID] = useState<number>(null)
   const [title, setTitle] = useState<string>('')
   const [context, setContext] = useState<string>('')
   const [categori, setCategori] = useState<string>('')

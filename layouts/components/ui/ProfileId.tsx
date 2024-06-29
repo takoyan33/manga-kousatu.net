@@ -4,7 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 
-type Props = {
+interface ProfileParams {
   profileImage: string
   id: number
   username: string
@@ -13,7 +13,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const ProfileId = React.memo(({ id, profileImage, username, bio, favorite }: Props) => {
+export const ProfileId = React.memo(({ id, profileImage, username, bio, favorite }: ProfileParams) => {
   return (
     <>
       <div className='m-auto flex max-w-md'>

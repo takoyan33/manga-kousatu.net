@@ -2,7 +2,7 @@ import { Button } from '@mui/material'
 import Link from 'next/link'
 import { DOMAttributes, memo } from 'react'
 
-type SiteButtonProps = {
+interface SiteButtonProps {
   href?: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
   text: string

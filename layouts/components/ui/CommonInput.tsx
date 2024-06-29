@@ -1,7 +1,7 @@
 import TextField from '@mui/material/TextField'
 import React from 'react'
 
-type Props = {
+interface InputParams {
   id: string
   text: string
   label: string
@@ -15,7 +15,7 @@ type Props = {
 
 // eslint-disable-next-line react/display-name
 export const CommonInput = React.memo(
-  ({ onChange, error, text, type, helperText, label, id, className, variant }: Props) => {
+  ({ onChange, error, text, type, helperText, label, id, className, variant }: InputParams) => {
     return (
       <>
         <div>

@@ -2,12 +2,12 @@
 import React from 'react'
 import { SiteCategory } from './SiteCategory'
 
-type Props = {
-  categori: String
+interface CategoryParams {
+  categori: string
 }
 
 //React.memo化
-const Categori: React.VFC<Props> = React.memo(({ categori }) => {
+const Categori: React.VFC<CategoryParams> = React.memo(({ categori }) => {
   return (
     <div className='my-1'>
       {categori === 'ONEPIECE' && (

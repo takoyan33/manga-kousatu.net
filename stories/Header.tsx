@@ -1,11 +1,11 @@
 import React from 'react'
 import './header.css'
 
-type User = {
+interface User {
   name: string
 }
 
-type HeaderProps = {
+interface HeaderProps {
   user?: User
   onLogin: () => void
   onLogout: () => void

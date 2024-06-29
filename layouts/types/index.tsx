@@ -1,5 +1,5 @@
 //CardPost
-export type SinglePost = {
+export interface SinglePost {
   downloadURL: string
   id: number
   title: string
@@ -15,7 +15,7 @@ export type SinglePost = {
 }
 
 //ImageUpload
-export type ImageUploadProps = {
+export interface ImageUploadProps {
   text: string
   createObjectURL?: string
   createcontextObjectURL?: string

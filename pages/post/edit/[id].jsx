@@ -23,22 +23,22 @@ const schema = yup.object({
 })
 
 const PostEdit = () => {
-  const [ID, setID] = useState(null)
-  const [image, setImage] = useState(null)
-  const [context, setContext] = useState('')
-  const [categori, setCategori] = useState('')
-  const [postTitle, setPostTitle] = useState('')
+  const [ID, setID] = useState<number>(null)
+  const [image, setImage] = useState<number>(null)
+  const [context, setContext] = useState<string>('')
+  const [categori, setCategori] = useState<string>('')
+  const [postTitle, setPostTitle] = useState<string>('')
   const databaseRef = collection(database, 'posts')
-  const [createObjectURL, setCreateObjectURL] = useState('')
+  const [createObjectURL, setCreateObjectURL] = useState<string>('')
   //データベースを取得
   const [post, setPost] = useState([])
-  const [downloadURL, setDownloadURL] = useState(null)
-  const [lengthData, setPostsLength] = useState(null)
+  // const [downloadURL, setDownloadURL] = useState(null)
+  const [lengthData, setPostsLength] = useState<number>(null)
   const usersRef = collection(database, 'users')
-  const [userid, setUserid] = useState(null)
-  const [netabare, setNetabare] = useState('')
-  const [display, setDisplay] = useState('')
-  const [selected, setSelected] = useState(['最終回'])
+  const [userid, setUserid] = useState<number>(null)
+  const [netabare, setNetabare] = useState<string>('')
+  const [display, setDisplay] = useState<string>('')
+  const [selected, setSelected] = useState<string>(['最終回'])
 
   const auth = getAuth()
   const user = auth.currentUser
@@ -62,7 +62,7 @@ const PostEdit = () => {
     }
   }
 
-  const useuseGetPost = async () => {
+  const useUseGetPost = async () => {
     try {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
@@ -114,8 +114,8 @@ const PostEdit = () => {
     [],
   )
 
-  const [plainText, setPlainText] = useState('')
-  const [html, setHtml] = useState('')
+  const [plainText, setPlainText] = useState<string>('')
+  const [html, setHtml] = useState<string>('')
 
   const handleEditorChange = (plainText, html) => {
     setPlainText(plainText)

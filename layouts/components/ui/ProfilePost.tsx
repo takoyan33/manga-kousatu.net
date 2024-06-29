@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'react-image-resizer'
 
-type Props = {
+interface ProfilePostParams {
   id: number
   profileImage: string
   username: string
@@ -10,7 +10,7 @@ type Props = {
 }
 
 // eslint-disable-next-line react/display-name
-export const ProfilePost = React.memo(({ id, profileImage, username, bio, favorite }: Props) => {
+export const ProfilePost = React.memo(({ id, profileImage, username, bio, favorite }: ProfilePostParams) => {
   return (
     <div key={id}>
       <p className='m-auto max-w-sm text-center'>

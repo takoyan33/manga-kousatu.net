@@ -1,14 +1,14 @@
 import { DOMAttributes, FC, memo, ReactNode } from 'react'
 import Link from 'next/link'
 
-type Props = {
+interface CategoryParams {
   href: string
   text: string
   className: string
 }
 
 // eslint-disable-next-line react/display-name
-export const SiteCategory = memo(({ href, text, className }: Props) => {
+export const SiteCategory = memo(({ href, text, className }: CategoryParams) => {
   return (
     <span className={className}>
       <Link href={href}>{text}</Link>

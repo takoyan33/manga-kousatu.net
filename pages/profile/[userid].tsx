@@ -23,8 +23,6 @@ const Post = () => {
     useGetUsersPosts(setPostData, userid)
   }, [user, userid, router])
 
-  console.log(users)
-  console.log(postsData)
   return (
     <>
       <CommonHead />

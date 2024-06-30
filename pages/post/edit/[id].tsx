@@ -67,7 +67,7 @@ const PostEdit = () => {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
       await setPost(snap.data())
-      await setCategori(post.categori)
+      await setCategori(post.category)
       console.log('post', post)
     } catch (error) {
       console.log(error)
@@ -75,7 +75,7 @@ const PostEdit = () => {
   }
 
   useEffect(() => {
-    useGetPost()
+    useUseGetPost()
     setID(routerid)
     setContext(post.context)
     setPostTitle(post.title)

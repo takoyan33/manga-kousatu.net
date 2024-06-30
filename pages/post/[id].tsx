@@ -27,12 +27,12 @@ import {
   useGetPost,
   useGetUsers,
   useGetMyUser,
-  LikeDelete,
   useGetCategoriPosts,
+  deleteComment,
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
 import { CommonHead, CardPost } from 'layouts/components/ui'
-import { deletePost } from 'layouts/api/auth'
+// import { deletePost } from 'layouts/api/auth'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -59,6 +59,9 @@ import {
 } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
 import Modal from 'react-modal'
+import { GetPost } from 'types/post'
+import { GetUser } from 'types/user'
+import { GetComment } from 'types/comment'
 
 // バリデーションルール
 const schema = yup.object({
@@ -66,14 +69,14 @@ const schema = yup.object({
 })
 
 const Post = () => {
-  const [comment, setComment] = useState('')
-  const [comments, setComments] = useState('')
-  const [users, setUsers] = useState(null)
-  const [singlePost, setSinglePost] = useState([])
-  const [likecount, setLikecount] = useState(0)
-  const [userEmail, setUserEmail] = useState(null)
-  const [categoriPosts, setCategoriPosts] = useState(null)
-  const [on, setOn] = useState(false)
+  const [comment, setComment] = useState<string>('')
+  const [comments, setComments] = useState<Array<GetComment>>([])
+  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [singlePost, setSinglePost] = useState<GetPost>(null)
+  const [likecount, setLikecount] = useState<number>(0)
+  const [userEmail, setUserEmail] = useState<string>(null)
+  const [categoriPosts, setCategoriPosts] = useState<string>(null)
+  const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
   const routerid = router.query.id
   const auth = getAuth()
@@ -101,7 +104,7 @@ const Post = () => {
 
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
-    setUserEmail(singlePost.email)
+    setUserEmail(singlePost?.email)
     useGetUsers(setUsers)
     getComments()
     // useGetMyUser(setUsers,)
@@ -111,7 +114,7 @@ const Post = () => {
   //記事の削除
   const deletePost = () => {
     //data.idを送っているのでidを受け取る
-    let deletePost = doc(database, 'posts', routerid)
+    let deletePost = doc(database, 'posts', routerid.toString())
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     if (checkSaveFlg) {
@@ -124,7 +127,7 @@ const Post = () => {
           }, 2000)
           getallPost()
         })
-        .catch((err) => {
+        .catch(() => {
           errorNotify('失敗しました')
         })
     } else {
@@ -139,7 +142,7 @@ const Post = () => {
     let post = doc(database, 'posts', routerid)
     updateDoc(post, {
       likes: likes + 1,
-      likes_email: arrayUnion(user.email),
+      likesEmail: arrayUnion(user.email),
     })
       .then(() => {
         setOn((prev) => !prev)
@@ -158,7 +161,7 @@ const Post = () => {
     let post = doc(database, 'posts', routerid)
     updateDoc(post, {
       likes: likes - 1,
-      likes_email: arrayRemove(user.email),
+      likesEmail: arrayRemove(user.email),
     })
       .then(() => {
         setLikecount(0)
@@ -172,7 +175,7 @@ const Post = () => {
   //コメントの追加
   const addComment = async (data) => {
     const newDate = new Date().toLocaleString('ja-JP')
-    const postRef = await doc(database, 'comments', routerid + (comments.length + 1).toString())
+    const postRef = await doc(database, 'comments', routerid + (comments.length + 2).toString())
 
     await setDoc(postRef, {
       comment: data.comment,
@@ -195,20 +198,8 @@ const Post = () => {
       })
   }
 
-  //コメントの削除
-  const deleteComment = async (commentId) => {
-    let deleteComment = doc(database, 'comments', commentId)
-    deleteDoc(deleteComment)
-      .then(() => {
-        successNotify('コメントを削除しました')
-      })
-      .catch((err) => {
-        errorNotify('失敗しました')
-      })
-  }
-
   //コメントの編集
-  const updateComment = (commentId) => {
+  const updateComment = (commentId: string) => {
     let commentDate = doc(database, 'comments', commentId)
     console.log(commentDate)
     updateDoc(commentDate, {
@@ -249,25 +240,26 @@ const Post = () => {
   //       console.log(err)
   //     })
   // }
+
   //画像のモーダルの開
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   //画像のモーダルの開
-  const openModal = () => {
+  const openModal = (): void => {
     setIsModalOpen(true)
   }
   //画像のモーダルの締
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsModalOpen(false)
   }
 
   //コメント編集のモーダルの開
-  const [isCommentModalOpen, setIsCommentModalOpen] = useState(false)
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false)
   //コメント編集のモーダルの開
-  const openCommentModal = () => {
+  const openCommentModal = (): void => {
     setIsCommentModalOpen(true)
   }
   //コメント編集のモーダルの締
-  const closeCommentModal = () => {
+  const closeCommentModal = (): void => {
     setIsCommentModalOpen(false)
   }
 
@@ -280,7 +272,7 @@ const Post = () => {
           <div className='my-4 lg:w-full'>
             {user && (
               <>
-                {user.email === singlePost.email && (
+                {user.email === singlePost?.email && (
                   <>
                     <List
                       sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
@@ -298,8 +290,7 @@ const Post = () => {
                         </ListItemIcon>
                         <Link
                           href={{
-                            pathname: `/post/edit/${singlePost.id}`,
-                            state: { data: singlePost },
+                            pathname: `/post/edit/${singlePost.id}`
                           }}
                         >
                           記事を編集する
@@ -319,7 +310,7 @@ const Post = () => {
             <div className='rounded-xl border p-10 '>
               <div>
                 <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-                {singlePost.title}
+                {singlePost?.title}
               </div>
               <div className='my-6 flex justify-center'>
                 <button onClick={openModal}>
@@ -327,7 +318,7 @@ const Post = () => {
                     className='m-auto max-w-sm text-center'
                     height={400}
                     width={400}
-                    src={singlePost.downloadURL}
+                    src={singlePost?.downloadURL}
                   />
                 </button>
               </div>
@@ -337,29 +328,29 @@ const Post = () => {
                     className='m-auto max-w-sm text-center'
                     height={400}
                     width={400}
-                    src={singlePost.downloadURL}
+                    src={singlePost?.downloadURL}
                   />
                 </div>
                 　<button onClick={closeModal}>閉じる</button>
               </Modal>
-              <div className='my-4 text-2xl font-semibold'>{singlePost.title}</div>
+              <div className='my-4 text-2xl font-semibold'>{singlePost?.title}</div>
               <br />
               <div>
                 <span className='text-gray-500'>
-                  <AccessTimeIcon /> {singlePost.createtime}
+                  <AccessTimeIcon /> {singlePost?.createTime}
                 </span>
                 <span>
                   　<FavoriteIcon />
-                  {singlePost.likes}
+                  {singlePost?.likes}
                 </span>
               </div>
               {users &&
                 users.map((user) => {
                   return (
                     <>
-                      {singlePost.email === user.email && (
-                        <Link href={`/profile/${user.userid}`}>
-                          <div key={user.userid}>
+                      {singlePost?.email === user.email && (
+                        <Link href={`/profile/${user.userId}`}>
+                          <div key={user.userId}>
                             <div className='m-auto my-4 flex  px-2'>
                               <div key={user.id}>
                                 <div>
@@ -367,12 +358,12 @@ const Post = () => {
                                     className='m-auto max-w-sm border text-center'
                                     alt='プロフィール'
                                     sx={{ width: 60, height: 60 }}
-                                    src={user.profileimage}
+                                    src={user.profileImage}
                                   />
                                 </div>
                               </div>
                               <div className='ml-6 mt-1'>
-                                <span className='text-sm'>{user.username}</span>
+                                <span className='text-sm'>{user.userName}</span>
                                 <div className='mt-2 pb-2 text-sm text-gray-500'>{user.bio}</div>
                               </div>
                             </div>
@@ -382,14 +373,14 @@ const Post = () => {
                     </>
                   )
                 })}
-              {singlePost.edittime && (
+              {singlePost?.editTime && (
                 <div>
                   <AccessTimeIcon />
-                  編集日時：{singlePost.edittime}
+                  編集日時：{singlePost.editTime}
                 </div>
               )}
               <br />
-              {singlePost.selected &&
+              {singlePost &&
                 singlePost.selected.map((tag, i) => (
                   <span
                     className='rounded-xl border border-cyan-700 py-1 px-2 text-center text-cyan-700'
@@ -398,9 +389,9 @@ const Post = () => {
                     #{tag}
                   </span>
                 ))}
-              <div variant='body2' color='text.secondary'>
+              <div color='text.secondary'>
                 {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
-                  singlePost.categori,
+                  singlePost?.category,
                 ) && (
                   <SiteCategory
                     className={`border-${
@@ -409,34 +400,34 @@ const Post = () => {
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[singlePost.categori]
+                      }[singlePost.category]
                     }-500 text-${
                       {
                         ONEPIECE: 'cyan',
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[singlePost.categori]
+                      }[singlePost.category]
                     }-500 hover:bg-${
                       {
                         ONEPIECE: 'cyan',
                         呪術廻戦: 'purple',
                         東京リベンジャーズ: 'rose',
                         キングダム: 'yellow',
-                      }[singlePost.categori]
+                      }[singlePost.category]
                     }-700 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
-                    text={singlePost.categori}
-                    href={`/post/categories/${singlePost.categori}`}
+                    text={singlePost.category}
+                    href={`/post/categories/${singlePost.category}`}
                   />
                 )}
 
-                {singlePost.netabare === 'ネタバレ有' ? (
+                {singlePost?.netabare === 'ネタバレ有' ? (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
                     {singlePost.netabare}
                   </span>
                 ) : (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
-                    {singlePost.netabare}
+                    {singlePost?.netabare}
                   </span>
                 )}
 
@@ -452,14 +443,14 @@ const Post = () => {
                   </LineShareButton>
                 </div> */}
 
-                {singlePost.context && (
+                {singlePost?.context && (
                   <p className='text-left' style={styles}>
                     {parse(singlePost.context)}
                   </p>
                 )}
               </div>
               <br />
-              {singlePost.contextImage && (
+              {singlePost?.contextImage && (
                 <div className='flex justify-center'>
                   <Image
                     className='m-auto max-w-sm text-center'
@@ -473,19 +464,18 @@ const Post = () => {
                 <span className='text-pink-400'>
                   <FavoriteIcon />
                 </span>
-                {singlePost.likes}
+                {singlePost?.likes}
               </div>
 
-              {user && singlePost.likes_email && user.email == singlePost.email ? (
+              {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
                 <>自分の投稿なのでいいねできません</>
               ) : (
                 <>
-                  {singlePost.likes_email && user ? (
-                    singlePost.likes_email.includes(user.email) ? (
+                  {singlePost?.likesEmail && user ? (
+                    singlePost?.likesEmail.includes(user.email) ? (
                       <>
                         <p>いいね済み</p>
                         <button
-                          text='いいね解除する'
                           className='my-2 inline'
                           onClick={() => LikeDelete(routerid, singlePost.likes)}
                         >
@@ -535,12 +525,12 @@ const Post = () => {
                     </div>
                     <form className='mb-6' id='aa'>
                       <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
-                        <label for='comment' className='sr-only'>
+                        <label htmlFor='comment' className='sr-only'>
                           あなたのコメント
                         </label>
                         <textarea
                           id='comment'
-                          rows='6'
+                          rows={6}
                           className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
                           placeholder='コメントを入力してください'
                           required
@@ -575,9 +565,7 @@ const Post = () => {
                             {comment.username}
                           </p>
                           <p className='text-sm text-gray-600 dark:text-gray-400'>
-                            <time pubdate datetime='2022-02-08' title='February 8th, 2022'>
-                              {comment.createtime}
-                            </time>
+                            <time>{comment.createtime}</time>
                           </p>
                         </div>
                       </footer>
@@ -608,7 +596,6 @@ const Post = () => {
                         <div>
                           <input
                             id='outlined-basic'
-                            label='タイトル（最大20文字)'
                             className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                             defaultValue={comment.comment}
                             type='text'
@@ -633,10 +620,10 @@ const Post = () => {
                   return (
                     <div className='hover:shadow-2xl'>
                       {singlePost.email === user.email && (
-                        <Link href={`/profile/${user.userid}`}>
-                          <div key={user.userid}>
+                        <Link href={`/profile/${user.userid}`} key={user.id}>
+                          <div>
                             <div className='m-auto my-8 flex border py-8  px-2'>
-                              <div key={user.id}>
+                              <div>
                                 <div>
                                   <Avatar
                                     className='m-auto max-w-sm border text-center'

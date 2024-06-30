@@ -17,16 +17,16 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
+import { GetPost } from 'types/post'
 
 export default function Index() {
-  const [postData, setPostData] = useState<Array<any>>([])
+  const [postData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
   const [loadIndex, setLoadIndex] = useState<number>(3)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
   const { posts, loading } = useFetchPosts()
-  console.log(posts)
 
   const displayMore = () => {
     if (loadIndex > posts.length) {
@@ -94,6 +94,11 @@ export default function Index() {
 
   const filteredPosts = filterPostData()
 
+  // interface CategoryParams {
+  //   id: string | ParsedUrlQueryInput
+  //   title: string | ParsedUrlQueryInput
+  // }
+
   return (
     <div>
       <CommonHead />
@@ -123,25 +128,25 @@ export default function Index() {
 
       <h2 className='my-12 text-center text-xl font-semibold'>カテゴリー</h2>
 
-      {POST_CATEGORIES.map((categori) => {
+      {POST_CATEGORIES.map((category) => {
         // userの情報
         const CategoriesInfo = {
-          id: categori.id,
-          title: categori.title,
+          id: category.id,
+          title: category.title,
         }
         return (
-          <span key={categori.id}>
+          <span key={category.id}>
             <span
-              className={`rounded-xltext-center + m-6  inline-block rounded-xl border  p-1 font-bold hover:text-white ${categori.className}`}
+              className={`rounded-xltext-center + m-6  inline-block rounded-xl border  p-1 font-bold hover:text-white ${category.className}`}
             >
               <Link
-                as={`/post/categories/${categori.title}`}
+                as={`/post/categories/${category.title}`}
                 href={{
-                  pathname: categori.link,
+                  pathname: category.link,
                   query: CategoriesInfo,
                 }}
               >
-                <a>{categori.title}</a>
+                <a>{category.title}</a>
               </Link>
             </span>
           </span>
@@ -199,11 +204,11 @@ export default function Index() {
               key={post.id}
               downloadURL={post.downloadURL}
               title={post.title}
-              categori={post.categori}
+              category={post.category}
               netabare={post.netabare}
               context={post.context}
-              createtime={post.createtime}
-              displayname={post.displayname}
+              createTime={post.createTime}
+              displayName={post.displayName}
               email={post.email}
               id={post.id}
               photoURL={post.photoURL}

@@ -1,4 +1,4 @@
 export * from './CommonAvatar'
-export * from './Categori'
+export * from './Category'
 export * from './SiteCategory'
 export * from './SiteModal'

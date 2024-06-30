@@ -3,17 +3,10 @@ import Avatar from '@mui/material/Avatar'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-
-interface ProfileParams {
-  profileImage: string
-  id: number
-  username: string
-  bio: string
-  favorite: string[]
-}
+import { ProfileParams } from 'types/user'
 
 // eslint-disable-next-line react/display-name
-export const ProfileId = React.memo(({ id, profileImage, username, bio, favorite }: ProfileParams) => {
+export const ProfileId = React.memo(({ id, profileImage, userName, bio, favorite }: ProfileParams) => {
   return (
     <>
       <div className='m-auto flex max-w-md'>
@@ -29,7 +22,7 @@ export const ProfileId = React.memo(({ id, profileImage, username, bio, favorite
         </div>
         <div>
           <p className='m-5 text-lg'>
-            <AccountBoxIcon /> {username}
+            <AccountBoxIcon /> {userName}
           </p>
           <h2 className='m-5'>
             <FavoriteIcon /> 好きな漫画
@@ -41,7 +34,7 @@ export const ProfileId = React.memo(({ id, profileImage, username, bio, favorite
                   ＃{favorite}　
                 </p>
               ))}
-            {favorite.length === 0 && <p>好きな漫画はありません</p>}
+            {favorite && favorite.length === 0 && <p>好きな漫画はありません</p>}
           </div>
         </div>
       </div>

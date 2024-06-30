@@ -9,15 +9,16 @@ import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/co
 import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
+import { GetPost } from 'types/post'
+import { GetUser } from 'types/user'
 
 export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
-  const databaseRef = collection(database, 'posts')
-  const [users, setUsers] = useState(null)
-  //データベースを取得
-  const [posts, setPostData] = useState([])
-  const [searchName, setSearchName] = useState('')
+  const databaseRef = collection(database, 'postsData')
+  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [postsData, setPostData] = useState<Array<GetPost>>([])
+  const [searchName, setSearchName] = useState<string>('')
   const [onePiece, setOnePiece] = useState([])
   const [kingdom, setKingdom] = useState([])
   const [tokyo, setTokyo] = useState([])
@@ -171,11 +172,11 @@ export default function Profile() {
               <>
                 <ProfileId
                   key={user.id}
-                  profileImage={user.profileimage}
-                  username={user.username}
+                  profileImage={user.profileImage}
+                  userName={user.userName}
                   bio={user.bio}
                   favorite={user.favorite}
-                  id={0}
+                  id={''}
                 />
               </>
             )
@@ -183,7 +184,7 @@ export default function Profile() {
       </>
 
       <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
-      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
+      <p className='text-1xl text-center'>投稿数　{postsData.length}件</p>
       <div>
         <ResponsiveContainer height={256}>
           <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
@@ -293,7 +294,7 @@ export default function Profile() {
             </tr>
           </thead>
           <tbody>
-            {posts
+            {postsData
               .filter((post) => {
                 if (searchName === '') {
                   return post
@@ -317,8 +318,8 @@ export default function Profile() {
                           {post.title}
                         </th>
                       </Link>
-                      <td className='px-6 py-4'>{post.categori}</td>
-                      <td className='px-6 py-4'> {post.createtime}</td>
+                      <td className='px-6 py-4'>{post.category}</td>
+                      <td className='px-6 py-4'> {post.createTime}</td>
                       <td className='px-6 py-4'> {post.likes}</td>
                       <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>下書き</p>}</td>
                       <td className='px-6 py-4 text-right'>
@@ -333,6 +334,6 @@ export default function Profile() {
           </tbody>
         </table>
       </div>
-    </>
+    </string>
   )
 }

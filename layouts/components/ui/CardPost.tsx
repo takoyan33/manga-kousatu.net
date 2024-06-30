@@ -9,9 +9,9 @@ import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
 import Image from 'react-image-resizer'
-import Categori from '../text/Categori'
+import Category from '../text/Category'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { SinglePost } from 'layouts/types'
+import { SingleGetPostParams } from 'types/post'
 
 // eslint-disable-next-line react/display-name
 export const CardPost = React.memo(
@@ -20,14 +20,14 @@ export const CardPost = React.memo(
     id,
     likes,
     title,
-    categori,
+    category,
     netabare,
-    displayname,
+    displayName,
     email,
     photoURL,
-    createtime,
+    createTime,
     selected,
-  }: SinglePost) => {
+  }: SingleGetPostParams) => {
     const [users, setUsers] = useState(null)
     const [comments, setComments] = useState('')
     const style: React.CSSProperties = {
@@ -81,7 +81,7 @@ export const CardPost = React.memo(
                     {title}
                   </Typography>
                   <div className='flex'>
-                    <Categori categori={categori} />
+                    <Category category={category} />
                     {netabare === 'ネタバレ有' ? (
                       <div>
                         <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>

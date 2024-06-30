@@ -4,10 +4,12 @@ import { useGetOtherUser, useGetUsersPosts } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import Grid from '@material-ui/core/Grid'
+import { GetPost } from 'types/post'
+import { GetUser } from 'types/user'
 
 const Post = () => {
-  const [users, setUsers] = useState([])
-  const [postsData, setPostData] = useState([])
+  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [postsData, setPostData] = useState<Array<GetPost>>([])
   const router = useRouter()
   const { userid } = router.query
   const auth = getAuth()
@@ -21,6 +23,8 @@ const Post = () => {
     useGetUsersPosts(setPostData, userid)
   }, [user, userid, router])
 
+  console.log(users)
+  console.log(postsData)
   return (
     <>
       <CommonHead />
@@ -31,8 +35,8 @@ const Post = () => {
               <>
                 <ProfileId
                   key={user.id}
-                  profileImage={user.profileimage}
-                  username={user.username}
+                  profileImage={user.profileImage}
+                  userName={user.userName}
                   bio={user.bio}
                   favorite={user.favorite}
                   id={user.id}
@@ -52,11 +56,11 @@ const Post = () => {
                   key={post.id}
                   downloadURL={post.downloadURL}
                   title={post.title}
-                  categori={post.categori}
+                  category={post.category}
                   netabare={post.netabare}
                   context={post.context}
-                  createtime={post.createtime}
-                  displayname={post.displayname}
+                  createTime={post.createTime}
+                  displayName={post.displayName}
                   email={post.email}
                   id={post.id}
                   photoURL={post.photoURL}

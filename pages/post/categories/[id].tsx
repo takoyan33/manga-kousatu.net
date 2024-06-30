@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 import {
-  useGetCategoriPosts,
+  useGetCategoryPosts,
   useGetCategoriOldPosts,
   useGetCategoriLikePosts,
 } from 'layouts/components/hooks'
@@ -79,11 +79,11 @@ const Details = ({ post }) => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === post.fields.id.stringValue) {
+            if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
+              data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data
@@ -104,11 +104,11 @@ const Details = ({ post }) => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === post.fields.id.stringValue) {
+            if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
+              data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data
@@ -129,11 +129,11 @@ const Details = ({ post }) => {
             //スプレッド構文で展開して、新しい配列を作成
           })
           .filter((data) => {
-            if (data.categori === post.fields.id.stringValue) {
+            if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す
             } else if (
-              data.categori.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
+              data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
               //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
             ) {
               return data
@@ -237,13 +237,14 @@ const Details = ({ post }) => {
                   key={post.id}
                   downloadURL={post.downloadURL}
                   title={post.title}
-                  categori={post.categori}
+                  category={post.category}
                   netabare={post.netabare}
                   context={post.context}
-                  createtime={post.createtime}
-                  displayname={post.displayname}
+                  createTime={post.createtime}
+                  displayName={post.displayname}
                   email={post.email}
                   id={post.id}
+                  likes={post.likes}
                   photoURL={post.photoURL}
                   selected={post.selected}
                 />

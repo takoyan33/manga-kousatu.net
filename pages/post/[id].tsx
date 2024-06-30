@@ -290,7 +290,7 @@ const Post = () => {
                         </ListItemIcon>
                         <Link
                           href={{
-                            pathname: `/post/edit/${singlePost.id}`
+                            pathname: `/post/edit/${singlePost.id}`,
                           }}
                         >
                           記事を編集する

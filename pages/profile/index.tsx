@@ -334,6 +334,6 @@ export default function Profile() {
           </tbody>
         </table>
       </div>
-    </string>
+    </>
   )
 }

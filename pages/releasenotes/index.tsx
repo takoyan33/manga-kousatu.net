@@ -17,7 +17,7 @@ export default function ReleaseNotes() {
       ))}
       <h3 className='my-4'>Github</h3>
       <p className='mb-8 font-semibold'>
-        <a href='https://github.com/takoyan33/manga-kousatu.net' target='_blank'>
+        <a href='https://github.com/takoyan33/manga-kousatu.net' target='_blank' rel='noreferrer'>
           https://github.com/takoyan33/manga-kousatu.net
         </a>
       </p>

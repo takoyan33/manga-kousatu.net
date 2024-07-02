@@ -17,6 +17,7 @@ import { successNotify, errorNotify } from 'layouts/components/text'
 import dynamic from 'next/dynamic'
 import ImageUpload from 'layouts/utils/ImageUpload'
 import { postImage } from 'layouts/api'
+import { GetPost } from 'types/post'
 
 const schema = yup.object({
   title: yup.string().required('必須です'),
@@ -28,22 +29,17 @@ const PostEdit = () => {
   const [context, setContext] = useState<string>('')
   const [categori, setCategori] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
-  const databaseRef = collection(database, 'posts')
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   //データベースを取得
-  const [post, setPost] = useState([])
-  // const [downloadURL, setDownloadURL] = useState(null)
+  const [post, setPost] = useState<GetPost>()
   const [lengthData, setPostsLength] = useState<number>(null)
-  const usersRef = collection(database, 'users')
-  const [userid, setUserid] = useState<number>(null)
   const [netabare, setNetabare] = useState<string>('')
   const [display, setDisplay] = useState<string>('')
-  const [selected, setSelected] = useState<string>(['最終回'])
+  const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const auth = getAuth()
-  const user = auth.currentUser
   const router = useRouter()
-  const routerid = router.query.id
+  const routerid: string = router.query.id.toString()
 
   const {
     register,
@@ -67,7 +63,7 @@ const PostEdit = () => {
       const ref = await doc(database, 'posts', routerid)
       const snap = await getDoc(ref)
       await setPost(snap.data())
-      await setCategori(post.category)
+      await setCategori(post?.category)
       console.log('post', post)
     } catch (error) {
       console.log(error)
@@ -77,8 +73,8 @@ const PostEdit = () => {
   useEffect(() => {
     useUseGetPost()
     setID(routerid)
-    setContext(post.context)
-    setPostTitle(post.title)
+    setContext(post?.context)
+    setPostTitle(post?.title)
   }, [])
 
   const updatePost = async (data) => {
@@ -131,11 +127,11 @@ const PostEdit = () => {
         <div>
           <div>
             <div className='my-4 lg:w-full '>
-              <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
+              <Link href='/top'>トップ</Link>＞ 投稿記事 ＞
               <Link href={`/post/${routerid}`}>
-                <span>{post.title}</span>
+                <span>{post?.title}</span>
               </Link>
-              　＞　考察記事の編集
+              ＞ 考察記事の編集
               <Stack
                 component='form'
                 className='m-auto'
@@ -149,21 +145,22 @@ const PostEdit = () => {
                     <FormLabel id='demo-radio-buttons-group-label'>
                       サムネイル<span className='text-red-600'>*</span>
                     </FormLabel>
-                    <img src={post.downloadURL} className='w-100' />
-                    <ImageUpload
-                      onChange={uploadImage}
-                      createObjectURL={createObjectURL}
-                      text=''
-                      event={undefined}
+                    <Image
+                      className='m-auto max-w-sm text-center'
+                      height={400}
+                      width={400}
+                      src={post?.downloadURL}
+                      alt='サムネイル'
                     />
+                    {!post?.downloadURL && <p className='text-center'>サムネイルがありません</p>}
+                    <ImageUpload onChange={uploadImage} createObjectURL={createObjectURL} text='' />
                     <input
                       id='file-input'
                       className='hidden'
                       type='file'
                       accept='image/*,.png,.jpg,.jpeg,.gif'
                       name='myImage'
-                      onChang
-                      e={uploadImage}
+                      onChange={uploadImage}
                     />
                   </div>
                   <FormLabel id='demo-radio-buttons-group-label'>
@@ -173,9 +170,9 @@ const PostEdit = () => {
                 <div>
                   <input
                     id='outlined-basic'
-                    label='タイトル（最大20文字)'
+                    placeholder='タイトル（最大20文字)'
                     className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                    defaultValue={post.title}
+                    defaultValue={post?.title}
                     type='text'
                     onChange={(event) => setPostTitle(event.target.value)}
                   />
@@ -185,9 +182,9 @@ const PostEdit = () => {
                     作品名<span className='text-red-600'>*</span>
                   </FormLabel>
                 </div>
-                <p>現在の作品：{post.categori}</p>
+                <p>現在の作品：{post?.category}</p>
                 <Controller
-                  name='categori'
+                  name='category'
                   control={control}
                   rules={{
                     required: '必須項目です',
@@ -195,8 +192,8 @@ const PostEdit = () => {
                   render={({ field }) => (
                     <RadioGroup
                       aria-labelledby='demo-radio-buttons-group-label'
-                      name={field.name}
-                      checked={categori}
+                      name={field.value}
+                      value={field}
                       onChange={(e) => {
                         field.onChange(e)
                         setCategori(e.target.value)
@@ -224,7 +221,7 @@ const PostEdit = () => {
                 <FormLabel id='demo-radio-buttons-group-label'>
                   ネタバレについて<span className='text-red-600'>*</span>
                 </FormLabel>
-                <p>現在のネタバレ：{post.netabare}</p>
+                <p>現在のネタバレ：{post?.netabare}</p>
                 <Controller
                   name='netabare'
                   control={control}
@@ -253,7 +250,6 @@ const PostEdit = () => {
                     </RadioGroup>
                   )}
                 />
-                {errors.netabare && <p>{errors.netabare.message}</p>}
                 <div>
                   <FormLabel id='demo-radio-buttons-group-label'>
                     内容<span className='text-red-600'>*</span>(最大500文字）
@@ -261,20 +257,18 @@ const PostEdit = () => {
                 </div>
                 <p>現在の文章</p>
                 <textarea
-                  label='内容(最大500文字）'
+                  placeholder='内容(最大500文字）'
                   className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                   id='filled-multiline-static'
-                  multiline
                   rows={14}
-                  type='text'
-                  defaultValue={post.context}
+                  defaultValue={post?.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
 
                 <FormLabel id='demo-radio-buttons-group-label'>
                   公開について<span className='text-red-600'>*</span>
                 </FormLabel>
-                <p>現在の公開：{post.display ? <p>公開</p> : <p>下書き</p>}</p>
+                <p>現在の公開：{post?.display ? <p>公開</p> : <p>下書き</p>}</p>
 
                 <Controller
                   name='display'
@@ -304,12 +298,10 @@ const PostEdit = () => {
                   )}
                 />
                 {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
-                {errors.display && <p>{errors.display.message}</p>}
-
+                {/* 
                 <div className='my-8'>
-                  <label htmlFor='file-input'>他の写真（最大1枚）</label>
-
-                  {/* <ImageUploadContext
+                  <label htmlFor='file-input'>他の写真（最大1枚）</label> */}
+                {/* <ImageUploadContext
                     onChange={uploadToClientContext}
                     createcontextObjectURL={createContextObjectURL}
                     text={'写真'}
@@ -324,9 +316,11 @@ const PostEdit = () => {
                     name='myImage'
                     onChange={uploadToClientContext}
                   /> */}
-                </div>
+                {/* </div> */}
 
-                <SiteButton onClick={updatePost} text='更新する' className='m-auto my-8 w-80' />
+                <div className='flex justify-center'>
+                  <SiteButton onClick={updatePost} text='更新する' className=''/>
+                </div>
               </Stack>
             </div>
           </div>

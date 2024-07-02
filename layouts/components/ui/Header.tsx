@@ -86,6 +86,7 @@ export const Header = () => {
                 height={100}
                 width={200}
                 src='/logo.png'
+                alt='logo'
               />
             </Typography>
             <button onClick={handleNotificationOpen}>

@@ -25,7 +25,7 @@ import { successNotify, errorNotify } from 'layouts/components/text'
 
 export default function Edit() {
   const [image, setImage] = useState<string>()
-  const [result, setResult] = useState('')
+  const [result, setResult] = useState<string>('')
   const [users, setUsers] = useState(null)
   const router = useRouter()
   const usersRef = collection(database, 'users')
@@ -33,7 +33,7 @@ export default function Edit() {
   const [username, setUsername] = useState(null)
   const [bio, setBio] = useState(null)
   const { user } = useAuthContext()
-  const [selected, setSelected] = useState([''])
+  const [selected, setSelected] = useState<string[]>([''])
   const my = query(usersRef, where('email', '==', user.email))
 
   useEffect(() => {

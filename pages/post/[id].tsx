@@ -329,6 +329,7 @@ const Post = () => {
                     height={400}
                     width={400}
                     src={singlePost?.downloadURL}
+                    alt='contextImage'
                   />
                 </div>
                 　<button onClick={closeModal}>閉じる</button>
@@ -423,7 +424,7 @@ const Post = () => {
 
                 {singlePost?.netabare === 'ネタバレ有' ? (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
-                    {singlePost.netabare}
+                    {singlePost?.netabare}
                   </span>
                 ) : (
                   <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
@@ -456,7 +457,8 @@ const Post = () => {
                     className='m-auto max-w-sm text-center'
                     height={300}
                     width={300}
-                    src={singlePost.contextImage}
+                    src={singlePost?.contextImage}
+                    alt='contextImage'
                   />
                 </div>
               )}
@@ -507,7 +509,7 @@ const Post = () => {
                   </Link>
                   <div className='mb-6 flex items-center justify-between'>
                     <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                      コメント ({comments.length})
+                      コメント {comments.length}
                     </h2>
                     <Link href='/login'>
                       <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
@@ -618,29 +620,25 @@ const Post = () => {
               <div className='cursor-pointer'>
                 {users?.map((user) => {
                   return (
-                    <div className='hover:shadow-2xl'>
-                      {singlePost.email === user.email && (
-                        <Link href={`/profile/${user.userid}`} key={user.id}>
-                          <div>
-                            <div className='m-auto my-8 flex border py-8  px-2'>
-                              <div>
-                                <div>
-                                  <Avatar
-                                    className='m-auto max-w-sm border text-center'
-                                    alt='プロフィール'
-                                    sx={{ width: 80, height: 80 }}
-                                    src={user.profileimage}
-                                  />
-                                </div>
-                              </div>
-                              <div className='ml-6 mt-4'>
-                                <span className=''>
-                                  <AccountBoxIcon /> {user.username}
-                                </span>
-                                <div className=' mt-2 pb-2 text-gray-500'>
-                                  <BorderColorIcon />
-                                  {user.bio}
-                                </div>
+                    <div className='hover:shadow-2xl' key={user.id}>
+                      {singlePost?.email === user.email && (
+                        <Link href={`/profile/${user.userId}`}>
+                          <div className='m-auto my-8 flex border py-8  px-2'>
+                            <div>
+                              <Avatar
+                                className='m-auto max-w-sm border text-center'
+                                alt='プロフィール'
+                                sx={{ width: 80, height: 80 }}
+                                src={user.profileImage}
+                              />
+                            </div>
+                            <div className='ml-6 mt-4'>
+                              <span className=''>
+                                <AccountBoxIcon /> {user.userName}
+                              </span>
+                              <div className=' mt-2 pb-2 text-gray-500'>
+                                <BorderColorIcon />
+                                {user.bio}
                               </div>
                             </div>
                           </div>

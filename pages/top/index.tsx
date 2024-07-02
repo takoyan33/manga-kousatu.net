@@ -103,7 +103,13 @@ export default function Index() {
     <div>
       <CommonHead />
       <div className='m-auto my-5 flex justify-center text-center'>
-        <Image className='m-auto' height={100} width={200} src='/logo.png' />
+        <Image
+        className='m-auto' 
+        height={100} 
+        width={200} 
+        src='/logo.png'
+        alt='logo'
+        />
       </div>
       <p className='my-5 text-center'>
         Manga Studyでは、人気漫画の考察を

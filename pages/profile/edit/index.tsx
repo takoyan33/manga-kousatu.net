@@ -22,42 +22,30 @@ import { TagsInput } from 'react-tag-input-component'
 import { CommonHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { successNotify, errorNotify } from 'layouts/components/text'
+import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
+import { GetUser } from 'types/user'
+import { ToastContainer } from 'react-toastify'
 
 export default function Edit() {
   const [image, setImage] = useState<string>()
   const [result, setResult] = useState<string>('')
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState<Array<GetUser>>([])
   const router = useRouter()
   const usersRef = collection(database, 'users')
   const [createObjectURL, setCreateObjectURL] = useState<string>(null)
-  const [username, setUsername] = useState(null)
-  const [bio, setBio] = useState(null)
+  const [username, setUsername] = useState<string>(null)
+  const [bio, setBio] = useState<string>(null)
   const { user } = useAuthContext()
   const [selected, setSelected] = useState<string[]>([''])
-  const my = query(usersRef, where('email', '==', user.email))
 
   useEffect(() => {
     if (!user) {
       router.push('/register')
     } else {
-      usersData()
+      useGetMyUser(setUsers, user.email)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const usersData = async () => {
-    //firestoreからデータ取得
-    await getDocs(my).then((response) => {
-      //コレクションのドキュメントを取得
-      setUsers(
-        response.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
 
   const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -82,11 +70,11 @@ export default function Edit() {
     const result = await postImage(image)
     setResult(result)
     updateDoc(fieldToEdit, {
-      username: username,
+      userName: username,
       bio: bio,
       email: user.email,
-      profileimage: result,
-      userid: user.uid,
+      profileImage: result,
+      userId: user.uid,
       favorite: selected,
     })
       .then(() => {
@@ -106,7 +94,7 @@ export default function Edit() {
   return (
     <div className='m-auto max-w-5xl'>
       <CommonHead />
-
+      <ToastContainer />
       {users &&
         users.map((user) => {
           return (
@@ -122,10 +110,10 @@ export default function Edit() {
                       className='m-auto max-w-sm text-center'
                       height={100}
                       width={100}
-                      src={user.profileimage}
+                      src={user.profileImage}
                     />
                   </div>
-                  {user.profileimage === '' && (
+                  {user.profileImage === '' && (
                     <p className='my-8 text-center'>設定している画像はありません</p>
                   )}
                 </p>
@@ -178,7 +166,7 @@ export default function Edit() {
                       <input
                         id='outlined-name'
                         className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                        defaultValue={user.username}
+                        defaultValue={user.userName}
                         type='text'
                         onChange={(event) => setUsername(event.target.value)}
                       />

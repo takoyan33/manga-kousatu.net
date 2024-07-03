@@ -537,9 +537,6 @@ const Post = () => {
                           placeholder='コメントを入力してください'
                           required
                           {...register('comment', { required: 'コメントは必須です' })}
-                          error={'comment' in errors}
-                          helperText={errors.comment?.message}
-                          label='コメント*（最大100文字)'
                         ></textarea>
                       </div>
                       {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
@@ -572,7 +569,9 @@ const Post = () => {
                         </div>
                       </footer>
 
-                      <p className='text-gray-500 dark:text-gray-400'>{comment.comment}</p>
+                      <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
+                        {comment.comment}
+                      </p>
                       {user && (
                         <>
                           {user.email === comment.userEmail && (

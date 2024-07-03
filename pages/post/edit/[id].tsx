@@ -193,7 +193,6 @@ const PostEdit = () => {
                     <RadioGroup
                       aria-labelledby='demo-radio-buttons-group-label'
                       name={field.value}
-                      value={field}
                       onChange={(e) => {
                         field.onChange(e)
                         setCategori(e.target.value)
@@ -264,6 +263,7 @@ const PostEdit = () => {
                   defaultValue={post?.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
+                <Richedita onChange={handleEditorChange} value={post?.context} />
 
                 <FormLabel id='demo-radio-buttons-group-label'>
                   公開について<span className='text-red-600'>*</span>
@@ -297,7 +297,6 @@ const PostEdit = () => {
                     </RadioGroup>
                   )}
                 />
-                {/* <Richedita onChange={handleEditorChange} value={post.context} /> */}
                 {/* 
                 <div className='my-8'>
                   <label htmlFor='file-input'>他の写真（最大1枚）</label> */}
@@ -319,7 +318,7 @@ const PostEdit = () => {
                 {/* </div> */}
 
                 <div className='flex justify-center'>
-                  <SiteButton onClick={updatePost} text='更新する' className=''/>
+                  <SiteButton onClick={updatePost} text='更新する' className='' />
                 </div>
               </Stack>
             </div>

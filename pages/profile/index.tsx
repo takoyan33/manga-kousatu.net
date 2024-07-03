@@ -19,10 +19,11 @@ export default function Profile() {
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
-  const [onePiece, setOnePiece] = useState([])
-  const [kingdom, setKingdom] = useState([])
-  const [tokyo, setTokyo] = useState([])
-  const [kaisen, setKaisen] = useState([])
+  const [onePiece, setOnePiece] = useState<Array<GetPost>>([])
+  console.log(onePiece)
+  const [kingdom, setKingdom] = useState<Array<GetPost>>([])
+  const [tokyo, setTokyo] = useState<Array<GetPost>>([])
+  const [kaisen, setKaisen] = useState<Array<GetPost>>([])
 
   const myOnePosts = query(
     databaseRef,
@@ -56,6 +57,7 @@ export default function Profile() {
           //スプレッド構文で展開して、新しい配列を作成
         }),
       )
+      console.log(onePiece)
     })
   }
 
@@ -140,15 +142,7 @@ export default function Profile() {
   ]
 
   const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-  }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.6
     const x = cx + radius * Math.cos(-midAngle * RADIAN)
     const y = cy + radius * Math.sin(-midAngle * RADIAN)
@@ -205,6 +199,7 @@ export default function Profile() {
             <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
           </PieChart>
         </ResponsiveContainer>
+        {!MANGA_DATA && <p>データがありません</p>}
       </div>
 
       <TextField

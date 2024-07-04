@@ -9,11 +9,11 @@ import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/co
 import { useGetLikedPosts, useGetMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
+import { postsRef } from 'layouts/utils/post'
 
 export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
-  const databaseRef = collection(database, 'posts')
   const [users, setUsers] = useState(null)
   //データベースを取得
   const [posts, setPostData] = useState([])
@@ -25,24 +25,24 @@ export default function Profile() {
   const [kaisen, setKaisen] = useState([])
 
   const myOnePosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', 'ONEPIECE'),
+    where('category', '==', 'ONEPIECE'),
   )
   const myKaisenPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', '呪術廻戦'),
+    where('category', '==', '呪術廻戦'),
   )
   const myTokyoPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', '東京リベンジャーズ'),
+    where('category', '==', '東京リベンジャーズ'),
   )
   const MyKingPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', 'キングダム'),
+    where('category', '==', 'キングダム'),
   )
 
   const getDataone = async () => {

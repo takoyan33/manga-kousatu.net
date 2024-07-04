@@ -18,6 +18,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import { query, orderBy } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
+import { postsRef, usersRef } from 'layouts/utils/post'
 
 export const getStaticPaths = async () => {
   const res = await fetch(
@@ -59,12 +60,10 @@ export const getStaticProps = async (context) => {
 
 const Daitails = ({ post }) => {
   const [users, setUsers] = useState(null)
-  const databaseRef = collection(database, 'posts')
-  const usersRef = collection(database, 'users')
   const your = query(usersRef, where('email', '==', post.fields.email.stringValue))
   //データベースを取得
   const [firedata, setFiredata] = useState([])
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const q = query(postsRef, orderBy('timestamp', 'desc'))
   const router = useRouter()
   const { id } = router.query
   const auth = getAuth()

@@ -1,9 +1,9 @@
 import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore'
 import { database } from 'firebaseConfig'
+import { usersRef } from 'layouts/utils/post'
 
 //自分のuserを取得
-export const useGetMyUser = async (setUsers, userEmail) => {
-  const usersRef = collection(database, 'users')
+export const useGetMyUser = async (setUsers, userEmail: string) => {
   const myUser = query(usersRef, where('email', '==', userEmail))
 
   onSnapshot(myUser, (querySnapshot) => {
@@ -12,8 +12,7 @@ export const useGetMyUser = async (setUsers, userEmail) => {
 }
 
 //他のuserを取得
-export const useGetOtherUser = async (setUsers, userid) => {
-  const usersRef = collection(database, 'users')
+export const useGetOtherUser = async (setUsers, userid: string) => {
   const otherUser = query(usersRef, where('userid', '==', userid))
 
   onSnapshot(otherUser, (querySnapshot) => {
@@ -23,8 +22,6 @@ export const useGetOtherUser = async (setUsers, userid) => {
 
 //user全体を取得
 export const useGetUsers = async (setUsers) => {
-  const usersRef = collection(database, 'users')
-
   await getDocs(usersRef).then((response) => {
     //コレクションのドキュメントを取得
     setUsers(

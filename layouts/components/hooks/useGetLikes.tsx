@@ -3,8 +3,8 @@ import { database } from 'firebaseConfig'
 import { successNotify, errorNotify } from 'layouts/components/text'
 
 //いいねの追加
-export const LikeAdd = (routerid, likes, email) => {
-  let post = doc(database, 'posts', routerid)
+export const LikeAdd = (routerId: string, likes: number, email: string) => {
+  let post = doc(database, 'posts', routerId)
   updateDoc(post, {
     likes: likes + 1,
     likesEmail: arrayUnion(email),
@@ -22,7 +22,7 @@ export const LikeAdd = (routerid, likes, email) => {
 }
 
 //いいねの削除
-export const LikeDelete = (routerid, likes) => {
+export const LikeDelete = (routerid: string, likes: number) => {
   let post = doc(database, 'posts', routerid)
   updateDoc(post, {
     likes: likes - 1,

@@ -26,7 +26,7 @@ export const POST_CATEGORIES = [
   },
 ]
 
-export const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#ff6361', '#8884d8', '#C1C1C1']
+export const COLORS: string[] = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#ff6361', '#8884d8', '#C1C1C1']
 
 export const DISPLAY_DATA = [
   {

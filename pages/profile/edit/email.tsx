@@ -7,11 +7,11 @@ import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import { CommonHead } from 'layouts/components/ui'
+import { postsRef } from 'layouts/utils/post'
 
 export default function Emaildedit() {
   const [email, setEmail] = useState<string>('')
   const router = useRouter()
-  const databaseRef = collection(database, 'posts')
   const [firedata, setFiredata] = useState([])
   const auth = getAuth()
   const user = auth.currentUser
@@ -30,7 +30,7 @@ export default function Emaildedit() {
   }, [])
 
   const getallPost = async () => {
-    await getDocs(databaseRef).then((response) => {
+    await getDocs(postsRef).then((response) => {
       setFiredata(
         response.docs.map((data) => {
           return { ...data.data(), id: data.id }

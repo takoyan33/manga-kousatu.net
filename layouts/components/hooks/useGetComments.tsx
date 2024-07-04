@@ -13,7 +13,7 @@ import { successNotify, errorNotify } from 'layouts/components/text'
 
 //特定の投稿のコメントを全て取得
 //一旦ストップ 投稿時にエラーが出る
-export const getComments = async (setComments, routerId) => {
+export const getComments = async (setComments, routerId: string) => {
   const commentseRef = collection(database, 'comments')
   const postComments = await query(commentseRef, where('postid', '==', routerId))
   try {

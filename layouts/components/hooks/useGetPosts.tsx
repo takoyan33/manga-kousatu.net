@@ -11,6 +11,7 @@ import {
 import useSWR from 'swr'
 import { useState, useEffect } from 'react'
 import { database } from 'firebaseConfig'
+import { postsRef } from 'layouts/utils/post'
 
 //新しいpostを取得
 export const useFetchPosts = () => {
@@ -18,8 +19,7 @@ export const useFetchPosts = () => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const databaseRef = collection(database, 'posts')
-    const descPost = query(databaseRef, where('display', '==', true))
+    const descPost = query(postsRef, where('display', '==', true))
 
     const unsubscribe = onSnapshot(descPost, (querySnapshot) => {
       const postsData = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -36,8 +36,7 @@ export const useFetchPosts = () => {
 
 //古いpostを取得
 export const useGetOldPosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const oldPost = query(databaseRef, orderBy('timestamp'))
+  const oldPost = query(postsRef, orderBy('timestamp'))
 
   onSnapshot(oldPost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -46,8 +45,7 @@ export const useGetOldPosts = async (setPostData) => {
 
 //いいね順でpostを取得
 export const useGetLikePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const likePost = query(databaseRef, orderBy('likes', 'desc'))
+  const likePost = query(postsRef, orderBy('likes', 'desc'))
 
   onSnapshot(likePost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -56,8 +54,7 @@ export const useGetLikePosts = async (setPostData) => {
 
 //ネタバレ有りでpostを取得
 export const useGetNetabrePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const netabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ有'))
+  const netabarePost = query(postsRef, where('netabare', '==', 'ネタバレ有'))
 
   onSnapshot(netabarePost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -66,8 +63,7 @@ export const useGetNetabrePosts = async (setPostData) => {
 
 //ネタバレなしでpostを取得
 export const useGetNoNetabrePosts = async (setPostData) => {
-  const databaseRef = collection(database, 'posts')
-  const noNetabarePost = query(databaseRef, where('netabare', '==', 'ネタバレ無'))
+  const noNetabarePost = query(postsRef, where('netabare', '==', 'ネタバレ無'))
 
   onSnapshot(noNetabarePost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -75,9 +71,8 @@ export const useGetNoNetabrePosts = async (setPostData) => {
 }
 
 //ユーザーの投稿データを取得
-export const useGetMyPosts = async (setPostData, myEmail) => {
-  const databaseRef = collection(database, 'posts')
-  const myPosts = query(databaseRef, where('email', '==', myEmail))
+export const useGetMyPosts = async (setPostData, myEmail: string) => {
+  const myPosts = query(postsRef, where('email', '==', myEmail))
 
   onSnapshot(myPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -85,9 +80,8 @@ export const useGetMyPosts = async (setPostData, myEmail) => {
 }
 
 //自分がいいねした投稿データを取得
-export const useGetLikedPosts = async (setLikedPosts, myEmail) => {
-  const databaseRef = collection(database, 'posts')
-  const myLikedPosts = query(databaseRef, where('likes_email', 'array-contains', myEmail))
+export const useGetLikedPosts = async (setLikedPosts, myEmail: string) => {
+  const myLikedPosts = query(postsRef, where('likes_email', 'array-contains', myEmail))
 
   onSnapshot(myLikedPosts, (querySnapshot) => {
     setLikedPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -95,7 +89,7 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail) => {
 }
 
 //特定のpostを取得
-export const useGetPost = async (setSinglePost, routerId) => {
+export const useGetPost = async (setSinglePost, routerId: string) => {
   try {
     const ref = await doc(database, 'posts', routerId)
     const snap = await getDoc(ref)
@@ -105,9 +99,8 @@ export const useGetPost = async (setSinglePost, routerId) => {
   }
 }
 //特定ユーザーのpostsを取得
-export const useGetUsersPosts = async (setPostData, userid) => {
-  const postsRef = collection(database, 'posts')
-  const userPosts = query(postsRef, where('userid', '==', userid))
+export const useGetUsersPosts = async (setPostData, userId: string) => {
+  const userPosts = query(postsRef, where('userid', '==', userId))
 
   onSnapshot(userPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -132,9 +125,8 @@ export const useGetUsersPosts = async (setPostData, userid) => {
 
 //リロード時にエラーになる
 //特定カテゴリの新しい投稿を取得
-export const useGetCategoriPosts = async (setPostData, postCategori) => {
-  const postRef = collection(database, 'posts')
-  const categoriPosts = query(postRef, where('categori', '==', postCategori))
+export const useGetCategoriPosts = async (setPostData, postCategory: string) => {
+  const categoriPosts = query(postsRef, where('categori', '==', postCategory))
 
   onSnapshot(categoriPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -142,9 +134,8 @@ export const useGetCategoriPosts = async (setPostData, postCategori) => {
 }
 
 //特定カテゴリの古い投稿を取得
-export const useGetCategoriOldPosts = async (setPostData, postCategori) => {
-  const postRef = collection(database, 'posts')
-  const categoriPosts = query(postRef, where('categori', '==', postCategori), orderBy('timestamp'))
+export const useGetCategoriOldPosts = async (setPostData, postCategory: string) => {
+  const categoriPosts = query(postsRef, where('categori', '==', postCategory), orderBy('timestamp'))
 
   onSnapshot(categoriPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -152,11 +143,10 @@ export const useGetCategoriOldPosts = async (setPostData, postCategori) => {
 }
 
 //特定カテゴリのいいね順の投稿を取得
-export const useGetCategoriLikePosts = async (setPostData, postCategori) => {
-  const postRef = collection(database, 'posts')
+export const useGetCategoriLikePosts = async (setPostData, postCategory: string) => {
   const categoriPosts = query(
-    postRef,
-    where('categori', '==', postCategori),
+    postsRef,
+    where('categori', '==', postCategory),
     orderBy('likes', 'desc'),
   )
 

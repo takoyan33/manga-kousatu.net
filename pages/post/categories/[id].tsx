@@ -16,6 +16,7 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
+import { postsRef } from 'layouts/utils/post'
 
 export const getStaticPaths = async () => {
   const res = await fetch(
@@ -55,13 +56,12 @@ export const getStaticProps = async (context) => {
 }
 
 const Details = ({ post }) => {
-  const databaseRef = collection(database, 'posts')
   //データベースを取得
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const q = query(postsRef, orderBy('timestamp', 'desc'))
   //新しい順
-  const u = query(databaseRef, orderBy('timestamp'))
+  const u = query(postsRef, orderBy('timestamp'))
   //古い順
-  const f = query(databaseRef, orderBy('likes', 'desc'))
+  const f = query(postsRef, orderBy('likes', 'desc'))
   //いいね数順
   const [posts, setPosts] = useState([])
 

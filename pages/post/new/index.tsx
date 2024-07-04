@@ -27,6 +27,7 @@ import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import dynamic from 'next/dynamic'
+import { postsRef } from 'layouts/utils/post'
 
 // フォームの型
 interface RegisterPostParams {
@@ -50,8 +51,7 @@ export default function Post() {
   const [processing, setProcessing] = useState<boolean>(false)
   const [tags, setTags] = useState<string[]>(['最終回'])
   const [context, setContext] = useState<string>('')
-  const databaseRef = collection(database, 'posts')
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState<File | null>(null)
   const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')

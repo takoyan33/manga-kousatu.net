@@ -9,6 +9,7 @@ import { useRouter } from 'next/router'
 import { getAuth } from 'firebase/auth'
 import { query, orderBy } from 'firebase/firestore'
 import React from 'react'
+import { postsRef } from 'layouts/utils/post'
 
 // type Props = {
 //   getallPost?: () => Promise<void>;
@@ -20,12 +21,11 @@ import React from 'react'
 export const Changetab = React.memo(({ getallOldpost, getallPost, getallLikepost }) => {
   const [firedata, setFiredata] = useState([])
 
-  const databaseRef = collection(database, 'posts')
-  const q = query(databaseRef, orderBy('timestamp', 'desc'))
+  const q = query(postsRef, orderBy('timestamp', 'desc'))
   //新しい順
-  const u = query(databaseRef, orderBy('timestamp'))
+  const u = query(postsRef, orderBy('timestamp'))
   //古い順
-  const f = query(databaseRef, orderBy('likes', 'desc'))
+  const f = query(postsRef, orderBy('likes', 'desc'))
   //いいね数順
 
   return (

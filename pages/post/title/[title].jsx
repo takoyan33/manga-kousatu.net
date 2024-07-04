@@ -25,7 +25,6 @@ const Post = () => {
   const [createtime, setCreatetime] = useState('')
   const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
-  const databaseRef = collection(database, 'posts')
   //データベースを取得
   const [createObjectURL, setCreateObjectURL] = useState(null)
   const [firedata, setFiredata] = useState([])

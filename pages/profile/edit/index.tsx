@@ -27,15 +27,14 @@ import { GetUser } from 'types/user'
 import { ToastContainer } from 'react-toastify'
 
 export default function Edit() {
-  const [image, setImage] = useState<string>()
+  const { user } = useAuthContext()
+  const [image, setImage] = useState<any>()
   const [result, setResult] = useState<string>('')
   const [users, setUsers] = useState<Array<GetUser>>([])
   const router = useRouter()
-  const usersRef = collection(database, 'users')
-  const [createObjectURL, setCreateObjectURL] = useState<string>(null)
+  const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [username, setUsername] = useState<string>(null)
   const [bio, setBio] = useState<string>(null)
-  const { user } = useAuthContext()
   const [selected, setSelected] = useState<string[]>([''])
 
   useEffect(() => {
@@ -44,12 +43,11 @@ export default function Edit() {
     } else {
       useGetMyUser(setUsers, user.email)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const uploadImage = (event) => {
+  const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      if (event === '') {
+      if (!event) {
         setImage('')
         setCreateObjectURL('')
       } else {
@@ -63,7 +61,7 @@ export default function Edit() {
     }
   }
 
-  const updateUserData = async (id) => {
+  const updateUserData = async (id: string) => {
     //更新する
     let fieldToEdit = doc(database, 'users', id)
     //セットしたIDをセットする
@@ -160,7 +158,7 @@ export default function Edit() {
                       />
                     </div>
                     <label className='my-4 text-center' htmlFor='outlined-name'>
-                      名前（最大10文字）
+                      名前（最大10文字）<span className='text-red-600'>*</span>
                     </label>
                     <div className='text-center'>
                       <input
@@ -172,19 +170,22 @@ export default function Edit() {
                       />
                     </div>
                     <br />
-                    <label className='my-4 text-center'>現在のプロフィール：（最大30文字）</label>
+                    <label className='my-4 text-center'>プロフィール（最大30文字）</label>
                     <div className='text-center'>
                       <input
                         id='outlined-name'
                         className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                         defaultValue={user.bio}
                         type='text'
+                        placeholder='よろしくお願いします'
                         onChange={(event) => setBio(event.target.value)}
                       />
                     </div>
                     <br />
-                    <p className='my-4 text-center'>好きな漫画（最大10作品）*</p>
-                    <div className='m-auto w-80 text-center'>
+                    <p className='my-4 text-center'>
+                      好きな漫画（最大10作品）<span className='text-red-600'>*</span>
+                    </p>
+                    <div className='m-auto text-center'>
                       <TagsInput
                         value={user.favorite}
                         onChange={setSelected}
@@ -193,7 +194,7 @@ export default function Edit() {
                       />
                     </div>
                     <br />
-                    <div className='text-center'>
+                    <div className='my-4 text-center'>
                       <Button
                         variant='outlined'
                         key={user.id}
@@ -204,7 +205,7 @@ export default function Edit() {
                       </Button>
                     </div>
                     <br />
-                    <div className='text-center'>
+                    <div className='my-4 text-center'>
                       <Button variant='outlined' className='m-auto w-80 '>
                         <Link href='/profile'>戻る</Link>
                       </Button>

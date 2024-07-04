@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { database } from 'firebaseConfig'
 import Link from 'next/link'
-import { collection, getDocs, query, where } from 'firebase/firestore'
+import { getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
@@ -11,39 +10,38 @@ import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
+import { postsRef } from 'layouts/utils/post'
 
 export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
-  const databaseRef = collection(database, 'postsData')
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
-  const [onePiece, setOnePiece] = useState<Array<GetPost>>([])
-  console.log(onePiece)
-  const [kingdom, setKingdom] = useState<Array<GetPost>>([])
-  const [tokyo, setTokyo] = useState<Array<GetPost>>([])
-  const [kaisen, setKaisen] = useState<Array<GetPost>>([])
+  const [onePiece, setOnePiece] = useState([])
+  const [kingdom, setKingdom] = useState([])
+  const [tokyo, setTokyo] = useState([])
+  const [kaisen, setKaisen] = useState([])
 
   const myOnePosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', 'ONEPIECE'),
+    where('category', '==', 'ONEPIECE'),
   )
   const myKaisenPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', '呪術廻戦'),
+    where('category', '==', '呪術廻戦'),
   )
   const myTokyoPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', '東京リベンジャーズ'),
+    where('category', '==', '東京リベンジャーズ'),
   )
   const MyKingPosts = query(
-    databaseRef,
+    postsRef,
     where('email', '==', user.email),
-    where('categori', '==', 'キングダム'),
+    where('category', '==', 'キングダム'),
   )
 
   const getOnePosts = async () => {
@@ -134,6 +132,8 @@ export default function Profile() {
     }
   }
 
+  console.log(postsData)
+  console.log(onePiece.length)
   const MANGA_DATA = [
     { name: 'ONE PIECE', value: onePiece.length },
     { name: '呪術廻戦', value: kaisen.length },
@@ -199,7 +199,6 @@ export default function Profile() {
             <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
           </PieChart>
         </ResponsiveContainer>
-        {!MANGA_DATA && <p>データがありません</p>}
       </div>
 
       <TextField
@@ -293,7 +292,6 @@ export default function Profile() {
               .filter((post) => {
                 if (searchName === '') {
                   return post
-                  //そのまま返す
                 } else if (
                   post.title.toLowerCase().includes(searchName.toLowerCase())
                   //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない

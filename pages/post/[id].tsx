@@ -78,7 +78,7 @@ const Post = () => {
   const [categoriPosts, setCategoriPosts] = useState<string>(null)
   const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
-  const routerid = router.query.id
+  const routerid: string | string[] = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
   const styles = { whiteSpace: 'pre-line' }
@@ -112,43 +112,38 @@ const Post = () => {
   }, [router])
 
   //記事の削除
-  const deletePost = () => {
+  const deletePost = (routerId: string) => {
     //data.idを送っているのでidを受け取る
-    let deletePost = doc(database, 'posts', routerid.toString())
+    let deletePost = doc(database, 'posts', routerId.toString())
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     if (checkSaveFlg) {
       deleteDoc(deletePost)
-        //記事を削除する
         .then(() => {
           successNotify('記事を削除しました')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
-          getallPost()
         })
         .catch(() => {
           errorNotify('失敗しました')
         })
     } else {
-      setTimeout(() => {
-        router.push('/top')
-      }, 2000)
     }
   }
 
   //いいねの追加
-  const LikeAdd = (routerid, likes) => {
-    let post = doc(database, 'posts', routerid)
+  const LikeAdd = (routerId: string | string[], likes: number, email: string) => {
+    let post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes + 1,
-      likesEmail: arrayUnion(user.email),
+      likesEmail: arrayUnion(email),
     })
       .then(() => {
         setOn((prev) => !prev)
         setLikecount(0)
         setTimeout(() => {
-          useGetPost(setSinglePost, routerid)
+          useGetPost(setSinglePost, routerId)
         }, 2000)
       })
       .catch((err) => {
@@ -157,15 +152,15 @@ const Post = () => {
   }
 
   //いいねの削除
-  const LikeDelete = (routerid, likes) => {
-    let post = doc(database, 'posts', routerid)
+  const LikeDelete = (routerId: string | string[], likes: number, email: string) => {
+    let post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes - 1,
-      likesEmail: arrayRemove(user.email),
+      likesEmail: arrayRemove(email),
     })
       .then(() => {
         setLikecount(0)
-        useGetPost(setSinglePost, routerid)
+        useGetPost(setSinglePost, routerId)
       })
       .catch((err) => {
         console.log(err)
@@ -300,7 +295,7 @@ const Post = () => {
                         <ListItemIcon>
                           <SendIcon />
                         </ListItemIcon>
-                        <button onClick={deletePost}>記事を削除する</button>
+                        <button onClick={() => deletePost(routerid)}>記事を削除する</button>
                       </ListItemButton>
                     </List>
                   </>
@@ -479,7 +474,7 @@ const Post = () => {
                         <p>いいね済み</p>
                         <button
                           className='my-2 inline'
-                          onClick={() => LikeDelete(routerid, singlePost.likes)}
+                          onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
                         >
                           <span className='py-4 text-pink-400 hover:text-pink-700'>
                             <FavoriteIcon />
@@ -488,7 +483,7 @@ const Post = () => {
                         </button>
                       </>
                     ) : (
-                      <button onClick={() => LikeAdd(routerid, singlePost.likes)}>
+                      <button onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}>
                         <FavoriteIconAnim on={on} />
                         <span>いいねする</span>
                       </button>

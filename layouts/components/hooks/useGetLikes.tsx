@@ -10,11 +10,11 @@ export const LikeAdd = (routerId: string, likes: number, email: string) => {
     likesEmail: arrayUnion(email),
   })
     .then(() => {
-      setOn((prev) => !prev)
-      setLikecount(0)
-      setTimeout(() => {
-        useGetPost(setSinglePost, routerid)
-      }, 2000)
+      // setOn((prev) => !prev)
+      // setLikecount(0)
+      // setTimeout(() => {
+      //   useGetPost(setSinglePost, routerid)
+      // }, 2000)
     })
     .catch((err) => {
       console.log(err)
@@ -22,15 +22,15 @@ export const LikeAdd = (routerId: string, likes: number, email: string) => {
 }
 
 //いいねの削除
-export const LikeDelete = (routerid: string, likes: number) => {
+export const LikeDelete = (routerid: string, likes: number, email: string) => {
   let post = doc(database, 'posts', routerid)
   updateDoc(post, {
     likes: likes - 1,
-    likesEmail: arrayRemove(user.email),
+    likesEmail: arrayRemove(email),
   })
     .then(() => {
-      setLikecount(0)
-      useGetPost(setSinglePost, routerid)
+      // setLikecount(0)
+      // useGetPost(setSinglePost, routerid)
     })
     .catch((err) => {
       console.log(err)

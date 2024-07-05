@@ -12,6 +12,7 @@ import Image from 'react-image-resizer'
 import Category from '../text/Category'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { SingleGetPostParams } from 'types/post'
+import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
 export const CardPost = React.memo(
@@ -28,7 +29,7 @@ export const CardPost = React.memo(
     createTime,
     selected,
   }: SingleGetPostParams) => {
-    const [users, setUsers] = useState(null)
+    const [users, setUsers] = useState<Array<GetUser>>([])
     const [comments, setComments] = useState('')
     const style: React.CSSProperties = {
       whiteSpace: 'pre-line',
@@ -114,21 +115,22 @@ export const CardPost = React.memo(
                         return (
                           <>
                             {email === user.email && (
-                              <div key={user.id} className=''>
+                              <div key={user.id}>
                                 <div className='m-auto my-2 flex py-4'>
-                                  <dl className=''>
+                                  <dl>
                                     <Avatar
                                       className='m-auto max-w-sm border text-center'
                                       sx={{ width: 40, height: 40 }}
                                       alt='投稿者プロフィール'
-                                      src={user.profileimage}
+                                      src={user.profileImage}
                                     />
                                   </dl>
                                   <dl className='pt-2'>
-                                    <span className='my-2 ml-2 '>
-                                      {user.username}
-                                      <FavoriteIcon /> {likes}
+                                    {user.userName}
+                                    <span className='my-2 ml-2 text-pink-400'>
+                                      <FavoriteIcon />
                                     </span>
+                                    {likes}
                                   </dl>
                                 </div>
                               </div>

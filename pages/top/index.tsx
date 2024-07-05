@@ -10,7 +10,7 @@ import {
   useGetNetabrePosts,
   useGetNoNetabrePosts,
 } from 'layouts/components/hooks'
-import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
+import { POST_CATEGORIES, COPY_WRITES, CommonHead, CardPost } from 'layouts/components/ui'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -26,10 +26,9 @@ export default function Index() {
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
-  const { posts, loading } = useFetchPosts()
 
   const displayMore = () => {
-    if (loadIndex > posts.length) {
+    if (loadIndex > postData.length) {
       setIsEmpty(true)
     } else {
       setLoadIndex(loadIndex + 3)
@@ -42,6 +41,10 @@ export default function Index() {
     value: string
     onClick: () => void
   }
+
+  useEffect(() => {
+    useFetchPosts(setPostData)
+  }, [])
 
   const SORT_LIST: NetabareItem[] = [
     {
@@ -80,7 +83,7 @@ export default function Index() {
   ]
 
   const filterPostData = () => {
-    return posts
+    return postData
       .filter((post) => {
         if (searchName === '') {
           return true
@@ -93,6 +96,7 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
+  console.log(postData)
 
   // interface CategoryParams {
   //   id: string | ParsedUrlQueryInput
@@ -103,13 +107,7 @@ export default function Index() {
     <div>
       <CommonHead />
       <div className='m-auto my-5 flex justify-center text-center'>
-        <Image
-        className='m-auto' 
-        height={100} 
-        width={200} 
-        src='/logo.png'
-        alt='logo'
-        />
+        <Image className='m-auto' height={100} width={200} src='/logo.png' alt='logo' />
       </div>
       <p className='my-5 text-center'>
         Manga Studyでは、人気漫画の考察を
@@ -125,9 +123,9 @@ export default function Index() {
       <h2 className='my-12 text-center text-2xl font-semibold'>投稿一覧</h2>
       <p className='text-1xl text-center'>
         {searchName === ''
-          ? `投稿数 ${posts.length}件`
+          ? `投稿数 ${postData.length}件`
           : `検索結果 ${
-              posts.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
+              postData.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
                 .length
             }件`}
       </p>
@@ -196,13 +194,9 @@ export default function Index() {
       </div>
 
       <div className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'>
-        {posts.length === 0 ? (
+        {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
-        ) : posts.filter((post) => {
-            if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
-              return post
-            }
-          }).length === 0 ? (
+        ) : filteredPosts.length === 0 ? (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           filteredPosts.map((post) => (
@@ -226,7 +220,7 @@ export default function Index() {
       </div>
 
       <div className='text-center'>
-        {posts.length > 3 && (
+        {postData.length > 3 && (
           <SiteButton
             href=''
             text='さらに表示'
@@ -237,10 +231,9 @@ export default function Index() {
         )}
       </div>
       <div className='my-4'>
-        <p>© 尾田栄一郎／集英社・フジテレビ・東映アニメーション</p>
-        <p>© 和久井健・講談社／アニメ「東京リベンジャーズ」</p>
-        <p>©原泰久／集英社・キングダム製作委員会</p>
-        <p>©芥見下々／集英社・呪術廻戦製作委員会</p>
+        {COPY_WRITES.map((copyWrite, index) => (
+          <p key={index}>{copyWrite}</p>
+        ))}
       </div>
     </div>
   )

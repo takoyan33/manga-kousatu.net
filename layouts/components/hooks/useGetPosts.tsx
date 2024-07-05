@@ -75,7 +75,7 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string) => {
 }
 
 //特定のpostを取得
-export const useGetPost = async (setSinglePost, routerId: string) => {
+export const useGetPost = async (setSinglePost, routerId) => {
   try {
     const ref = await doc(database, 'posts', routerId)
     const snap = await getDoc(ref)

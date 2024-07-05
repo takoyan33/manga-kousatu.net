@@ -70,7 +70,7 @@ const schema = yup.object({
 
 const Post = () => {
   const [comment, setComment] = useState<string>('')
-  const [comments, setComments] = useState<Array<GetComment>>([])
+  const [comments, setComments] = useState([])
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [singlePost, setSinglePost] = useState<GetPost>(null)
   const [likecount, setLikecount] = useState<number>(0)
@@ -133,7 +133,7 @@ const Post = () => {
   }
 
   //いいねの追加
-  const LikeAdd = (routerId: string | string[], likes: number, email: string) => {
+  const LikeAdd = (routerId, likes: number, email: string) => {
     let post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes + 1,
@@ -152,7 +152,7 @@ const Post = () => {
   }
 
   //いいねの削除
-  const LikeDelete = (routerId: string | string[], likes: number, email: string) => {
+  const LikeDelete = (routerId, likes: number, email: string) => {
     let post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes - 1,

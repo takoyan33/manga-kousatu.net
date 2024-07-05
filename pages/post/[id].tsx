@@ -81,7 +81,6 @@ const Post = () => {
   const routerid: string | string[] = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
-  const styles = { whiteSpace: 'pre-line' }
 
   // const URL = `http://localhost:8080/post/${routerid}`
   // const QUOTE = `記事をシェアしました。　${singlePost.title}　漫画考察.net`
@@ -440,7 +439,7 @@ const Post = () => {
                 </div> */}
 
                 {singlePost?.context && (
-                  <p className='text-left' style={styles}>
+                  <p className='text-left' style={{ whiteSpace: 'pre-line' }}>
                     {parse(singlePost.context)}
                   </p>
                 )}

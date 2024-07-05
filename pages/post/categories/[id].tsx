@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 import {
-  useGetCategoryPosts,
+  // useGetCategoryPosts,
   useGetCategoriOldPosts,
   useGetCategoriLikePosts,
 } from 'layouts/components/hooks'

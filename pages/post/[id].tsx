@@ -49,14 +49,14 @@ import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import SendIcon from '@mui/icons-material/Send'
-import {
-  FacebookShareButton,
-  TwitterShareButton,
-  FacebookIcon,
-  LineShareButton,
-  LineIcon,
-  TwitterIcon,
-} from 'react-share'
+// import {
+//   FacebookShareButton,
+//   TwitterShareButton,
+//   FacebookIcon,
+//   LineShareButton,
+//   LineIcon,
+//   TwitterIcon,
+// } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
 import Modal from 'react-modal'
 import { GetPost } from 'types/post'

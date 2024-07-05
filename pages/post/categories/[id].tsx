@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import { postsRef } from 'layouts/utils/post'
+import { GetPost } from 'types/post'
 
 export const getStaticPaths = async () => {
   const res = await fetch(
@@ -63,10 +64,10 @@ const Details = ({ post }) => {
   //古い順
   const f = query(postsRef, orderBy('likes', 'desc'))
   //いいね数順
-  const [posts, setPosts] = useState([])
+  const [posts, setPosts] = useState<any>([])
 
   const router = useRouter()
-  const [searchName, setSearchName] = useState('')
+  const [searchName, setSearchName] = useState<any>('')
 
   const useGetPosts = async () => {
     await getDocs(q).then((querySnapshot) => {
@@ -78,7 +79,7 @@ const Details = ({ post }) => {
             return { ...data.data(), id: data.id }
             //スプレッド構文で展開して、新しい配列を作成
           })
-          .filter((data) => {
+          .filter((data: any) => {
             if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す
@@ -103,7 +104,7 @@ const Details = ({ post }) => {
             return { ...data.data(), id: data.id }
             //スプレッド構文で展開して、新しい配列を作成
           })
-          .filter((data) => {
+          .filter((data: any) => {
             if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す
@@ -128,7 +129,7 @@ const Details = ({ post }) => {
             return { ...data.data(), id: data.id }
             //スプレッド構文で展開して、新しい配列を作成
           })
-          .filter((data) => {
+          .filter((data: any) => {
             if (data.category === post.fields.id.stringValue) {
               return data
               //そのまま返す

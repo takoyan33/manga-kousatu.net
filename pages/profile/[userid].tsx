@@ -11,7 +11,7 @@ const Post = () => {
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const router = useRouter()
-  const { userid } = router.query
+  const { userid }: any = router.query
   const auth = getAuth()
   const user = auth.currentUser
 

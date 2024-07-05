@@ -10,14 +10,15 @@ import { useGetLikedPosts, useGetMyUser } from 'layouts/components/hooks'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { postsRef } from 'layouts/utils/post'
+import { GetPost } from 'types/post'
 
 export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
   const [users, setUsers] = useState(null)
   //データベースを取得
-  const [posts, setPostData] = useState([])
-  const [likedPosts, setLikedPosts] = useState([])
+  // const [posts, setPostData] = useState([])
+  const [likedPosts, setLikedPosts] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState('')
   const [onpiece, setOnpiece] = useState([])
   const [kingdom, setKingdom] = useState([])
@@ -188,11 +189,11 @@ export default function Profile() {
                 key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
-                categori={post.categori}
+                category={post.category}
                 netabare={post.netabare}
                 context={post.context}
-                createtime={post.createtime}
-                displayname={post.displayname}
+                createTime={post.createTime}
+                displayName={post.displayName}
                 email={post.email}
                 id={post.id}
                 photoURL={post.photoURL}

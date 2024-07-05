@@ -24,14 +24,14 @@ const schema = yup.object({
 })
 
 const PostEdit = () => {
-  const [ID, setID] = useState<number>(null)
+  const [ID, setID] = useState<string>(null)
   const [image, setImage] = useState<number>(null)
   const [context, setContext] = useState<string>('')
   const [categori, setCategori] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   //データベースを取得
-  const [post, setPost] = useState<GetPost>()
+  const [post, setPost] = useState<any>()
   const [lengthData, setPostsLength] = useState<number>(null)
   const [netabare, setNetabare] = useState<string>('')
   const [display, setDisplay] = useState<string>('')

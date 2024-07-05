@@ -50,11 +50,11 @@ export default function RegisterProfile() {
       const userRef = await doc(database, 'users', user.uid)
       //写真のurlをセットする
       await setDoc(userRef, {
-        username: username,
+        userName: username,
         bio: bio,
         email: user.email,
-        profileimage: result,
-        userid: user.uid,
+        profileImage: result,
+        userId: user.uid,
         favorite: selected,
         admin: 0,
       })
@@ -94,9 +94,7 @@ export default function RegisterProfile() {
                 <AccountCircle />
               </InputAdornment>
             }
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-              setUsername(event.target.value)
-            }
+            onChange={(event: any) => setUsername(event.target.value)}
           />
         </FormControl>
 
@@ -152,7 +150,7 @@ export default function RegisterProfile() {
           type='text'
           variant='outlined'
           className='m-auto w-80'
-          onChange={(event: React.ChangeEvent<HTMLInputElement>) => setBio(event.target.value)}
+          onChange={(event: any) => setBio(event.target.value)}
         />
         <div>
           <label className='my-4 text-center'>

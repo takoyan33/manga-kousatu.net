@@ -112,7 +112,7 @@ const Post = () => {
   }, [router])
 
   //記事の削除
-  const deletePost = (routerId: string) => {
+  const deletePost = (routerId) => {
     //data.idを送っているのでidを受け取る
     let deletePost = doc(database, 'posts', routerId.toString())
     let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')

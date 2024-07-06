@@ -42,7 +42,7 @@
     "pages/ninjas/[id].tsx",
     "pages/posts/[id].js",
     "pages/post/categories/[id].tsx",
-    "layouts/context/AuthContext.js",
+    "layouts/context/AuthContext.tsx",
     "pages/post/[id].tsx",
     "layouts/components/ui/CardPost.jsx",
     "layouts/components/ui/CardPost.jsx",

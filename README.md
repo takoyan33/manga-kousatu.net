@@ -40,6 +40,28 @@ git add .
 git commit -m " "
 git push
 
+### ディレクトリ構成
+
+```
+.
+├── layouts
+│   ├── api        #firestoreのCRUD処理
+│   ├── assets     #アニメーション素材
+│   ├── components #コンポーネントの記載
+│   ├── types      #型定義
+│   ├── utils      #共通関数
+├── pages
+│   ├── about      #Aboutページ
+│   ├── login      #loginページ
+│   ├── post       #投稿の表示と更新と削除
+│   ├── profile    #プロフィールの表示と更新と削除
+│   ├── register   #registerページ
+│   ├── top        #topページ
+├── public          #写真
+├── stories         #storybook
+├── styles          #cssの設定
+```
+
 ### こだわりポイント
 
 ・firestore でクラッド処理を行なっている点

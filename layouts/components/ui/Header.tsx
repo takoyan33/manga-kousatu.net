@@ -6,8 +6,8 @@ import PersonIcon from '@mui/icons-material/Person'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import Image from 'react-image-resizer'
 import Link from 'next/link'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import {
   AppBar,
   Toolbar,
@@ -25,10 +25,12 @@ import {
 import { useLogOut } from 'layouts/api/auth/useAuth'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { NotificationModal } from 'layouts/components/ui'
+import { useGetMyUser } from 'layouts/components/hooks'
+import { GetUser } from 'types/user'
 
 const ACCOUNT_MENU_ITEMS = [
-  { text: '更新履歴', href: '/releasenotes', icon: <CachedIcon fontSize='small' /> },
   { text: 'About', href: '/about', icon: <Settings fontSize='small' /> },
+  { text: '更新履歴', href: '/releasenotes', icon: <CachedIcon fontSize='small' /> },
 ]
 
 const LOGIN_ADMIN_MENU_ITEMS = [
@@ -46,6 +48,14 @@ export const Header = () => {
   const router = useRouter()
   const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState(false)
+  const [users, setUsers] = useState<Array<GetUser>>([])
+
+  useEffect(() => {
+    if (user) {
+      useGetMyUser(setUsers, user.email)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,28 +82,23 @@ export const Header = () => {
     setNotificationOpen(false)
   }
 
+  console.log(users)
+
   return (
-    <AppBar position='static' color='transparent' className='m-0 w-full'>
-      <Box
-        sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}
-        className='m-0 w-full'
-      >
-        <Link href='/top'>
-          <Toolbar className='m-0 w-full'>
-            <Typography variant='h6' component='div' sx={{ flexGrow: 1, textAlign: 'left' }}>
-              <Image
-                className='m-auto max-w-sm text-center'
-                height={100}
-                width={200}
-                src='/logo.png'
-                alt='logo'
-              />
+    <AppBar position='static' color='transparent'>
+      <div>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
+          <Toolbar style={{ height: '80px' }}>
+            <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
+              <Link href='/top'>
+                <Image height={100} width={200} src='/logo.png' alt='logo' />
+              </Link>
             </Typography>
             <button onClick={handleNotificationOpen}>
               <NotificationsIcon fontSize='small' />
             </button>
             <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
-            <Tooltip title='Account settings'>
+            <Tooltip title='メニュー'>
               <IconButton
                 onClick={handleClick}
                 size='small'
@@ -102,12 +107,22 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                {users &&
+                  users.map((user) => {
+                    return (
+                      <Avatar
+                        sx={{ width: 32, height: 32 }}
+                        src={user.profileImage ? user.profileImage : '/logo.png'}
+                        className='border'
+                      />
+                    )
+                  })}
+                  M
               </IconButton>
             </Tooltip>
           </Toolbar>
-        </Link>
-      </Box>
+        </div>
+      </div>
 
       <Menu
         anchorEl={anchorEl}
@@ -161,12 +176,6 @@ export const Header = () => {
             </MenuItem>
           </>
         )}
-        {ACCOUNT_MENU_ITEMS.map((item) => (
-          <MenuItem key={item.text} onClick={handleClose}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <Link href={item.href}>{item.text}</Link>
-          </MenuItem>
-        ))}
         {user && (
           <>
             {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
@@ -175,14 +184,26 @@ export const Header = () => {
                 <Link href={item.href}>{item.text}</Link>
               </MenuItem>
             ))}
-            <MenuItem>
-              <Button color='inherit' onClick={handleLogout}>
+            <MenuItem style={{ padding: '0 16px' }}>
+              <ListItemIcon>
                 <Logout fontSize='small' />
+              </ListItemIcon>
+              <Button
+                color='inherit'
+                onClick={handleLogout}
+                style={{ fontSize: '16px', padding: '0px' }}
+              >
                 ログアウト
               </Button>
             </MenuItem>
           </>
         )}
+        {ACCOUNT_MENU_ITEMS.map((item) => (
+          <MenuItem key={item.text} onClick={handleClose}>
+            <ListItemIcon>{item.icon}</ListItemIcon>
+            <Link href={item.href}>{item.text}</Link>
+          </MenuItem>
+        ))}
       </Menu>
     </AppBar>
   )

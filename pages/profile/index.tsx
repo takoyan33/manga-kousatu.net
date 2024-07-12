@@ -195,16 +195,14 @@ export default function Profile() {
         {users &&
           users.map((user) => {
             return (
-              <>
-                <ProfileId
-                  key={user.id}
-                  profileImage={user.profileImage}
-                  userName={user.userName}
-                  bio={user.bio}
-                  favorite={user.favorite}
-                  id={''}
-                />
-              </>
+              <ProfileId
+                key={user.id}
+                profileImage={user.profileImage}
+                userName={user.userName}
+                bio={user.bio}
+                favorite={user.favorite}
+                id={''}
+              />
             )
           })}
       </>

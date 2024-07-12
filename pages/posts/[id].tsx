@@ -2,8 +2,7 @@
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, doc, getDoc, updateDoc, deleteDoc } from 'firebase/firestore'
+import { getDocs } from 'firebase/firestore'
 import Grid from '@material-ui/core/Grid'
 import { getAuth } from 'firebase/auth'
 import Button from '@mui/material/Button'
@@ -21,6 +20,7 @@ import BorderColorIcon from '@mui/icons-material/BorderColor'
 import { postsRef, usersRef } from 'layouts/utils/post'
 
 export const getStaticPaths = async () => {
+  // 生成する静的パスのリストを決定
   const res = await fetch(
     'https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts',
   )
@@ -30,6 +30,7 @@ export const getStaticPaths = async () => {
     return data[key]
   })
 
+  // パスを作成
   const paths = array[0].map((post) => {
     return {
       params: { id: post.fields.id.stringValue.toString() },
@@ -38,11 +39,12 @@ export const getStaticPaths = async () => {
 
   return {
     paths,
-    fallback: 'blocking',
+    fallback: 'blocking', //未生成のパスにアクセスされた場合、ビルド時に生成することを指示
   }
 }
 
 export const getStaticProps = async (context) => {
+  // 個々のページに必要なデータを事前に取得
   const id = context.params.id
   const res = await fetch(
     'https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts/' +
@@ -54,7 +56,7 @@ export const getStaticProps = async (context) => {
     props: {
       post: data,
     },
-    revalidate: 10, // ここを追加
+    revalidate: 10, //10秒ごとにデータの更新を確認し、必要に応じて再生成することを指示します。
   }
 }
 
@@ -62,13 +64,9 @@ const Daitails = ({ post }) => {
   const [users, setUsers] = useState(null)
   const your = query(usersRef, where('email', '==', post.fields.email.stringValue))
   //データベースを取得
-  const [firedata, setFiredata] = useState([])
-  const q = query(postsRef, orderBy('timestamp', 'desc'))
   const router = useRouter()
   const { id } = router.query
   const auth = getAuth()
-  const user = auth.currentUser
-  const styles = { whiteSpace: 'pre-line' }
 
   const usersData = async () => {
     //firestoreからデータ取得
@@ -196,7 +194,7 @@ const Daitails = ({ post }) => {
                                 className='m-auto max-w-sm border text-center'
                                 alt='プロフィール'
                                 sx={{ width: 100, height: 100 }}
-                                src={user.profileimage}
+                                src={user.profileImage}
                               />
                             </div>
                           </div>

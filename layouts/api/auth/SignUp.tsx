@@ -66,7 +66,7 @@ export default function SignUp() {
 
   return (
     <>
-      <Stack component='form' className='m-auto' noValidate spacing={2} sx={{ width: '38ch' }}>
+      <div style={{ maxWidth: '320px', margin: '0 auto' }}>
         <ToastContainer />
         <div>
           <label className='my-4 text-center'>
@@ -82,7 +82,7 @@ export default function SignUp() {
           error={Boolean(errors.email)}
           helperText={errors.email?.message}
         />
-        <div>
+        <div className='mt-6'>
           <label className='my-4 text-center'>
             パスワード（8文字以上)<span className='text-red-600'>*</span>
           </label>
@@ -97,7 +97,7 @@ export default function SignUp() {
           error={Boolean(errors.password)}
           helperText={errors.password?.message}
         />
-        <div>
+        <div className='mt-6'>
           <label className='my-4 text-center'>
             確認用パスワード（8文字以上)<span className='text-red-600'>*</span>
           </label>
@@ -118,7 +118,7 @@ export default function SignUp() {
           href=''
           onClick={handleSubmit(handleSignUp)}
           text='新規登録'
-          className='m-auto my-8 w-80 text-center'
+          className='m-auto my-4 w-80 text-center'
         />
         <SiteButton
           href=''
@@ -126,7 +126,7 @@ export default function SignUp() {
           onClick={SignUpWithGoogle}
           className='m-auto my-4 w-80 text-center'
         />
-        <p className='my-4'>
+        <p className='my-8 text-center'>
           登録済みの方はこちら
           <Link href='/login'>
             <span className='text-blue-500 underline'>ログイン</span>
@@ -144,7 +144,7 @@ export default function SignUp() {
             theme='light'
           />
         </p>
-      </Stack>
+      </div>
     </>
   )
 }

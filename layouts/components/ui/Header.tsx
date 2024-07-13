@@ -68,6 +68,7 @@ export const Header = () => {
   const handleLogout = async () => {
     await logout()
     setAnchorEl(null)
+    setUsers([])
     setTimeout(() => {
       router.push('/login')
     }, 2000)
@@ -89,14 +90,16 @@ export const Header = () => {
       <div>
         <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
           <Toolbar style={{ height: '80px' }}>
-            <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
-              <Link href='/top'>
+            <Link href='/top'>
+              <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
                 <Image height={100} width={200} src='/logo.png' alt='logo' />
-              </Link>
-            </Typography>
-            <button onClick={handleNotificationOpen}>
-              <NotificationsIcon fontSize='small' />
-            </button>
+              </Typography>
+            </Link>
+            {user && (
+              <button onClick={handleNotificationOpen}>
+                <NotificationsIcon fontSize='small' />
+              </button>
+            )}
             <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
             <Tooltip title='メニュー'>
               <IconButton
@@ -107,17 +110,16 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                {users &&
-                  users.map((user) => {
-                    return (
-                      <Avatar
-                        sx={{ width: 32, height: 32 }}
-                        src={user.profileImage ? user.profileImage : '/logo.png'}
-                        className='border'
-                      />
-                    )
-                  })}
-                  M
+                {users.map((user) => {
+                  return (
+                    <Avatar
+                      sx={{ width: 32, height: 32 }}
+                      src={user.profileImage}
+                      className='border'
+                    />
+                  )
+                })}
+                {!user && <span>三</span>}
               </IconButton>
             </Tooltip>
           </Toolbar>

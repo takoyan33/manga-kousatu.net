@@ -62,11 +62,11 @@ export default function LoginAuth() {
 
   return (
     <>
-      <Stack component='form' className='m-auto' noValidate spacing={2} sx={{ width: '38ch' }}>
+      <div style={{ maxWidth: '320px', margin: '0 auto' }}>
         <>
           <ToastContainer />
           <div>
-            <label className='my-4 text-center'>
+            <label className='my-4 mt-10 text-center'>
               メールアドレス<span className='text-red-600'>*</span>
             </label>
           </div>
@@ -80,7 +80,7 @@ export default function LoginAuth() {
               error={'email' in errors}
               helperText={errors.email?.message}
             />
-            <div>
+            <div className='mt-6'>
               <label className='my-4 text-center'>
                 パスワード（8文字以上)<span className='text-red-600'>*</span>
               </label>
@@ -98,6 +98,9 @@ export default function LoginAuth() {
               helperText={errors.password?.message}
             />
           </div>
+          <p className='pb-6 pt-6 text-center underline'>
+            <Link href='/profile/edit/password'>パスワードをお忘れの方はこちら</Link>
+          </p>
           <SiteButton
             href=''
             onClick={handleSubmit(handleSignIn)}
@@ -110,21 +113,14 @@ export default function LoginAuth() {
             onClick={SignInWithGoogle}
             className='m-auto my-4 w-80 text-center'
           />
-          <p className='my-4'>
+          <p className='my-8 text-center'>
             ユーザー未登録の方はこちら
             <Link href='/register'>
               <span className='text-blue-500 underline'>新規登録</span>
             </Link>
           </p>
-          <p className='my-4'>
-            パスワードを忘れた方はこちら
-            <br />
-            <Link href='/profile/edit/password'>
-              <span className='text-blue-500 underline'>パスワード再設定</span>
-            </Link>
-          </p>
         </>
-      </Stack>
+      </div>
     </>
   )
 }

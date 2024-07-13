@@ -18,15 +18,19 @@ export default function Password() {
   return (
     <div>
       <CommonHead />
-      <h2 className='my-5'>パスワード再設定</h2>
-
-      <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+      <div style={{ maxWidth: '320px', margin: '0 auto' }}>
+        <h1 className='m-5 my-12 text-center text-2xl font-semibold'>パスワード再設定</h1>
+        <div>
+          <label className='my-4 mt-10 text-center'>
+            メールアドレス<span className='text-red-600'>*</span>
+          </label>
+        </div>
         <TextField
           margin='normal'
           required
           fullWidth
           id='email'
-          label='メールアドレス'
+          label='sample@gmail.com'
           name='email'
           autoComplete='email'
           autoFocus
@@ -37,14 +41,14 @@ export default function Password() {
           送信
         </Button>
 
-        <Grid container sx={{ justifyContent: 'center' }}>
+        <Grid container sx={{ justifyContent: 'center' }} className='my-4'>
           <Grid item>
-            <Link href='login' variant='body2'>
+            <Link href='/login' variant='body2'>
               戻る
             </Link>
           </Grid>
         </Grid>
-      </Box>
+      </div>
 
       {error && <Alert severity='error'>メールアドレスに送信できませんでした</Alert>}
       {success && <Alert severity='success'>メールアドレスに送信しました</Alert>}

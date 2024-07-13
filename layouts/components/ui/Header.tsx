@@ -44,7 +44,7 @@ const LOGIN_ADMIN_MENU_ITEMS = [
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const { user } = useAuthContext()
+  const user: any = useAuthContext()
   const router = useRouter()
   const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState(false)

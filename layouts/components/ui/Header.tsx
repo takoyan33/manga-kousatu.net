@@ -4,7 +4,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import CachedIcon from '@mui/icons-material/Cached'
 import PersonIcon from '@mui/icons-material/Person'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import Image from 'react-image-resizer'
 import Link from 'next/link'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useRouter } from 'next/router'
@@ -20,7 +19,6 @@ import {
   Divider,
   Tooltip,
   Button,
-  Box,
 } from '@mui/material'
 import { useLogOut } from 'layouts/api/auth/useAuth'
 import { useAuthContext } from 'layouts/context/AuthContext'
@@ -51,6 +49,7 @@ export const Header = () => {
   const [users, setUsers] = useState<Array<GetUser>>([])
 
   useEffect(() => {
+    console.log('レンダリング')
     if (user) {
       useGetMyUser(setUsers, user.email)
     }
@@ -83,8 +82,6 @@ export const Header = () => {
     setNotificationOpen(false)
   }
 
-  console.log(users)
-
   return (
     <AppBar position='static' color='transparent'>
       <div>
@@ -92,7 +89,7 @@ export const Header = () => {
           <Toolbar style={{ height: '80px' }}>
             <Link href='/top'>
               <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
-                <Image height={100} width={200} src='/logo.png' alt='logo' />
+                <img height={100} width={200} src='/logo.png' alt='logo' />
               </Typography>
             </Link>
             {user && (
@@ -116,6 +113,7 @@ export const Header = () => {
                       sx={{ width: 32, height: 32 }}
                       src={user.profileImage}
                       className='border'
+                      key={user.id}
                     />
                   )
                 })}
@@ -163,43 +161,43 @@ export const Header = () => {
       >
         <Divider />
         {!user && (
-          <>
-            <MenuItem>
-              <ListItemIcon>
-                <Logout fontSize='small' />
-              </ListItemIcon>
-              <Link href='/login'>ログイン</Link>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <Logout fontSize='small' />
-              </ListItemIcon>
-              <Link href='/register'>新規登録</Link>
-            </MenuItem>
-          </>
+          <MenuItem>
+            <ListItemIcon>
+              <Logout fontSize='small' />
+            </ListItemIcon>
+            <Link href='/login'>ログイン</Link>
+          </MenuItem>
         )}
+        {!user && (
+          <MenuItem>
+            <ListItemIcon>
+              <Logout fontSize='small' />
+            </ListItemIcon>
+            <Link href='/register'>新規登録</Link>
+          </MenuItem>
+        )}
+        {user &&
+          LOGIN_ADMIN_MENU_ITEMS.map((item) => (
+            <MenuItem key={item.text} onClick={handleClose}>
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <Link href={item.href}>{item.text}</Link>
+            </MenuItem>
+          ))}
         {user && (
-          <>
-            {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
-              <MenuItem key={item.text} onClick={handleClose}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <Link href={item.href}>{item.text}</Link>
-              </MenuItem>
-            ))}
-            <MenuItem style={{ padding: '0 16px' }}>
-              <ListItemIcon>
-                <Logout fontSize='small' />
-              </ListItemIcon>
-              <Button
-                color='inherit'
-                onClick={handleLogout}
-                style={{ fontSize: '16px', padding: '0px' }}
-              >
-                ログアウト
-              </Button>
-            </MenuItem>
-          </>
+          <MenuItem style={{ padding: '0 16px' }}>
+            <ListItemIcon>
+              <Logout fontSize='small' />
+            </ListItemIcon>
+            <Button
+              color='inherit'
+              onClick={handleLogout}
+              style={{ fontSize: '16px', padding: '0px' }}
+            >
+              ログアウト
+            </Button>
+          </MenuItem>
         )}
+
         {ACCOUNT_MENU_ITEMS.map((item) => (
           <MenuItem key={item.text} onClick={handleClose}>
             <ListItemIcon>{item.icon}</ListItemIcon>

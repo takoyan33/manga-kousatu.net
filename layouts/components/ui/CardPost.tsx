@@ -109,36 +109,34 @@ export const CardPost = React.memo(
                         // </Link>
                       ))}
                   </div>
-                  <div key={id} className='cursor-pointer'>
-                    {users &&
-                      users.map((user) => {
-                        return (
-                          <>
-                            {email === user.email && (
-                              <div key={user.id}>
-                                <div className='m-auto my-2 flex py-4'>
-                                  <dl>
-                                    <Avatar
-                                      className='m-auto max-w-sm border text-center'
-                                      sx={{ width: 40, height: 40 }}
-                                      alt='投稿者プロフィール'
-                                      src={user.profileImage}
-                                    />
-                                  </dl>
-                                  <dl className='pt-2'>
-                                    {user.userName}
-                                    <span className='my-2 ml-2 text-pink-400'>
-                                      <FavoriteIcon />
-                                    </span>
-                                    {likes}
-                                  </dl>
-                                </div>
+                  {users &&
+                    users.map((user) => {
+                      return (
+                        <div key={user.id}>
+                          {email === user.email && (
+                            <div key={user.id}>
+                              <div className='m-auto my-2 flex py-4'>
+                                <dl>
+                                  <Avatar
+                                    className='m-auto max-w-sm border text-center'
+                                    sx={{ width: 40, height: 40 }}
+                                    alt='投稿者プロフィール'
+                                    src={user.profileImage}
+                                  />
+                                </dl>
+                                <dl className='pt-2'>
+                                  {user.userName}
+                                  <span className='my-2 ml-2 text-pink-400'>
+                                    <FavoriteIcon />
+                                  </span>
+                                  {likes}
+                                </dl>
                               </div>
-                            )}
-                          </>
-                        )
-                      })}
-                  </div>
+                            </div>
+                          )}
+                        </div>
+                      )
+                    })}
                 </CardContent>
               </dl>
             </Card>

@@ -16,7 +16,7 @@ export default function Password() {
   }
 
   return (
-    <div>
+    <div style={{ height: '750px' }}>
       <CommonHead />
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>パスワード再設定</h1>

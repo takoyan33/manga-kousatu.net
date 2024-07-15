@@ -4,7 +4,7 @@ import { useEffect, useState, useMemo, useCallback } from 'react'
 import { database } from 'firebaseConfig'
 import { collection, getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { useGetPost, useGetUsers } from 'layouts/components/hooks'
+import { useGetPost, useGetUsers, useGetOtherUser } from 'layouts/components/hooks'
 import { getAuth } from 'firebase/auth'
 import styles from 'styles/Home.module.css'
 import { Card, CardContent, Typography, Avatar } from '@mui/material'
@@ -28,17 +28,13 @@ export const CardPost = React.memo(
     photoURL,
     createTime,
     selected,
+    userid,
   }: SingleGetPostParams) => {
-    const [users, setUsers] = useState<Array<GetUser>>([])
+    const [users, setUsers] = useState<GetUser>()
     const [comments, setComments] = useState('')
-    const style: React.CSSProperties = {
-      whiteSpace: 'pre-line',
-    }
     const cardStyle: React.CSSProperties = {
       margin: '10px',
     }
-
-    const auth = getAuth()
 
     // const useGetPostComment = async () => {
     //   const commentseRef = collection(database, 'comments')
@@ -57,7 +53,7 @@ export const CardPost = React.memo(
     // }
 
     useEffect(() => {
-      useGetUsers(setUsers)
+      useGetOtherUser(setUsers, userid)
       // useGetPostComment()
     }, [])
 
@@ -109,34 +105,25 @@ export const CardPost = React.memo(
                         // </Link>
                       ))}
                   </div>
-                  {users &&
-                    users.map((user) => {
-                      return (
-                        <div key={user.id}>
-                          {email === user.email && (
-                            <div key={user.id}>
-                              <div className='m-auto my-2 flex py-4'>
-                                <dl>
-                                  <Avatar
-                                    className='m-auto max-w-sm border text-center'
-                                    sx={{ width: 40, height: 40 }}
-                                    alt='投稿者プロフィール'
-                                    src={user.profileImage}
-                                  />
-                                </dl>
-                                <dl className='pt-2'>
-                                  {user.userName}
-                                  <span className='my-2 ml-2 text-pink-400'>
-                                    <FavoriteIcon />
-                                  </span>
-                                  {likes}
-                                </dl>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      )
-                    })}
+                  <div>
+                    <div className='m-auto my-2 flex py-4'>
+                      <dl>
+                        <Avatar
+                          className='m-auto max-w-sm border text-center'
+                          sx={{ width: 40, height: 40 }}
+                          alt='投稿者プロフィール'
+                          src={users?.profileImage}
+                        />
+                      </dl>
+                      <dl className='pt-2'>
+                        {users?.userName}
+                        <span className='my-2 ml-2 text-pink-400'>
+                          <FavoriteIcon />
+                        </span>
+                        {likes}
+                      </dl>
+                    </div>
+                  </div>
                 </CardContent>
               </dl>
             </Card>

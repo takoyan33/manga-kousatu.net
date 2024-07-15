@@ -16,7 +16,7 @@ export interface GetPost {
   selected: string[]
   timestamp: { seconds: number; nanoseconds: number }
   title: string
-  userId: string
+  userid: string
 }
 
 export interface SingleGetPostParams {
@@ -32,4 +32,5 @@ export interface SingleGetPostParams {
   createTime: string
   likes: number
   selected: string[]
+  userid: string
 }

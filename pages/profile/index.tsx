@@ -15,7 +15,7 @@ import { postsRef } from 'layouts/utils/post'
 export default function Profile() {
   let router = useRouter()
   const { user } = useAuthContext()
-  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
   const [onePiece, setOnePiece] = useState([])
@@ -106,7 +106,8 @@ export default function Profile() {
       router.push('/register')
     } else {
       useGetMyPosts(setPostData, user.email)
-      useGetMyUser(setUsers, user.email)
+      useGetMyUser(setUsers, user.uid)
+      console.log(users)
       getOnePosts()
       getKaisenPosts()
       getTokyoPosts()
@@ -191,21 +192,14 @@ export default function Profile() {
       <CommonHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
       <AccountMenu onClick={deleteuser} />
-      <>
-        {users &&
-          users.map((user) => {
-            return (
-              <ProfileId
-                key={user.id}
-                profileImage={user.profileImage}
-                userName={user.userName}
-                bio={user.bio}
-                favorite={user.favorite}
-                id={''}
-              />
-            )
-          })}
-      </>
+      <ProfileId
+        key={users?.id}
+        profileImage={users?.profileImage}
+        userName={users?.userName}
+        bio={users?.bio}
+        favorite={users?.favorite}
+        id={''}
+      />
 
       <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
       <p className='text-1xl text-center'>投稿数　{filteredPosts.length}件</p>

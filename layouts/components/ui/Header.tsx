@@ -43,15 +43,16 @@ const LOGIN_ADMIN_MENU_ITEMS = [
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { user } = useAuthContext()
+  console.log(user)
   const router = useRouter()
   const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState(false)
-  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [users, setUsers] = useState<GetUser>()
 
   useEffect(() => {
     console.log('レンダリング')
     if (user) {
-      useGetMyUser(setUsers, user.email)
+      useGetMyUser(setUsers, user.uid)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -67,7 +68,7 @@ export const Header = () => {
   const handleLogout = async () => {
     await logout()
     setAnchorEl(null)
-    setUsers([])
+    setUsers(null)
     setTimeout(() => {
       router.push('/login')
     }, 2000)
@@ -107,16 +108,14 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                {users.map((user) => {
-                  return (
-                    <Avatar
-                      sx={{ width: 32, height: 32 }}
-                      src={user.profileImage}
-                      className='border'
-                      key={user.id}
-                    />
-                  )
-                })}
+                {users && (
+                  <Avatar
+                    sx={{ width: 32, height: 32 }}
+                    src={users?.profileImage}
+                    className='border'
+                    key={users?.id}
+                  />
+                )}
                 {!user && <span>三</span>}
               </IconButton>
             </Tooltip>

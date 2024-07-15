@@ -30,7 +30,7 @@ export default function Edit() {
   const { user } = useAuthContext()
   const [image, setImage] = useState<any>()
   const [result, setResult] = useState<string>('')
-  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [users, setUsers] = useState<GetUser>()
   const router = useRouter()
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [username, setUsername] = useState<string>(null)
@@ -41,7 +41,7 @@ export default function Edit() {
     if (!user) {
       router.push('/register')
     } else {
-      useGetMyUser(setUsers, user.email)
+      useGetMyUser(setUsers, user.uid)
     }
   }, [])
 
@@ -93,129 +93,122 @@ export default function Edit() {
     <div className='m-auto max-w-5xl'>
       <CommonHead />
       <ToastContainer />
-      {users &&
-        users.map((user) => {
-          return (
-            <>
-              <div key={user.id}>
-                <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
+      <div key={users.id}>
+        <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
 
-                <p className='font-semib my-12 text-center'>
-                  現在のプロフィール画像
-                  <br />
-                  <div className='flex justify-center'>
-                    <Image
-                      className='m-auto max-w-sm text-center'
-                      height={100}
-                      width={100}
-                      src={user.profileImage}
-                    />
-                  </div>
-                  {user.profileImage === '' && (
-                    <p className='my-8 text-center'>設定している画像はありません</p>
-                  )}
-                </p>
+        <p className='font-semib my-12 text-center'>
+          現在のプロフィール画像
+          <br />
+          <div className='flex justify-center'>
+            <Image
+              className='m-auto max-w-sm text-center'
+              height={100}
+              width={100}
+              src={users.profileImage}
+            />
+          </div>
+          {users.profileImage === '' && (
+            <p className='my-8 text-center'>設定している画像はありません</p>
+          )}
+        </p>
 
-                <Box component='form' className='' noValidate autoComplete='off'>
-                  <>
-                    <p className='my-4 text-center'>新しいプロフィール画像</p>
-                    <br />
-                    <div className='flex justify-center'>
-                      <Image
-                        className='m-auto max-w-sm text-center'
-                        height={100}
-                        width={100}
-                        src={createObjectURL}
-                      />
-                    </div>
-                    <div className='m-auto my-4 text-center'>
-                      <label
-                        htmlFor='file-input'
-                        className='bg-primary-900 text-white-900 dark:bg-dark-900 m-auto mb-6 w-full rounded px-4 py-2 text-center'
-                      >
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          className='m-auto h-10 w-10 text-center hover:cursor-pointer hover:bg-gray-700'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke='currentColor'
-                          strokeWidth='2'
-                        >
-                          <path
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                            d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
-                          />
-                        </svg>
-                      </label>
-                      <input
-                        id='file-input'
-                        className='m-auto hidden text-center'
-                        type='file'
-                        accept='image/*'
-                        name='myImage'
-                        onChange={uploadImage}
-                      />
-                    </div>
-                    <label className='my-4 text-center' htmlFor='outlined-name'>
-                      名前（最大10文字）<span className='text-red-600'>*</span>
-                    </label>
-                    <div className='text-center'>
-                      <input
-                        id='outlined-name'
-                        className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                        defaultValue={user.userName}
-                        type='text'
-                        onChange={(event) => setUsername(event.target.value)}
-                      />
-                    </div>
-                    <br />
-                    <label className='my-4 text-center'>プロフィール（最大30文字）</label>
-                    <div className='text-center'>
-                      <input
-                        id='outlined-name'
-                        className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                        defaultValue={user.bio}
-                        type='text'
-                        placeholder='よろしくお願いします'
-                        onChange={(event) => setBio(event.target.value)}
-                      />
-                    </div>
-                    <br />
-                    <p className='my-4 text-center'>
-                      好きな漫画（最大10作品）<span className='text-red-600'>*</span>
-                    </p>
-                    <div className='m-auto text-center'>
-                      <TagsInput
-                        value={user.favorite}
-                        onChange={setSelected}
-                        name='selected'
-                        placeHolder='タグを追加してください'
-                      />
-                    </div>
-                    <br />
-                    <div className='my-4 text-center'>
-                      <Button
-                        variant='outlined'
-                        key={user.id}
-                        className='m-auto w-80 text-center'
-                        onClick={() => updateUserData(user.id)}
-                      >
-                        プロフィールを更新する
-                      </Button>
-                    </div>
-                    <br />
-                    <div className='my-4 text-center'>
-                      <Button variant='outlined' className='m-auto w-80 '>
-                        <Link href='/profile'>戻る</Link>
-                      </Button>
-                    </div>
-                  </>
-                </Box>
-              </div>
-            </>
-          )
-        })}
+        <Box component='form' className='' noValidate autoComplete='off'>
+          <>
+            <p className='my-4 text-center'>新しいプロフィール画像</p>
+            <br />
+            <div className='flex justify-center'>
+              <Image
+                className='m-auto max-w-sm text-center'
+                height={100}
+                width={100}
+                src={createObjectURL}
+              />
+            </div>
+            <div className='m-auto my-4 text-center'>
+              <label
+                htmlFor='file-input'
+                className='bg-primary-900 text-white-900 dark:bg-dark-900 m-auto mb-6 w-full rounded px-4 py-2 text-center'
+              >
+                <svg
+                  xmlns='http://www.w3.org/2000/svg'
+                  className='m-auto h-10 w-10 text-center hover:cursor-pointer hover:bg-gray-700'
+                  fill='none'
+                  viewBox='0 0 24 24'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                >
+                  <path
+                    strokeLinecap='round'
+                    strokeLinejoin='round'
+                    d='M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z'
+                  />
+                </svg>
+              </label>
+              <input
+                id='file-input'
+                className='m-auto hidden text-center'
+                type='file'
+                accept='image/*'
+                name='myImage'
+                onChange={uploadImage}
+              />
+            </div>
+            <label className='my-4 text-center' htmlFor='outlined-name'>
+              名前（最大10文字）<span className='text-red-600'>*</span>
+            </label>
+            <div className='text-center'>
+              <input
+                id='outlined-name'
+                className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                defaultValue={users.userName}
+                type='text'
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </div>
+            <br />
+            <label className='my-4 text-center'>プロフィール（最大30文字）</label>
+            <div className='text-center'>
+              <input
+                id='outlined-name'
+                className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                defaultValue={users.bio}
+                type='text'
+                placeholder='よろしくお願いします'
+                onChange={(event) => setBio(event.target.value)}
+              />
+            </div>
+            <br />
+            <p className='my-4 text-center'>
+              好きな漫画（最大10作品）<span className='text-red-600'>*</span>
+            </p>
+            <div className='m-auto text-center'>
+              <TagsInput
+                value={users.favorite}
+                onChange={setSelected}
+                name='selected'
+                placeHolder='タグを追加してください'
+              />
+            </div>
+            <br />
+            <div className='my-4 text-center'>
+              <Button
+                variant='outlined'
+                key={users.id}
+                className='m-auto w-80 text-center'
+                onClick={() => updateUserData(users.id)}
+              >
+                プロフィールを更新する
+              </Button>
+            </div>
+            <br />
+            <div className='my-4 text-center'>
+              <Button variant='outlined' className='m-auto w-80 '>
+                <Link href='/profile'>戻る</Link>
+              </Button>
+            </div>
+          </>
+        </Box>
+      </div>
     </div>
   )
 }

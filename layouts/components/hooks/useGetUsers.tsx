@@ -1,23 +1,27 @@
-import { onSnapshot, collection, query, where, getDocs } from 'firebase/firestore'
+import { onSnapshot, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore'
 import { database } from 'firebaseConfig'
 import { usersRef } from 'layouts/utils/post'
 
 //自分のuserを取得
-export const useGetMyUser = async (setUsers, userEmail: string) => {
-  const myUser = query(usersRef, where('email', '==', userEmail))
-
-  onSnapshot(myUser, (querySnapshot) => {
-    setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+export const useGetMyUser = async (setUsers, uid: string) => {
+  try {
+    const ref = await doc(database, 'users', uid)
+    const snap = await getDoc(ref)
+    setUsers(snap.data())
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //他のuserを取得
-export const useGetOtherUser = async (setUsers, userid: string) => {
-  const otherUser = query(usersRef, where('userid', '==', userid))
-
-  onSnapshot(otherUser, (querySnapshot) => {
-    setUsers(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+export const useGetOtherUser = async (setUsers, uid: string) => {
+  try {
+    const ref = await doc(database, 'users', uid)
+    const snap = await getDoc(ref)
+    setUsers(snap.data())
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 //user全体を取得

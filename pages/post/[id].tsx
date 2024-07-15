@@ -314,6 +314,7 @@ const Post = () => {
                     width={400}
                     src={singlePost?.downloadURL}
                   />
+                  {!singlePost?.downloadURL && <p className=''>画像なし</p>}
                 </button>
               </div>
               <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>

@@ -65,7 +65,7 @@ export const CardPost = React.memo(
               <dl>
                 <div className='m-auto flex justify-center'>
                   <Image
-                    className='text-center'
+                    className='text-center rounded'
                     height={150}
                     width={200}
                     src={downloadURL}

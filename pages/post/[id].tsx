@@ -301,7 +301,7 @@ const Post = () => {
                 )}
               </>
             )}
-            <div className='rounded-xl border p-10 '>
+            <div className='rounded-xl border p-10'>
               <div>
                 <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
                 {singlePost?.title}
@@ -353,14 +353,14 @@ const Post = () => {
                                   <Avatar
                                     className='m-auto max-w-sm border text-center'
                                     alt='プロフィール'
-                                    sx={{ width: 60, height: 60 }}
+                                    sx={{ width: 50, height: 50 }}
                                     src={user.profileImage}
                                   />
                                 </div>
                               </div>
                               <div className='ml-6 mt-1'>
                                 <span className='text-sm'>{user.userName}</span>
-                                <div className='mt-2 pb-2 text-sm text-gray-500'>{user.bio}</div>
+                                <div className=' text-sm text-gray-500'>{user.bio}</div>
                               </div>
                             </div>
                           </div>
@@ -375,16 +375,6 @@ const Post = () => {
                   編集日時：{singlePost.editTime}
                 </div>
               )}
-              <br />
-              {singlePost &&
-                singlePost.selected.map((tag, i) => (
-                  <span
-                    className='rounded-xl border border-cyan-700 py-1 px-2 text-center text-cyan-700'
-                    key={i}
-                  >
-                    #{tag}
-                  </span>
-                ))}
               <div color='text.secondary'>
                 {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
                   singlePost?.category,
@@ -493,6 +483,13 @@ const Post = () => {
                   )}
                 </>
               )}
+
+              {singlePost &&
+                singlePost.selected.map((tag, i) => (
+                  <span className='rounded border border-black  px-4 py-2 text-center text-cyan-700' key={i}>
+                    #{tag}
+                  </span>
+                ))}
 
               {!user && (
                 <>

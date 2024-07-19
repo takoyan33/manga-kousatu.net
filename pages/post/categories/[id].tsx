@@ -152,6 +152,13 @@ const Details = ({ post }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
 
+  interface NetabareItem {
+    sortId: number
+    label: string
+    value: string
+    onClick: () => void
+  }
+
   const SORT_LIST = [
     {
       sortId: 1,
@@ -170,6 +177,21 @@ const Details = ({ post }) => {
       label: 'いいね順',
       value: 'いいね順',
       onClick: () => useGetLikePosts(),
+    },
+  ]
+
+  const NETABARE_LIST: NetabareItem[] = [
+    {
+      sortId: 1,
+      label: 'ネタバレ有',
+      value: 'ネタバレ有',
+      onClick: () => useGetNetabrePosts(setPostData),
+    },
+    {
+      sortId: 2,
+      label: 'ネタバレ無',
+      value: 'ネタバレ無',
+      onClick: () => useGetNoNetabrePosts(setPostData),
     },
   ]
 
@@ -237,13 +259,14 @@ const Details = ({ post }) => {
                   category={post.category}
                   netabare={post.netabare}
                   context={post.context}
-                  createTime={post.createtime}
-                  displayName={post.displayname}
+                  createTime={post.createTime}
+                  displayName={post.displayName}
                   email={post.email}
                   id={post.id}
-                  likes={post.likes}
                   photoURL={post.photoURL}
+                  likes={post.likes}
                   selected={post.selected}
+                  userid={post.userid}
                 />
               )
             })}

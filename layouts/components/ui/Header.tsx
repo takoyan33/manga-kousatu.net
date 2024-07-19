@@ -51,9 +51,9 @@ export const Header = () => {
   const [users, setUsers] = useState<GetUser>()
 
   useEffect(() => {
-    console.log('レンダリング')
     if (user) {
       useGetMyUser(setUsers, user.uid)
+      console.log(users)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -95,7 +95,7 @@ export const Header = () => {
               </Typography>
             </Link>
             {user && (
-              <div className='text-center mr-6'>
+              <div className='mr-6 text-center'>
                 <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
               </div>
             )}
@@ -157,14 +157,13 @@ export const Header = () => {
               height: 10,
               bgcolor: 'background.paper',
               transform: 'translateY(-50%) rotate(45deg)',
-              zIndex: 0,
+              zIndex: 100,
             },
           },
         }}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <Divider />
         {!user && (
           <MenuItem>
             <ListItemIcon>
@@ -181,6 +180,8 @@ export const Header = () => {
             <Link href='/register'>新規登録</Link>
           </MenuItem>
         )}
+        {user && <MenuItem>{user.displayName}</MenuItem>}
+        <Divider />
         {user &&
           LOGIN_ADMIN_MENU_ITEMS.map((item) => (
             <MenuItem key={item.text} onClick={handleClose}>
@@ -202,7 +203,6 @@ export const Header = () => {
             </Button>
           </MenuItem>
         )}
-
         {ACCOUNT_MENU_ITEMS.map((item) => (
           <MenuItem key={item.text} onClick={handleClose}>
             <ListItemIcon>{item.icon}</ListItemIcon>

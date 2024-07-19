@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { EditorState, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
@@ -9,10 +9,12 @@ interface RicheditaProps {
   value: string
 }
 
-const Richedita = ({ onChange }: RicheditaProps) => {
-  const [editorState, setEditorState] = useState(
-    EditorState.createWithContent(ContentState.createFromText('デフォルトのテキスト')),
-  )
+const Richedita = ({ onChange, value }: RicheditaProps) => {
+  const [editorState, setEditorState] = useState(value)
+
+  useEffect(() => {
+    setEditorState(EditorState.createWithContent(ContentState.createFromText(value || '')))
+  }, [value])
 
   const handleEditorChange = (editorState: EditorState): void => {
     setEditorState(editorState)
@@ -23,21 +25,20 @@ const Richedita = ({ onChange }: RicheditaProps) => {
   }
 
   return (
-    <>
-      <div className='center-input border pb-20'>
-        <Editor
-          onEditorStateChange={handleEditorChange}
-          localization={{
-            locale: 'ja',
-          }}
-          hashtag={{
-            separator: ' ',
-            trigger: '#',
-          }}
-          placeholder='文字を入力してください'
-        />
-      </div>
-    </>
+    <div className='center-input border pb-20'>
+      <Editor
+        editorState={editorState}
+        onEditorStateChange={handleEditorChange}
+        localization={{
+          locale: 'ja',
+        }}
+        hashtag={{
+          separator: ' ',
+          trigger: '#',
+        }}
+        placeholder='文字を入力してください'
+      />
+    </div>
   )
 }
 

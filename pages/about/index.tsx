@@ -1,8 +1,8 @@
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { POST_CATEGORIES, COPY_WRITES, CommonHead, CardPost } from 'layouts/components/ui'
 
 export default function About() {
   return (
-    <div style={{ height: '750px' }}>
+    <div>
       <div className='flex min-h-screen flex-col items-center justify-center'>
         <CommonHead />
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>About</h1>
@@ -21,6 +21,12 @@ export default function About() {
               </a>
             </li>
           </ul>
+          <div className='my-4'>
+            <h2 className='my-2 text-xl font-semibold'>掲載漫画</h2>
+            {COPY_WRITES.map((copyWrite, index) => (
+              <p key={index}>{copyWrite}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

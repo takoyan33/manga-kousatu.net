@@ -177,15 +177,9 @@ const Details = ({ post }) => {
     <>
       <CommonHead />
       <p className='my-4'>
-        <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-        {post.fields.title.stringValue}
+        <Link href='/top'>トップ</Link> ＞ 投稿記事 ＞ カテゴリ ＞{post.fields.title.stringValue}
       </p>
-      <h1 className='my-12 text-center text-2xl font-semibold'>
-        {post.fields.title.stringValue}の考察記事一覧
-      </h1>
-
-      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
-
+      <h1 className='my-12 text-left text-2xl font-semibold'>{post.fields.title.stringValue}</h1>
       <div className='m-auto my-10 flex justify-center'>
         <TextField
           id='outlined-basic'
@@ -208,6 +202,8 @@ const Details = ({ post }) => {
           </Select>
         </FormControl> */}
       </div>
+
+      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
 
       <div className='flex justify-end'>
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>

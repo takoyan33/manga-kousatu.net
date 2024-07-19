@@ -278,7 +278,7 @@ const PostEdit = () => {
                   }}
                   render={({ field }) => (
                     <RadioGroup
-                      aria-label='ネタバレ'
+                      aria-label='公開'
                       name={field.name}
                       value={field.value}
                       onChange={(e) => {

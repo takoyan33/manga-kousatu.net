@@ -25,6 +25,7 @@ import { useAuthContext } from 'layouts/context/AuthContext'
 import { NotificationModal } from 'layouts/components/ui'
 import { useGetMyUser } from 'layouts/components/hooks'
 import { GetUser } from 'types/user'
+import { SiteButton } from 'layouts/components/button'
 
 const ACCOUNT_MENU_ITEMS = [
   { text: 'About', href: '/about', icon: <Settings fontSize='small' /> },
@@ -93,6 +94,11 @@ export const Header = () => {
                 <img height={100} width={200} src='/logo.png' alt='logo' />
               </Typography>
             </Link>
+            {user && (
+              <div className='text-center mr-6'>
+                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
+              </div>
+            )}
             {user && (
               <button onClick={handleNotificationOpen}>
                 <NotificationsIcon fontSize='small' />

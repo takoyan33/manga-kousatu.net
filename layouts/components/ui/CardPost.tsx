@@ -61,38 +61,35 @@ export const CardPost = React.memo(
       <div className='w-full cursor-pointer md:w-1/3'>
         <Link href={`/post/${id}`}>
           <div key={id} className='m-auto w-4/5'>
-            <Card className='m-auto my-8 border hover:shadow-2xl' style={cardStyle}>
+            <div className='m-auto my-2 hover:opacity-80' style={cardStyle}>
               <dl>
                 <div className='m-auto flex justify-center'>
                   <Image
-                    className='m-auto max-w-sm text-center'
-                    height={250}
-                    width={250}
+                    className='text-center'
+                    height={150}
+                    width={200}
                     src={downloadURL}
                     alt='画像'
                   />
                 </div>
-
                 <CardContent>
-                  <Typography gutterBottom variant='h5' component='div'>
-                    {title}
-                  </Typography>
+                  <h3 className='text-left text-xl font-semibold'>{title}</h3>
                   <div className='flex'>
                     <Category category={category} />
                     {netabare === 'ネタバレ有' ? (
                       <div>
-                        <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
+                        <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-sm text-red-500'>
                           {netabare}
                         </dl>
                       </div>
                     ) : (
-                      <dl className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
+                      <dl className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-sm text-gray-500'>
                         {netabare}
                       </dl>
                     )}
                   </div>
                   <div className='m-auto w-80' style={styles}></div>
-                  <div className='mt-3 max-w-xs'>
+                  {/* <div className='mt-3 max-w-xs'>
                     {selected &&
                       selected.map((tag, i) => (
                         // <Link href={`/post/tag/${tag}`} key={i}>
@@ -104,29 +101,29 @@ export const CardPost = React.memo(
                         </span>
                         // </Link>
                       ))}
-                  </div>
+                  </div> */}
                   <div>
-                    <div className='m-auto my-2 flex py-4'>
+                    <div className='m-auto flex py-2'>
                       <dl>
                         <Avatar
                           className='m-auto max-w-sm border text-center'
-                          sx={{ width: 40, height: 40 }}
+                          sx={{ width: 30, height: 30 }}
                           alt='投稿者プロフィール'
                           src={users?.profileImage}
                         />
                       </dl>
-                      <dl className='pt-2'>
+                      <dl className='ml-2'>
                         {users?.userName}
-                        <span className='my-2 ml-2 text-pink-400'>
+                        <span className='ml- text-pink-400'>
                           <FavoriteIcon />
                         </span>
-                        {likes}
+                        <span className='ml-1'>{likes}</span>
                       </dl>
                     </div>
                   </div>
                 </CardContent>
               </dl>
-            </Card>
+            </div>
           </div>
         </Link>
       </div>

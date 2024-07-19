@@ -150,7 +150,7 @@ export default function Index() {
         return (
           <span key={category.id}>
             <span
-              className={`m-6 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white ${category.className}`}
+              className={`rounded-xltext-center + m-6  inline-block rounded-xl border p-1 font-bold hover:text-white ${category.className}`}
             >
               <Link
                 as={`/post/categories/${category.title}`}
@@ -159,7 +159,7 @@ export default function Index() {
                   query: CategoriesInfo,
                 }}
               >
-                <a>#{category.title}</a>
+                <a>{category.title}</a>
               </Link>
             </span>
           </span>

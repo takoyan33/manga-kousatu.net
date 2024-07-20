@@ -78,12 +78,12 @@ export const CardPost = React.memo(
                     <Category category={category} />
                     {netabare === 'ネタバレ有' ? (
                       <div>
-                        <dl className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-sm text-red-500'>
+                        <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
                           {netabare}
                         </dl>
                       </div>
                     ) : (
-                      <dl className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-sm text-gray-500'>
+                      <dl className='mx-1 mt-1 inline-block rounded border border-gray-700 p-1 text-center text-sm text-gray-500'>
                         {netabare}
                       </dl>
                     )}

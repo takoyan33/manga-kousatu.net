@@ -142,7 +142,6 @@ export default function Index() {
       </div>
       <h2 className='text-left text-xl font-semibold'>カテゴリで探す</h2>
       {POST_CATEGORIES.map((category) => {
-        // userの情報
         const CategoriesInfo = {
           id: category.id,
           title: category.title,

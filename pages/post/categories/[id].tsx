@@ -180,20 +180,20 @@ const Details = ({ post }) => {
     },
   ]
 
-  const NETABARE_LIST: NetabareItem[] = [
-    {
-      sortId: 1,
-      label: 'ネタバレ有',
-      value: 'ネタバレ有',
-      onClick: () => useGetNetabrePosts(setPostData),
-    },
-    {
-      sortId: 2,
-      label: 'ネタバレ無',
-      value: 'ネタバレ無',
-      onClick: () => useGetNoNetabrePosts(setPostData),
-    },
-  ]
+  // const NETABARE_LIST: NetabareItem[] = [
+  //   {
+  //     sortId: 1,
+  //     label: 'ネタバレ有',
+  //     value: 'ネタバレ有',
+  //     onClick: () => useGetNetabrePosts(setPostData),
+  //   },
+  //   {
+  //     sortId: 2,
+  //     label: 'ネタバレ無',
+  //     value: 'ネタバレ無',
+  //     onClick: () => useGetNoNetabrePosts(setPostData),
+  //   },
+  // ]
 
   return (
     <>

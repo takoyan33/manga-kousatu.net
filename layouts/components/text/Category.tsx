@@ -12,29 +12,29 @@ const Category: React.VFC<CategoryParams> = React.memo(({ category }) => {
     <div className='my-1'>
       {category === 'ONEPIECE' && (
         <SiteCategory
-          className=' inline-block rounded-xl border border-cyan-500  p-1 text-center text-sm  font-bold text-cyan-500 hover:bg-cyan-700 hover:text-white'
-          text='ONE PIECE'
+          className='inline-block rounded border border-cyan-500  py-1 px-2 text-center  text-sm  font-bold hover:bg-cyan-500 hover:text-white'
+          text={`#${category}`}
           href={`/post/categories/${category}`}
         />
       )}
       {category === '呪術廻戦' && (
         <SiteCategory
-          className='inline-block rounded-xl border border-purple-500  p-1 text-center text-sm  font-bold text-purple-500 hover:bg-purple-700 hover:text-white'
-          text='呪術廻戦'
+          className='inline-block rounded border border-purple-500  p-1 text-center text-sm  font-bold hover:bg-purple-700 hover:text-white'
+          text={`#${category}`}
           href={`/post/categories/${category}`}
         />
       )}
       {category === '東京リベンジャーズ' && (
         <SiteCategory
-          className='inline-block rounded-xl border border-rose-500  p-1 text-center text-sm  font-bold text-rose-500 hover:bg-rose-700 hover:text-white'
-          text='東京リベンジャーズ'
+          className='inline-block rounded border border-rose-500  p-1 text-center text-sm  font-bold hover:bg-rose-500 hover:text-white'
+          text={`#${category}`}
           href={`/post/categories/${category}`}
         />
       )}
       {category === 'キングダム' && (
         <SiteCategory
-          className='inline-block rounded-xl border border-yellow-500  p-1 text-center text-sm  font-bold text-yellow-500 hover:bg-yellow-700 hover:text-white'
-          text='キングダム'
+          className='inline-block rounded border border-yellow-500  p-1 text-center text-sm  font-bold hover:bg-yellow-500 hover:text-white'
+          text={`#${category}`}
           href={`/post/categories/${category}`}
         />
       )}

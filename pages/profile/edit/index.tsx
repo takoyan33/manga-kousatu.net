@@ -93,7 +93,7 @@ export default function Edit() {
     <div className='m-auto max-w-5xl'>
       <CommonHead />
       <ToastContainer />
-      <div key={users.id}>
+      <div key={users?.id}>
         <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
 
         <p className='font-semib my-12 text-center'>
@@ -104,10 +104,10 @@ export default function Edit() {
               className='m-auto max-w-sm text-center'
               height={100}
               width={100}
-              src={users.profileImage}
+              src={users?.profileImage}
             />
           </div>
-          {users.profileImage === '' && (
+          {users?.profileImage === '' && (
             <p className='my-8 text-center'>設定している画像はありません</p>
           )}
         </p>
@@ -160,7 +160,7 @@ export default function Edit() {
               <input
                 id='outlined-name'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                defaultValue={users.userName}
+                defaultValue={users?.userName}
                 type='text'
                 onChange={(event) => setUsername(event.target.value)}
               />
@@ -171,7 +171,7 @@ export default function Edit() {
               <input
                 id='outlined-name'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                defaultValue={users.bio}
+                defaultValue={users?.bio}
                 type='text'
                 placeholder='よろしくお願いします'
                 onChange={(event) => setBio(event.target.value)}
@@ -183,7 +183,7 @@ export default function Edit() {
             </p>
             <div className='m-auto text-center'>
               <TagsInput
-                value={users.favorite}
+                value={users?.favorite}
                 onChange={setSelected}
                 name='selected'
                 placeHolder='タグを追加してください'
@@ -191,11 +191,12 @@ export default function Edit() {
             </div>
             <br />
             <div className='my-4 text-center'>
+              {users?.id}
               <Button
                 variant='outlined'
-                key={users.id}
+                key={users?.id}
                 className='m-auto w-80 text-center'
-                onClick={() => updateUserData(users.id)}
+                onClick={() => updateUserData(users?.id)}
               >
                 プロフィールを更新する
               </Button>

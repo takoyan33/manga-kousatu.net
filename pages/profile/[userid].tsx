@@ -41,23 +41,22 @@ const Post = () => {
         {postsData &&
           postsData.map((post) => {
             return (
-              <>
-                <CardPost
-                  key={post.id}
-                  downloadURL={post.downloadURL}
-                  title={post.title}
-                  category={post.category}
-                  netabare={post.netabare}
-                  context={post.context}
-                  createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
-                  id={post.id}
-                  photoURL={post.photoURL}
-                  likes={post.likes}
-                  selected={post.selected}
-                />
-              </>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
             )
           })}
       </Grid>

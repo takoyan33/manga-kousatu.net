@@ -199,6 +199,7 @@ export default function Profile() {
                 photoURL={post.photoURL}
                 likes={post.likes}
                 selected={post.selected}
+                userid={post.userid}
               />
             </>
           )

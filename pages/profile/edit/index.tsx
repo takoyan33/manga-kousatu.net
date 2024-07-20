@@ -72,7 +72,7 @@ export default function Edit() {
       bio: bio,
       email: user.email,
       profileImage: result,
-      userId: user.uid,
+      userid: user.uid,
       favorite: selected,
     })
       .then(() => {
@@ -191,12 +191,11 @@ export default function Edit() {
             </div>
             <br />
             <div className='my-4 text-center'>
-              {users?.id}
               <Button
                 variant='outlined'
-                key={users?.id}
+                key={users?.userid}
                 className='m-auto w-80 text-center'
-                onClick={() => updateUserData(users?.id)}
+                onClick={() => updateUserData(users?.userid)}
               >
                 プロフィールを更新する
               </Button>

@@ -116,7 +116,7 @@ export default function Index() {
         return (
           <span key={category.id}>
             <span
-              className={`rounded-xltext-center + m-6  inline-block rounded-xl border p-1 font-bold hover:text-white ${category.className}`}
+              className={`m-6 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white ${category.className}`}
             >
               <Link
                 as={`/post/categories/${category.title}`}
@@ -125,7 +125,7 @@ export default function Index() {
                   query: CategoriesInfo,
                 }}
               >
-                <a>{category.title}</a>
+                <a>#{category.title}</a>
               </Link>
             </span>
           </span>
@@ -209,11 +209,6 @@ export default function Index() {
             className='w-50 m-auto my-2'
           />
         )}
-      </div>
-      <div className='my-4'>
-        {COPY_WRITES.map((copyWrite, index) => (
-          <p key={index}>{copyWrite}</p>
-        ))}
       </div>
     </div>
   )

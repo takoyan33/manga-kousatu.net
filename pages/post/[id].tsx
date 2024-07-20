@@ -345,8 +345,8 @@ const Post = () => {
                   return (
                     <>
                       {singlePost?.email === user.email && (
-                        <Link href={`/profile/${user.userId}`}>
-                          <div key={user.userId}>
+                        <Link href={`/profile/${user.userid}`}>
+                          <div key={user.userid}>
                             <div className='m-auto my-4 flex  px-2'>
                               <div key={user.id}>
                                 <div>
@@ -613,7 +613,7 @@ const Post = () => {
                   return (
                     <div className='hover:shadow-2xl' key={user.id}>
                       {singlePost?.email === user.email && (
-                        <Link href={`/profile/${user.userId}`}>
+                        <Link href={`/profile/${user.userid}`}>
                           <div className='m-auto my-8 flex border py-8  px-2'>
                             <div>
                               <Avatar

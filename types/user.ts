@@ -5,7 +5,7 @@ export interface GetUser {
   favorite: string[]
   id: string
   profileImage: string
-  userId: string
+  userid: string
   userName: string
 }
 

@@ -28,6 +28,7 @@ import {
   useGetUsers,
   useGetMyUser,
   useGetCategoriPosts,
+  useGetOtherUser,
   deleteComment,
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
@@ -74,7 +75,6 @@ const Post = () => {
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [singlePost, setSinglePost] = useState<GetPost>(null)
   const [likecount, setLikecount] = useState<number>(0)
-  const [userEmail, setUserEmail] = useState<string>(null)
   const [categoriPosts, setCategoriPosts] = useState<string>(null)
   const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
@@ -103,8 +103,8 @@ const Post = () => {
 
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
-    setUserEmail(singlePost?.email)
     useGetUsers(setUsers)
+    console.log(singlePost)
     getComments()
     // useGetMyUser(setUsers,)
     // useGetCategoriPosts(setCategoriPosts, singlePost.categori)
@@ -329,15 +329,15 @@ const Post = () => {
                 </div>
                 　<button onClick={closeModal}>閉じる</button>
               </Modal>
-              <div className='my-4 text-2xl font-semibold'>{singlePost?.title}</div>
+              <div className='my-4 text-center text-2xl font-semibold'>{singlePost?.title}</div>
               <br />
               <div>
                 <span className='text-gray-500'>
-                  <AccessTimeIcon /> {singlePost?.createTime}
+                  <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
                 </span>
                 <span>
                   　<FavoriteIcon />
-                  {singlePost?.likes}
+                  <span className='ml-1'>{singlePost?.likes}</span>
                 </span>
               </div>
               {users &&
@@ -486,132 +486,18 @@ const Post = () => {
 
               {singlePost &&
                 singlePost.selected.map((tag, i) => (
-                  <span className='rounded border border-black  px-4 py-2 text-center text-cyan-700' key={i}>
+                  <span
+                    className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
+                    key={i}
+                  >
                     #{tag}
                   </span>
                 ))}
 
-              {!user && (
-                <>
-                  <Link href='/login'>
-                    <span className='p-4 text-pink-400 hover:text-pink-700'>
-                      <FavoriteIcon />
-                      ログインするといいねができます
-                    </span>
-                  </Link>
-                  <div className='mb-6 flex items-center justify-between'>
-                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                      コメント {comments.length}
-                    </h2>
-                    <Link href='/login'>
-                      <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
-                    </Link>
-                  </div>
-                </>
-              )}
-              {user && (
-                <section className='bg-white py-8 lg:py-16'>
-                  <div className='mx-auto max-w-2xl px-4'>
-                    <div className='mb-6 flex items-center justify-between'>
-                      <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                        コメント ({comments.length})
-                      </h2>
-                    </div>
-                    <form className='mb-6' id='aa'>
-                      <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
-                        <label htmlFor='comment' className='sr-only'>
-                          あなたのコメント
-                        </label>
-                        <textarea
-                          id='comment'
-                          rows={6}
-                          className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
-                          placeholder='コメントを入力してください'
-                          required
-                          {...register('comment', { required: 'コメントは必須です' })}
-                        ></textarea>
-                      </div>
-                      {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
-                      <button
-                        type='submit'
-                        onClick={handleSubmit(addComment)}
-                        className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
-                      >
-                        コメントする
-                      </button>
-                    </form>
-                  </div>
-                </section>
-              )}
-              {comments &&
-                comments.map((comment) => {
-                  return (
-                    <article
-                      className='mb-6 rounded-lg border bg-white p-6 text-base'
-                      key={comment.id}
-                    >
-                      <footer className='mb-2 flex items-center justify-between'>
-                        <div className='flex items-center'>
-                          <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
-                            {comment.username}
-                          </p>
-                          <p className='text-sm text-gray-600 dark:text-gray-400'>
-                            <time>{comment.createtime}</time>
-                          </p>
-                        </div>
-                      </footer>
-
-                      <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
-                        {comment.comment}
-                      </p>
-                      {user && (
-                        <>
-                          {user.email === comment.userEmail && (
-                            <div className='flex'>
-                              <button onClick={openCommentModal} className='mx-2'>
-                                編集
-                              </button>
-                              <button onClick={() => deleteComment(comment.id)}>削除</button>
-                            </div>
-                          )}
-                        </>
-                      )}
-                      <Modal
-                        isOpen={isCommentModalOpen}
-                        onRequestClose={closeCommentModal}
-                        contentLabel='comment Modal'
-                      >
-                        <div>
-                          <FormLabel id='demo-radio-buttons-group-label'>
-                            コメント<span className='text-red-600'>*</span>
-                          </FormLabel>
-                        </div>
-                        <div>
-                          <input
-                            id='outlined-basic'
-                            className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                            defaultValue={comment.comment}
-                            type='text'
-                            onChange={(event) => setComment(event.target.value)}
-                          />
-                          <button
-                            onClick={() => updateComment(comment.id)}
-                            className='m-auto my-8 w-80'
-                          >
-                            更新する
-                          </button>
-                        </div>
-                        <button onClick={closeCommentModal}>閉じる</button>
-                      </Modal>
-                    </article>
-                  )
-                })}
-              <hr className='mt-10'></hr>
-
               <div className='cursor-pointer'>
                 {users?.map((user) => {
                   return (
-                    <div className='hover:shadow-2xl' key={user.id}>
+                    <div key={user.id}>
                       {singlePost?.email === user.email && (
                         <Link href={`/profile/${user.userid}`}>
                           <div className='m-auto my-8 flex border py-8  px-2'>
@@ -640,6 +526,122 @@ const Post = () => {
                 })}
               </div>
             </div>
+
+            {!user && (
+              <>
+                <Link href='/login'>
+                  <span className='p-4 text-pink-400 hover:text-pink-700'>
+                    <FavoriteIcon />
+                    ログインするといいねができます
+                  </span>
+                </Link>
+                <div className='mb-6 flex items-center justify-between'>
+                  <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                    コメント {comments.length}
+                  </h2>
+                  <Link href='/login'>
+                    <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
+                  </Link>
+                </div>
+              </>
+            )}
+            {user && (
+              <section className='bg-white py-8 lg:py-16'>
+                <div className='mx-auto max-w-2xl px-4'>
+                  <div className='mb-6 flex items-center justify-between'>
+                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                      コメント ({comments.length})
+                    </h2>
+                  </div>
+                  <form className='mb-6' id='aa'>
+                    <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
+                      <label htmlFor='comment' className='sr-only'>
+                        あなたのコメント
+                      </label>
+                      <textarea
+                        id='comment'
+                        rows={6}
+                        className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
+                        placeholder='コメントを入力してください'
+                        required
+                        {...register('comment', { required: 'コメントは必須です' })}
+                      ></textarea>
+                    </div>
+                    {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
+                    <button
+                      type='submit'
+                      onClick={handleSubmit(addComment)}
+                      className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
+                    >
+                      コメントする
+                    </button>
+                  </form>
+                </div>
+              </section>
+            )}
+            {comments &&
+              comments.map((comment) => {
+                return (
+                  <article
+                    className='mb-6 rounded-lg border bg-white p-6 text-base'
+                    key={comment.id}
+                  >
+                    <footer className='mb-2 flex items-center justify-between'>
+                      <div className='flex items-center'>
+                        <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
+                          {comment.username}
+                        </p>
+                        <p className='text-sm text-gray-600 dark:text-gray-400'>
+                          <time>{comment.createtime}</time>
+                        </p>
+                      </div>
+                    </footer>
+
+                    <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
+                      {comment.comment}
+                    </p>
+                    {user && (
+                      <>
+                        {user.email === comment.userEmail && (
+                          <div className='flex'>
+                            <button onClick={openCommentModal} className='mx-2'>
+                              編集
+                            </button>
+                            <button onClick={() => deleteComment(comment.id)}>削除</button>
+                          </div>
+                        )}
+                      </>
+                    )}
+                    <Modal
+                      isOpen={isCommentModalOpen}
+                      onRequestClose={closeCommentModal}
+                      contentLabel='comment Modal'
+                    >
+                      <div>
+                        <FormLabel id='demo-radio-buttons-group-label'>
+                          コメント<span className='text-red-600'>*</span>
+                        </FormLabel>
+                      </div>
+                      <div>
+                        <input
+                          id='outlined-basic'
+                          className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                          defaultValue={comment.comment}
+                          type='text'
+                          onChange={(event) => setComment(event.target.value)}
+                        />
+                        <button
+                          onClick={() => updateComment(comment.id)}
+                          className='m-auto my-8 w-80'
+                        >
+                          更新する
+                        </button>
+                      </div>
+                      <button onClick={closeCommentModal}>閉じる</button>
+                    </Modal>
+                  </article>
+                )
+              })}
           </div>
           <>
             {/* <h2 className="text-2xl">こちらもおすすめ</h2>

@@ -16,6 +16,7 @@ export const useGetMyUser = async (setUsers, uid: string) => {
 //他のuserを取得
 export const useGetOtherUser = async (setUsers, uid: string) => {
   try {
+    console.log(uid)
     const ref = await doc(database, 'users', uid)
     const snap = await getDoc(ref)
     setUsers(snap.data())

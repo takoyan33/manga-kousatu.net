@@ -44,7 +44,6 @@ const LOGIN_ADMIN_MENU_ITEMS = [
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { user } = useAuthContext()
-  console.log(user)
   const router = useRouter()
   const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState(false)
@@ -53,7 +52,6 @@ export const Header = () => {
   useEffect(() => {
     if (user) {
       useGetMyUser(setUsers, user.uid)
-      console.log(users)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

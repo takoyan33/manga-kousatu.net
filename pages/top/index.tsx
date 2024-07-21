@@ -72,7 +72,10 @@ export default function Index() {
       <CommonHead />
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>
-          おすすめ記事 <span className='ml-4 text-sm text-gray-600'>すべて見る</span>
+          おすすめ記事
+          <span className='ml-4 text-sm text-gray-600'>
+            <Link href='/top/recommend'>すべて見る</Link>
+          </span>
         </h2>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>
@@ -99,6 +102,39 @@ export default function Index() {
           ))
         )}
       </div>
+      <div className='my-12'>
+        <h2 className='text-left text-2xl font-semibold'>
+          新着記事
+          <span className='ml-4 text-sm text-gray-600'>
+            <Link href='/top/recommend'>すべて見る</Link>
+          </span>
+        </h2>
+      </div>
+      <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>
+        {postData.length === 0 ? (
+          <p className='my-2 text-center'>記事がありません。</p>
+        ) : (
+          filteredPosts.map((post) => (
+            <CardPost
+              key={post.id}
+              downloadURL={post.downloadURL}
+              title={post.title}
+              category={post.category}
+              netabare={post.netabare}
+              context={post.context}
+              createTime={post.createTime}
+              displayName={post.displayName}
+              email={post.email}
+              id={post.id}
+              photoURL={post.photoURL}
+              likes={post.likes}
+              selected={post.selected}
+              userid={post.userid}
+            />
+          ))
+        )}
+      </div>
+
       <h2 className='my-12 text-left text-2xl font-semibold'>
         投稿一覧
         <span className='ml-4 text-sm text-gray-600'>

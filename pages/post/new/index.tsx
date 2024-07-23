@@ -206,7 +206,10 @@ export default function Post() {
           />
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label' htmlFor='input-title' className='mb-2'>
-              タイトル（最大20文字) <span className='text-red-600'>*</span>
+              タイトル（最大20文字)
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
             </FormLabel>
 
             <TextField
@@ -221,7 +224,10 @@ export default function Post() {
           </div>
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label'>
-              作品名<span className='text-red-600'>*</span>
+              作品名
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
             </FormLabel>
             <Controller
               name='categori'
@@ -260,7 +266,10 @@ export default function Post() {
           </div>
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label'>
-              ネタバレについて<span className='text-red-600'>*</span>
+              ネタバレについて
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
             </FormLabel>
             <Controller
               name='netabare'
@@ -286,7 +295,10 @@ export default function Post() {
           </div>
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label'>
-              内容<span className='text-red-600'>*</span>(最大500文字）
+              内容(最大500文字）
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
             </FormLabel>
 
             <Richedita onChange={handleEditorChange} value='' />
@@ -313,7 +325,10 @@ export default function Post() {
           </div>
 
           <FormLabel id='demo-radio-buttons-group-label'>
-            公開について<span className='text-red-600'>*</span>
+            公開について
+            <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+              必須
+            </span>
           </FormLabel>
 
           <Controller

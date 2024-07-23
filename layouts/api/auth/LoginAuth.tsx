@@ -65,14 +65,17 @@ export default function LoginAuth() {
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
         <>
           <ToastContainer />
-          <div>
-            <label className='my-4 mt-10 text-center'>
-              メールアドレス<span className='text-red-600'>*</span>
+          <div className='mb-2'>
+            <label className='my-4 mt-10 text-center' htmlFor='email'>
+              メールアドレス
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
             </label>
           </div>
           <div>
             <TextField
-              id='outlined-basic'
+              id='email'
               label='sample@gmail.com'
               className='m-auto mb-6 w-80'
               variant='outlined'
@@ -80,15 +83,18 @@ export default function LoginAuth() {
               error={'email' in errors}
               helperText={errors.email?.message}
             />
-            <div className='mt-6'>
-              <label className='my-4 text-center'>
-                パスワード（8文字以上)<span className='text-red-600'>*</span>
+            <div className='mt-6 mb-2'>
+              <label className='my-4 text-center' htmlFor='password'>
+                パスワード（8文字以上)
+                <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                  必須
+                </span>
               </label>
             </div>
           </div>
           <div className='m-auto'>
             <TextField
-              id='outlined-basic'
+              id='password'
               label='Password'
               variant='outlined'
               type='password'

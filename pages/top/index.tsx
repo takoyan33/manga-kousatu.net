@@ -18,6 +18,8 @@ import Select from '@mui/material/Select'
 import { Changetab } from 'layouts/components/ui/Changetab'
 import Image from 'react-image-resizer'
 import { GetPost } from 'types/post'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
 
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
@@ -26,14 +28,6 @@ export default function Index() {
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
-
-  const displayMore = () => {
-    if (loadIndex > postData.length) {
-      setIsEmpty(true)
-    } else {
-      setLoadIndex(loadIndex + 3)
-    }
-  }
 
   interface NetabareItem {
     sortId: number
@@ -47,16 +41,14 @@ export default function Index() {
   }, [])
 
   const filterPostData = () => {
-    return postData
-      .filter((post) => {
-        if (searchName === '') {
-          return true
-        } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-          return true
-        }
-        return false
-      })
-      .slice(0, loadIndex)
+    return postData.filter((post) => {
+      if (searchName === '') {
+        return true
+      } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+        return true
+      }
+      return false
+    })
   }
 
   const filteredPosts = filterPostData()
@@ -78,62 +70,74 @@ export default function Index() {
           </span>
         </h2>
       </div>
-      <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>
+      <Swiper
+        className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
+        spaceBetween={10}
+        slidesPerView={3.5}
+      >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <CardPost
-              key={post.id}
-              downloadURL={post.downloadURL}
-              title={post.title}
-              category={post.category}
-              netabare={post.netabare}
-              context={post.context}
-              createTime={post.createTime}
-              displayName={post.displayName}
-              email={post.email}
-              id={post.id}
-              photoURL={post.photoURL}
-              likes={post.likes}
-              selected={post.selected}
-              userid={post.userid}
-            />
+            <SwiperSlide>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
+            </SwiperSlide>
           ))
         )}
-      </div>
+      </Swiper>
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>
           新着記事
           <span className='ml-4 text-sm text-gray-600'>
-            <Link href='/top/recommend'>すべて見る</Link>
+            <Link href='/top/new'>すべて見る</Link>
           </span>
         </h2>
       </div>
-      <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>
+      <Swiper
+        className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
+        spaceBetween={10}
+        slidesPerView={3.5}
+      >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <CardPost
-              key={post.id}
-              downloadURL={post.downloadURL}
-              title={post.title}
-              category={post.category}
-              netabare={post.netabare}
-              context={post.context}
-              createTime={post.createTime}
-              displayName={post.displayName}
-              email={post.email}
-              id={post.id}
-              photoURL={post.photoURL}
-              likes={post.likes}
-              selected={post.selected}
-              userid={post.userid}
-            />
+            <SwiperSlide>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
+            </SwiperSlide>
           ))
         )}
-      </div>
+      </Swiper>
 
       <h2 className='my-12 text-left text-2xl font-semibold'>
         投稿一覧
@@ -141,42 +145,37 @@ export default function Index() {
           <Link href='/top/all'>すべて見る</Link>
         </span>
       </h2>
-      <div className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'>
+      <Swiper
+        className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
+        spaceBetween={10}
+        slidesPerView={3.5}
+      >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <CardPost
-              key={post.id}
-              downloadURL={post.downloadURL}
-              title={post.title}
-              category={post.category}
-              netabare={post.netabare}
-              context={post.context}
-              createTime={post.createTime}
-              displayName={post.displayName}
-              email={post.email}
-              id={post.id}
-              photoURL={post.photoURL}
-              likes={post.likes}
-              selected={post.selected}
-              userid={post.userid}
-            />
+            <SwiperSlide>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
+            </SwiperSlide>
           ))
         )}
-      </div>
-      <div className='text-center'>
-        {postData.length > 3 && (
-          <SiteButton
-            href=''
-            text='さらに表示'
-            disabled={isEmpty ? true : false}
-            onClick={displayMore}
-            className='w-50 m-auto my-2'
-          />
-        )}
-      </div>
-      <h2 className='text-left text-xl font-semibold'>カテゴリで探す</h2>
+      </Swiper>
+      <h2 className='text-left text-xl font-semibold mt-12'>カテゴリで探す</h2>
       {POST_CATEGORIES.map((category) => {
         const CategoriesInfo = {
           id: category.id,

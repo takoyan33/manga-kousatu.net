@@ -76,6 +76,11 @@ export const DISPLAY_DATA: DisplayData[] = [
 
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    version: '2.0',
+    date: '2024年7月30日',
+    features: ['TypeScriptで型定義の追加、UIの大幅改良、カルーセルの追加'],
+  },
+  {
     version: '1.9',
     date: '2023年7月1日',
     features: [

@@ -72,7 +72,7 @@ export default function Index() {
       <CommonHead />
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>
-          おすすめ記事 <span className='ml-4 text-sm text-gray-600'>すべて見る</span>
+          新着記事 
         </h2>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>

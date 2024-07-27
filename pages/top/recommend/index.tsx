@@ -68,7 +68,7 @@ export default function Index() {
   // }
 
   return (
-    <div>
+    <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>

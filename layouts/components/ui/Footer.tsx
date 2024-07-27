@@ -2,25 +2,25 @@ import Link from 'next/link'
 
 export const Footer = () => (
   <>
-    <div className='m-auto mt-16 flex max-w-4xl justify-between'>
+    <div className='d-block m-auto mt-6 w-11/12 max-w-4xl justify-between md:mt-16 md:flex md:w-full'>
       <div>
         <Link href='/top'>
           <img height={100} width={150} src='/logo.png' alt='logo' />
         </Link>
-        <p className='my-4 text-sm'>漫画記事考察サイト</p>
+        <p className='my-4 text-lg md:text-sm'>漫画記事考察サイト</p>
       </div>
       <div>
-        <p className='text-sm font-semibold'>
+        <p className='my-2 text-lg font-semibold md:my-0 md:text-sm'>
           <Link href='/about'>About</Link>
         </p>
       </div>
       <div>
-        <p className='text-sm font-semibold'>
+        <p className='my-2 text-lg font-semibold md:my-0 md:text-sm'>
           <Link href='/'>Manga Studyとは</Link>
         </p>
       </div>
       <div>
-        <p className='text-sm font-semibold'>
+        <p className='my-2 text-lg font-semibold md:my-0 md:text-sm'>
           <Link href='/releasenotes'>更新履歴</Link>
         </p>
       </div>

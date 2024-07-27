@@ -59,8 +59,16 @@ export default function Index() {
   //   title: string | ParsedUrlQueryInput
   // }
 
+  const breakpoints = {
+    0: {
+      slidesPerView: 1.5,
+    },
+    768: {
+      slidesPerView: 3.5,
+    },
+  }
   return (
-    <div>
+    <div className='w-11/12 md:w-full m-auto'>
       <CommonHead />
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>
@@ -74,6 +82,7 @@ export default function Index() {
         className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
         spaceBetween={10}
         slidesPerView={3.5}
+        breakpoints={breakpoints}
       >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
@@ -112,6 +121,7 @@ export default function Index() {
         className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
         spaceBetween={10}
         slidesPerView={3.5}
+        breakpoints={breakpoints}
       >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
@@ -149,6 +159,7 @@ export default function Index() {
         className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
         spaceBetween={10}
         slidesPerView={3.5}
+        breakpoints={breakpoints}
       >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
@@ -175,7 +186,7 @@ export default function Index() {
           ))
         )}
       </Swiper>
-      <h2 className='text-left text-xl font-semibold mt-12'>カテゴリで探す</h2>
+      <h2 className='mb-4 mt-12 text-left text-xl font-semibold'>カテゴリで探す</h2>
       {POST_CATEGORIES.map((category) => {
         const CategoriesInfo = {
           id: category.id,
@@ -184,7 +195,7 @@ export default function Index() {
         return (
           <span key={category.id}>
             <span
-              className={`m-6 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white ${category.className}`}
+              className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
             >
               <Link
                 as={`/post/categories/${category.title}`}

@@ -104,7 +104,7 @@ export default function Index() {
   // }
 
   return (
-    <div>
+    <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
       <h2 className='text-left text-xl font-semibold'>カテゴリで探す</h2>
       {POST_CATEGORIES.map((category) => {

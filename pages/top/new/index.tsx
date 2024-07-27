@@ -68,12 +68,10 @@ export default function Index() {
   // }
 
   return (
-    <div>
+    <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
       <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          新着記事 
-        </h2>
+        <h2 className='text-left text-2xl font-semibold'>新着記事</h2>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-center md:flex-row'>
         {postData.length === 0 ? (

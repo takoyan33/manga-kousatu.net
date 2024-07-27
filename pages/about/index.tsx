@@ -2,7 +2,7 @@ import { COPY_WRITES, CommonHead } from 'layouts/components/ui'
 
 export default function About() {
   return (
-    <div>
+    <div className='m-auto w-11/12 md:w-full'>
       <div className='flex min-h-screen flex-col items-center justify-center'>
         <CommonHead />
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>About</h1>

@@ -261,163 +261,156 @@ const Post = () => {
     <>
       <CommonHead />
       <ToastContainer />
-      <div>
-        <div>
-          <div className='my-4 lg:w-full'>
-            {user && (
+      <div className='m-auto my-4 w-11/12 md:w-full'>
+        {user && (
+          <>
+            {user.email === singlePost?.email && (
               <>
-                {user.email === singlePost?.email && (
-                  <>
-                    <List
-                      sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
-                      component='nav'
-                      aria-labelledby='nested-list-subheader'
-                      subheader={
-                        <ListSubheader component='div' id='nested-list-subheader'>
-                          投稿編集
-                        </ListSubheader>
-                      }
+                <List
+                  sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
+                  component='nav'
+                  aria-labelledby='nested-list-subheader'
+                  subheader={
+                    <ListSubheader component='div' id='nested-list-subheader'>
+                      投稿編集
+                    </ListSubheader>
+                  }
+                >
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <SendIcon />
+                    </ListItemIcon>
+                    <Link
+                      href={{
+                        pathname: `/post/edit/${singlePost.id}`,
+                      }}
                     >
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <SendIcon />
-                        </ListItemIcon>
-                        <Link
-                          href={{
-                            pathname: `/post/edit/${singlePost.id}`,
-                          }}
-                        >
-                          記事を編集する
-                        </Link>
-                      </ListItemButton>
-                      <ListItemButton>
-                        <ListItemIcon>
-                          <SendIcon />
-                        </ListItemIcon>
-                        <button onClick={() => deletePost(routerid)}>記事を削除する</button>
-                      </ListItemButton>
-                    </List>
-                  </>
-                )}
+                      記事を編集する
+                    </Link>
+                  </ListItemButton>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <SendIcon />
+                    </ListItemIcon>
+                    <button onClick={() => deletePost(routerid)}>記事を削除する</button>
+                  </ListItemButton>
+                </List>
               </>
             )}
-            <div className='rounded-xl border p-10'>
-              <div>
-                <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-                {singlePost?.title}
-              </div>
-              <div className='my-6 flex justify-center'>
-                <button onClick={openModal}>
-                  <Image
-                    className='m-auto max-w-sm text-center'
-                    height={400}
-                    width={400}
-                    src={singlePost?.downloadURL}
-                  />
-                  {!singlePost?.downloadURL && <p className=''>画像なし</p>}
-                </button>
-              </div>
-              <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
-                <div className='my-6 flex justify-center'>
-                  <Image
-                    className='m-auto max-w-sm text-center'
-                    height={400}
-                    width={400}
-                    src={singlePost?.downloadURL}
-                    alt='contextImage'
-                  />
-                </div>
-                　<button onClick={closeModal}>閉じる</button>
-              </Modal>
-              <div className='my-4 text-center text-2xl font-semibold'>{singlePost?.title}</div>
-              <br />
-              <div>
-                <span className='text-gray-500'>
-                  <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
-                </span>
-                <span>
-                  　<FavoriteIcon />
-                  <span className='ml-1'>{singlePost?.likes}</span>
-                </span>
-              </div>
-              {users &&
-                users.map((user) => {
-                  return (
-                    <>
-                      {singlePost?.email === user.email && (
-                        <Link href={`/profile/${user.userid}`}>
-                          <div key={user.userid}>
-                            <div className='m-auto my-4 flex  px-2'>
-                              <div key={user.id}>
-                                <div>
-                                  <Avatar
-                                    className='m-auto max-w-sm border text-center'
-                                    alt='プロフィール'
-                                    sx={{ width: 50, height: 50 }}
-                                    src={user.profileImage}
-                                  />
-                                </div>
-                              </div>
-                              <div className='ml-6 mt-1'>
-                                <span className='text-sm'>{user.userName}</span>
-                                <div className=' text-sm text-gray-500'>{user.bio}</div>
-                              </div>
+          </>
+        )}
+        <div className='rounded-xl md:border md:p-10'>
+          <div>
+            <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
+            {singlePost?.title}
+          </div>
+          <div className='my-6 flex justify-center'>
+            <button onClick={openModal}>
+              <Image
+                className='m-auto max-w-sm text-center'
+                height={400}
+                width={400}
+                src={singlePost?.downloadURL}
+              />
+              {!singlePost?.downloadURL && <p className=''>画像なし</p>}
+            </button>
+          </div>
+          <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
+            <div className='my-6 flex justify-center'>
+              <Image
+                className='m-auto max-w-sm text-center'
+                height={400}
+                width={400}
+                src={singlePost?.downloadURL}
+                alt='contextImage'
+              />
+            </div>
+            　<button onClick={closeModal}>閉じる</button>
+          </Modal>
+          <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
+            {singlePost?.title}
+          </div>
+          <br />
+          <div>
+            <span className='text-sm text-gray-500 md:text-base'>
+              <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
+            </span>
+            <span className='text-sm md:text-base'>
+              　<FavoriteIcon />
+              <span className='ml-1'>{singlePost?.likes}</span>
+            </span>
+          </div>
+          {users &&
+            users.map((user) => {
+              return (
+                <>
+                  {singlePost?.email === user.email && (
+                    <Link href={`/profile/${user.userid}`}>
+                      <div key={user.userid}>
+                        <div className='m-auto my-4 flex  px-2'>
+                          <div key={user.id}>
+                            <div>
+                              <Avatar
+                                className='m-auto max-w-sm border text-center'
+                                alt='プロフィール'
+                                sx={{ width: 50, height: 50 }}
+                                src={user.profileImage}
+                              />
                             </div>
                           </div>
-                        </Link>
-                      )}
-                    </>
-                  )
-                })}
-              {singlePost?.editTime && (
-                <div>
-                  <AccessTimeIcon />
-                  編集日時：{singlePost.editTime}
-                </div>
-              )}
-              <div color='text.secondary'>
-                {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
-                  singlePost?.category,
-                ) && (
-                  <SiteCategory
-                    className={`border-${
-                      {
-                        ONEPIECE: 'cyan',
-                        呪術廻戦: 'purple',
-                        東京リベンジャーズ: 'rose',
-                        キングダム: 'yellow',
-                      }[singlePost.category]
-                    }-500 text-${
-                      {
-                        ONEPIECE: 'cyan',
-                        呪術廻戦: 'purple',
-                        東京リベンジャーズ: 'rose',
-                        キングダム: 'yellow',
-                      }[singlePost.category]
-                    }-500 hover:bg-${
-                      {
-                        ONEPIECE: 'cyan',
-                        呪術廻戦: 'purple',
-                        東京リベンジャーズ: 'rose',
-                        キングダム: 'yellow',
-                      }[singlePost.category]
-                    }-700 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
-                    text={singlePost.category}
-                    href={`/post/categories/${singlePost.category}`}
-                  />
-                )}
+                          <div className='ml-6 mt-1'>
+                            <span className='text-sm'>{user.userName}</span>
+                            <div className=' text-sm text-gray-500'>{user.bio}</div>
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  )}
+                </>
+              )
+            })}
+          {singlePost?.editTime && (
+            <div>
+              <AccessTimeIcon />
+              編集日時：{singlePost.editTime}
+            </div>
+          )}
+          <div color='text.secondary'>
+            {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
+              singlePost?.category,
+            ) && (
+              <SiteCategory
+                className={`border-${
+                  {
+                    ONEPIECE: 'cyan',
+                    呪術廻戦: 'purple',
+                    東京リベンジャーズ: 'rose',
+                    キングダム: 'yellow',
+                  }[singlePost.category]
+                }-500 hover:bg-${
+                  {
+                    ONEPIECE: 'cyan',
+                    呪術廻戦: 'purple',
+                    東京リベンジャーズ: 'rose',
+                    キングダム: 'yellow',
+                  }[singlePost.category]
+                }-500 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
+                text={singlePost.category}
+                href={`/post/categories/${singlePost.category}`}
+              />
+            )}
 
-                {singlePost?.netabare === 'ネタバレ有' ? (
-                  <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center text-red-500'>
-                    {singlePost?.netabare}
-                  </span>
-                ) : (
-                  <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center text-gray-500'>
-                    {singlePost?.netabare}
-                  </span>
-                )}
+            {singlePost?.netabare === 'ネタバレ有' ? (
+              <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center'>
+                {singlePost?.netabare}
+              </span>
+            ) : (
+              <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center '>
+                {singlePost?.netabare}
+              </span>
+            )}
 
-                {/* <div className='mt-2 mb-8'>
+            {/* <div className='mt-2 mb-8'>
                   <FacebookShareButton url={URL} quote={QUOTE}>
                     <FacebookIcon size={24} round />
                   </FacebookShareButton>
@@ -429,222 +422,216 @@ const Post = () => {
                   </LineShareButton>
                 </div> */}
 
-                {singlePost?.context && (
-                  <p className='text-left' style={{ whiteSpace: 'pre-line' }}>
-                    {parse(singlePost.context)}
-                  </p>
-                )}
-              </div>
-              <br />
-              {singlePost?.contextImage && (
-                <div className='flex justify-center'>
-                  <Image
-                    className='m-auto max-w-sm text-center'
-                    height={300}
-                    width={300}
-                    src={singlePost?.contextImage}
-                    alt='contextImage'
-                  />
-                </div>
-              )}
-              <div className='my-4'>
-                <span className='text-pink-400'>
-                  <FavoriteIcon />
-                </span>
-                {singlePost?.likes}
-              </div>
-
-              {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
-                <>自分の投稿なのでいいねできません</>
-              ) : (
-                <>
-                  {singlePost?.likesEmail && user ? (
-                    singlePost?.likesEmail.includes(user.email) ? (
-                      <>
-                        <p>いいね済み</p>
-                        <button
-                          className='my-2 inline'
-                          onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
-                        >
-                          <span className='py-4 text-pink-400 hover:text-pink-700'>
-                            <FavoriteIcon />
-                            いいね解除する
-                          </span>
-                        </button>
-                      </>
-                    ) : (
-                      <button onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}>
-                        <FavoriteIconAnim on={on} />
-                        <span>いいねする</span>
-                      </button>
-                    )
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
-
-              {singlePost &&
-                singlePost.selected.map((tag, i) => (
-                  <span
-                    className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
-                    key={i}
-                  >
-                    #{tag}
-                  </span>
-                ))}
-
-              <div className='cursor-pointer'>
-                {users?.map((user) => {
-                  return (
-                    <div key={user.id}>
-                      {singlePost?.email === user.email && (
-                        <Link href={`/profile/${user.userid}`}>
-                          <div className='m-auto my-8 flex border py-8  px-2'>
-                            <div>
-                              <Avatar
-                                className='m-auto max-w-sm border text-center'
-                                alt='プロフィール'
-                                sx={{ width: 80, height: 80 }}
-                                src={user.profileImage}
-                              />
-                            </div>
-                            <div className='ml-6 mt-4'>
-                              <span className=''>
-                                <AccountBoxIcon /> {user.userName}
-                              </span>
-                              <div className=' mt-2 pb-2 text-gray-500'>
-                                <BorderColorIcon />
-                                {user.bio}
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      )}
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-
-            {!user && (
-              <>
-                <Link href='/login'>
-                  <span className='p-4 text-pink-400 hover:text-pink-700'>
-                    <FavoriteIcon />
-                    ログインするといいねができます
-                  </span>
-                </Link>
-                <div className='mb-6 flex items-center justify-between'>
-                  <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                    コメント {comments.length}
-                  </h2>
-                  <Link href='/login'>
-                    <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
-                  </Link>
-                </div>
-              </>
+            {singlePost?.context && (
+              <p className='text-left' style={{ whiteSpace: 'pre-line' }}>
+                {parse(singlePost.context)}
+              </p>
             )}
-            {user && (
-              <section className='bg-white py-8 lg:py-16'>
-                <div className='mx-auto max-w-2xl px-4'>
-                  <div className='mb-6 flex items-center justify-between'>
-                    <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
-                      コメント ({comments.length})
-                    </h2>
-                  </div>
-                  <form className='mb-6' id='aa'>
-                    <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
-                      <label htmlFor='comment' className='sr-only'>
-                        あなたのコメント
-                      </label>
-                      <textarea
-                        id='comment'
-                        rows={6}
-                        className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
-                        placeholder='コメントを入力してください'
-                        required
-                        {...register('comment', { required: 'コメントは必須です' })}
-                      ></textarea>
-                    </div>
-                    {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
-                    <button
-                      type='submit'
-                      onClick={handleSubmit(addComment)}
-                      className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
-                    >
-                      コメントする
-                    </button>
-                  </form>
-                </div>
-              </section>
-            )}
-            {comments &&
-              comments.map((comment) => {
-                return (
-                  <article
-                    className='mb-6 rounded-lg border bg-white p-6 text-base'
-                    key={comment.id}
-                  >
-                    <footer className='mb-2 flex items-center justify-between'>
-                      <div className='flex items-center'>
-                        <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
-                          {comment.username}
-                        </p>
-                        <p className='text-sm text-gray-600 dark:text-gray-400'>
-                          <time>{comment.createtime}</time>
-                        </p>
-                      </div>
-                    </footer>
-
-                    <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
-                      {comment.comment}
-                    </p>
-                    {user && (
-                      <>
-                        {user.email === comment.userEmail && (
-                          <div className='flex'>
-                            <button onClick={openCommentModal} className='mx-2'>
-                              編集
-                            </button>
-                            <button onClick={() => deleteComment(comment.id)}>削除</button>
-                          </div>
-                        )}
-                      </>
-                    )}
-                    <Modal
-                      isOpen={isCommentModalOpen}
-                      onRequestClose={closeCommentModal}
-                      contentLabel='comment Modal'
-                    >
-                      <div>
-                        <FormLabel id='demo-radio-buttons-group-label'>
-                          コメント<span className='text-red-600'>*</span>
-                        </FormLabel>
-                      </div>
-                      <div>
-                        <input
-                          id='outlined-basic'
-                          className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                          defaultValue={comment.comment}
-                          type='text'
-                          onChange={(event) => setComment(event.target.value)}
-                        />
-                        <button
-                          onClick={() => updateComment(comment.id)}
-                          className='m-auto my-8 w-80'
-                        >
-                          更新する
-                        </button>
-                      </div>
-                      <button onClick={closeCommentModal}>閉じる</button>
-                    </Modal>
-                  </article>
-                )
-              })}
           </div>
+          <br />
+          {singlePost?.contextImage && (
+            <div className='flex justify-center'>
+              <Image
+                className='m-auto max-w-sm text-center'
+                height={300}
+                width={300}
+                src={singlePost?.contextImage}
+                alt='contextImage'
+              />
+            </div>
+          )}
+          <div className='my-4'>
+            <span className='text-pink-400'>
+              <FavoriteIcon />
+            </span>
+            {singlePost?.likes}
+          </div>
+
+          {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
+            <>自分の投稿なのでいいねできません</>
+          ) : (
+            <>
+              {singlePost?.likesEmail && user ? (
+                singlePost?.likesEmail.includes(user.email) ? (
+                  <>
+                    <p>いいね済み</p>
+                    <button
+                      className='my-2 inline'
+                      onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
+                    >
+                      <span className='py-4 text-pink-400 hover:text-pink-700'>
+                        <FavoriteIcon />
+                        いいね解除する
+                      </span>
+                    </button>
+                  </>
+                ) : (
+                  <button onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}>
+                    <FavoriteIconAnim on={on} />
+                    <span>いいねする</span>
+                  </button>
+                )
+              ) : (
+                <></>
+              )}
+            </>
+          )}
+
+          {singlePost &&
+            singlePost.selected.map((tag, i) => (
+              <span
+                className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
+                key={i}
+              >
+                #{tag}
+              </span>
+            ))}
+
+          <div className='cursor-pointer'>
+            {users?.map((user) => {
+              return (
+                <div key={user.id}>
+                  {singlePost?.email === user.email && (
+                    <Link href={`/profile/${user.userid}`}>
+                      <div className='m-auto my-8 flex border py-8  px-2'>
+                        <div>
+                          <Avatar
+                            className='m-auto max-w-sm border text-center'
+                            alt='プロフィール'
+                            sx={{ width: 80, height: 80 }}
+                            src={user.profileImage}
+                          />
+                        </div>
+                        <div className='ml-6 mt-4'>
+                          <span className=''>
+                            <AccountBoxIcon /> {user.userName}
+                          </span>
+                          <div className=' mt-2 pb-2 text-gray-500'>
+                            <BorderColorIcon />
+                            {user.bio}
+                          </div>
+                        </div>
+                      </div>
+                    </Link>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
+        {!user && (
           <>
-            {/* <h2 className="text-2xl">こちらもおすすめ</h2>
+            <Link href='/login'>
+              <span className='p-4 text-pink-400 hover:text-pink-700'>
+                <FavoriteIcon />
+                ログインするといいねができます
+              </span>
+            </Link>
+            <div className='mb-6 flex items-center justify-between'>
+              <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                コメント {comments.length}件
+              </h2>
+              <Link href='/login'>
+                <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
+              </Link>
+            </div>
+          </>
+        )}
+        {user && (
+          <section className='bg-white py-8 lg:py-16'>
+            <div className='mx-auto max-w-2xl px-4'>
+              <div className='mb-6 flex items-center justify-between'>
+                <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                  コメント ({comments.length})
+                </h2>
+              </div>
+              <form className='mb-6' id='aa'>
+                <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
+                  <label htmlFor='comment' className='sr-only'>
+                    あなたのコメント
+                  </label>
+                  <textarea
+                    id='comment'
+                    rows={6}
+                    className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
+                    placeholder='コメントを入力してください'
+                    required
+                    {...register('comment', { required: 'コメントは必須です' })}
+                  ></textarea>
+                </div>
+                {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
+                <button
+                  type='submit'
+                  onClick={handleSubmit(addComment)}
+                  className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
+                >
+                  コメントする
+                </button>
+              </form>
+            </div>
+          </section>
+        )}
+        {comments &&
+          comments.map((comment) => {
+            return (
+              <article className='mb-6 rounded-lg border bg-white p-6 text-base' key={comment.id}>
+                <footer className='mb-2 flex items-center justify-between'>
+                  <div className='flex items-center'>
+                    <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
+                      {comment.username}
+                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>
+                      <time>{comment.createtime}</time>
+                    </p>
+                  </div>
+                </footer>
+
+                <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
+                  {comment.comment}
+                </p>
+                {user && (
+                  <>
+                    {user.email === comment.userEmail && (
+                      <div className='flex'>
+                        <button onClick={openCommentModal} className='mx-2'>
+                          編集
+                        </button>
+                        <button onClick={() => deleteComment(comment.id)}>削除</button>
+                      </div>
+                    )}
+                  </>
+                )}
+                <Modal
+                  isOpen={isCommentModalOpen}
+                  onRequestClose={closeCommentModal}
+                  contentLabel='comment Modal'
+                >
+                  <div>
+                    <FormLabel id='demo-radio-buttons-group-label'>
+                      コメント<span className='text-red-600'>*</span>
+                    </FormLabel>
+                  </div>
+                  <div>
+                    <input
+                      id='outlined-basic'
+                      className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                      defaultValue={comment.comment}
+                      type='text'
+                      onChange={(event) => setComment(event.target.value)}
+                    />
+                    <button onClick={() => updateComment(comment.id)} className='m-auto my-8 w-80'>
+                      更新する
+                    </button>
+                  </div>
+                  <button onClick={closeCommentModal}>閉じる</button>
+                </Modal>
+              </article>
+            )
+          })}
+      </div>
+      <>
+        {/* <h2 className="text-2xl">こちらもおすすめ</h2>
               <div className="max-w-7xl m-auto">
                 <Grid container spacing={1}>
                   {singlePost.map((data) => {
@@ -672,9 +659,7 @@ const Post = () => {
                   )}
                 </Grid>
               </div> */}
-          </>
-        </div>
-      </div>
+      </>
     </>
   )
 }

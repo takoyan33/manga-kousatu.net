@@ -79,7 +79,7 @@ const Post = () => {
   const [categoryPosts, setCategoryPosts] = useState([])
   const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
-  const routerid: string = router.query.id
+  const routerid = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
 

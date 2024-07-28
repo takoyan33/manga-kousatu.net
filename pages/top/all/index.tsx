@@ -22,7 +22,7 @@ import { GetPost } from 'types/post'
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
-  const [loadIndex, setLoadIndex] = useState<number>(3)
+  const [loadIndex, setLoadIndex] = useState<number>(9)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
@@ -31,7 +31,7 @@ export default function Index() {
     if (loadIndex > postData.length) {
       setIsEmpty(true)
     } else {
-      setLoadIndex(loadIndex + 3)
+      setLoadIndex(loadIndex + 9)
     }
   }
 
@@ -60,7 +60,7 @@ export default function Index() {
       onClick: () => useGetOldPosts(setPostData),
     },
     {
-      sortId: 3,
+      sortId: 9,
       label: 'いいね順',
       value: 'いいね順',
       onClick: () => useGetLikePosts(setPostData),
@@ -173,34 +173,36 @@ export default function Index() {
           </Select>
         </FormControl>
       </div>
-      <div className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'>
+      <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : filteredPosts.length === 0 ? (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           filteredPosts.map((post) => (
-            <CardPost
-              key={post.id}
-              downloadURL={post.downloadURL}
-              title={post.title}
-              category={post.category}
-              netabare={post.netabare}
-              context={post.context}
-              createTime={post.createTime}
-              displayName={post.displayName}
-              email={post.email}
-              id={post.id}
-              photoURL={post.photoURL}
-              likes={post.likes}
-              selected={post.selected}
-              userid={post.userid}
-            />
+            <div className='w-1/4'>
+              <CardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
+            </div>
           ))
         )}
       </div>
       <div className='text-center'>
-        {postData.length > 3 && (
+        {postData.length > 9 && (
           <SiteButton
             href=''
             text='さらに表示'

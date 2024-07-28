@@ -1,8 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
-import TextField from '@mui/material/TextField'
-import { SiteButton } from 'layouts/components/button'
 import {
   useFetchPosts,
   useGetOldPosts,
@@ -11,21 +9,16 @@ import {
   useGetNoNetabrePosts,
 } from 'layouts/components/hooks'
 import { POST_CATEGORIES, COPY_WRITES, CommonHead, CardPost } from 'layouts/components/ui'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
 import { Changetab } from 'layouts/components/ui/Changetab'
-import Image from 'react-image-resizer'
 import { GetPost } from 'types/post'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
-  const [loadIndex, setLoadIndex] = useState<number>(3)
-  const [isEmpty, setIsEmpty] = useState<boolean>(false)
   const auth = getAuth()
   const user = auth.currentUser
 
@@ -52,7 +45,6 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
-  console.log(postData)
 
   // interface CategoryParams {
   //   id: string | ParsedUrlQueryInput
@@ -68,7 +60,7 @@ export default function Index() {
     },
   }
   return (
-    <div className='w-11/12 md:w-full m-auto'>
+    <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>

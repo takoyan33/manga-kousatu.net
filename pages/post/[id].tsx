@@ -27,12 +27,13 @@ import {
   useGetPost,
   useGetUsers,
   useGetMyUser,
-  useGetCategoriPosts,
+  useGetCategoryPosts,
   useGetOtherUser,
   deleteComment,
+  getComments,
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
-import { CommonHead, CardPost } from 'layouts/components/ui'
+import { CommonHead, RecommendCardPost } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
@@ -71,14 +72,14 @@ const schema = yup.object({
 
 const Post = () => {
   const [comment, setComment] = useState<string>('')
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState<Array<GetComment>>([])
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [singlePost, setSinglePost] = useState<GetPost>(null)
   const [likecount, setLikecount] = useState<number>(0)
-  const [categoriPosts, setCategoriPosts] = useState<string>(null)
+  const [categoryPosts, setCategoryPosts] = useState([])
   const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
-  const routerid: string | string[] = router.query.id
+  const routerid: string = router.query.id
   const auth = getAuth()
   const user = auth.currentUser
 
@@ -93,22 +94,19 @@ const Post = () => {
     resolver: yupResolver(schema),
   })
 
-  const getComments = async () => {
-    const commentsRef = collection(database, 'comments')
-    const postComments = await query(commentsRef, where('postid', '==', routerid))
-    onSnapshot(postComments, (querySnapshot) => {
-      setComments(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
-
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
     useGetUsers(setUsers)
-    console.log(singlePost)
-    getComments()
-    // useGetMyUser(setUsers,)
-    // useGetCategoriPosts(setCategoriPosts, singlePost.categori)
-  }, [router])
+    getComments(setComments, routerid)
+  }, [routerid])
+
+  useEffect(() => {
+    if (singlePost && singlePost.category) {
+      console.log(singlePost)
+      useGetCategoryPosts(setCategoryPosts, singlePost.category)
+      console.log(categoryPosts)
+    }
+  }, [singlePost])
 
   //記事の削除
   const deletePost = (routerId) => {
@@ -174,9 +172,9 @@ const Post = () => {
     await setDoc(postRef, {
       comment: data.comment,
       userid: user.uid,
-      postid: singlePost.id,
+      postid: routerid,
       username: user.displayName,
-      createtime: newDate,
+      createTime: newDate,
       timestamp: serverTimestamp(),
       userEmail: user.email,
       isEdit: false,
@@ -185,7 +183,7 @@ const Post = () => {
     })
       .then(() => {
         successNotify('コメントを投稿しました')
-        getComments()
+        getComments(setComments, routerid)
       })
       .catch((err) => {
         errorNotify('コメントの投稿に失敗しました')
@@ -199,7 +197,6 @@ const Post = () => {
     updateDoc(commentDate, {
       comment: comment,
       userid: user.uid,
-      postid: singlePost.id,
       username: user.displayName,
       userEmail: user.email,
       userPhoto: user.photoURL,
@@ -522,19 +519,10 @@ const Post = () => {
 
         {!user && (
           <>
-            <Link href='/login'>
-              <span className='p-4 text-pink-400 hover:text-pink-700'>
-                <FavoriteIcon />
-                ログインするといいねができます
-              </span>
-            </Link>
-            <div className='mb-6 flex items-center justify-between'>
-              <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+            <div className='my-4 text-center'>
+              <h2 className='text-lg font-bold text-gray-700 lg:text-xl'>
                 コメント {comments.length}件
               </h2>
-              <Link href='/login'>
-                <p className='my-6 hover:text-gray-600'>ログインするとコメントできます</p>
-              </Link>
             </div>
           </>
         )}
@@ -542,7 +530,7 @@ const Post = () => {
           <section className='bg-white py-8 lg:py-16'>
             <div className='mx-auto max-w-2xl px-4'>
               <div className='mb-6 flex items-center justify-between'>
-                <h2 className='text-lg font-bold text-gray-900 lg:text-2xl '>
+                <h2 className='text-lg font-bold text-gray-700 lg:text-2xl '>
                   コメント ({comments.length})
                 </h2>
               </div>
@@ -578,26 +566,38 @@ const Post = () => {
               <article className='mb-6 rounded-lg border bg-white p-6 text-base' key={comment.id}>
                 <footer className='mb-2 flex items-center justify-between'>
                   <div className='flex items-center'>
-                    <p className='mr-3 inline-flex items-center text-sm text-gray-900 '>
+                    <Avatar
+                      className='m-auto max-w-sm border text-center'
+                      alt='プロフィール'
+                      sx={{ width: 30, height: 30 }}
+                      src={comment.userPhoto}
+                    />
+                    <p className='mx-3 inline-flex items-center text-sm font-semibold text-gray-900'>
                       {comment.username}
                     </p>
                     <p className='text-sm text-gray-600 dark:text-gray-400'>
-                      <time>{comment.createtime}</time>
+                      <time>{comment.createTime}</time>
                     </p>
                   </div>
                 </footer>
 
-                <p className='whitespace-pre-wrap break-words text-gray-500 dark:text-gray-400'>
-                  {comment.comment}
-                </p>
+                <p className='my-4 whitespace-pre-wrap break-words'>{comment.comment}</p>
                 {user && (
                   <>
                     {user.email === comment.userEmail && (
                       <div className='flex'>
-                        <button onClick={openCommentModal} className='mx-2'>
+                        <button
+                          onClick={openCommentModal}
+                          className='text-whit mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
+                        >
                           編集
                         </button>
-                        <button onClick={() => deleteComment(comment.id)}>削除</button>
+                        <button
+                          onClick={() => deleteComment(comment.id)}
+                          className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
+                        >
+                          削除
+                        </button>
                       </div>
                     )}
                   </>
@@ -630,36 +630,34 @@ const Post = () => {
             )
           })}
       </div>
-      <>
-        {/* <h2 className="text-2xl">こちらもおすすめ</h2>
-              <div className="max-w-7xl m-auto">
-                <Grid container spacing={1}>
-                  {singlePost.map((data) => {
-                    return (
-                      <CardPost
-                        key={data.id}
-                        downloadURL={data.downloadURL}
-                        title={data.title}
-                        categori={data.categori}
-                        netabare={data.netabare}
-                        context={data.context}
-                        createtime={data.createtime}
-                        displayname={data.displayname}
-                        email={data.email}
-                        id={data.id}
-                        photoURL={data.photoURL}
-                        selected={data.selected}
-                      />
-                    );
-                  })}
-                  {singlePost.length === 0 && (
-                    <p className="text-center m-auto my-6 text-2xl">
-                      まだ投稿されていません
-                    </p>
-                  )}
-                </Grid>
-              </div> */}
-      </>
+      <h2 className='my-4 text-xl'>こちらもおすすめ</h2>
+      <div className='m-auto mt-8 max-w-7xl'>
+        <div>
+          {categoryPosts.map((post) => {
+            return (
+              <RecommendCardPost
+                key={post.id}
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                displayName={post.displayName}
+                email={post.email}
+                id={post.id}
+                photoURL={post.photoURL}
+                likes={post.likes}
+                selected={post.selected}
+                userid={post.userid}
+              />
+            )
+          })}
+          {categoryPosts.length === 0 && (
+            <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
+          )}
+        </div>
+      </div>
     </>
   )
 }

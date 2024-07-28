@@ -111,32 +111,33 @@ export const useGetUsersPosts = async (setPostData, userId: string) => {
 
 //リロード時にエラーになる
 //特定カテゴリの新しい投稿を取得
-export const useGetCategoriPosts = async (setPostData, postCategory: string) => {
-  const categoriPosts = query(postsRef, where('categori', '==', postCategory))
+export const useGetCategoryPosts = async (setPostData, postCategory: string) => {
+  console.log(postCategory)
+  const categoryPosts = query(postsRef, where('category', '==', postCategory))
 
-  onSnapshot(categoriPosts, (querySnapshot) => {
+  onSnapshot(categoryPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
 
 //特定カテゴリの古い投稿を取得
 export const useGetCategoriOldPosts = async (setPostData, postCategory: string) => {
-  const categoriPosts = query(postsRef, where('categori', '==', postCategory), orderBy('timestamp'))
+  const categoryPosts = query(postsRef, where('category', '==', postCategory), orderBy('timestamp'))
 
-  onSnapshot(categoriPosts, (querySnapshot) => {
+  onSnapshot(categoryPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
 
 //特定カテゴリのいいね順の投稿を取得
 export const useGetCategoriLikePosts = async (setPostData, postCategory: string) => {
-  const categoriPosts = query(
+  const categoryPosts = query(
     postsRef,
-    where('categori', '==', postCategory),
+    where('category', '==', postCategory),
     orderBy('likes', 'desc'),
   )
 
-  onSnapshot(categoriPosts, (querySnapshot) => {
+  onSnapshot(categoryPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }

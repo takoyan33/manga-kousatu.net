@@ -9,19 +9,19 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import useSWR from 'swr'
-
+import { GetPost } from 'types/post'
 import { database } from 'firebaseConfig'
 import { postsRef } from 'layouts/utils/post'
 
 //新しいpostを取得
-export const useFetchPosts = async (setPostData) => {
+export const useFetchPosts = async (setPostData: any) => {
   onSnapshot(postsRef, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
 
 //古いpostを取得
-export const useGetOldPosts = async (setPostData) => {
+export const useGetOldPosts = async (setPostData: any) => {
   const oldPost = query(postsRef, orderBy('timestamp'))
 
   onSnapshot(oldPost, (querySnapshot) => {
@@ -30,7 +30,7 @@ export const useGetOldPosts = async (setPostData) => {
 }
 
 //いいね順でpostを取得
-export const useGetLikePosts = async (setPostData) => {
+export const useGetLikePosts = async (setPostData: any) => {
   const likePost = query(postsRef, orderBy('likes', 'desc'))
 
   onSnapshot(likePost, (querySnapshot) => {
@@ -39,7 +39,7 @@ export const useGetLikePosts = async (setPostData) => {
 }
 
 //ネタバレ有りでpostを取得
-export const useGetNetabrePosts = async (setPostData) => {
+export const useGetNetabrePosts = async (setPostData: any) => {
   const netabarePost = query(postsRef, where('netabare', '==', 'ネタバレ有'))
 
   onSnapshot(netabarePost, (querySnapshot) => {
@@ -48,7 +48,7 @@ export const useGetNetabrePosts = async (setPostData) => {
 }
 
 //ネタバレなしでpostを取得
-export const useGetNoNetabrePosts = async (setPostData) => {
+export const useGetNoNetabrePosts = async (setPostData: any) => {
   const noNetabarePost = query(postsRef, where('netabare', '==', 'ネタバレ無'))
 
   onSnapshot(noNetabarePost, (querySnapshot) => {
@@ -57,7 +57,7 @@ export const useGetNoNetabrePosts = async (setPostData) => {
 }
 
 //ユーザーの投稿データを取得
-export const useGetMyPosts = async (setPostData, myEmail: string) => {
+export const useGetMyPosts = async (setPostData: any, myEmail: string) => {
   const myPosts = query(postsRef, where('email', '==', myEmail))
 
   onSnapshot(myPosts, (querySnapshot) => {
@@ -109,11 +109,14 @@ export const useGetUsersPosts = async (setPostData, userId: string) => {
 //   })
 // }
 
-//リロード時にエラーになる
-//特定カテゴリの新しい投稿を取得
-export const useGetCategoryPosts = async (setPostData, postCategory: string) => {
+//カテゴリの新しい投稿を取得（自分の記事以外）
+export const useGetCategoryPosts = async (setPostData, postCategory: string, routerid) => {
   console.log(postCategory)
-  const categoryPosts = query(postsRef, where('category', '==', postCategory))
+  const categoryPosts = query(
+    postsRef,
+    where('category', '==', postCategory),
+    where('id', '!=', routerid),
+  )
 
   onSnapshot(categoryPosts, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))

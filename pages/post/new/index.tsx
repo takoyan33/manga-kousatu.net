@@ -120,7 +120,7 @@ export default function Post() {
       console.log('contextSetImage', contextSetImage)
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
-      const postRef = await doc(database, 'posts', (posts.length + 3).toString())
+      const postRef = await doc(database, 'posts', (posts.length + 1).toString())
       await setDoc(postRef, {
         title: data.title,
         context: html,

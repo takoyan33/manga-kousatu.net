@@ -87,7 +87,7 @@ export const Header = () => {
       <div>
         <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
           <Toolbar style={{ height: '80px' }}>
-            <Link href='/top'>
+            <Link href='/'>
               <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
                 <img height={100} width={200} src='/logo.png' alt='logo' />
               </Typography>

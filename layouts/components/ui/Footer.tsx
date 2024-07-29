@@ -4,7 +4,7 @@ export const Footer = () => (
   <>
     <div className='d-block m-auto mt-6 w-11/12 max-w-4xl justify-between md:mt-16 md:flex md:w-full'>
       <div>
-        <Link href='/top'>
+        <Link href='/'>
           <img height={100} width={150} src='/logo.png' alt='logo' />
         </Link>
         <p className='my-4 text-lg md:text-sm'>漫画記事考察サイト</p>
@@ -16,7 +16,7 @@ export const Footer = () => (
       </div>
       <div>
         <p className='my-2 text-lg font-semibold md:my-0 md:text-sm'>
-          <Link href='/'>Manga Studyとは</Link>
+          <Link href='/top'>Manga Studyとは</Link>
         </p>
       </div>
       <div>

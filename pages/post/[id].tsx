@@ -102,9 +102,7 @@ const Post = () => {
 
   useEffect(() => {
     if (singlePost && singlePost.category) {
-      console.log(singlePost)
-      useGetCategoryPosts(setCategoryPosts, singlePost.category)
-      console.log(categoryPosts)
+      useGetCategoryPosts(setCategoryPosts, singlePost.category, routerid)
     }
   }, [singlePost])
 

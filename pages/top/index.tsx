@@ -1,207 +1,93 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import Link from 'next/link'
+import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { SiteButton } from 'layouts/components/button'
 import { getAuth } from 'firebase/auth'
-import {
-  useFetchPosts,
-  useGetOldPosts,
-  useGetLikePosts,
-  useGetNetabrePosts,
-  useGetNoNetabrePosts,
-} from 'layouts/components/hooks'
-import { POST_CATEGORIES, COPY_WRITES, CommonHead, CardPost } from 'layouts/components/ui'
-import { Changetab } from 'layouts/components/ui/Changetab'
-import { GetPost } from 'types/post'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
-export default function Index() {
-  const [postData, setPostData] = useState<Array<GetPost>>([])
-  const [searchName, setSearchName] = useState<string>('')
+export default function Top() {
   const auth = getAuth()
   const user = auth.currentUser
-
-  interface NetabareItem {
-    sortId: number
-    label: string
-    value: string
-    onClick: () => void
-  }
-
-  useEffect(() => {
-    useFetchPosts(setPostData)
-  }, [])
-
-  const filterPostData = () => {
-    return postData.filter((post) => {
-      if (searchName === '') {
-        return true
-      } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-        return true
-      }
-      return false
-    })
-  }
-
-  const filteredPosts = filterPostData()
-
-  // interface CategoryParams {
-  //   id: string | ParsedUrlQueryInput
-  //   title: string | ParsedUrlQueryInput
-  // }
-
-  const breakpoints = {
-    0: {
-      slidesPerView: 1.5,
-    },
-    768: {
-      slidesPerView: 3.5,
-    },
-  }
   return (
-    <div className='m-auto w-11/12 md:w-full'>
+    <div>
       <CommonHead />
-      <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          おすすめ記事
-          <span className='ml-4 text-sm text-gray-600'>
-            <Link href='/top/recommend'>すべて見る</Link>
-          </span>
-        </h2>
+      <div className='d-block m-auto my-20 w-80 md:flex md:w-full md:justify-center'>
+        <div className='w-full md:w-6/12'>
+          <h1 className='my-6 text-left text-4xl font-semibold text-sky-600'>Manga Study</h1>
+          <p className='my-6 text-xl'>
+            Manga Studyでは、人気漫画の考察を
+            <br />
+            自由に投稿・閲覧できるwebサイトです。
+          </p>
+        </div>
+        <div className='w-full md:w-6/12'>
+          <div className='text-center'>
+            <img src='../images/top-home.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          </div>
+        </div>
       </div>
-      <Swiper
-        className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
-        spaceBetween={10}
-        slidesPerView={3.5}
-        breakpoints={breakpoints}
-      >
-        {postData.length === 0 ? (
-          <p className='my-2 text-center'>記事がありません。</p>
-        ) : (
-          filteredPosts.map((post) => (
-            <SwiperSlide>
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
-            </SwiperSlide>
-          ))
-        )}
-      </Swiper>
-      <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          新着記事
-          <span className='ml-4 text-sm text-gray-600'>
-            <Link href='/top/new'>すべて見る</Link>
-          </span>
-        </h2>
+      <hr></hr>
+      <h2 className='my-12 text-center text-2xl font-semibold'>機能</h2>
+      <div className='d-block  m-auto my-20 w-80 md:flex md:w-full'>
+        <div className='w-full md:w-1/3'>
+          <img src='../images/top-1.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h2>
+          <p className='my-6 px-4'>
+            語りたい漫画の考察があったら、 <br />
+            ログインをして、 記事を投稿しましょう。
+          </p>
+        </div>
+        <div className='w-full md:w-1/3'>
+          <img src='../images/top-2.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h2>
+          <p className='my-6 px-4'>
+            Manga Studyでは、様々な記事が投稿されているため、
+            <br />
+            記事の閲覧や好きな漫画の考察を検索できます
+          </p>
+        </div>
+        <div className='w-full md:w-1/3'>
+          <img src='../images/top-3.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h2>
+          <p className='my-6 px-4'>
+            コメント機能で、考察の内容について語ることができ、
+            <br />
+            より考察を深められます
+          </p>
+        </div>
       </div>
-      <Swiper
-        className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
-        spaceBetween={10}
-        slidesPerView={3.5}
-        breakpoints={breakpoints}
-      >
-        {postData.length === 0 ? (
-          <p className='my-2 text-center'>記事がありません。</p>
-        ) : (
-          filteredPosts.map((post) => (
-            <SwiperSlide>
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
-            </SwiperSlide>
-          ))
-        )}
-      </Swiper>
-
-      <h2 className='my-12 text-left text-2xl font-semibold'>
-        投稿一覧
-        <span className='ml-4 text-sm text-gray-600'>
-          <Link href='/top/all'>すべて見る</Link>
-        </span>
-      </h2>
-      <Swiper
-        className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
-        spaceBetween={10}
-        slidesPerView={3.5}
-        breakpoints={breakpoints}
-      >
-        {postData.length === 0 ? (
-          <p className='my-2 text-center'>記事がありません。</p>
-        ) : (
-          filteredPosts.map((post) => (
-            <SwiperSlide>
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
-            </SwiperSlide>
-          ))
-        )}
-      </Swiper>
-      <h2 className='mb-4 mt-12 text-left text-xl font-semibold'>カテゴリで探す</h2>
-      {POST_CATEGORIES.map((category) => {
-        const CategoriesInfo = {
-          id: category.id,
-          title: category.title,
-        }
-        return (
-          <span key={category.id}>
-            <span
-              className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
-            >
-              <Link
-                as={`/post/categories/${category.title}`}
-                href={{
-                  pathname: category.link,
-                  query: CategoriesInfo,
-                }}
-              >
-                <a>#{category.title}</a>
-              </Link>
-            </span>
-          </span>
-        )
-      })}
+      <hr></hr>
+      <div className='d-block m-auto my-20 bg-blue-200 p-10 md:flex'>
+        <div className='w-full md:w-6/12'>
+          <h2 className='my-6 text-center text-4xl font-semibold text-sky-600 md:text-left'>
+            Join Manga Study
+          </h2>
+          <p className='my-6 text-center text-xl md:text-left'>漫画の考察記事を投稿、閲覧しよう</p>
+          <div className='m-auto'>
+            {!user && (
+              <>
+                <SiteButton
+                  href='/register'
+                  text='新規登録'
+                  className='w-50 m-auto my-2 inline-block text-left'
+                />
+                <SiteButton
+                  href='/login'
+                  text='ログイン'
+                  className='w-50 text-lef m-auto my-2 mx-4 inline-block'
+                />
+              </>
+            )}
+            <SiteButton
+              href='/top'
+              text='記事を見る'
+              className='w-50 text-lef m-auto my-2 inline-block'
+            />
+          </div>
+        </div>
+        <div className='w-full md:w-6/12'>
+          <div className='text-center'>
+            <img src='../images/top-search.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

@@ -301,14 +301,13 @@ const Post = () => {
           </div>
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
-              <Image
-                className='m-auto max-w-sm text-center'
-                height={400}
-                width={400}
+              <img
+                className='Post-img rounded text-center'
                 src={singlePost?.downloadURL}
+                alt='画像'
               />
-              {!singlePost?.downloadURL && <p className=''>画像なし</p>}
             </button>
+            {!singlePost?.downloadURL && <p>画像なし</p>}
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
@@ -338,30 +337,28 @@ const Post = () => {
           {users &&
             users.map((user) => {
               return (
-                <>
+                <div key={user.userid}>
                   {singlePost?.email === user.email && (
                     <Link href={`/profile/${user.userid}`}>
-                      <div key={user.userid}>
-                        <div className='m-auto my-4 flex  px-2'>
-                          <div key={user.id}>
-                            <div>
-                              <Avatar
-                                className='m-auto max-w-sm border text-center'
-                                alt='プロフィール'
-                                sx={{ width: 50, height: 50 }}
-                                src={user.profileImage}
-                              />
-                            </div>
+                      <div className='m-auto my-4 flex  px-2'>
+                        <div key={user.id}>
+                          <div>
+                            <Avatar
+                              className='m-auto max-w-sm border text-center'
+                              alt='プロフィール'
+                              sx={{ width: 50, height: 50 }}
+                              src={user.profileImage}
+                            />
                           </div>
-                          <div className='ml-6 mt-1'>
-                            <span className='text-sm'>{user.userName}</span>
-                            <div className=' text-sm text-gray-500'>{user.bio}</div>
-                          </div>
+                        </div>
+                        <div className='ml-6 mt-1'>
+                          <span className='text-sm'>{user.userName}</span>
+                          <div className=' text-sm text-gray-500'>{user.bio}</div>
                         </div>
                       </div>
                     </Link>
                   )}
-                </>
+                </div>
               )
             })}
           {singlePost?.editTime && (
@@ -424,7 +421,7 @@ const Post = () => {
             )}
           </div>
           <br />
-          {singlePost?.contextImage && (
+          {/* {singlePost?.contextImage && (
             <div className='flex justify-center'>
               <Image
                 className='m-auto max-w-sm text-center'
@@ -434,7 +431,7 @@ const Post = () => {
                 alt='contextImage'
               />
             </div>
-          )}
+          )} */}
           <div className='my-4'>
             <span className='text-pink-400'>
               <FavoriteIcon />
@@ -443,7 +440,7 @@ const Post = () => {
           </div>
 
           {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
-            <>自分の投稿なのでいいねできません</>
+            <p>自分の投稿なのでいいねできません</p>
           ) : (
             <>
               {singlePost?.likesEmail && user ? (
@@ -573,9 +570,7 @@ const Post = () => {
                     <p className='mx-3 inline-flex items-center text-sm font-semibold text-gray-900'>
                       {comment.username}
                     </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>
-                      <time>{comment.createTime}</time>
-                    </p>
+                    <p className='text-sm text-gray-600 dark:text-gray-400'>{comment.createTime}</p>
                   </div>
                 </footer>
 

@@ -25,6 +25,7 @@ import {
 } from 'firebase/firestore'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { database } from 'firebaseConfig'
+import useUserStore from '../../../stores/login'
 
 //新規登録
 export const useSignup = () => {
@@ -108,7 +109,7 @@ export const usePasswordReset = () => {
   return { success, error, passwordReset }
 }
 
-//Googleログインまだ動いていない
+//Googleログイン
 export const SignInWithGoogle = () => {
   const googleProvider = new GoogleAuthProvider()
   const router = useRouter()

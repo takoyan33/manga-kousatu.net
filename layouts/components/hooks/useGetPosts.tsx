@@ -111,7 +111,6 @@ export const useGetUsersPosts = async (setPostData, userId: string) => {
 
 //カテゴリの新しい投稿を取得（自分の記事以外）
 export const useGetCategoryPosts = async (setPostData, postCategory: string, routerid) => {
-  console.log(postCategory)
   const categoryPosts = query(
     postsRef,
     where('category', '==', postCategory),

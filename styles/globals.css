@@ -6,7 +6,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 a {
@@ -16,4 +16,16 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.cardPost-img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.Post-img {
+  width: 400px;
+  height: 300px;
+  object-fit: cover;
 }

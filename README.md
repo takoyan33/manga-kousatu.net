@@ -24,7 +24,9 @@ Manga Study では、漫画の考察などを自由に投稿・閲覧できる w
 
 データベース：Cloud Firestore (NoSQL)
 
-ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer
+状態管理： Zustand
+
+ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer, Swiper
 
 ## 使い方
 

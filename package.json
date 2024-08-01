@@ -57,7 +57,8 @@
     "styled-components": "^5.3.5",
     "swiper": "^11.1.8",
     "swr": "^2.2.2",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",

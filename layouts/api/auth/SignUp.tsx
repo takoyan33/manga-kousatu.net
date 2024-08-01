@@ -67,79 +67,84 @@ export default function SignUp() {
   return (
     <>
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
-        <ToastContainer />
-        <div className='mb-2'>
-          <label className='my-4 text-center' htmlFor='email'>
-            メールアドレス
-            <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-              必須
-            </span>
-          </label>
-        </div>
-        <TextField
-          id='email'
-          label='sample@gmail.com'
-          className='m-auto w-80'
-          variant='outlined'
-          {...register('email', { required: true })}
-          error={Boolean(errors.email)}
-          helperText={errors.email?.message}
-        />
-        <div className='mt-6 mb-2'>
-          <label className='my-4 text-center' htmlFor='password'>
-            パスワード（8文字以上)
-            <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-              必須
-            </span>
-          </label>
-        </div>
-        <TextField
-          id='password'
-          label='Password'
-          type='password'
-          variant='outlined'
-          className='m-auto w-80'
-          {...register('password', { minLength: 8 })}
-          error={Boolean(errors.password)}
-          helperText={errors.password?.message}
-        />
-        <div className='mt-6 mb-2'>
-          <label className='my-4 text-center' htmlFor='confirmPassword'>
-            確認用パスワード（8文字以上)
-            <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-              必須
-            </span>
-          </label>
-        </div>
-        <TextField
-          id='confirmPassword'
-          label='Password'
-          type='password'
-          variant='outlined'
-          className='m-auto w-80'
-          {...register('confirmPassword', {
-            validate: (value) => value === watch('password'),
-          })}
-          error={Boolean(errors.confirmPassword)}
-          helperText={errors.confirmPassword?.message}
-        />
-        <SiteButton
-          href=''
-          onClick={handleSubmit(handleSignUp)}
-          text='新規登録'
-          className='m-auto my-4 w-80 text-center'
-        />
-        <SiteButton
-          href=''
-          text='Googleで新規登録'
-          onClick={SignUpWithGoogle}
-          className='m-auto my-4 w-80 text-center'
-        />
-        <p className='my-8 text-center'>
-          登録済みの方はこちら
-          <Link href='/login'>
-            <span className='text-blue-500 underline'>ログイン</span>
-          </Link>
+        <form>
+          <ToastContainer />
+          <div className='mb-2'>
+            <label className='my-4 text-center' htmlFor='email'>
+              メールアドレス
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
+            </label>
+          </div>
+          <TextField
+            id='email'
+            label='sample@gmail.com'
+            className='m-auto w-80'
+            variant='outlined'
+            {...register('email', { required: true })}
+            error={Boolean(errors.email)}
+            helperText={errors.email?.message}
+            autoComplete='email'
+          />
+          <div className='mt-6 mb-2'>
+            <label className='my-4 text-center' htmlFor='password'>
+              パスワード（8文字以上)
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
+            </label>
+          </div>
+          <TextField
+            id='password'
+            label='Password'
+            type='password'
+            variant='outlined'
+            className='m-auto w-80'
+            {...register('password', { minLength: 8 })}
+            error={Boolean(errors.password)}
+            helperText={errors.password?.message}
+            autoComplete='new-password'
+          />
+          <div className='mt-6 mb-2'>
+            <label className='my-4 text-center' htmlFor='confirmPassword'>
+              確認用パスワード（8文字以上)
+              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                必須
+              </span>
+            </label>
+          </div>
+          <TextField
+            id='confirmPassword'
+            label='Password'
+            type='password'
+            variant='outlined'
+            className='m-auto w-80'
+            {...register('confirmPassword', {
+              validate: (value) => value === watch('password'),
+            })}
+            error={Boolean(errors.confirmPassword)}
+            helperText={errors.confirmPassword?.message}
+            autoComplete='new-password'
+          />
+          <SiteButton
+            href=''
+            onClick={handleSubmit(handleSignUp)}
+            text='新規登録'
+            className='m-auto my-4 w-80 text-center'
+          />
+          <SiteButton
+            href=''
+            text='Googleで新規登録'
+            onClick={SignUpWithGoogle}
+            className='m-auto my-4 w-80 text-center'
+          />
+          <p className='my-8 text-center'>
+            登録済みの方はこちら
+            <Link href='/login'>
+              <span className='text-blue-500 underline'>ログイン</span>
+            </Link>
+          </p>
           <ToastContainer
             position='top-right'
             autoClose={6000}
@@ -152,7 +157,7 @@ export default function SignUp() {
             pauseOnHover
             theme='light'
           />
-        </p>
+        </form>
       </div>
     </>
   )

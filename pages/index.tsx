@@ -76,9 +76,8 @@ export default function Index() {
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <SwiperSlide>
+            <SwiperSlide key={post.id}>
               <CardPost
-                key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
                 category={post.category}
@@ -115,9 +114,8 @@ export default function Index() {
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           filteredPosts.map((post) => (
-            <SwiperSlide>
+            <SwiperSlide key={post.id}>
               <CardPost
-                key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
                 category={post.category}
@@ -153,9 +151,8 @@ export default function Index() {
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           oldPostData.map((post) => (
-            <SwiperSlide>
+            <SwiperSlide key={post.id}>
               <CardPost
-                key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
                 category={post.category}

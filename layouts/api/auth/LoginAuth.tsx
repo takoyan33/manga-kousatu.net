@@ -38,7 +38,7 @@ export default function LoginAuth() {
       await login(data.email, data.password)
       successNotify('ログインしました')
       setTimeout(() => {
-        router.push('/top')
+        router.push('/')
       }, 2000)
     } catch (e) {
       errorNotify('ログインに失敗しました')
@@ -51,7 +51,7 @@ export default function LoginAuth() {
       .then(() => {
         successNotify('ログインしました')
         setTimeout(() => {
-          router.push('/top')
+          router.push('/')
         }, 2000)
       })
       .catch((e) => {
@@ -63,7 +63,7 @@ export default function LoginAuth() {
   return (
     <>
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
-        <>
+        <form>
           <ToastContainer />
           <div className='mb-2'>
             <label className='my-4 mt-10 text-center' htmlFor='email'>
@@ -82,6 +82,7 @@ export default function LoginAuth() {
               {...register('email')}
               error={'email' in errors}
               helperText={errors.email?.message}
+              autoComplete='email'
             />
             <div className='mt-6 mb-2'>
               <label className='my-4 text-center' htmlFor='password'>
@@ -102,6 +103,7 @@ export default function LoginAuth() {
               {...register('password')}
               error={'password' in errors}
               helperText={errors.password?.message}
+              autoComplete='current-password'
             />
           </div>
           <p className='pb-6 pt-6 text-center underline'>
@@ -125,7 +127,7 @@ export default function LoginAuth() {
               <span className='text-blue-500 underline'>新規登録</span>
             </Link>
           </p>
-        </>
+        </form>
       </div>
     </>
   )

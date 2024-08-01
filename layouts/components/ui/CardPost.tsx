@@ -75,13 +75,7 @@ export const CardPost = React.memo(
       <Link href={`/post/${id}`}>
         <div className='m-auto my-2 hover:opacity-80'>
           <dl className=''>
-            <Image
-              className='rounded text-center'
-              height={150}
-              width={200}
-              src={downloadURL}
-              alt='画像'
-            />
+            <img className='cardPost-img rounded text-center' src={downloadURL} alt='画像' />
             <div>
               <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
               <div className='flex'>

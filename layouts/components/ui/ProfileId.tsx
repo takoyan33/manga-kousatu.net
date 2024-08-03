@@ -12,14 +12,12 @@ export const ProfileId = React.memo(
       <>
         <div className='m-auto flex max-w-md'>
           <div key={id}>
-            <p>
-              <Avatar
-                className='m-auto max-w-sm border text-center'
-                alt='プロフィール'
-                sx={{ width: 150, height: 150 }}
-                src={profileImage}
-              />
-            </p>
+            <Avatar
+              className='m-auto max-w-sm border text-center'
+              alt='プロフィール'
+              sx={{ width: 150, height: 150 }}
+              src={profileImage}
+            />
           </div>
           <div>
             <p className='m-5 text-lg'>

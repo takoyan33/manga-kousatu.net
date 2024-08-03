@@ -22,13 +22,12 @@ export const useFetchPosts = async (setPostData: any) => {
 
 //古いpostを取得
 export const useGetOldPosts = async (setPostData: any) => {
-  const oldPost = query(postsRef, orderBy('timestamp'))
+  const oldPost = query(postsRef, orderBy('timestamp', 'desc'))
 
   onSnapshot(oldPost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
-
 //いいね順でpostを取得
 export const useGetLikePosts = async (setPostData: any) => {
   const likePost = query(postsRef, orderBy('likes', 'desc'))

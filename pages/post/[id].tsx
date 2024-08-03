@@ -296,7 +296,7 @@ const Post = () => {
         )}
         <div className='rounded-xl md:border md:p-10'>
           <div>
-            <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
+            <Link href='/'>トップ</Link>　＞　投稿記事　＞　
             {singlePost?.title}
           </div>
           <div className='my-6 flex justify-center'>

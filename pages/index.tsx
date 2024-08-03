@@ -13,7 +13,6 @@ export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [oldPostData, setOldPostData] = useState<Array<GetPost>>([])
   const [recommendPostData, setRecommendPostData] = useState<Array<GetPost>>([])
-  const [searchName, setSearchName] = useState<string>('')
   const auth = getAuth()
   const user = auth.currentUser
 
@@ -27,20 +26,8 @@ export default function Index() {
   useEffect(() => {
     useFetchPosts(setPostData)
     useGetOldPosts(setOldPostData)
+    setRecommendPostData(postData.sort(() => Math.random() - 0.5).slice(0, 3))
   }, [])
-
-  const filterPostData = () => {
-    return postData.filter((post) => {
-      if (searchName === '') {
-        return true
-      } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-        return true
-      }
-      return false
-    })
-  }
-
-  const filteredPosts = filterPostData()
 
   // interface CategoryParams {
   //   id: string | ParsedUrlQueryInput
@@ -55,6 +42,7 @@ export default function Index() {
       slidesPerView: 3.5,
     },
   }
+
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
@@ -75,7 +63,7 @@ export default function Index() {
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
-          filteredPosts.map((post) => (
+          postData.map((post) => (
             <SwiperSlide key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
@@ -110,10 +98,10 @@ export default function Index() {
         slidesPerView={3.5}
         breakpoints={breakpoints}
       >
-        {filteredPosts.length === 0 ? (
+        {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
-          filteredPosts.map((post) => (
+          postData.map((post) => (
             <SwiperSlide key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}

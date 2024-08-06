@@ -512,49 +512,12 @@ const Post = () => {
           </div>
         </div>
 
-        {!user && (
-          <>
-            <div className='my-4 text-center'>
-              <h2 className='text-lg font-bold text-gray-700 lg:text-xl'>
-                コメント {comments.length}件
-              </h2>
-            </div>
-          </>
-        )}
-        {user && (
-          <section className='bg-white py-8 lg:py-16'>
-            <div className='mx-auto max-w-2xl px-4'>
-              <div className='mb-6 flex items-center justify-between'>
-                <h2 className='text-lg font-bold text-gray-700 lg:text-2xl '>
-                  コメント ({comments.length})
-                </h2>
-              </div>
-              <form className='mb-6' id='aa'>
-                <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
-                  <label htmlFor='comment' className='sr-only'>
-                    あなたのコメント
-                  </label>
-                  <textarea
-                    id='comment'
-                    rows={6}
-                    className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
-                    placeholder='コメントを入力してください'
-                    required
-                    {...register('comment', { required: 'コメントは必須です' })}
-                  ></textarea>
-                </div>
-                {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
-                <button
-                  type='submit'
-                  onClick={handleSubmit(addComment)}
-                  className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
-                >
-                  コメントする
-                </button>
-              </form>
-            </div>
-          </section>
-        )}
+        <div className='my-4 text-center'>
+          <p className='text-lg font-bold text-gray-700 lg:text-xl'>
+            コメント {comments.length}
+            <span className='ml-1 text-base'>件</span>
+          </p>
+        </div>
         {comments &&
           comments.map((comment) => {
             return (
@@ -622,6 +585,52 @@ const Post = () => {
               </article>
             )
           })}
+        {!user && (
+          <>
+            <div className='my-4 text-center'>
+              <p className='text-gray-700'>
+                コメントを投稿するには、
+                <Link href='/login'>
+                  <span className='text-blue-500 underline'>ログイン</span>
+                </Link>
+                or
+                <Link href='/register'>
+                  <span className='text-blue-500 underline'>会員登録</span>
+                </Link>
+                をする必要があります。
+              </p>
+            </div>
+          </>
+        )}
+        {user && (
+          <section className='bg-white py-8 lg:py-16'>
+            <div className='mx-auto max-w-2xl px-4'>
+              <form className='mb-6' id='aa'>
+                <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4  dark:border-gray-700'>
+                  <label htmlFor='comment' className='sr-only'>
+                    あなたのコメント
+                  </label>
+                  <textarea
+                    id='comment'
+                    rows={6}
+                    className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
+                    placeholder='コメントを入力してください'
+                    required
+                    {...register('comment', { required: 'コメントは必須です' })}
+                  ></textarea>
+                </div>
+                {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
+                <button
+                  type='submit'
+                  onClick={handleSubmit(addComment)}
+                  className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'
+                >
+                  コメントする
+                </button>
+              </form>
+            </div>
+          </section>
+        )}
       </div>
       <h2 className='my-4 text-xl'>こちらもおすすめ</h2>
       <div className='m-auto mt-8 max-w-7xl'>

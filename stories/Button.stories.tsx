@@ -5,4 +5,4 @@ export default {
   component: Button,
 }
 
-export const HelloButton = () => <Button>Hello World!</Button>
+export const HelloButton = () => <Button>Haaa!</Button>

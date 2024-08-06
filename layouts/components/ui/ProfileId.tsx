@@ -23,9 +23,9 @@ export const ProfileId = React.memo(
             <p className='m-5 text-lg'>
               <AccountBoxIcon /> {userName}
             </p>
-            <h2 className='m-5'>
+            <p className='m-5'>
               <FavoriteIcon /> 好きな漫画
-            </h2>
+            </p>
             <div className='m-5'>
               {favorite &&
                 favorite.map((favorite, index) => (
@@ -38,9 +38,9 @@ export const ProfileId = React.memo(
           </div>
         </div>
         <div className='m-auto my-10 max-w-md'>
-          <h2 className='m-5'>
+          <p className='m-5'>
             <BorderColorIcon className='mr-2' /> プロフィール
-          </h2>
+          </p>
           <p className='m-5'>{bio ? bio : 'プロフィールはまだありません'}</p>
         </div>
       </>

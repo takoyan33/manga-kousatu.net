@@ -28,7 +28,7 @@ export default function Top() {
       <div className='d-block  m-auto my-20 w-80 md:flex md:w-full'>
         <div className='w-full md:w-1/3'>
           <img src='../images/top-1.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
-          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h2>
+          <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h3>
           <p className='my-6 px-4'>
             語りたい漫画の考察があったら、 <br />
             ログインをして、 記事を投稿しましょう。
@@ -36,7 +36,7 @@ export default function Top() {
         </div>
         <div className='w-full md:w-1/3'>
           <img src='../images/top-2.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
-          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h2>
+          <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h3>
           <p className='my-6 px-4'>
             Manga Studyでは、様々な記事が投稿されているため、
             <br />
@@ -45,7 +45,7 @@ export default function Top() {
         </div>
         <div className='w-full md:w-1/3'>
           <img src='../images/top-3.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
-          <h2 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h2>
+          <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h3>
           <p className='my-6 px-4'>
             コメント機能で、考察の内容について語ることができ、
             <br />

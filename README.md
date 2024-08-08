@@ -14,19 +14,21 @@ Manga Study では、漫画の考察などを自由に投稿・閲覧できる w
 
 ## 使用言語、環境
 
-使用言語：TypeScript
+- 使用言語：TypeScript
 
-フレームワーク：React,Next.js
+- フレームワーク：React,Next.js
 
-認証：Firebase Authentication
+- 認証：Firebase Authentication
 
-サーバー：Vercel
+- サーバー：Vercel
 
-データベース：Cloud Firestore (NoSQL)
+- データベース：Cloud Firestore (NoSQL)
 
-状態管理： Zustand
+- 状態管理： Zustand
 
-ライブラリ：moment.js,Tailwind CSS,Material-UI,react-image-resizer, Swiper
+- コンポーネント管理： Storybook
+
+- ライブラリ：moment.js,Tailwind CSS,Material-UI,Swiper
 
 ## 使い方
 

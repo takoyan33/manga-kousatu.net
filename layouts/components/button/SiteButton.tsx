@@ -8,6 +8,7 @@ interface SiteButtonProps {
   text: string
   className: string
   disabled?: boolean
+  google?: boolean
 }
 
 const styles = {
@@ -17,7 +18,7 @@ const styles = {
 }
 
 export const SiteButton = memo(
-  ({ href = '', onClick, text, className, disabled }: SiteButtonProps) => {
+  ({ href = '', onClick, text, className, disabled, google }: SiteButtonProps) => {
     return (
       <div className={className}>
         <Link href={href}>
@@ -27,6 +28,7 @@ export const SiteButton = memo(
             disabled={disabled}
             type='submit'
             sx={{ textTransform: 'none' }}
+            className={google ? 'google-btn' : 'incomplete'}
           >
             {text}
           </Button>

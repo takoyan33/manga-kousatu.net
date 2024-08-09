@@ -133,11 +133,13 @@ export default function SignUp() {
             text='新規登録'
             className='m-auto my-4 w-80 text-center'
           />
+          <p className='text-center'>または</p>
           <SiteButton
             href=''
             text='Googleで新規登録'
             onClick={SignUpWithGoogle}
             className='m-auto my-4 w-80 text-center'
+            google
           />
           <p className='my-8 text-center'>
             登録済みの方はこちら

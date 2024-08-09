@@ -1,12 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 a {
@@ -21,29 +20,31 @@ a {
 .cardPost-img {
   width: 200px;
   height: 150px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .Post-img {
   width: 400px;
   height: 300px;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .google-btn::before {
-  content: '';
+  content: "";
   display: block;
   position: relative;
-  background-image: url('/images/google-logo.png');
+  background-image: url("/images/google-logo.png");
   background-repeat: no-repeat;
   top: 0;
   left: 0;
   background-position: 0%;
   background-size: 20px;
-  margin-right: 4px;
   width: 20px;
   height: 20px;
   z-index: 100;
   border-radius: 5px;
   transition: 0.5s;
 }
+/*# sourceMappingURL=globals.css.map */

@@ -330,7 +330,9 @@ const Post = () => {
               <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
             </span>
             <span className='text-sm md:text-base'>
-              　<FavoriteIcon />
+              <span className='text-pink-400'>
+                　<FavoriteIcon />
+              </span>
               <span className='ml-1'>{singlePost?.likes}</span>
             </span>
           </div>
@@ -392,15 +394,13 @@ const Post = () => {
               />
             )}
 
-            {singlePost?.netabare === 'ネタバレ有' ? (
-              <span className='mx-1 mt-1 inline-block rounded-xl border border-red-500 p-1 text-center'>
-                {singlePost?.netabare}
-              </span>
-            ) : (
-              <span className='mx-1 mt-1 inline-block rounded-xl border border-gray-700 p-1 text-center '>
-                {singlePost?.netabare}
-              </span>
-            )}
+            <span
+              className={`mx-1 mt-1 inline-block rounded-xl border p-1 text-center ${
+                singlePost?.netabare === 'ネタバレ有' ? 'border-red-500' : 'border-gray-700'
+              }`}
+            >
+              {singlePost?.netabare}
+            </span>
 
             {/* <div className='mt-2 mb-8'>
                   <FacebookShareButton url={URL} quote={QUOTE}>
@@ -518,6 +518,7 @@ const Post = () => {
             <span className='ml-1 text-base'>件</span>
           </p>
         </div>
+
         {comments &&
           comments.map((comment) => {
             return (

@@ -51,7 +51,7 @@ export const CardPost = React.memo(
       // useGetPostComment()
     }, [])
 
-    function daysAgo(createTime) {
+    const daysAgo = (createTime: string) => {
       const inputDate: any = new Date(createTime)
       const currentDate: any = new Date()
 
@@ -71,23 +71,20 @@ export const CardPost = React.memo(
         return `${diffMinutes}分前`
       }
     }
+
     return (
       <Link href={`/post/${id}`}>
         <div className='m-auto my-2 hover:opacity-80'>
-          <dl className=''>
+          <dl>
             <img className='cardPost-img rounded text-center' src={downloadURL} alt='画像' />
             <div>
               <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
               <div className='flex'>
                 <Category category={category} />
-                {netabare === 'ネタバレ有' ? (
-                  <div>
-                    <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
-                      {netabare}
-                    </dl>
-                  </div>
-                ) : (
-                  <dl></dl>
+                {netabare === 'ネタバレ有' && (
+                  <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
+                    {netabare}
+                  </dl>
                 )}
               </div>
               <div>

@@ -104,7 +104,6 @@ export default function Index() {
       <div className='text-center'>
         {postData.length > 9 && (
           <SiteButton
-            href=''
             text='さらに表示'
             disabled={isEmpty ? true : false}
             onClick={displayMore}

@@ -131,10 +131,9 @@ const Category = () => {
         />
 
         <div className='mt-4 flex'>
-          <SiteButton href='' text='新しい順' className='m-4 my-2 inline' onClick={useFetchPosts} />
-          <SiteButton href='' text='古い順' className='m-4 my-2 inline' onClick={useGetOldPosts} />
+          <SiteButton text='新しい順' className='m-4 my-2 inline' onClick={useFetchPosts} />
+          <SiteButton text='古い順' className='m-4 my-2 inline' onClick={useGetOldPosts} />
           <SiteButton
-            href=''
             text='いいね順'
             className='m-4 my-2 inline'
             onClick={useGetLikePosts}

@@ -317,9 +317,7 @@ const PostEdit = () => {
                   /> */}
                 {/* </div> */}
 
-                <div className='flex justify-center'>
-                  <SiteButton onClick={updatePost} text='更新する' className='' />
-                </div>
+                <SiteButton onClick={updatePost} text='更新する' className='text-center' />
               </Stack>
             </div>
           </div>

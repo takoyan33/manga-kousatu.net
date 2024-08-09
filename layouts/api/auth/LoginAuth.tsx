@@ -110,14 +110,12 @@ export default function LoginAuth() {
             <Link href='/profile/edit/password'>パスワードをお忘れの方はこちら</Link>
           </p>
           <SiteButton
-            href=''
             onClick={handleSubmit(handleSignIn)}
             text='ログイン'
             className='m-auto my-4 w-80 text-center'
           />
           <p className='text-center'>または</p>
           <SiteButton
-            href=''
             text='Googleでログイン'
             onClick={SignInWithGoogle}
             className='m-auto text-center my-4 w-80'

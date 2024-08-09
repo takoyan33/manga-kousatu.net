@@ -111,13 +111,11 @@ export default function Index() {
             helperText={errors.password?.message}
           />
           <SiteButton
-            href=''
             onClick={handleSubmit(SignIn)}
             text='ログイン'
             className='m-auto my-8 w-80'
           />
           <SiteButton
-            href=''
             text='Googleでログイン'
             onClick={SignInWithGoogle}
             className='m-auto my-8 w-80'

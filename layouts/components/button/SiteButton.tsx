@@ -6,7 +6,7 @@ interface SiteButtonProps {
   href?: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
   text: string
-  className: string
+  className?: string
   disabled?: boolean
   google?: boolean
 }

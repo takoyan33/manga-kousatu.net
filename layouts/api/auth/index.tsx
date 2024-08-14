@@ -110,11 +110,7 @@ export default function Index() {
             error={'password' in errors}
             helperText={errors.password?.message}
           />
-          <SiteButton
-            onClick={handleSubmit(SignIn)}
-            text='ログイン'
-            className='m-auto my-8 w-80'
-          />
+          <SiteButton onClick={handleSubmit(SignIn)} text='ログイン' className='m-auto my-8 w-80' />
           <SiteButton
             text='Googleでログイン'
             onClick={SignInWithGoogle}

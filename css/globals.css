@@ -5,7 +5,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: 'Noto Sans JP', sans-serif;
 }
 
 a {
@@ -21,21 +21,21 @@ a {
   width: 200px;
   height: 150px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .Post-img {
   width: 400px;
   height: 300px;
   -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 .google-btn::before {
-  content: "";
+  content: '';
   display: block;
   position: relative;
-  background-image: url("/images/google-logo.png");
+  background-image: url('/images/google-logo.png');
   background-repeat: no-repeat;
   top: 0;
   left: 0;

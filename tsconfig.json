@@ -46,7 +46,8 @@
     "pages/post/[id].tsx",
     "layouts/components/ui/CardPost.jsx",
     "layouts/components/ui/CardPost.jsx",
-    "pages/post/edit/[id].tsx"
-, "pages/main.jsx"  ],
+    "pages/post/edit/[id].tsx",
+    "pages/main.jsx"
+  ],
   "exclude": ["node_modules"]
 }

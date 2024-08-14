@@ -102,7 +102,7 @@ export default function Post() {
 
   const router = useRouter()
 
-  interface addPost  {
+  interface addPost {
     toLocaleString(timeZone): string
   }
 

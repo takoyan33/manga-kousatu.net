@@ -1,5 +1,3 @@
-
-
 //ImageUpload
 export interface ImageUploadProps {
   text: string

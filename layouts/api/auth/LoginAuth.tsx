@@ -118,7 +118,7 @@ export default function LoginAuth() {
           <SiteButton
             text='Googleでログイン'
             onClick={SignInWithGoogle}
-            className='m-auto text-center my-4 w-80'
+            className='m-auto my-4 w-80 text-center'
             google
           />
           <p className='my-8 text-center'>

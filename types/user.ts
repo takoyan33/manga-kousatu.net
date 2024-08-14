@@ -9,7 +9,6 @@ export interface GetUser {
   userName: string
 }
 
-
 export interface ProfileParams {
   profileImage: string
   id: string

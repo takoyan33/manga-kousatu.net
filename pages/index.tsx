@@ -84,6 +84,7 @@ export default function Index() {
           ))
         )}
       </Swiper>
+
       <div className='my-12'>
         <h2 className='text-left text-2xl font-semibold'>
           新着記事

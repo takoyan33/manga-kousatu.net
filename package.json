@@ -6,11 +6,12 @@
     "dev": "next -p 8080",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --dir src",
-    "lint:fix": "yarn lint --fix",
-    "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "format": "prettier --write .",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -35,6 +36,7 @@
     "firebase": "^9.8.4",
     "html-react-parser": "^3.0.15",
     "leaflet": "^1.9.3",
+    "lint-staged": "^15.2.9",
     "moment": "^2.29.4",
     "next": "12.1.6",
     "papaparse": "^5.4.1",
@@ -84,6 +86,7 @@
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-storybook": "^0.6.7",
+    "husky": "^9.1.4",
     "postcss": "^8.4.14",
     "prettier": "^2.8.4",
     "tailwindcss": "^3.1.4",

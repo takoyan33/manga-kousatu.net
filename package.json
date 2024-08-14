@@ -36,7 +36,6 @@
     "firebase": "^9.8.4",
     "html-react-parser": "^3.0.15",
     "leaflet": "^1.9.3",
-    "lint-staged": "^15.2.9",
     "moment": "^2.29.4",
     "next": "12.1.6",
     "papaparse": "^5.4.1",

@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from 'react'
-import { database } from 'firebaseConfig'
-import {
-  collection,
-  onSnapshot,
-  setDoc,
-  doc,
-  serverTimestamp,
-  query,
-  orderBy,
-} from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import { TextField, Box, FormLabel } from '@mui/material'
-import { postImage, postContextImage } from 'layouts/api'
+import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import { TextField, Box, FormLabel } from '@mui/material'
+import { onSnapshot, setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
+import { SubmitHandler, useForm, Controller } from 'react-hook-form'
+import { TagsInput } from 'react-tag-input-component'
+import { ToastContainer } from 'react-toastify'
+import * as yup from 'yup'
+import { database } from 'firebaseConfig'
+import { postImage, postContextImage } from 'layouts/api'
 import 'moment/locale/ja'
+import { SiteButton } from 'layouts/components/button'
+import { successNotify, errorNotify } from 'layouts/components/text'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { useAuthContext } from 'layouts/context/AuthContext'
 import ImageUpload from 'layouts/utils/ImageUpload'
 import ImageUploadContext from 'layouts/utils/ImageUploadContext'
-import { TagsInput } from 'react-tag-input-component'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
-import { SiteButton } from 'layouts/components/button'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useAuthContext } from 'layouts/context/AuthContext'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import dynamic from 'next/dynamic'
 import { postsRef } from 'layouts/utils/post'
 
 // フォームの型
@@ -38,9 +30,9 @@ interface RegisterPostParams {
   display: boolean
 }
 
-interface addPost {
-  toLocaleString(timeZone): string
-}
+// interface addPost {
+//   toLocaleString(timeZone): string
+// }
 
 // バリデーションルール
 const schema = yup.object({
@@ -57,7 +49,6 @@ export default function Post() {
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
   const [userid, setUserId] = useState<string | null>(null)
-  const [result, setResult] = useState<string>('')
   const [photoURL, setPhotoURL] = useState<string>('')
   const [posts, setPosts] = useState<any[]>([])
   const [lengthData, setPostsLength] = useState<number | null>(null)

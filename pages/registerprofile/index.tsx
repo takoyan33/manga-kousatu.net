@@ -1,9 +1,4 @@
-import { getAuth } from 'firebase/auth'
-import { database } from 'firebaseConfig'
-import { collection, setDoc, doc } from 'firebase/firestore'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import { postImage } from 'layouts/api/upload'
+import AccountCircle from '@mui/icons-material/AccountCircle'
 import {
   Button,
   TextField,
@@ -13,11 +8,16 @@ import {
   InputAdornment,
   FormControl,
 } from '@mui/material'
+import { getAuth } from 'firebase/auth'
+import { setDoc, doc } from 'firebase/firestore'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import { TagsInput } from 'react-tag-input-component'
+import { database } from 'firebaseConfig'
+import { postImage } from 'layouts/api/upload'
 import 'react-toastify/dist/ReactToastify.css'
-import { CommonHead } from 'layouts/components/ui'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import { successNotify, errorNotify } from 'layouts/components/text'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function RegisterProfile() {
   const [selected, setSelected] = useState<string[]>(['ワンピース'])

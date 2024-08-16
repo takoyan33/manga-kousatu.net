@@ -1,23 +1,21 @@
 /* eslint-disable jsx-a11y/alt-text */
+import Avatar from '@mui/material/Avatar'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import { getAuth } from 'firebase/auth'
+import { getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
+import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
-import { getAuth, updateProfile, deleteUser } from 'firebase/auth'
-import Button from '@mui/material/Button'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Head from 'next/head'
 import Image from 'react-image-resizer'
-import Avatar from '@mui/material/Avatar'
+import { database } from 'firebaseConfig'
 
 const Post = () => {
   const [ID, setID] = useState(null)
-  const [id, setid] = useState(null)
   const [context, setContext] = useState('')
-  const [file, setFile] = useState('')
   const [categori, setCategori] = useState('')
   const [photoURL, setPhotoURL] = useState()
   const [title1, setTitle1] = useState('')
@@ -26,31 +24,22 @@ const Post = () => {
   const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
   //データベースを取得
-  const [createObjectURL, setCreateObjectURL] = useState(null)
   const [firedata, setFiredata] = useState([])
   const [downloadURL, setDownloadURL] = useState(null)
   const [likecount, setLikecount] = useState(0)
-  const [image, setImage] = useState('')
-  const [result, setResult] = useState('')
-  const [email, setEmail] = useState('')
   const [userid, setUserid] = useState(null)
   const [netabare, setNetabare] = useState('')
   const [likes, setLikes] = useState(null)
   const [selected, setSelected] = useState(['最終回'])
-  const [opentext, setOpentext] = useState(false)
 
-  const styles = { whiteSpace: 'pre-line' }
   const router = useRouter()
   const { title } = router.query
   const auth = getAuth()
   const user = auth.currentUser
-  const [searchName, setSearchName] = useState('')
-
-  console.log({ title })
 
   const getallPost = async () => {
     //firestoreからデータ取得
-    await getDocs(databaseRef).then((response) => {
+    await getDocs().then((response) => {
       //コレクションのドキュメントを取得
       setFiredata(
         response.docs
@@ -65,7 +54,7 @@ const Post = () => {
               //そのまま返す
             } else if (
               data.title.toLowerCase().includes(title)
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -120,7 +109,7 @@ const Post = () => {
 
   const updatefields = () => {
     //更新する
-    let fieldToEdit = doc(database, 'posts', ID)
+    const fieldToEdit = doc(database, 'posts', ID)
     //セットしたIDをセットする
     updateDoc(fieldToEdit, {
       title: posttitle,
@@ -141,8 +130,8 @@ const Post = () => {
 
   const deleteDocument = (id) => {
     //data.idを送っているのでidを受け取る
-    let fieldToEdit = doc(database, 'posts', id)
-    let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
+    const fieldToEdit = doc(database, 'posts', id)
+    const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
 
     if (checkSaveFlg) {
@@ -152,7 +141,7 @@ const Post = () => {
           alert('記事を削除しました')
           getallPost()
         })
-        .catch((err) => {
+        .catch(() => {
           alert('記事の削除に失敗しました')
         })
     } else {
@@ -166,7 +155,7 @@ const Post = () => {
     // setLikecount(likes + 1);
     console.log(likes)
 
-    let fieldToEdit = doc(database, 'posts', id)
+    const fieldToEdit = doc(database, 'posts', id)
     updateDoc(fieldToEdit, {
       likes: likes + 1,
     })
@@ -191,7 +180,7 @@ const Post = () => {
 
       <div className='m-auto max-w-5xl'>
         <p>
-          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　{title}
+          <Link href='/top'>トップ</Link> ＞ 投稿記事 ＞ {title}
         </p>
         <div>
           {firedata.map((data) => {
@@ -273,7 +262,7 @@ const Post = () => {
                     {data.selected &&
                       data.selected.map((tag, i) => (
                         <span className='text-cyan-700' key={i}>
-                          #{tag}　
+                          #{tag}
                         </span>
                       ))}
                     <div variant='body2' color='text.secondary'>

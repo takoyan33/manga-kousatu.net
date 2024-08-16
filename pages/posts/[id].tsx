@@ -1,22 +1,17 @@
-/* eslint-disable jsx-a11y/alt-text */
-import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
-import { getDocs } from 'firebase/firestore'
-import Grid from '@material-ui/core/Grid'
-import { getAuth } from 'firebase/auth'
-import Button from '@mui/material/Button'
-import { where } from 'firebase/firestore'
-import Image from 'react-image-resizer'
-import Avatar from '@mui/material/Avatar'
-import { SiteCategory } from 'layouts/components/text'
-import { CommonHead } from 'layouts/components/ui'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { query, orderBy } from 'firebase/firestore'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-import { postsRef, usersRef } from 'layouts/utils/post'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import Avatar from '@mui/material/Avatar'
+import { getDocs } from 'firebase/firestore'
+import { where } from 'firebase/firestore'
+import { query } from 'firebase/firestore'
+import Link from 'next/link'
+import React, { useEffect, useState } from 'react'
+import Image from 'react-image-resizer'
+import { SiteCategory } from 'layouts/components/text'
+import { CommonHead } from 'layouts/components/ui'
+import { usersRef } from 'layouts/utils/post'
 
 export const getStaticPaths = async () => {
   // 生成する静的パスのリストを決定
@@ -62,10 +57,6 @@ export const getStaticProps = async (context) => {
 const Daitails = ({ post }) => {
   const [users, setUsers] = useState(null)
   const your = query(usersRef, where('email', '==', post.fields.email.stringValue))
-  //データベースを取得
-  const router = useRouter()
-  const { id } = router.query
-  const auth = getAuth()
 
   const usersData = async () => {
     //firestoreからデータ取得
@@ -91,8 +82,7 @@ const Daitails = ({ post }) => {
       <CommonHead />
       <div>
         <div>
-          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　
-          {post.fields.title.stringValue}
+          <Link href='/top'>トップ</Link> ＞ 投稿記事 ＞{post.fields.title.stringValue}
         </div>
         <div className='my-6 flex justify-center'>
           <Image
@@ -118,7 +108,7 @@ const Daitails = ({ post }) => {
         {post.fields.selected.stringValue &&
           post.fields.selected.stringValue.map((tag, i) => (
             <span className='text-cyan-700' key={i}>
-              #{tag}　
+              #{tag}
             </span>
           ))}
         <div color='text.secondary'>

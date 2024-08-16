@@ -20,6 +20,8 @@ Manga Study では、漫画の考察などを自由に投稿・閲覧できる w
 
 - 認証：Firebase Authentication
 
+- リンター：ESLint, Prettier, husky, lint-staged
+
 - サーバー：Vercel
 
 - データベース：Cloud Firestore (NoSQL)

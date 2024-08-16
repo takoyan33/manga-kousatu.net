@@ -1,19 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect, useState, useCallback } from 'react'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, query, where } from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
-import { useGetLikedPosts, useGetMyUser } from 'layouts/components/hooks'
+import TextField from '@mui/material/TextField'
+import { getDocs, query, where } from 'firebase/firestore'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { useGetLikedPosts, useGetMyUser } from 'layouts/components/hooks'
+import { CommonHead, CardPost, COLORS } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { postsRef } from 'layouts/utils/post'
 import { GetPost } from 'types/post'
 
 export default function Profile() {
-  let router = useRouter()
+  const router = useRouter()
   const { user } = useAuthContext()
   const [users, setUsers] = useState(null)
   //データベースを取得
@@ -124,15 +123,7 @@ export default function Profile() {
   ]
 
   const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-    index,
-  }) => {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.6
     const x = cx + radius * Math.cos(-midAngle * RADIAN)
     const y = cy + radius * Math.sin(-midAngle * RADIAN)
@@ -180,7 +171,7 @@ export default function Profile() {
           setSearchName(event.target.value)
         }}
       />
-      <p className='text-1xl text-center'>投稿数　{likedPosts.length}件</p>
+      <p className='text-1xl text-center'>投稿数 {likedPosts.length}件</p>
       <Grid container className='m-auto'>
         {likedPosts.map((post) => {
           return (

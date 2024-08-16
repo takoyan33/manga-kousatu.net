@@ -1,23 +1,20 @@
-import { useRouter } from 'next/router'
-import React from 'react'
-import { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
-import TextField from '@mui/material/TextField'
 import Grid from '@material-ui/core/Grid'
-import { CommonHead, CardPost } from 'layouts/components/ui'
-import {
-  // useGetCategoryPosts,
-  useGetCategoriOldPosts,
-  useGetCategoriLikePosts,
-} from 'layouts/components/hooks'
+import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select, { SelectChangeEvent } from '@mui/material/Select'
+import Select from '@mui/material/Select'
+import TextField from '@mui/material/TextField'
+import { getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { useEffect, useState } from 'react'
+import { CommonHead, CardPost } from 'layouts/components/ui'
+//import useGetCategoryPosts,
+// useGetCategoriOldPosts,
+// useGetCategoriLikePosts,
+// 'layouts/components/hooks'
 import { postsRef } from 'layouts/utils/post'
-import { GetPost } from 'types/post'
 
 export const getStaticPaths = async () => {
   const res = await fetch(
@@ -85,7 +82,7 @@ const Details = ({ post }) => {
               //そのまま返す
             } else if (
               data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -110,7 +107,7 @@ const Details = ({ post }) => {
               //そのまま返す
             } else if (
               data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -135,7 +132,7 @@ const Details = ({ post }) => {
               //そのまま返す
             } else if (
               data.category.toLowerCase().includes(post.fields.id.stringValue.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -152,12 +149,12 @@ const Details = ({ post }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
 
-  interface NetabareItem {
-    sortId: number
-    label: string
-    value: string
-    onClick: () => void
-  }
+  // interface NetabareItem {
+  //   sortId: number
+  //   label: string
+  //   value: string
+  //   onClick: () => void
+  // }
 
   const SORT_LIST = [
     {
@@ -225,7 +222,7 @@ const Details = ({ post }) => {
         </FormControl> */}
       </div>
 
-      <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
+      <p className='text-1xl text-center'>投稿数 {posts.length}件</p>
 
       <div className='flex justify-end'>
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>

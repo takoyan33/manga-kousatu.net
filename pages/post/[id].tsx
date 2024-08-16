@@ -1,55 +1,49 @@
 /* eslint-disable jsx-a11y/alt-text */
-import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
-import { Stack, FormLabel } from '@mui/material'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
+import { yupResolver } from '@hookform/resolvers/yup'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import BorderColorIcon from '@mui/icons-material/BorderColor'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import SendIcon from '@mui/icons-material/Send'
+import { FormLabel } from '@mui/material'
+import { Avatar } from '@mui/material'
+import List from '@mui/material/List'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListSubheader from '@mui/material/ListSubheader'
+import { getAuth } from 'firebase/auth'
 import {
-  collection,
-  getDocs,
   doc,
   setDoc,
   updateDoc,
   deleteDoc,
   arrayUnion,
-  query,
   arrayRemove,
-  orderBy,
   serverTimestamp,
-  where,
-  onSnapshot,
 } from 'firebase/firestore'
-import { Avatar } from '@mui/material'
-import { getAuth } from 'firebase/auth'
+import parse from 'html-react-parser'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import Image from 'react-image-resizer'
+import Modal from 'react-modal'
+import { ToastContainer } from 'react-toastify'
+import * as yup from 'yup'
+import { database } from 'firebaseConfig'
 import {
   useGetPost,
   useGetUsers,
-  useGetMyUser,
   useGetCategoryPosts,
-  useGetOtherUser,
   deleteComment,
   getComments,
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { CommonHead, RecommendCardPost } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
-import FavoriteIcon from '@mui/icons-material/Favorite'
-import AccessTimeIcon from '@mui/icons-material/AccessTime'
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import BorderColorIcon from '@mui/icons-material/BorderColor'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { SubmitHandler, useForm, Controller } from 'react-hook-form'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import parse from 'html-react-parser'
-import ListSubheader from '@mui/material/ListSubheader'
-import List from '@mui/material/List'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import SendIcon from '@mui/icons-material/Send'
+
 // import {
 //   FacebookShareButton,
 //   TwitterShareButton,
@@ -59,10 +53,9 @@ import SendIcon from '@mui/icons-material/Send'
 //   TwitterIcon,
 // } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
-import Modal from 'react-modal'
+import { GetComment } from 'types/comment'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
-import { GetComment } from 'types/comment'
 
 // バリデーションルール
 const schema = yup.object({
@@ -83,7 +76,7 @@ const Post = () => {
   const user = auth.currentUser
 
   // const URL = `http://localhost:8080/post/${routerid}`
-  // const QUOTE = `記事をシェアしました。　${singlePost.title}　漫画考察.net`
+  // const QUOTE = `記事をシェアしました。 ${singlePost.title} 漫画考察.net`
 
   const {
     register,
@@ -108,8 +101,8 @@ const Post = () => {
   //記事の削除
   const deletePost = (routerId) => {
     //data.idを送っているのでidを受け取る
-    let deletePost = doc(database, 'posts', routerId.toString())
-    let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
+    const deletePost = doc(database, 'posts', routerId.toString())
+    const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     if (checkSaveFlg) {
       deleteDoc(deletePost)
@@ -122,13 +115,12 @@ const Post = () => {
         .catch(() => {
           errorNotify('失敗しました')
         })
-    } else {
     }
   }
 
   //いいねの追加
   const LikeAdd = (routerId, likes: number, email: string) => {
-    let post = doc(database, 'posts', routerId)
+    const post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes + 1,
       likesEmail: arrayUnion(email),
@@ -147,7 +139,7 @@ const Post = () => {
 
   //いいねの削除
   const LikeDelete = (routerId, likes: number, email: string) => {
-    let post = doc(database, 'posts', routerId)
+    const post = doc(database, 'posts', routerId)
     updateDoc(post, {
       likes: likes - 1,
       likesEmail: arrayRemove(email),
@@ -182,14 +174,14 @@ const Post = () => {
         successNotify('コメントを投稿しました')
         getComments(setComments, routerid)
       })
-      .catch((err) => {
+      .catch(() => {
         errorNotify('コメントの投稿に失敗しました')
       })
   }
 
   //コメントの編集
   const updateComment = (commentId: string) => {
-    let commentDate = doc(database, 'comments', commentId)
+    const commentDate = doc(database, 'comments', commentId)
     console.log(commentDate)
     updateDoc(commentDate, {
       comment: comment,
@@ -212,7 +204,7 @@ const Post = () => {
 
   //コメントのいいね
   // const LikeCommentAdd = (routerid, likes) => {
-  //   let comment = doc(database, 'comments', routerid)
+  //   const comment = doc(database, 'comments', routerid)
   //   updateDoc(comment, {
   //     likes: likes + 1,
   //     likes_email: arrayUnion(user.email),
@@ -295,8 +287,7 @@ const Post = () => {
         )}
         <div className='rounded-xl md:border md:p-10'>
           <div>
-            <Link href='/'>トップ</Link>　＞　投稿記事　＞　
-            {singlePost?.title}
+            <Link href='/'>トップ</Link> ＞ 投稿記事 ＞{singlePost?.title}
           </div>
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
@@ -318,7 +309,7 @@ const Post = () => {
                 alt='contextImage'
               />
             </div>
-            　<button onClick={closeModal}>閉じる</button>
+            <button onClick={closeModal}>閉じる</button>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
             {singlePost?.title}
@@ -330,7 +321,7 @@ const Post = () => {
             </span>
             <span className='text-sm md:text-base'>
               <span className='text-pink-400'>
-                　<FavoriteIcon />
+                <FavoriteIcon />
               </span>
               <span className='ml-1'>{singlePost?.likes}</span>
             </span>

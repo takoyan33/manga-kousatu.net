@@ -1,10 +1,9 @@
-import React, { useEffect, useState, useMemo } from 'react'
 import Link from 'next/link'
-import { getAuth } from 'firebase/auth'
+import React, { useEffect, useState } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import { useFetchPosts, useGetOldPosts } from 'layouts/components/hooks'
 import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
 import { GetPost } from 'types/post'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -12,21 +11,19 @@ import 'swiper/css/pagination'
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [oldPostData, setOldPostData] = useState<Array<GetPost>>([])
-  const [recommendPostData, setRecommendPostData] = useState<Array<GetPost>>([])
-  const auth = getAuth()
-  const user = auth.currentUser
+  // const [recommendPostData, setRecommendPostData] = useState<Array<GetPost>>([])
 
-  interface NetabareItem {
-    sortId: number
-    label: string
-    value: string
-    onClick: () => void
-  }
+  // interface NetabareItem {
+  //   sortId: number
+  //   label: string
+  //   value: string
+  //   onClick: () => void
+  // }
 
   useEffect(() => {
     useFetchPosts(setPostData)
     useGetOldPosts(setOldPostData)
-    setRecommendPostData(postData.sort(() => Math.random() - 0.5).slice(0, 3))
+    // setRecommendPostData(postData.sort(() => Math.random() - 0.5).slice(0, 3))
   }, [])
 
   // interface CategoryParams {

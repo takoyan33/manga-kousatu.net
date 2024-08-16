@@ -1,23 +1,22 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import { collection, doc, getDoc, updateDoc } from 'firebase/firestore'
-import { getAuth } from 'firebase/auth'
-import { Stack, FormLabel } from '@mui/material'
-import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import Image from 'react-image-resizer'
-import { SiteButton } from 'layouts/components/button'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
-import { TagsInput } from 'react-tag-input-component'
-import { useForm, Controller } from 'react-hook-form'
-import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { successNotify, errorNotify } from 'layouts/components/text'
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import { Stack, FormLabel } from '@mui/material'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
-import ImageUpload from 'layouts/utils/ImageUpload'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { useForm, Controller } from 'react-hook-form'
+import Image from 'react-image-resizer'
+import { TagsInput } from 'react-tag-input-component'
+import * as yup from 'yup'
+import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api'
-import { GetPost } from 'types/post'
+import { SiteButton } from 'layouts/components/button'
+import { successNotify, errorNotify } from 'layouts/components/text'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
+import ImageUpload from 'layouts/utils/ImageUpload'
+// import { GetPost } from 'types/post'
 
 const schema = yup.object({
   title: yup.string().required('必須です'),
@@ -37,16 +36,10 @@ const PostEdit = () => {
   const [display, setDisplay] = useState<string>('')
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
-  const auth = getAuth()
   const router = useRouter()
   const routerid: string = router.query.id.toString()
 
-  const {
-    register,
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, control } = useForm({
     resolver: yupResolver(schema),
   })
 
@@ -77,9 +70,9 @@ const PostEdit = () => {
     setPostTitle(post?.title)
   }, [])
 
-  const updatePost = async (data) => {
+  const updatePost = async () => {
     const result = await postImage(image)
-    let fieldToEdit = doc(database, 'posts', routerid)
+    const fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
     updateDoc(fieldToEdit, {
       downloadURL: result,

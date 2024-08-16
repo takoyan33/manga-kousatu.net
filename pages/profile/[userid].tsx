@@ -1,9 +1,9 @@
+import Grid from '@material-ui/core/Grid'
+import { getAuth } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useGetOtherUser, useGetUsersPosts } from 'layouts/components/hooks'
-import { getAuth } from 'firebase/auth'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
-import Grid from '@material-ui/core/Grid'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 

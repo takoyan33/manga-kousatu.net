@@ -1,30 +1,24 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { database, auth } from 'firebaseConfig'
-import { collection } from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import { getAuth, sendEmailVerification, updateProfile } from 'firebase/auth'
-import Button from '@mui/material/Button'
-import { postImage } from 'layouts/api/upload'
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import { CommonHead } from 'layouts/components/ui'
+import Button from '@mui/material/Button'
+import { updateProfile } from 'firebase/auth'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
+import { auth } from 'firebaseConfig'
+import { postImage } from 'layouts/api/upload'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function Photoedit() {
   const [image, setImage] = useState<string>()
   const [result, setResult] = useState('')
   const router = useRouter()
   const [createObjectURL, setCreateObjectURL] = useState<string>(null)
-  const [downloadURL, setDownloadURL] = useState<string>(null)
-  const [firedata, setFiredata] = useState([])
   const user = auth.currentUser
 
   useEffect(() => {
-    let token = localStorage.getItem('Token')
-    if (token) {
-    }
+    const token = localStorage.getItem('Token')
     if (!token) {
       router.push('/register')
     }

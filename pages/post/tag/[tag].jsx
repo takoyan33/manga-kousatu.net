@@ -1,11 +1,10 @@
-import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
-import TextField from '@mui/material/TextField'
-import { getAuth } from 'firebase/auth'
 import Grid from '@material-ui/core/Grid'
+import TextField from '@mui/material/TextField'
+import { collection, getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
+import { database } from 'firebaseConfig'
 import { SiteButton } from 'layouts/components/button'
 import { CardPost, CommonHead } from 'layouts/components/ui'
 
@@ -19,13 +18,9 @@ const Category = () => {
   const f = query(posts, orderBy('likes', 'desc'))
   //いいね数順
   const [postsData, setPostsData] = useState([])
-  const [likecount, setLikecount] = useState(0)
 
-  const styles = { whiteSpace: 'pre-line' }
   const router = useRouter()
   const { tag } = router.query
-  const auth = getAuth()
-  const user = auth.currentUser
   const [searchName, setSearchName] = useState('')
 
   const useFetchPosts = async () => {
@@ -45,7 +40,7 @@ const Category = () => {
               //そのまま返す
             } else if (
               data.selected.toLowerCase().includes(tag.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -70,7 +65,7 @@ const Category = () => {
               //そのまま返す
             } else if (
               data.selected.toLowerCase().includes(tag.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -95,7 +90,7 @@ const Category = () => {
               //そのまま返す
             } else if (
               data.selected.toLowerCase().includes(tag.toLowerCase())
-              //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+              //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
             ) {
               return data
             }
@@ -107,18 +102,18 @@ const Category = () => {
   useEffect(() => {
     useFetchPosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [likecount])
+  }, [])
 
   return (
     <>
       <CommonHead />
       <div className='m-auto max-w-7xl'>
         <p>
-          <Link href='/top'>トップ</Link>　＞　投稿記事　＞　#{tag}
+          <Link href='/top'>トップ</Link> ＞ 投稿記事 ＞ #{tag}
         </p>
         <h2 className='my-12 text-center text-2xl font-semibold'>#{tag}の考察記事一覧</h2>
 
-        <p className='text-1xl text-center'>投稿数　{posts.length}件</p>
+        <p className='text-1xl text-center'>投稿数 {posts.length}件</p>
 
         <TextField
           id='outlined-basic'
@@ -145,7 +140,7 @@ const Category = () => {
                   //そのまま返す
                 } else if (
                   post.title.toLowerCase().includes(searchName.toLowerCase())
-                  //valのnameが含んでいたら小文字で返す　含んでいないvalは返さない
+                  //valのnameが含んでいたら小文字で返す 含んでいないvalは返さない
                 ) {
                   return post
                 }

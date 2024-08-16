@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { app, database } from 'firebaseConfig'
-import { collection, getDocs } from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import { getAuth, sendEmailVerification } from 'firebase/auth'
-import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
+import { getAuth, sendEmailVerification } from 'firebase/auth'
+import { getDocs } from 'firebase/firestore'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { CommonHead } from 'layouts/components/ui'
 import { postsRef } from 'layouts/utils/post'
 
@@ -16,9 +15,8 @@ export default function Emaildedit() {
   const auth = getAuth()
   const user = auth.currentUser
 
-  console.log(user)
   useEffect(() => {
-    let token = localStorage.getItem('Token')
+    const token = localStorage.getItem('Token')
 
     if (token) {
       getallPost()

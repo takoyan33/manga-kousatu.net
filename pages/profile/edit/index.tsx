@@ -1,30 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { database } from 'firebaseConfig'
-import {
-  collection,
-  getDocs,
-  doc,
-  updateDoc,
-  query,
-  orderBy,
-  limit,
-  where,
-} from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import Button from '@mui/material/Button'
-import { postImage } from 'layouts/api/upload'
 import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import { doc, updateDoc } from 'firebase/firestore'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
 import { TagsInput } from 'react-tag-input-component'
+import { ToastContainer } from 'react-toastify'
+import { database } from 'firebaseConfig'
+import { postImage } from 'layouts/api/upload'
+import { useGetMyUser } from 'layouts/components/hooks'
+import { successNotify, errorNotify } from 'layouts/components/text'
 import { CommonHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
 import { GetUser } from 'types/user'
-import { ToastContainer } from 'react-toastify'
 
 export default function Edit() {
   const { user } = useAuthContext()
@@ -63,7 +53,7 @@ export default function Edit() {
 
   const updateUserData = async (id: string) => {
     //更新する
-    let fieldToEdit = doc(database, 'users', id)
+    const fieldToEdit = doc(database, 'users', id)
     //セットしたIDをセットする
     const result = await postImage(image)
     setResult(result)

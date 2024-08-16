@@ -1,22 +1,14 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import Link from 'next/link'
 import { getAuth } from 'firebase/auth'
-import TextField from '@mui/material/TextField'
+import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import {
   useFetchPosts,
-  useGetOldPosts,
-  useGetLikePosts,
-  useGetNetabrePosts,
-  useGetNoNetabrePosts,
+  // useGetOldPosts,
+  // useGetLikePosts,
+  // useGetNetabrePosts,
+  // useGetNoNetabrePosts,
 } from 'layouts/components/hooks'
-import { POST_CATEGORIES, COPY_WRITES, CommonHead, CardPost } from 'layouts/components/ui'
-import InputLabel from '@mui/material/InputLabel'
-import MenuItem from '@mui/material/MenuItem'
-import FormControl from '@mui/material/FormControl'
-import Select from '@mui/material/Select'
-import { Changetab } from 'layouts/components/ui/Changetab'
-import Image from 'react-image-resizer'
+import { CommonHead, CardPost } from 'layouts/components/ui'
 import { GetPost } from 'types/post'
 
 export default function Index() {
@@ -35,12 +27,12 @@ export default function Index() {
     }
   }
 
-  interface NetabareItem {
-    sortId: number
-    label: string
-    value: string
-    onClick: () => void
-  }
+  // interface NetabareItem {
+  //   sortId: number
+  //   label: string
+  //   value: string
+  //   onClick: () => void
+  // }
 
   useEffect(() => {
     useFetchPosts(setPostData)
@@ -80,9 +72,8 @@ export default function Index() {
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           filteredPosts.map((post) => (
-            <div className='w-1/4'>
+            <div className='w-1/4' key={post.id}>
               <CardPost
-                key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
                 category={post.category}

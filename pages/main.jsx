@@ -1,5 +1,5 @@
-import useStore from '../stores/store'
 import Count from '../layouts/components/ui/Count'
+import useStore from '../stores/store'
 
 function App() {
   const { count } = useStore()

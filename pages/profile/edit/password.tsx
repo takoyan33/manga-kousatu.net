@@ -1,19 +1,18 @@
-import React, { useState } from 'react'
-import { CommonHead } from 'layouts/components/ui'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import { usePasswordReset } from 'layouts/api/auth/useAuth'
 import { Alert, Grid, Link } from '@mui/material'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import React, { useState } from 'react'
+import { usePasswordReset } from 'layouts/api/auth/useAuth'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function Password() {
   const [email, setEmail] = useState('')
   const { success, error, passwordReset } = usePasswordReset()
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    passwordReset(email)
-  }
+  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  //   event.preventDefault()
+  //   passwordReset(email)
+  // }
 
   return (
     <div style={{ height: '750px' }}>

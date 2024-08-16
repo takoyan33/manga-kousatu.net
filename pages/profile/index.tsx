@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
-import { getDocs, query, where } from 'firebase/firestore'
-import { useRouter } from 'next/router'
-import { deleteUser } from 'firebase/auth'
 import TextField from '@mui/material/TextField'
-import { CommonHead, ProfileId, CardPost, COLORS, AccountMenu } from 'layouts/components/ui'
-import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
+import { deleteUser } from 'firebase/auth'
+import { getDocs, query, where } from 'firebase/firestore'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
+import { CommonHead, ProfileId, COLORS, AccountMenu } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
+import { postsRef } from 'layouts/utils/post'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
-import { postsRef } from 'layouts/utils/post'
 
 export default function Profile() {
-  let router = useRouter()
+  const router = useRouter()
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
@@ -202,7 +202,7 @@ export default function Profile() {
       />
 
       <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
-      <p className='text-1xl text-center'>投稿数　{filteredPosts.length}件</p>
+      <p className='text-1xl text-center'>投稿数 {filteredPosts.length}件</p>
       <div>
         <ResponsiveContainer height={256}>
           <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>

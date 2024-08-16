@@ -30,7 +30,7 @@ export const ProfileId = React.memo(
               {favorite &&
                 favorite.map((favorite, index) => (
                   <p className='my-2 text-cyan-700' key={index}>
-                    ＃{favorite} 
+                    ＃{favorite}
                   </p>
                 ))}
               {favorite && favorite.length === 0 && <p>好きな漫画はありません</p>}

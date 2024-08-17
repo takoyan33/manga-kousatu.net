@@ -24,6 +24,8 @@ Manga Study では、漫画の考察などを自由に投稿・閲覧できる w
 
 - サーバー：Vercel
 
+- テスト：jest, react-testing-library
+
 - データベース：Cloud Firestore (NoSQL)
 
 - 状態管理： Zustand

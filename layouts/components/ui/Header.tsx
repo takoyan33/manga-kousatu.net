@@ -1,12 +1,9 @@
-import Logout from '@mui/icons-material/Logout'
-import Settings from '@mui/icons-material/Settings'
-import NotificationsIcon from '@mui/icons-material/Notifications'
 import CachedIcon from '@mui/icons-material/Cached'
-import PersonIcon from '@mui/icons-material/Person'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
-import Link from 'next/link'
-import React, { useEffect, useState, useCallback } from 'react'
-import { useRouter } from 'next/router'
+import Logout from '@mui/icons-material/Logout'
+import NotificationsIcon from '@mui/icons-material/Notifications'
+import PersonIcon from '@mui/icons-material/Person'
+import Settings from '@mui/icons-material/Settings'
 import {
   AppBar,
   Toolbar,
@@ -20,12 +17,16 @@ import {
   Tooltip,
   Button,
 } from '@mui/material'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useLogOut } from 'layouts/api/auth/useAuth'
-import { useAuthContext } from 'layouts/context/AuthContext'
-import { NotificationModal } from 'layouts/components/ui'
-import { useGetMyUser } from 'layouts/components/hooks'
-import { GetUser } from 'types/user'
 import { SiteButton } from 'layouts/components/button'
+import { useGetMyUser } from 'layouts/components/hooks'
+import { NotificationModal } from 'layouts/components/ui'
+import { useAuthContext } from 'layouts/context/AuthContext'
+import { GetUser } from 'types/user'
 
 const ACCOUNT_MENU_ITEMS = [
   { text: 'About', href: '/about', icon: <Settings fontSize='small' /> },
@@ -89,7 +90,7 @@ export const Header = () => {
           <Toolbar style={{ height: '80px' }}>
             <Link href='/'>
               <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
-                <img height={100} width={200} src='/logo.png' alt='logo' />
+                <Image height={20} width={150} src='/logo.png' alt='logo' />
               </Typography>
             </Link>
             {user && (

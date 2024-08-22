@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 
 export const Footer = () => (
@@ -5,7 +6,7 @@ export const Footer = () => (
     <div className='d-block m-auto mt-6 w-11/12 max-w-4xl justify-between md:mt-16 md:flex md:w-full'>
       <div>
         <Link href='/'>
-          <img height={100} width={150} src='/logo.png' alt='logo' />
+          <Image height={20} width={150} src='/logo.png' alt='logo' />
         </Link>
         <p className='my-4 text-lg md:text-sm'>漫画記事考察サイト</p>
       </div>

@@ -1,14 +1,14 @@
-import React from 'react'
-import Link from 'next/link'
-import { useEffect, useState, useMemo, useCallback } from 'react'
-import { useGetOtherUser } from 'layouts/components/hooks'
-import { Avatar } from '@mui/material'
-import Image from 'react-image-resizer'
-import Category from '../text/Category'
 import FavoriteIcon from '@mui/icons-material/Favorite'
+import { Avatar } from '@mui/material'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import Category from '../text/Category'
+import { useGetOtherUser } from 'layouts/components/hooks'
 import { SingleGetPostParams } from 'types/post'
 import { GetUser } from 'types/user'
-import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 
 // eslint-disable-next-line react/display-name
@@ -76,7 +76,14 @@ export const CardPost = React.memo(
       <Link href={`/post/${id}`}>
         <div className='m-auto my-2 hover:opacity-80'>
           <dl>
-            <img className='cardPost-img rounded text-center' src={downloadURL} alt='画像' />
+            <div className='cardPost-img'>
+              <Image
+                className='cardPost-img rounded text-center'
+                src={downloadURL}
+                alt='画像'
+                layout='fill'
+              />
+            </div>
             <div>
               <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
               <div className='flex'>

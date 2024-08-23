@@ -13,9 +13,12 @@
     "build-storybook": "build-storybook",
     "prepare": "husky",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "commitmsg": "commitlint -e $GIT_PARAMS"
   },
   "dependencies": {
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.2.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",

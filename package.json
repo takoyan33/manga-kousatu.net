@@ -14,7 +14,7 @@
     "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch",
-    "commitmsg": "commitlint -e $GIT_PARAMS"
+    "commitmsg": "commitlint --edit"
   },
   "dependencies": {
     "@commitlint/cli": "^19.4.0",

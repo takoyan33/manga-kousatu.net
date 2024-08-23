@@ -85,7 +85,7 @@ export const Header = () => {
 
   return (
     <AppBar position='static' color='transparent'>
-      <div>
+      <nav>
         <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
           <Toolbar style={{ height: '80px' }}>
             <Link href='/'>
@@ -126,7 +126,7 @@ export const Header = () => {
             </Tooltip>
           </Toolbar>
         </div>
-      </div>
+      </nav>
 
       <Menu
         anchorEl={anchorEl}

@@ -4,6 +4,9 @@ module.exports = {
   parserOptions: {
     project: './tsconfig.json',
   },
+  env: {
+    jest: true,
+  },
   root: true,
   rules: {
     // 使っていない変数を警告しない

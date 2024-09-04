@@ -91,6 +91,7 @@
     "@types/react": "^18.0.15",
     "autoprefixer": "^10.4.7",
     "babel-loader": "^8.3.0",
+    "chromatic": "^11.7.1",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
     "eslint-config-prettier": "^8.6.0",

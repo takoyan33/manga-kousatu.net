@@ -1,6 +1,6 @@
-import { NotificationModal } from './components/NotificationModal'
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import React from 'react'
+import { NotificationModal } from './components/NotificationModal'
 
 export default {
   text: 'NotificationModal',

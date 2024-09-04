@@ -1,6 +1,6 @@
-import { SiteButton } from './components/SiteButton'
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import React from 'react'
+import { SiteButton } from './components/SiteButton'
 
 export default {
   text: 'SiteButton',

@@ -6,7 +6,7 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
 
-export const AccountMenu = () => (
+export const AccountMenu = (onClick?) => (
   <List
     sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
     component='nav'
@@ -21,19 +21,25 @@ export const AccountMenu = () => (
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
-      <Link href='/profile/edit'> プロフィールを変更する</Link>
+      <Link href='/profile/edit' aria-label='profile-edit'>
+        プロフィールを変更する
+      </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
-      <Link href='/profile/edit/password'>パスワードを変更する</Link>
+      <Link href='/profile/edit/password' aria-label='password-change'>
+        パスワードを変更する
+      </Link>
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
         <DraftsIcon />
       </ListItemIcon>
-      <button>アカウントを退会する</button>
+      <button aria-label='account-delete' onClick={onClick}>
+        アカウントを退会する
+      </button>
     </ListItemButton>
   </List>
 )

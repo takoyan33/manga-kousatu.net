@@ -1,16 +1,16 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react'
 import React from 'react'
-import { AccountMenu } from './components/AccountMenu'
+import { OpenButton } from './components/OpenButton'
 
 export default {
-  text: 'AccountMenu',
-  component: AccountMenu,
+  text: 'OpenButton',
+  component: OpenButton,
 }
 
-const Template = (args) => <AccountMenu {...args} />
+const Template = (args) => <OpenButton {...args} />
 
 export const AccountMenuTes = Template.bind({})
 
 AccountMenuTes.args = {
-  onClick: '',
+  text: 'test',
 }

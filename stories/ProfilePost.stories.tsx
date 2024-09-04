@@ -1,6 +1,6 @@
-import { ProfilePost } from './components/ProfilePost'
-import React from 'react'
 import { ComponentStory, ComponentMeta } from '@storybook/react'
+import React from 'react'
+import { ProfilePost } from './components/ProfilePost'
 
 export default {
   text: 'ProfilePost',

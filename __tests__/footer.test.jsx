@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { Footer } from '../layouts/components/ui/Footer'
 import '@testing-library/jest-dom'
 
@@ -23,5 +23,8 @@ describe('A1_Component > Footer', () => {
     //[A1_1_5] Manga Study ©︎があって、リンクが正しいか
     const copyrightText = screen.getByText(/Manga Study ©︎\d+/)
     expect(copyrightText).toBeInTheDocument()
+
+    //[A1_1_6] LINKをクリックできるか
+    // fireEvent.click(screen.getByRole('button', { name: 'account-delete' }))
   })
 })

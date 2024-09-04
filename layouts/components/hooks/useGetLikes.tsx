@@ -4,7 +4,7 @@ import { successNotify, errorNotify } from 'layouts/components/text'
 
 //いいねの追加
 export const LikeAdd = (routerId: string, likes: number, email: string) => {
-  let post = doc(database, 'posts', routerId)
+  const post = doc(database, 'posts', routerId)
   updateDoc(post, {
     likes: likes + 1,
     likesEmail: arrayUnion(email),
@@ -23,7 +23,7 @@ export const LikeAdd = (routerId: string, likes: number, email: string) => {
 
 //いいねの削除
 export const LikeDelete = (routerid: string, likes: number, email: string) => {
-  let post = doc(database, 'posts', routerid)
+  const post = doc(database, 'posts', routerid)
   updateDoc(post, {
     likes: likes - 1,
     likesEmail: arrayRemove(email),

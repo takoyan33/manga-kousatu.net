@@ -1,9 +1,9 @@
-import ListSubheader from '@mui/material/ListSubheader'
+import DraftsIcon from '@mui/icons-material/Drafts'
+import SendIcon from '@mui/icons-material/Send'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import DraftsIcon from '@mui/icons-material/Drafts'
-import SendIcon from '@mui/icons-material/Send'
+import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
 
 export const AccountMenu = (onClick) => (
@@ -36,9 +36,7 @@ export const AccountMenu = (onClick) => (
       <ListItemIcon>
         <DraftsIcon />
       </ListItemIcon>
-      <button className='' onClick={onClick}>
-        アカウントを退会する
-      </button>
+      <button onClick={onClick}>アカウントを退会する</button>
     </ListItemButton>
   </List>
 )

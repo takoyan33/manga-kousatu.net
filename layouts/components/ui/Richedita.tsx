@@ -1,8 +1,8 @@
+import { EditorState, ContentState } from 'draft-js'
+import { stateToHTML } from 'draft-js-export-html'
 import React, { useState, useEffect } from 'react'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
-import { EditorState, ContentState } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
-import { stateToHTML } from 'draft-js-export-html'
 
 interface RicheditaProps {
   onChange: (plainText: string, html: string) => void

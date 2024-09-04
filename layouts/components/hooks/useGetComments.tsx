@@ -26,7 +26,7 @@ export const getComments = async (setComments, routerId) => {
 
 //コメントの削除
 export const deleteComment = async (commentId: string) => {
-  let deleteComment = doc(database, 'comments', commentId)
+  const deleteComment = doc(database, 'comments', commentId)
   deleteDoc(deleteComment)
     .then(() => {
       successNotify('コメントを削除しました')

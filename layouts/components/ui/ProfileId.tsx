@@ -1,8 +1,8 @@
-import React from 'react'
-import Avatar from '@mui/material/Avatar'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
+import FavoriteIcon from '@mui/icons-material/Favorite'
+import Avatar from '@mui/material/Avatar'
+import React from 'react'
 import { ProfileParams } from 'types/user'
 
 // eslint-disable-next-line react/display-name

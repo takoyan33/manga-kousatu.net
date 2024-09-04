@@ -1,5 +1,5 @@
-import { DOMAttributes, FC, memo, ReactNode } from 'react'
 import Link from 'next/link'
+import { DOMAttributes, FC, memo, ReactNode } from 'react'
 
 interface CategoryParams {
   href: string

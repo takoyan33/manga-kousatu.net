@@ -9,9 +9,9 @@ import {
   getDocs,
 } from 'firebase/firestore'
 import useSWR from 'swr'
-import { GetPost } from 'types/post'
 import { database } from 'firebaseConfig'
 import { postsRef } from 'layouts/utils/post'
+import { GetPost } from 'types/post'
 
 //新しいpostを取得
 export const useFetchPosts = async (setPostData: any) => {

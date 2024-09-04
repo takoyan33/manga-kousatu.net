@@ -4,7 +4,7 @@ import '@testing-library/jest-dom'
 
 describe('A1_Component > Footer', () => {
   it('[A1_1]Footerのテスト', () => {
-    //[A1_1_1] レンダリングされているか
+    //[A1_1_1] レンダリングされているか えらるけど無視
     render(<Footer />)
 
     //[A1_1_2] 更新履歴の文字があるか

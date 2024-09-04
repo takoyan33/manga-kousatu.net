@@ -8,8 +8,6 @@ import {
   signInWithEmailAndPassword,
   UserCredential,
 } from 'firebase/auth'
-import { useState } from 'react'
-import { useRouter } from 'next/router'
 import {
   collection,
   getDocs,
@@ -23,9 +21,11 @@ import {
   orderBy,
   where,
 } from 'firebase/firestore'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { database } from 'firebaseConfig'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 import useUserStore from '../../../stores/login'
+import { database } from 'firebaseConfig'
+import { successNotify, errorNotify } from 'layouts/components/text'
 
 //新規登録
 export const useSignup = () => {
@@ -135,8 +135,8 @@ export const SignInWithGoogle = () => {
 export const deletePost = (routerid) => {
   const router = useRouter()
   //data.idを送っているのでidを受け取る
-  let deletePost = doc(database, 'posts', routerid)
-  let checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
+  const deletePost = doc(database, 'posts', routerid)
+  const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
   //確認画面を出す
   if (checkSaveFlg) {
     deleteDoc(deletePost)

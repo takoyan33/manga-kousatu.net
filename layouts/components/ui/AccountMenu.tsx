@@ -1,12 +1,12 @@
-import ListSubheader from '@mui/material/ListSubheader'
+import DraftsIcon from '@mui/icons-material/Drafts'
+import SendIcon from '@mui/icons-material/Send'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
-import DraftsIcon from '@mui/icons-material/Drafts'
-import SendIcon from '@mui/icons-material/Send'
+import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
 
-export const AccountMenu = (onClick) => (
+export const AccountMenu = () => (
   <List
     sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
     component='nav'
@@ -23,9 +23,6 @@ export const AccountMenu = (onClick) => (
       </ListItemIcon>
       <Link href='/profile/edit'> プロフィールを変更する</Link>
     </ListItemButton>
-    {/* <button className="m-5">
-          <Link href="/profile/emailedit">メールアドレスを変更する</Link>
-        </button> */}
     <ListItemButton>
       <ListItemIcon>
         <SendIcon />
@@ -36,9 +33,7 @@ export const AccountMenu = (onClick) => (
       <ListItemIcon>
         <DraftsIcon />
       </ListItemIcon>
-      <button className='' onClick={onClick}>
-        アカウントを退会する
-      </button>
+      <button>アカウントを退会する</button>
     </ListItemButton>
   </List>
 )

@@ -9,15 +9,13 @@ interface buttonParams {
 //React.memo化
 export const OpenButton = React.memo(({ text, onClick }: buttonParams) => {
   return (
-    <div>
-      <button
-        onClick={onClick}
-        type='button'
-        aria-label='open-button'
-        className='mt-2 inline-block bg-yellow-500 p-1 text-center text-white'
-      >
-        {text}
-      </button>
-    </div>
+    <button
+      onClick={onClick}
+      type='button'
+      aria-label='open-button'
+      className='mt-2 inline-block bg-yellow-500 p-1 text-center text-white'
+    >
+      {text}
+    </button>
   )
 })

@@ -3,28 +3,32 @@ import { Footer } from '../layouts/components/ui/Footer'
 import '@testing-library/jest-dom'
 
 describe('A1_Component > Footer', () => {
-  it('[A1_1]Footerのテスト', () => {
-    //[A1_1_1] レンダリングされているか えらるけど無視
+  test('[A1_1]レンダリングされているか えらるけど無視', () => {
     render(<Footer />)
+  })
 
-    //[A1_1_2] 更新履歴の文字があるか
+  test('[A1_2]更新履歴の文字があるか', () => {
+    render(<Footer />)
     expect(screen.getByText('更新履歴'))
+  })
 
-    //[A1_1_3] aboutの文字があって、リンクが正しいか
+  test('[A1_3]aboutの文字があって、リンクが正しいか', () => {
+    render(<Footer />)
     const aboutLink = screen.getByText('About')
     expect(aboutLink).toBeInTheDocument()
     expect(aboutLink.href).toBe('http://localhost/about')
+  })
 
-    //[A1_1_4] Manga Studyとはの文字があって、リンクが正しいか
+  test('[A1_4] Manga Studyとはの文字があって、リンクが正しいか', () => {
+    render(<Footer />)
     const mangaStudyLink = screen.getByText('Manga Studyとは')
     expect(mangaStudyLink).toBeInTheDocument()
     expect(mangaStudyLink.href).toBe('http://localhost/top')
+  })
 
-    //[A1_1_5] Manga Study ©︎があって、リンクが正しいか
+  test('[A1_5] Manga Study ©︎があって、リンクが正しいか', () => {
+    render(<Footer />)
     const copyrightText = screen.getByText(/Manga Study ©︎\d+/)
     expect(copyrightText).toBeInTheDocument()
-
-    //[A1_1_6] LINKをクリックできるか
-    // fireEvent.click(screen.getByRole('button', { name: 'account-delete' }))
   })
 })

@@ -14,23 +14,23 @@ export const ProfileId = React.memo(
           <div key={id}>
             <Avatar
               className='m-auto max-w-sm border text-center'
-              alt='プロフィール'
+              alt='プロフィール画像'
               sx={{ width: 150, height: 150 }}
               src={profileImage}
             />
           </div>
           <div>
-            <p className='m-5 text-lg'>
+            <p className='m-5 text-lg' aria-label='name-text'>
               <AccountBoxIcon /> {userName}
             </p>
             <p className='m-5'>
               <FavoriteIcon /> 好きな漫画
             </p>
-            <div className='m-5'>
+            <div className='m-5' aria-label='liked-text'>
               {favorite &&
                 favorite.map((favorite, index) => (
                   <p className='my-2 text-cyan-700' key={index}>
-                    ＃{favorite}
+                    #{favorite}
                   </p>
                 ))}
               {favorite && favorite.length === 0 && <p>好きな漫画はありません</p>}
@@ -41,7 +41,9 @@ export const ProfileId = React.memo(
           <p className='m-5'>
             <BorderColorIcon className='mr-2' /> プロフィール
           </p>
-          <p className='m-5'>{bio ? bio : 'プロフィールはまだありません'}</p>
+          <p className='m-5' aria-label='profile-text'>
+            {bio ? bio : 'プロフィールはまだありません'}
+          </p>
         </div>
       </>
     )

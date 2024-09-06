@@ -6,7 +6,11 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
 
-export const AccountMenu = (onClick?) => (
+interface AccountMenuParams {
+  onClick?: () => void
+}
+
+export const AccountMenu = ({ onClick }: AccountMenuParams) => (
   <List
     sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
     component='nav'

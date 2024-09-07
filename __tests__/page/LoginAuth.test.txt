@@ -1,0 +1,9 @@
+import { render, screen, fireEvent } from '@testing-library/react'
+import { LoginAuth } from '../../layouts/api/auth/LoginAuth'
+import '@testing-library/jest-dom'
+
+describe('A2_Page > LoginAuth', () => {
+  it('[A2_1_1]レンダリングされているか', () => {
+    render(<LoginAuth />)
+  })
+})

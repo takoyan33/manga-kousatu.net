@@ -2,13 +2,11 @@
 import React from 'react'
 import { SiteCategory } from './SiteCategory'
 
-interface CategoryParams {
+interface TitleParams {
   title: string
 }
 
 //React.memo化
-const siteTitle: React.VFC<CategoryParams> = React.memo(({ title }) => {
-  return <div className='my-1'></div>
+export const siteTitle: React.VFC<TitleParams> = React.memo(({ title }) => {
+  return <div className='my-1'>{title}</div>
 })
-
-export default siteTitle

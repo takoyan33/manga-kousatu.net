@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { ProfileId } from '../layouts/components/ui/ProfileId'
+import { ProfileId } from '../../layouts/components/ui/ProfileId'
 import '@testing-library/jest-dom'
 
 describe('A1_Component > ProfileId', () => {

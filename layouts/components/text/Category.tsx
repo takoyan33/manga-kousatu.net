@@ -7,7 +7,7 @@ interface CategoryParams {
 }
 
 //React.memo化
-const Category: React.VFC<CategoryParams> = React.memo(({ category }) => {
+export const Category = React.memo(({ category }: CategoryParams) => {
   return (
     <div className='my-1'>
       {category === 'ONEPIECE' && (
@@ -41,5 +41,3 @@ const Category: React.VFC<CategoryParams> = React.memo(({ category }) => {
     </div>
   )
 })
-
-export default Category

@@ -11,7 +11,7 @@ interface AvatarParams {
 const CommonAvatar = React.memo(({ photoURL, displayname }: AvatarParams) => {
   return (
     <>
-      <Avatar alt='Remy Sharp' src={photoURL} />
+      <Avatar alt='アバター画像' src={photoURL} />
       <span className='text-xl'>{displayname}</span>
     </>
   )

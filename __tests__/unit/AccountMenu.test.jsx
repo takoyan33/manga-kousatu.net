@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { AccountMenu } from '../layouts/components/ui/AccountMenu'
+import { AccountMenu } from '../../layouts/components/ui/AccountMenu'
 import '@testing-library/jest-dom'
 
 describe('A1_Component > AccountMenu', () => {
@@ -25,8 +25,7 @@ describe('A1_Component > AccountMenu', () => {
     // testFunction が呼び出されたことを確認
     expect(testFunction).toHaveBeenCalledTimes(1)
 
-    // testFunction に渡された引数を確認 (必要に応じて)
-    // 例: イベントオブジェクトの確認
+    // testFunction に渡された引数を確認
     expect(testFunction).toHaveBeenCalledWith(expect.any(Object))
   })
 })

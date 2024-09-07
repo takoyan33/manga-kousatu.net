@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, userEvent } from '@testing-library/react'
-import { OpenButton } from '../layouts/components/button/OpenButton'
+import { OpenButton } from '../../layouts/components/button/OpenButton'
 import '@testing-library/jest-dom'
 
 describe('A1_Component > OpenButton', () => {

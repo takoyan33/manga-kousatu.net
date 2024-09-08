@@ -1,6 +1,5 @@
 import { arrayUnion, arrayRemove, updateDoc, doc, deleteDoc } from 'firebase/firestore'
-import { database } from 'firebaseConfig'
-import { successNotify, errorNotify } from 'layouts/components/text'
+import { database } from '../../../firebaseConfig'
 
 //いいねの追加
 export const LikeAdd = (routerId: string, likes: number, email: string) => {

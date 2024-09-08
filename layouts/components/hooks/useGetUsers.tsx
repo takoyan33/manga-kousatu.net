@@ -1,6 +1,6 @@
-import { onSnapshot, collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore'
-import { database } from 'firebaseConfig'
-import { usersRef } from 'layouts/utils/post'
+import { getDocs, doc, getDoc } from 'firebase/firestore'
+import { database } from '../../../firebaseConfig'
+import { usersRef } from '../../../layouts/utils/post'
 
 //自分のuserを取得
 export const useGetMyUser = async (setUsers, uid: string) => {

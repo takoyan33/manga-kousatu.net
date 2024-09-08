@@ -4,11 +4,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState, useMemo, useCallback } from 'react'
+import { useGetOtherUser } from '../../../layouts/components/hooks'
 import { Category } from '../text/Category'
-import { useGetOtherUser } from 'layouts/components/hooks'
 import { SingleGetPostParams } from 'types/post'
 import { GetUser } from 'types/user'
-import 'swiper/css'
 
 // eslint-disable-next-line react/display-name
 export const CardPost = React.memo(

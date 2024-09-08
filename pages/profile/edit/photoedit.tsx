@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
-import { auth } from 'firebaseConfig'
+import { auth } from '../../../firebaseConfig'
 import { postImage } from 'layouts/api/upload'
 import { CommonHead } from 'layouts/components/ui'
 

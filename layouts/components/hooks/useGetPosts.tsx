@@ -1,16 +1,7 @@
-import {
-  onSnapshot,
-  collection,
-  query,
-  orderBy,
-  where,
-  doc,
-  getDoc,
-  getDocs,
-} from 'firebase/firestore'
+import { onSnapshot, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
 import useSWR from 'swr'
-import { database } from 'firebaseConfig'
-import { postsRef } from 'layouts/utils/post'
+import { database } from '../../../firebaseConfig'
+import { postsRef } from '../../../layouts/utils/post'
 import { GetPost } from 'types/post'
 
 //新しいpostを取得

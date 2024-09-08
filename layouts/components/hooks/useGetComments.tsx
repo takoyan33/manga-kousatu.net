@@ -8,8 +8,8 @@ import {
   doc,
   deleteDoc,
 } from 'firebase/firestore'
-import { database } from 'firebaseConfig'
-import { successNotify, errorNotify } from 'layouts/components/text'
+import { database } from '../../../firebaseConfig'
+import { successNotify, errorNotify } from '../../../layouts/components/text'
 
 //特定の投稿のコメントを全て取得
 export const getComments = async (setComments, routerId) => {

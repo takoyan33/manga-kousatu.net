@@ -71,6 +71,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.2",
+    "@babel/preset-react": "^7.24.7",
     "@storybook/addon-actions": "^6.5.13",
     "@storybook/addon-controls": "7.0.0-beta.20",
     "@storybook/addon-docs": "7.0.0-beta.20",

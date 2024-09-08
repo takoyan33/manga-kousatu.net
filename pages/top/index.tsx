@@ -1,6 +1,6 @@
 import { getAuth } from 'firebase/auth'
-import { SiteButton } from 'layouts/components/button'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { SiteButton } from '../../layouts/components/button'
+import { CommonHead } from '../../layouts/components/ui/CommonHead'
 
 export default function Top() {
   const auth = getAuth()

@@ -28,4 +28,10 @@ describe('A1_Component > AccountMenu', () => {
     // testFunction に渡された引数を確認
     expect(testFunction).toHaveBeenCalledWith(expect.any(Object))
   })
+
+  it('[A1_3_4] スナップショット', () => {
+    const testFunction = jest.fn()
+    const { container } = render(<AccountMenu onClick={testFunction} />)
+    expect(container).toMatchSnapshot()
+  })
 })

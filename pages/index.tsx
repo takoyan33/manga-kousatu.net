@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { useFetchPosts, useGetOldPosts } from 'layouts/components/hooks'
-import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
+import { POST_CATEGORIES, CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
 import { GetPost } from 'types/post'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -43,14 +43,7 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
-      <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          おすすめ記事
-          <span className='ml-4 text-sm text-gray-600'>
-            <Link href='/top/recommend'>すべて見る</Link>
-          </span>
-        </h2>
-      </div>
+      <TopTitle title='おすすめ記事' url='/top/recommend' />
       <Swiper
         className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
         spaceBetween={10}
@@ -82,14 +75,8 @@ export default function Index() {
         )}
       </Swiper>
 
-      <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          新着記事
-          <span className='ml-4 text-sm text-gray-600'>
-            <Link href='/top/new'>すべて見る</Link>
-          </span>
-        </h2>
-      </div>
+      <TopTitle title='新着記事' url='/top/new' />
+
       <Swiper
         className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
         spaceBetween={10}
@@ -121,12 +108,7 @@ export default function Index() {
         )}
       </Swiper>
 
-      <h2 className='my-12 text-left text-2xl font-semibold'>
-        投稿一覧
-        <span className='ml-4 text-sm text-gray-600'>
-          <Link href='/top/all'>すべて見る</Link>
-        </span>
-      </h2>
+      <TopTitle title='投稿一覧' url='/top/all' />
       <Swiper
         className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
         spaceBetween={10}

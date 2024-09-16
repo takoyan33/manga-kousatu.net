@@ -1,0 +1,9 @@
+import { render, screen, fireEvent } from '@testing-library/react'
+import Index from '../../pages/index'
+import '@testing-library/jest-dom'
+
+describe('A2_Page > Index', () => {
+  it('[A2_1_1]レンダリングされているか', () => {
+    render(<Index />)
+  })
+})

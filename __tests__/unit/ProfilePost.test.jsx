@@ -48,4 +48,17 @@ describe('A1_Component > ProfilePost', () => {
     const favoriteElement = screen.getByLabelText('liked-text')
     expect(favoriteElement).toBeInTheDocument()
   })
+
+  it('[A1_4_3] Pageのスナップショット', () => {
+    const { container } = render(
+      <ProfilePost
+        id={1}
+        profileImage='image'
+        username='aaaa'
+        bio='aaaa'
+        favorite={['onepiece']}
+      />,
+    )
+    expect(container).toMatchSnapshot()
+  })
 })

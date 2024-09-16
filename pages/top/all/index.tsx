@@ -13,7 +13,7 @@ import {
   useGetNetabrePosts,
   useGetNoNetabrePosts,
 } from 'layouts/components/hooks'
-import { POST_CATEGORIES, CommonHead, CardPost } from 'layouts/components/ui'
+import { POST_CATEGORIES, CommonHead, CardPost, BreadList } from 'layouts/components/ui'
 // import { Changetab } from 'layouts/components/ui/Changetab'
 import { GetPost } from 'types/post'
 
@@ -102,7 +102,9 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
-      <h2 className='text-left text-xl font-semibold'>カテゴリで探す</h2>
+      <BreadList secondTitle='投稿一覧' />
+      <h2 className='my-12 text-left text-2xl font-semibold'>投稿一覧</h2>
+      <h2 className='text-left text-xl font-semibold'>カテゴリ</h2>
       {POST_CATEGORIES.map((category) => {
         // userの情報
         const CategoriesInfo = {
@@ -127,7 +129,6 @@ export default function Index() {
           </span>
         )
       })}
-      <h2 className='my-12 text-left text-2xl font-semibold'>投稿一覧</h2>
       <p className='text-1xl text-center'>
         {searchName === ''
           ? `投稿数 ${postData.length}件`

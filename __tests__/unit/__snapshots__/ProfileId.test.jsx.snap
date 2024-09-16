@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > ProfileId [A1_5_3] Pageのスナップショット 1`] = `
+<div>
+  <div
+    class="m-auto flex max-w-md"
+  >
+    <div>
+      <div
+        class="MuiAvatar-root MuiAvatar-circular m-auto max-w-sm border text-center css-cxgc6-MuiAvatar-root"
+      >
+        <img
+          alt="プロフィール画像"
+          class="MuiAvatar-img css-1pqm26d-MuiAvatar-img"
+          src="image"
+        />
+      </div>
+    </div>
+    <div>
+      <p
+        aria-label="name-text"
+        class="m-5 text-lg"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="AccountBoxIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z"
+          />
+        </svg>
+         
+        aaaa
+      </p>
+      <p
+        class="m-5"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="FavoriteIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="m12 21.35-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+          />
+        </svg>
+         好きな漫画
+      </p>
+      <div
+        aria-label="liked-text"
+        class="m-5"
+      >
+        <p
+          class="my-2 text-cyan-700"
+        >
+          #
+          onepiece
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="m-auto my-10 max-w-md"
+  >
+    <p
+      class="m-5"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium mr-2 css-i4bv87-MuiSvgIcon-root"
+        data-testid="BorderColorIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M22 24H2v-4h20v4zM13.06 5.19l3.75 3.75L7.75 18H4v-3.75l9.06-9.06zm4.82 2.68-3.75-3.75 1.83-1.83c.39-.39 1.02-.39 1.41 0l2.34 2.34c.39.39.39 1.02 0 1.41l-1.83 1.83z"
+        />
+      </svg>
+       プロフィール
+    </p>
+    <p
+      aria-label="profile-text"
+      class="m-5"
+    >
+      aaaa
+    </p>
+  </div>
+</div>
+`;

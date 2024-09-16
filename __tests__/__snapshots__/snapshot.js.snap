@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Pageのスナップショット 1`] = `
+<div>
+  <div>
+    <h1>
+      Home
+    </h1>
+    <a
+      href="/about"
+    >
+      About
+    </a>
+  </div>
+</div>
+`;
+
 exports[`renders homepage unchanged 1`] = `
 <div>
   <div>

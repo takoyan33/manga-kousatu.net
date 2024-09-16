@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { useFetchPosts } from 'layouts/components/hooks'
-import { CommonHead, CardPost } from 'layouts/components/ui'
+import { CommonHead, CardPost, TopTitle, BreadList } from 'layouts/components/ui'
 import { GetPost } from 'types/post'
 
 export default function Index() {
@@ -53,11 +53,8 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
-      <div className='my-12'>
-        <h2 className='text-left text-2xl font-semibold'>
-          おすすめ記事 <span className='ml-4 text-sm text-gray-600'>すべて見る</span>
-        </h2>
-      </div>
+      <BreadList secondTitle='おすすめ記事' />
+      <TopTitle title='おすすめ記事' />
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>

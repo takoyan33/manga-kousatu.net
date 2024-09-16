@@ -11,6 +11,11 @@ describe('A1_Component > OpenButton', () => {
     fireEvent.click(screen.getByRole('button', { name: 'open-button' }))
   })
 
+  it('[A1_4_3] Pageのスナップショット', () => {
+    const { container } = render(<OpenButton text='test' />)
+    expect(container).toMatchSnapshot()
+  })
+
   //[A1_3_4] LINKをクリックできるか
   // const passwordChangeLink = screen.getByRole('link', { name: 'password-change' });
   // fireEvent.click(passwordChangeLink);

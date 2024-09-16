@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > Footer [A1_1_6] スナップショット 1`] = `
+<div>
+  <div
+    class="d-block m-auto mt-6 w-11/12 max-w-4xl justify-between md:mt-16 md:flex md:w-full"
+  >
+    <div>
+      <div>
+        <span
+          style="box-sizing: border-box; display: inline-block; overflow: hidden; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; position: relative; max-width: 100%;"
+        >
+          <span
+            style="box-sizing: border-box; display: block; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px; max-width: 100%;"
+          >
+            <img
+              alt=""
+              aria-hidden="true"
+              src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27150%27%20height=%2720%27/%3e"
+              style="display: block; max-width: 100%; background: none; opacity: 1; border: 0px; margin: 0px; padding: 0px;"
+            />
+          </span>
+          <img
+            alt="logo"
+            data-nimg="intrinsic"
+            data-testid="image"
+            decoding="async"
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            style="position: absolute; top: 0px; left: 0px; bottom: 0px; right: 0px; box-sizing: border-box; padding: 0px; margin: auto; display: block; width: 0px; height: 0px; min-width: 100%; max-width: 100%; min-height: 100%; max-height: 100%;"
+          />
+          <noscript />
+        </span>
+      </div>
+      <p
+        class="my-4 text-lg md:text-sm"
+      >
+        漫画記事考察サイト
+      </p>
+    </div>
+    <div>
+      <p
+        class="my-2 text-lg font-semibold md:my-0 md:text-sm"
+      >
+        <a
+          href="/about"
+        >
+          About
+        </a>
+      </p>
+    </div>
+    <div>
+      <p
+        class="my-2 text-lg font-semibold md:my-0 md:text-sm"
+      >
+        <a
+          href="/top"
+        >
+          Manga Studyとは
+        </a>
+      </p>
+    </div>
+    <div>
+      <p
+        class="my-2 text-lg font-semibold md:my-0 md:text-sm"
+      >
+        <a
+          href="/releasenotes"
+        >
+          更新履歴
+        </a>
+      </p>
+    </div>
+  </div>
+  <div
+    class="mt-4 border py-4 text-center"
+  >
+    Manga Study ©︎
+    2024
+  </div>
+</div>
+`;

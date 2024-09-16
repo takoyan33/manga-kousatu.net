@@ -40,7 +40,7 @@ import {
 } from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { CommonHead, RecommendCardPost } from 'layouts/components/ui'
+import { CommonHead, RecommendCardPost, BreadList } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -286,9 +286,7 @@ const Post = () => {
           </>
         )}
         <div className='rounded-xl md:border md:p-10'>
-          <div>
-            <Link href='/'>トップ</Link> ＞ 投稿記事 ＞{singlePost?.title}
-          </div>
+          <BreadList secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
               <img

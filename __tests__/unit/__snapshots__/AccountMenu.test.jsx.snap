@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > AccountMenu [A1_3_4] スナップショット 1`] = `
+<div>
+  <nav
+    aria-labelledby="nested-list-subheader"
+    class="MuiList-root MuiList-padding MuiList-subheader css-wmg9lc-MuiList-root"
+  >
+    <div
+      class="MuiListSubheader-root MuiListSubheader-gutters MuiListSubheader-sticky css-uob957-MuiListSubheader-root"
+      id="nested-list-subheader"
+    >
+      アカウントメニュー
+    </div>
+    <div
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="SendIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+          />
+        </svg>
+      </div>
+      <a
+        href="/profile/edit"
+      >
+        プロフィールを変更する
+      </a>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="SendIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+          />
+        </svg>
+      </div>
+      <a
+        href="/profile/edit/password"
+      >
+        パスワードを変更する
+      </a>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </div>
+    <div
+      class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root"
+      role="button"
+      tabindex="0"
+    >
+      <div
+        class="MuiListItemIcon-root css-cveggr-MuiListItemIcon-root"
+      >
+        <svg
+          aria-hidden="true"
+          class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+          data-testid="DraftsIcon"
+          focusable="false"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M21.99 8c0-.72-.37-1.35-.94-1.7L12 1 2.95 6.3C2.38 6.65 2 7.28 2 8v10c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2l-.01-10zM12 13 3.74 7.84 12 3l8.26 4.84L12 13z"
+          />
+        </svg>
+      </div>
+      <button
+        aria-label="account-delete"
+      >
+        アカウントを退会する
+      </button>
+      <span
+        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+      />
+    </div>
+  </nav>
+</div>
+`;

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > ProfilePost [A1_4_3] Pageのスナップショット 1`] = `
+<div>
+  <div>
+    <div
+      class="m-auto max-w-sm text-center"
+    >
+      <div
+        style="position: relative; width: 100px; height: 100px;"
+      >
+        <img
+          alt="プロフィール画像"
+          src="image"
+          style="position: absolute; display: block; left: 50px; top: 50px; width: 0px; height: 0px;"
+        />
+      </div>
+    </div>
+    <p
+      aria-label="name-text"
+      class="m-5"
+    >
+      名前：
+      aaaa
+    </p>
+    <p
+      aria-label="profile-text"
+      class="m-5"
+    >
+      プロフィール：
+      aaaa
+    </p>
+    <p
+      aria-label="liked-text"
+      class="m-5"
+    >
+      好きな漫画：
+      onepiece
+    </p>
+  </div>
+</div>
+`;

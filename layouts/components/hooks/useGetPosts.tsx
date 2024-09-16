@@ -1,4 +1,5 @@
 import { onSnapshot, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
+import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import { database } from '../../../firebaseConfig'
 import { postsRef } from '../../../layouts/utils/post'
@@ -10,6 +11,23 @@ export const useFetchPosts = async (setPostData: any) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
+
+//新しいpostを取得
+// export const useFetchPosts = async () => {
+//   const [value, setValue] = useState([])
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       await onSnapshot(postsRef, (querySnapshot) => {
+//         setValue(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+//       })
+//     }
+
+//     fetchData()
+//   }, [])
+
+//   return [value, setValue]
+// }
 
 //古いpostを取得
 export const useGetOldPosts = async (setPostData: any) => {

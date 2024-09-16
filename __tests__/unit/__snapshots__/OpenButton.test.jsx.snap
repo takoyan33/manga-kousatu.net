@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > OpenButton [A1_4_3] Pageのスナップショット 1`] = `
+<div>
+  <button
+    aria-label="open-button"
+    class="mt-2 inline-block bg-yellow-500 p-1 text-center text-white"
+    type="button"
+  >
+    test
+  </button>
+</div>
+`;

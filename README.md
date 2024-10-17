@@ -1,54 +1,69 @@
-## プロジェクトのタイトル
+# Manga Study
 
-Manga Study
+## 目次
+- [システムの特徴](#system-feature)
+- [使用技術について](#technology-used)
+- [ディレクトリ構成](#directory-structure)
+- [ブランチについて](#technology-used)
 
-https://manga-kousatu-net.vercel.app/
 
-## プロジェクトの概要説明
+- [URL](https://manga-study.vercel.app/)
 
-Manga Study では、漫画の考察などを自由に投稿・閲覧できる web サイトです。
-
-2022 年の 6 月頃から制作を始めました。
-
+<h2 id="system-feature">システムの特徴</h2>
+Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。<br>
+2022年の6月頃から制作を始めました。<br>
 実装した機能としては、記事投稿・編集・削除機能と会員登録・編集・削除機能を実装しています。
 
-## 使用言語、環境
+<h2 id="technology-used">使用言語、環境</h2>
 
-- 使用言語：TypeScript
+### nodeバージョン
 
-- フレームワーク：React,Next.js
+- node v18.18.0
+- npm v9.8.1
 
-- 認証：Firebase Authentication
+### フロントエンド
 
-- リンター：ESLint, Prettier, husky, lint-staged
+- [Next.js](https://nextjs.org/) 12.1.6
+- [React](https://ja.reactjs.org/) 18.2.0
+- [typescript](https://www.typescriptlang.org/) 4.7.4
 
-- サーバー：Vercel
+### バックエンド
 
-- テスト：jest, react-testing-library
+- [Firebase](https://firebase.google.com/) 9.8.4
 
-- データベース：Cloud Firestore (NoSQL)
 
-- 状態管理： Zustand
+### 認証
 
-- コンポーネント管理： Storybook
+- [Firebase Authentication](https://firebase.google.com/docs/auth) 9.6.0
 
-- ライブラリ：moment.js,Tailwind CSS,Material-UI,Swiper
+### リンター
+- [ESLint](https://eslint.org/) 9.9.0
+- [Prettier](https://prettier.io/) 3.3.3
+- [Stylelint](https://stylelint.io/) 16.8.2
+- [husky](https://typicode.github.io/husky/)9.1.4
+- [lint-staged](https://github.com/lint-staged/lint-staged) 
 
-## 使い方
+### ホスティング
 
-git clone
+Vercel
 
-npm install
+### テスト
+- [Jest]() 2.1.1
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) 10.4.0
 
-yarn dev
+### 状態管理
 
-## デプロイ方法
+- [Zustand](https://zustand.surge.sh/) 3.8.0
 
-git add .
-git commit -m " "
-git push
+### コンポーネント管理
 
-### ディレクトリ構成
+-[Storybook](https://storybook.js.org/) 6.4.9
+
+### ライブラリ
+
+moment.js,Tailwind CSS,Material-UI,Swiper
+
+<h2 id="technology-used">ディレクトリ構成</h2>
 
 ```
 .
@@ -83,3 +98,8 @@ git push
 ・投稿の個別ページの作成
 
 ・投稿検索機能実装
+
+# Author
+ 
+* 作成者 阿部 舜平
+* E-mail harrier2070@gmail.com

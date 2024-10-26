@@ -18,10 +18,12 @@ test('All Test', async ({ page }) => {
   await page.fill('#profileText', 'よろしくお願いします。')
   await page.locator('#registerProfile').click()
 
-  // ログインページにアクセス
-  await page.goto('http://localhost:8080/login/')
+  // プロフィールにアクセス
+  await page.goto('http://localhost:8080/profile/')
 
-  // ログインページ失敗
+  // ログアウト
+
+  // ログインページにアクセス
 
   // await page.waitForURL('http://localhost:8080/')
 

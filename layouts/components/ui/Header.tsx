@@ -55,7 +55,7 @@ export const Header = () => {
       useGetMyUser(setUsers, user.uid)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [user])
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

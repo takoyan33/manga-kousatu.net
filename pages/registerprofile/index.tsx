@@ -11,7 +11,7 @@ import {
 import { getAuth } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { TagsInput } from 'react-tag-input-component'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
@@ -32,6 +32,12 @@ export default function RegisterProfile() {
   const router = useRouter()
   const auth = getAuth()
   const user = auth.currentUser
+
+  useEffect(() => {
+    if (!user) {
+      router.push('/')
+    }
+  }, [user])
 
   const uploadImage = (event): void => {
     if (event.target.files && event.target.files[0]) {

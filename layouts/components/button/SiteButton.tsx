@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { DOMAttributes, memo } from 'react'
 
 interface SiteButtonProps {
+  id?: string
   href?: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
   text: string
@@ -18,11 +19,12 @@ const styles = {
 }
 
 export const SiteButton = memo(
-  ({ href = '', onClick, text, className, disabled, google }: SiteButtonProps) => {
+  ({ href = '', onClick, text, className, disabled, google, id }: SiteButtonProps) => {
     return (
       <div className={className}>
         <Link href={href}>
           <Button
+            id={id}
             variant='outlined'
             onClick={onClick}
             disabled={disabled}

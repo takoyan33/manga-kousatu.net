@@ -10,6 +10,7 @@ import { useLogin } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
 import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify } from 'layouts/components/text'
+import { SiteLabel } from 'layouts/components/text'
 import { LoginUserFormInput } from 'types/auth'
 
 // バリデーションルール
@@ -66,12 +67,7 @@ export default function LoginAuth() {
         <form>
           <ToastContainer />
           <div className='mb-2'>
-            <label className='my-4 mt-10 text-center' htmlFor='email'>
-              メールアドレス
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </label>
+            <SiteLabel name='メールアドレス' required htmlFor='email' />
           </div>
           <div>
             <TextField
@@ -85,12 +81,7 @@ export default function LoginAuth() {
               autoComplete='email'
             />
             <div className='mt-6 mb-2'>
-              <label className='my-4 text-center' htmlFor='password'>
-                パスワード（8文字以上)
-                <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                  必須
-                </span>
-              </label>
+              <SiteLabel name='パスワード(8文字以上)' required htmlFor='email' />
             </div>
           </div>
           <div className='m-auto'>

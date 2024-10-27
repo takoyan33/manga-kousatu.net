@@ -25,7 +25,7 @@ export const AccountMenu = ({ onClick }: AccountMenuParams) => (
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
-      <Link href='/profile/edit' aria-label='profile-edit'>
+      <Link id='profile-edit' href='/profile/edit' aria-label='profile-edit'>
         プロフィールを変更する
       </Link>
     </ListItemButton>
@@ -33,7 +33,7 @@ export const AccountMenu = ({ onClick }: AccountMenuParams) => (
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
-      <Link href='/profile/edit/password' aria-label='password-change'>
+      <Link id='password-change' href='/profile/edit/password' aria-label='password-change'>
         パスワードを変更する
       </Link>
     </ListItemButton>
@@ -41,7 +41,7 @@ export const AccountMenu = ({ onClick }: AccountMenuParams) => (
       <ListItemIcon>
         <DraftsIcon />
       </ListItemIcon>
-      <button aria-label='account-delete' onClick={onClick}>
+      <button id='account-delete' aria-label='account-delete' onClick={onClick}>
         アカウントを退会する
       </button>
     </ListItemButton>

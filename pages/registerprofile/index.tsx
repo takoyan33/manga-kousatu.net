@@ -11,17 +11,19 @@ import {
 import { getAuth } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { TagsInput } from 'react-tag-input-component'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
 import 'react-toastify/dist/ReactToastify.css'
+import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
+import { SiteLabel } from 'layouts/components/text'
 import { CommonHead } from 'layouts/components/ui'
 
 export default function RegisterProfile() {
   const [selected, setSelected] = useState<string[]>(['ワンピース'])
-  const [image, setImage] = useState<number>(null)
+  const [image, setImage] = useState<any>(null)
   const [username, setUsername] = useState<number>(null)
   const [bio, setBio] = useState<number>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
@@ -31,44 +33,53 @@ export default function RegisterProfile() {
   const auth = getAuth()
   const user = auth.currentUser
 
+  useEffect(() => {
+    if (!user) {
+      router.push('/')
+    }
+  }, [user])
+
   const uploadImage = (event): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
 
       setImage(file)
       setCreateObjectURL(URL.createObjectURL(file))
-      console.log(image)
     }
   }
 
-  const addDate = async () => {
-    if (image === null) {
-      alert('プロフィール画像を選んでください')
+  const registerProfile = async () => {
+    let result = ''
+    if (image) {
+      result = await postImage(image)
     } else {
-      const result = await postImage(image)
-      setResult(result)
-      const userRef = await doc(database, 'users', user.uid)
-      //写真のurlをセットする
-      await setDoc(userRef, {
-        userName: username,
-        bio: bio,
-        email: user.email,
-        profileImage: result,
-        userId: user.uid,
-        favorite: selected,
-        admin: 0,
-      })
-        .then(() => {
-          successNotify('プロフィールの登録が完了しました！')
-          setTimeout(() => {
-            router.push('/top')
-          }, 2000)
-        })
-        .catch((err) => {
-          errorNotify('登録に失敗しました！')
-          console.error(err)
-        })
+      result = ''
     }
+    setResult(result)
+    const userRef = await doc(database, 'users', user.uid)
+    //写真のurlをセットする
+    await setDoc(userRef, {
+      userName: username,
+      bio: bio,
+      email: user.email,
+      profileImage: result,
+      userId: user.uid,
+      favorite: selected,
+      admin: 0,
+    })
+      .then(() => {
+        successNotify('プロフィールの登録が完了しました！')
+        setTimeout(() => {
+          router.push('/top').then(() => {
+            location.reload()
+          })
+        }, 2000)
+      })
+      .catch((err) => {
+        errorNotify('登録に失敗しました！')
+        console.error(err)
+      })
+    // }
   }
 
   return (
@@ -76,33 +87,13 @@ export default function RegisterProfile() {
       <CommonHead />
 
       <Stack component='form' className='m-auto' noValidate spacing={2} sx={{ width: '38ch' }}>
-        <h1 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h1>
+        <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h2>
         <p>詳細なプロフィールの記載をお願いします。</p>
-        <div>
-          <label className='my-4 text-center'>
-            ユーザーの名前<span className='text-red-600'>*</span>
-            （10文字以内）
-          </label>
+
+        <div className='mb-2'>
+          <SiteLabel name='ユーザー画像' htmlFor='myImage' />
         </div>
 
-        <FormControl variant='standard'>
-          <InputLabel htmlFor='input-with-icon-adornment'>太郎</InputLabel>
-          <Input
-            id='input-with-icon-adornment'
-            startAdornment={
-              <InputAdornment position='start'>
-                <AccountCircle />
-              </InputAdornment>
-            }
-            onChange={(event: any) => setUsername(event.target.value)}
-          />
-        </FormControl>
-
-        <div>
-          <label className='my-4 text-center'>
-            ユーザー画像<span className='text-red-600'>*</span>
-          </label>
-        </div>
         <div>
           <img
             className='m-auto flex w-60 items-center justify-center'
@@ -139,34 +130,46 @@ export default function RegisterProfile() {
             onChange={uploadImage}
           />
         </div>
-        <div>
-          <label className='my-4 text-center'>
-            プロフィール<span className='text-red-600'>*</span>（最大50文字）
-          </label>
+        <div className='mb-2'>
+          <SiteLabel name='ユーザーの名前（10文字以内）' required htmlFor='name' />
+        </div>
+        <Input
+          id='name'
+          startAdornment={
+            <InputAdornment position='start'>
+              <AccountCircle />
+            </InputAdornment>
+          }
+          onChange={(event: any) => setUsername(event.target.value)}
+        />
+        <div className='mb-2'>
+          <SiteLabel name='プロフィール（最大50文字）' htmlFor='profileText' />
         </div>
         <TextField
-          id='outlined-basic'
+          id='profileText'
           label='よろしくお願いします。'
           type='text'
           variant='outlined'
-          className='m-auto w-80'
+          className='w-100 m-auto'
           onChange={(event: any) => setBio(event.target.value)}
         />
-        <div>
-          <label className='my-4 text-center'>
-            好きな漫画<span className='text-red-600'>*</span>（最大10作品）
-          </label>
+
+        <div className='mb-2'>
+          <SiteLabel name='好きな漫画（最大10作品）' htmlFor='likeManga' />
         </div>
         <TagsInput
           value={selected}
           onChange={setSelected}
-          name='selected'
+          name='likeManga'
           placeHolder='タグを追加してください'
         />
         <div>
-          <Button variant='outlined' onClick={addDate} className='m-auto my-8 w-80'>
-            新規登録
-          </Button>
+          <SiteButton
+            id='registerProfile'
+            onClick={registerProfile}
+            text='新規登録'
+            className='m-auto my-4 w-80 text-center'
+          />
         </div>
       </Stack>
     </div>

@@ -53,9 +53,10 @@ export const Header = () => {
   useEffect(() => {
     if (user) {
       useGetMyUser(setUsers, user.uid)
+      console.log('user', users)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [user])
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -94,11 +95,6 @@ export const Header = () => {
               </Typography>
             </Link>
             {user && (
-              <div className='mr-6 text-center'>
-                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
-              </div>
-            )}
-            {user && (
               <button onClick={handleNotificationOpen}>
                 <NotificationsIcon fontSize='small' />
               </button>
@@ -113,7 +109,8 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                {users && (
+                {/* プロフ画像がある場合 */}
+                {user && users?.profileImage && (
                   <Avatar
                     sx={{ width: 32, height: 32 }}
                     src={users?.profileImage}
@@ -121,9 +118,24 @@ export const Header = () => {
                     key={users?.id}
                   />
                 )}
+                {/* プロフ画像がない場合 */}
+                {user && users?.profileImage === undefined && (
+                  <Avatar
+                    sx={{ width: 32, height: 32 }}
+                    src='/images/avater.svg'
+                    className='border'
+                    key={users?.id}
+                  />
+                )}
+                {/* ユーザーじゃない場合 */}
                 {!user && <span>三</span>}
               </IconButton>
             </Tooltip>
+            {user && (
+              <div className='ml-4 mr-6 text-center'>
+                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
+              </div>
+            )}
           </Toolbar>
         </div>
       </nav>
@@ -179,7 +191,9 @@ export const Header = () => {
             <Link href='/register'>新規登録</Link>
           </MenuItem>
         )}
-        {user && <MenuItem>{user.displayName}</MenuItem>}
+        {user?.displayName && <MenuItem>{user.displayName}</MenuItem>}
+        {user?.displayName === null && users && <MenuItem>{users[0]?.userName}</MenuItem>}
+        {user?.displayName === null && <MenuItem>ユーザー名未設定</MenuItem>}
         <Divider />
         {user &&
           LOGIN_ADMIN_MENU_ITEMS.map((item) => (

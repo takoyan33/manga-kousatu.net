@@ -5,8 +5,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { SiteButton } from '../../layouts/components/button'
 import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
 import { CommonHead, ProfileId, COLORS, AccountMenu } from 'layouts/components/ui'
+import { DisplayChart } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { postsRef } from 'layouts/utils/post'
 import { GetPost } from 'types/post'
@@ -18,88 +20,12 @@ export default function Profile() {
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
-  const [onePiece, setOnePiece] = useState([])
-  const [kingdom, setKingdom] = useState([])
-  const [tokyo, setTokyo] = useState([])
-  const [kaisen, setKaisen] = useState([])
 
-  const myOnePosts = query(
-    postsRef,
-    where('email', '==', user.email),
-    where('category', '==', 'ONEPIECE'),
-  )
-  const myKaisenPosts = query(
-    postsRef,
-    where('email', '==', user.email),
-    where('category', '==', '呪術廻戦'),
-  )
-  const myTokyoPosts = query(
-    postsRef,
-    where('email', '==', user.email),
-    where('category', '==', '東京リベンジャーズ'),
-  )
-  const MyKingPosts = query(
-    postsRef,
-    where('email', '==', user.email),
-    where('category', '==', 'キングダム'),
-  )
-
-  const getOnePosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(myOnePosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setOnePiece(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-      console.log(onePiece)
-    })
-  }
-
-  const getKaisenPosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(myKaisenPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setKaisen(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-
-  const getTokyoPosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(myTokyoPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setTokyo(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
-
-  const getKingPosts = async () => {
-    //firestoreからデータ取得
-    await getDocs(MyKingPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
-      setKingdom(
-        querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
-          return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
-        }),
-      )
-    })
-  }
+  useEffect(() => {
+    if (!user) {
+      router.push('/')
+    }
+  }, [user])
 
   useEffect(() => {
     if (!user) {
@@ -108,71 +34,26 @@ export default function Profile() {
       useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)
       console.log(users)
-      getOnePosts()
-      getKaisenPosts()
-      getTokyoPosts()
-      getKingPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const deleteuser = async () => {
-    //userを削除する
-    if (user) {
-      deleteUser(user)
-        //user削除
-        .then(() => {
-          localStorage.removeItem('Token')
-          //tokenを削除
-          alert('退会しました。TOP画面に戻ります。')
-          router.push('/top')
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }
-
-  type MangaData = {
-    name: string
-    value: number
-  }
-
-  const MANGA_DATA: MangaData[] = [
-    { name: 'ONE PIECE', value: onePiece.length },
-    { name: '呪術廻戦', value: kaisen.length },
-    { name: 'キングダム', value: kingdom.length },
-    { name: '東京リベンジャーズ', value: tokyo.length },
-  ]
-
-  type LabelProps = {
-    cx: number
-    cy: number
-    midAngle: number
-    innerRadius: number
-    outerRadius: number
-    percent: number
-  }
-
-  const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({
-    cx,
-    cy,
-    midAngle,
-    innerRadius,
-    outerRadius,
-    percent,
-  }: LabelProps) => {
-    const radius = innerRadius + (outerRadius - innerRadius) * 0.6
-    const x = cx + radius * Math.cos(-midAngle * RADIAN)
-    const y = cy + radius * Math.sin(-midAngle * RADIAN)
-
-    return (
-      <text x={x} y={y} fill='white' textAnchor='middle' dominantBaseline='central'>
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    )
-  }
+  // const deleteuser = async () => {
+  //   //userを削除する
+  //   if (user) {
+  //     deleteUser(user)
+  //       //user削除
+  //       .then(() => {
+  //         localStorage.removeItem('Token')
+  //         //tokenを削除
+  //         alert('退会しました。TOP画面に戻ります。')
+  //         router.push('/top')
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //       })
+  //   }
+  // }
 
   const filterPostData = () => {
     return postsData.filter((post) => {
@@ -191,7 +72,7 @@ export default function Profile() {
     <>
       <CommonHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
-      <AccountMenu onClick={deleteuser} />
+      {/* <AccountMenu onClick={deleteuser} /> */}
       <ProfileId
         key={users?.id}
         profileImage={users?.profileImage}
@@ -200,29 +81,19 @@ export default function Profile() {
         favorite={users?.favorite}
         id={''}
       />
+      <div className='text-center'>
+        <SiteButton
+          id='profile-edit'
+          href='/profile/edit'
+          text='Edit Profile'
+          className='w-50 m-auto my-2'
+        />
+      </div>
 
       <p className='my-12 text-center text-2xl font-semibold'>過去の投稿</p>
       <p className='text-1xl text-center'>投稿数 {filteredPosts.length}件</p>
       <div>
-        <ResponsiveContainer height={256}>
-          <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-            <Pie
-              dataKey='value'
-              data={MANGA_DATA}
-              cx='50%'
-              cy='50%'
-              outerRadius={80}
-              labelLine={false}
-              label={renderCustomizedLabel}
-              isAnimationActive={true}
-            >
-              {MANGA_DATA.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} key={index} />
-              ))}
-            </Pie>
-            <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
-          </PieChart>
-        </ResponsiveContainer>
+        <DisplayChart />
       </div>
 
       <TextField
@@ -261,11 +132,13 @@ export default function Profile() {
           </thead>
           <tbody>
             {postsData.length === 0 ? (
-              <p className='my-2 text-center'>記事がありません。</p>
+              <tr className='my-2 text-center'>
+                <td>記事がありません。</td>
+              </tr>
             ) : filteredPosts.length === 0 ? (
-              <p className='m-auto my-10 text-center text-xl'>
-                検索した名前の記事がありませんでした。
-              </p>
+              <tr className='m-auto my-10 text-center text-xl'>
+                <td>検索した名前の記事がありませんでした。</td>
+              </tr>
             ) : (
               filteredPosts.map((post) => (
                 <tr className='border-b bg-white' key={post.id}>
@@ -281,10 +154,8 @@ export default function Profile() {
                   <td className='px-6 py-4'> {post.createTime}</td>
                   <td className='px-6 py-4'> {post.likes}</td>
                   <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>下書き</p>}</td>
-                  <td className='px-6 py-4 text-right'>
-                    <a href='#' className='font-medium text-blue-600 hover:underline'>
-                      <Link href={`/post/edit/${post.id}`}>編集する</Link>
-                    </a>
+                  <td className='px-6 py-4 text-right font-medium text-blue-600 hover:underline'>
+                    <Link href={`/post/edit/${post.id}`}>編集する</Link>
                   </td>
                 </tr>
               ))

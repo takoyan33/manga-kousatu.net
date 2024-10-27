@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { useSignup } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
+import { SiteLabel } from 'layouts/components/text'
 import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { RegisterUserFormInput } from 'types/auth'
@@ -70,12 +71,7 @@ export default function SignUp() {
         <form>
           <ToastContainer />
           <div className='mb-2'>
-            <label className='my-4 text-center' htmlFor='email'>
-              メールアドレス
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </label>
+            <SiteLabel name='メールアドレス' required htmlFor='email' />
           </div>
           <TextField
             id='email'
@@ -87,13 +83,9 @@ export default function SignUp() {
             helperText={errors.email?.message}
             autoComplete='email'
           />
+
           <div className='mt-6 mb-2'>
-            <label className='my-4 text-center' htmlFor='password'>
-              パスワード（8文字以上)
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </label>
+            <SiteLabel name='パスワード(8文字以上)' required htmlFor='email' />
           </div>
           <TextField
             id='password'
@@ -107,12 +99,7 @@ export default function SignUp() {
             autoComplete='new-password'
           />
           <div className='mt-6 mb-2'>
-            <label className='my-4 text-center' htmlFor='confirmPassword'>
-              確認用パスワード（8文字以上)
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </label>
+            <SiteLabel name='確認用パスワード(8文字以上)' required htmlFor='confirmPassword' />
           </div>
           <TextField
             id='confirmPassword'
@@ -128,12 +115,14 @@ export default function SignUp() {
             autoComplete='new-password'
           />
           <SiteButton
+            id='signUp'
             onClick={handleSubmit(handleSignUp)}
             text='新規登録'
             className='m-auto my-4 w-80 text-center'
           />
           <p className='text-center'>または</p>
           <SiteButton
+            id='googleSignUp'
             text='Googleで新規登録'
             onClick={SignUpWithGoogle}
             className='m-auto my-4 w-80 text-center'

@@ -70,7 +70,9 @@ export default function RegisterProfile() {
       .then(() => {
         successNotify('プロフィールの登録が完了しました！')
         setTimeout(() => {
-          router.push('/top')
+          router.push('/top').then(() => {
+            location.reload()
+          })
         }, 2000)
       })
       .catch((err) => {

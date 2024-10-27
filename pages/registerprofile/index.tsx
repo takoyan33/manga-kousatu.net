@@ -23,7 +23,7 @@ import { CommonHead } from 'layouts/components/ui'
 
 export default function RegisterProfile() {
   const [selected, setSelected] = useState<string[]>(['ワンピース'])
-  const [image, setImage] = useState<number>(null)
+  const [image, setImage] = useState<any>(null)
   const [username, setUsername] = useState<number>(null)
   const [bio, setBio] = useState<number>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
@@ -45,38 +45,39 @@ export default function RegisterProfile() {
 
       setImage(file)
       setCreateObjectURL(URL.createObjectURL(file))
-      console.log(image)
     }
   }
 
   const registerProfile = async () => {
-    if (image === null) {
-      errorNotify('プロフィール画像を選んでください')
+    let result = ''
+    if (image) {
+      result = await postImage(image)
     } else {
-      const result = await postImage(image)
-      setResult(result)
-      const userRef = await doc(database, 'users', user.uid)
-      //写真のurlをセットする
-      await setDoc(userRef, {
-        userName: username,
-        bio: bio,
-        email: user.email,
-        profileImage: result,
-        userId: user.uid,
-        favorite: selected,
-        admin: 0,
-      })
-        .then(() => {
-          successNotify('プロフィールの登録が完了しました！')
-          setTimeout(() => {
-            router.push('/top')
-          }, 2000)
-        })
-        .catch((err) => {
-          errorNotify('登録に失敗しました！')
-          console.error(err)
-        })
+      result = ''
     }
+    setResult(result)
+    const userRef = await doc(database, 'users', user.uid)
+    //写真のurlをセットする
+    await setDoc(userRef, {
+      userName: username,
+      bio: bio,
+      email: user.email,
+      profileImage: result,
+      userId: user.uid,
+      favorite: selected,
+      admin: 0,
+    })
+      .then(() => {
+        successNotify('プロフィールの登録が完了しました！')
+        setTimeout(() => {
+          router.push('/top')
+        }, 2000)
+      })
+      .catch((err) => {
+        errorNotify('登録に失敗しました！')
+        console.error(err)
+      })
+    // }
   }
 
   return (
@@ -88,7 +89,7 @@ export default function RegisterProfile() {
         <p>詳細なプロフィールの記載をお願いします。</p>
 
         <div className='mb-2'>
-          <SiteLabel name='ユーザー画像' required htmlFor='myImage' />
+          <SiteLabel name='ユーザー画像' htmlFor='myImage' />
         </div>
 
         <div>

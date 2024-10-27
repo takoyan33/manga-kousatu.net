@@ -94,11 +94,6 @@ export const Header = () => {
               </Typography>
             </Link>
             {user && (
-              <div className='mr-6 text-center'>
-                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
-              </div>
-            )}
-            {user && (
               <button onClick={handleNotificationOpen}>
                 <NotificationsIcon fontSize='small' />
               </button>
@@ -124,6 +119,11 @@ export const Header = () => {
                 {!user && <span>三</span>}
               </IconButton>
             </Tooltip>
+            {user && (
+              <div className='ml-4 mr-6 text-center'>
+                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
+              </div>
+            )}
           </Toolbar>
         </div>
       </nav>

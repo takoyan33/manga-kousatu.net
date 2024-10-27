@@ -10,8 +10,10 @@ import { TagsInput } from 'react-tag-input-component'
 import { ToastContainer } from 'react-toastify'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
+import { SiteButton } from 'layouts/components/button'
 import { useGetMyUser } from 'layouts/components/hooks'
 import { successNotify, errorNotify } from 'layouts/components/text'
+import { SiteLabel } from 'layouts/components/text'
 import { CommonHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { GetUser } from 'types/user'
@@ -104,8 +106,9 @@ export default function Edit() {
 
         <Box component='form' className='' noValidate autoComplete='off'>
           <>
-            <p className='my-4 text-center'>新しいプロフィール画像</p>
-            <br />
+            <div className='mb-2'>
+              <SiteLabel name='新しいプロフィール画像' required htmlFor='name' />
+            </div>
             <div className='flex justify-center'>
               <Image
                 className='m-auto max-w-sm text-center'
@@ -143,23 +146,24 @@ export default function Edit() {
                 onChange={uploadImage}
               />
             </div>
-            <label className='my-4 text-center' htmlFor='outlined-name'>
-              名前（最大10文字）<span className='text-red-600'>*</span>
-            </label>
-            <div className='text-center'>
+            <div className='mb-2'>
+              <SiteLabel name='名前（最大10文字）' required htmlFor='name' />
+            </div>
+            <div className='mb-4 text-center'>
               <input
-                id='outlined-name'
+                id='name'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                 defaultValue={users?.userName}
                 type='text'
                 onChange={(event) => setUsername(event.target.value)}
               />
             </div>
-            <br />
-            <label className='my-4 text-center'>プロフィール（最大30文字）</label>
-            <div className='text-center'>
+            <div className='mb-2'>
+              <SiteLabel name='プロフィール（最大30文字）' htmlFor='profileText' />
+            </div>
+            <div className='mb-4 text-center'>
               <input
-                id='outlined-name'
+                id='profileText'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                 defaultValue={users?.bio}
                 type='text'
@@ -167,28 +171,25 @@ export default function Edit() {
                 onChange={(event) => setBio(event.target.value)}
               />
             </div>
-            <br />
-            <p className='my-4 text-center'>
-              好きな漫画（最大10作品）<span className='text-red-600'>*</span>
-            </p>
+            <div className='mb-2'>
+              <SiteLabel name=' 好きな漫画（最大10作品）' htmlFor='likeManga' />
+            </div>
             <div className='m-auto text-center'>
               <TagsInput
                 value={users?.favorite}
                 onChange={setSelected}
-                name='selected'
+                name='likeManga'
                 placeHolder='タグを追加してください'
               />
             </div>
             <br />
             <div className='my-4 text-center'>
-              <Button
-                variant='outlined'
-                key={users?.userid}
-                className='m-auto w-80 text-center'
+              <SiteButton
+                id='updateProfile'
                 onClick={() => updateUserData(users?.userid)}
-              >
-                プロフィールを更新する
-              </Button>
+                text='更新する'
+                className='text-center'
+              />
             </div>
             <br />
             <div className='my-4 text-center'>

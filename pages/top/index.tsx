@@ -76,6 +76,7 @@ export default function Top() {
               </>
             )}
             <SiteButton
+              id='go-index'
               href='/'
               text='記事を見る'
               className='w-50 text-lef m-auto my-2 inline-block'

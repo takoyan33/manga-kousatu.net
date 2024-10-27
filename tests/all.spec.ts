@@ -9,19 +9,35 @@ test('All Test', async ({ page }) => {
   await page.locator('#signUp').click()
 
   //プロフィール登録
-  await page
-    .locator('#file-input')
-    .setInputFiles(
-      '/Users/abeshmupeii/Desktop/01_engineer💻/01_React系/02_Next/01_開発物/manga-kousatu.net/public/images/book-reading.png',
-    )
+  // await page
+  //   .locator('#file-input')
+  //   .setInputFiles(
+  //     '/Users/abeshmupeii/Desktop/01_engineer💻/01_React系/02_Next/01_開発物/manga-kousatu.net/public/images/book-reading.png',
+  //   )
   await page.fill('#name', 'test123')
   await page.fill('#profileText', 'よろしくお願いします。')
   await page.locator('#registerProfile').click()
+  await test.setTimeout(120000)
+
+  // topページにアクセス
+  await page.locator('#go-index').click()
+
+  //indexページにアクセス
+
+  await page.goto('http://localhost:8080/')
 
   // プロフィールにアクセス
   await page.goto('http://localhost:8080/profile/')
+  await page.locator('#profile-edit').click()
+
+  // プロフィール編集
+  await page.fill('#name', 'test1234')
+  await page.fill('#profileText', 'よろしくお願いします!')
+  await page.locator('#updateProfile').click()
+  await test.setTimeout(120000)
 
   // ログアウト
+  await page.goto('http://localhost:8080/profile/')
 
   // ログインページにアクセス
 

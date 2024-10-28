@@ -56,14 +56,15 @@ export default function RegisterProfile() {
       result = ''
     }
     setResult(result)
+    console.log('result', result)
     const userRef = await doc(database, 'users', user.uid)
     //写真のurlをセットする
     await setDoc(userRef, {
       userName: username,
       bio: bio,
       email: user.email,
-      profileImage: result,
-      userId: user.uid,
+      profileImage: result === '' ? createObjectURL : result,
+      userid: user.uid,
       favorite: selected,
       admin: 0,
     })

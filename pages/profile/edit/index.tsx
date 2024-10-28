@@ -80,7 +80,9 @@ export default function Edit() {
         setUsername('')
         setBio('')
         setTimeout(() => {
-          router.push('/profile')
+          router.push('/profile').then(() => {
+            location.reload()
+          })
         }, 2000)
       })
       .catch((err) => {

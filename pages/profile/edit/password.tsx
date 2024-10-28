@@ -9,15 +9,15 @@ export default function Password() {
   const [email, setEmail] = useState('')
   const { success, error, passwordReset } = usePasswordReset()
 
-  // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //   event.preventDefault()
-  //   passwordReset(email)
-  // }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    passwordReset(email)
+  }
 
   return (
     <div style={{ height: '750px' }}>
       <CommonHead />
-      <div style={{ maxWidth: '320px', margin: '0 auto' }}>
+      <form style={{ maxWidth: '320px', margin: '0 auto' }}>
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>パスワード再設定</h1>
         <div>
           <label className='my-4 mt-10 text-center'>
@@ -36,7 +36,7 @@ export default function Password() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Button type='submit' fullWidth variant='outlined' sx={{ mt: 3, mb: 2 }}>
+        <Button id='submit' type='submit' fullWidth variant='outlined' onClick={handleSubmit}>
           送信
         </Button>
 
@@ -47,7 +47,7 @@ export default function Password() {
             </Link>
           </Grid>
         </Grid>
-      </div>
+      </form>
 
       {error && <Alert severity='error'>メールアドレスに送信できませんでした</Alert>}
       {success && <Alert severity='success'>メールアドレスに送信しました</Alert>}

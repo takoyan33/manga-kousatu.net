@@ -2,7 +2,7 @@ import { test } from '@playwright/test'
 
 export const localhost = 'http://localhost:8080'
 export const testUser = {
-  email: 'samplee2e1@gmail.com',
+  email: 'harrier2070+2@gmail.com',
   password: 'password1234!',
 }
 
@@ -57,7 +57,7 @@ test('Login Test', async ({ page }) => {
   await page.waitForTimeout(3000)
 })
 
-// 現時点だと失敗
+// プロフィール編集
 test('ProfileEdit Test', async ({ page }) => {
   await test.setTimeout(120000)
 
@@ -91,8 +91,17 @@ test('ProfileEdit Test', async ({ page }) => {
   await page.waitForTimeout(3000)
 })
 
+// 設定テスト
 test('Setting Test', async ({ page }) => {
   await test.setTimeout(120000)
+
+  // パスワード変更
+  await page.goto(localhost + '/profile/edit/password')
+  await page.waitForTimeout(2000)
+  await page.fill('#password', testUser.password)
+  await page.locator('#submit').click()
+  await page.waitForTimeout(2000)
+  await page.pause()
 
   //ログイン
   await page.goto(localhost + '/login/')
@@ -102,9 +111,10 @@ test('Setting Test', async ({ page }) => {
   await page.waitForTimeout(2000)
   await page.waitForURL(localhost)
 
-  // メールアドレス変更
-
-  // パスワード変更
-
   // 退会
+  await page.goto(localhost + '/profile/edit/settings')
+  await page.waitForTimeout(2000)
+  await page.locator('#deleteUser').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost + '/top/')
 })

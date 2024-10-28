@@ -40,23 +40,6 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // const deleteuser = async () => {
-  //   //userを削除する
-  //   if (user) {
-  //     deleteUser(user)
-  //       //user削除
-  //       .then(() => {
-  //         localStorage.removeItem('Token')
-  //         //tokenを削除
-  //         alert('退会しました。TOP画面に戻ります。')
-  //         router.push('/top')
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //       })
-  //   }
-  // }
-
   const handleLogout = async () => {
     await logout()
     setUsers(null)

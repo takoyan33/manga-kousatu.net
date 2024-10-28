@@ -40,6 +40,11 @@ const LOGIN_ADMIN_MENU_ITEMS = [
     href: '/profile/likespost',
     icon: <FavoriteBorderIcon fontSize='small' />,
   },
+  {
+    text: '設定',
+    href: '/profile/edit/settings',
+    icon: <FavoriteBorderIcon fontSize='small' />,
+  },
 ]
 
 export const Header = () => {
@@ -57,6 +62,8 @@ export const Header = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
+
+  console.log(users?.profileImage)
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -119,7 +126,7 @@ export const Header = () => {
                   />
                 )}
                 {/* プロフ画像がない場合 */}
-                {user && users?.profileImage === undefined && (
+                {user && users?.profileImage === '' && (
                   <Avatar
                     sx={{ width: 32, height: 32 }}
                     src='/images/avater.svg'

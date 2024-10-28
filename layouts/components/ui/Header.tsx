@@ -208,6 +208,7 @@ export const Header = () => {
               <Logout fontSize='small' />
             </ListItemIcon>
             <Button
+              id='logout'
               color='inherit'
               onClick={handleLogout}
               style={{ fontSize: '16px', padding: '0px' }}

@@ -28,22 +28,22 @@ export const DisplayChart = React.memo(() => {
 
   const myOnePosts = query(
     postsRef,
-    where('email', '==', user.email),
+    where('email', '==', user?.email),
     where('category', '==', 'ONEPIECE'),
   )
   const myKaisenPosts = query(
     postsRef,
-    where('email', '==', user.email),
+    where('email', '==', user?.email),
     where('category', '==', '呪術廻戦'),
   )
   const myTokyoPosts = query(
     postsRef,
-    where('email', '==', user.email),
+    where('email', '==', user?.email),
     where('category', '==', '東京リベンジャーズ'),
   )
   const MyKingPosts = query(
     postsRef,
-    where('email', '==', user.email),
+    where('email', '==', user?.email),
     where('category', '==', 'キングダム'),
   )
 

@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { SiteButton } from '../../layouts/components/button'
+import { useLogOut } from 'layouts/api/auth/useAuth'
 import { useGetMyPosts, useGetMyUser } from 'layouts/components/hooks'
 import { CommonHead, ProfileId, COLORS, AccountMenu } from 'layouts/components/ui'
 import { DisplayChart } from 'layouts/components/ui'
@@ -20,6 +21,7 @@ export default function Profile() {
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
+  const { logout } = useLogOut()
 
   useEffect(() => {
     if (!user) {
@@ -55,6 +57,12 @@ export default function Profile() {
   //   }
   // }
 
+  const handleLogout = async () => {
+    await logout()
+    setUsers(null)
+    router.push('/login')
+  }
+
   const filterPostData = () => {
     return postsData.filter((post) => {
       if (searchName === '') {
@@ -81,11 +89,17 @@ export default function Profile() {
         favorite={users?.favorite}
         id={''}
       />
-      <div className='text-center'>
+      <div className='flex'>
         <SiteButton
           id='profile-edit'
           href='/profile/edit'
           text='Edit Profile'
+          className='w-50 m-auto my-2'
+        />
+        <SiteButton
+          id='logout'
+          text='ログアウト'
+          onClick={handleLogout}
           className='w-50 m-auto my-2'
         />
       </div>

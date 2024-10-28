@@ -34,10 +34,8 @@ export default function Edit() {
       router.push('/register')
     } else {
       useGetMyUser(setUsers, user.uid)
-      console.log('users', users)
-      console.log('users', user.id)
     }
-  }, [user])
+  }, [])
 
   const uploadImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -57,7 +55,6 @@ export default function Edit() {
 
   const updateUserData = async (id: string) => {
     //更新する
-    console.log('fieldToEdit', id)
     const fieldToEdit = doc(database, 'users', id)
     //セットしたIDをセットする
     let result = ''
@@ -93,21 +90,25 @@ export default function Edit() {
     <div className='m-auto max-w-5xl'>
       <CommonHead />
       <ToastContainer />
-      <div>
-        aa {users?.userid}
+      <div key={users?.id}>
         <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>
-        <label className='font-semib my-12 text-center'>現在のプロフィール画像</label>
-        <div className='flex justify-center'>
-          <Image
-            className='m-auto max-w-sm text-center'
-            height={100}
-            width={100}
-            src={users?.profileImage}
-          />
-        </div>
-        {users?.profileImage === '' && (
-          <p className='my-8 text-center'>設定している画像はありません</p>
-        )}
+
+        <p className='font-semib my-12 text-center'>
+          現在のプロフィール画像
+          <br />
+          <div className='flex justify-center'>
+            <Image
+              className='m-auto max-w-sm text-center'
+              height={100}
+              width={100}
+              src={users?.profileImage}
+            />
+          </div>
+          {users?.profileImage === '' && (
+            <p className='my-8 text-center'>設定している画像はありません</p>
+          )}
+        </p>
+
         <Box component='form' className='' noValidate autoComplete='off'>
           <>
             <div className='mb-2'>
@@ -186,6 +187,7 @@ export default function Edit() {
                 placeHolder='タグを追加してください'
               />
             </div>
+            <br />
             <div className='my-4 text-center'>
               <SiteButton
                 id='updateProfile'
@@ -194,8 +196,11 @@ export default function Edit() {
                 className='text-center'
               />
             </div>
+            <br />
             <div className='my-4 text-center'>
-              <Link href='/profile'>戻る</Link>
+              <Button variant='outlined' className='m-auto w-80 '>
+                <Link href='/profile'>戻る</Link>
+              </Button>
             </div>
           </>
         </Box>

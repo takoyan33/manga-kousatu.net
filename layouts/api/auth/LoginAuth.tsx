@@ -81,7 +81,7 @@ export default function LoginAuth() {
               autoComplete='email'
             />
             <div className='mt-6 mb-2'>
-              <SiteLabel name='パスワード(8文字以上)' required htmlFor='email' />
+              <SiteLabel name='パスワード(8文字以上)' required htmlFor='password' />
             </div>
           </div>
           <div className='m-auto'>
@@ -101,6 +101,7 @@ export default function LoginAuth() {
             <Link href='/profile/edit/password'>パスワードをお忘れの方はこちら</Link>
           </p>
           <SiteButton
+            id='login'
             onClick={handleSubmit(handleSignIn)}
             text='ログイン'
             className='m-auto my-4 w-80 text-center'

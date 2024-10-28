@@ -50,6 +50,7 @@ Vercel
 ### テスト
 - [Jest]() 2.1.1
 - [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) 10.4.0
+- [Playwright](https://playwright.dev/)
 
 ### 状態管理
 

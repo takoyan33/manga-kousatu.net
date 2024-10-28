@@ -31,6 +31,7 @@ export const SiteButton = memo(
             type='submit'
             sx={{ textTransform: 'none' }}
             className={google ? 'google-btn' : 'incomplete'}
+            aria-label={id}
           >
             {text}
           </Button>

@@ -49,6 +49,6 @@
     "pages/post/edit/[id].tsx",
     "pages/main.jsx",
     "__tests__/unit/page.test.jsx"
-  ],
+, "tests/all.spec.jsx", "tests/example.spec.jsx"  ],
   "exclude": ["node_modules"]
 }

@@ -1,4 +1,5 @@
 import { getAuth } from 'firebase/auth'
+import Image from 'next/image'
 import { SiteButton } from '../../layouts/components/button'
 import { CommonHead } from '../../layouts/components/ui/CommonHead'
 
@@ -19,7 +20,7 @@ export default function Top() {
         </div>
         <div className='w-full md:w-6/12'>
           <div className='text-center'>
-            <img src='../images/top-home.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+            <Image height={200} width={200} src='/images/top-home.png' alt='漫画のイラスト' />
           </div>
         </div>
       </div>
@@ -27,7 +28,15 @@ export default function Top() {
       <h2 className='my-12 text-center text-2xl font-semibold'>機能</h2>
       <div className='d-block  m-auto my-20 w-80 md:flex md:w-full'>
         <div className='w-full md:w-1/3'>
-          <img src='../images/top-1.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <div className='text-center'>
+            <Image
+              height={300}
+              width={260}
+              src='/images/top-1.png'
+              alt='漫画のイラスト'
+              loading='lazy'
+            />
+          </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h3>
           <p className='my-6 px-4'>
             語りたい漫画の考察があったら、 <br />
@@ -35,7 +44,15 @@ export default function Top() {
           </p>
         </div>
         <div className='w-full md:w-1/3'>
-          <img src='../images/top-2.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <div className='text-center'>
+            <Image
+              height={300}
+              width={260}
+              src='/images/top-2.png'
+              alt='漫画のイラスト'
+              loading='lazy'
+            />
+          </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h3>
           <p className='my-6 px-4'>
             Manga Studyでは、様々な記事が投稿されているため、
@@ -44,7 +61,15 @@ export default function Top() {
           </p>
         </div>
         <div className='w-full md:w-1/3'>
-          <img src='../images/top-3.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+          <div className='text-center'>
+            <Image
+              height={300}
+              width={260}
+              src='/images/top-3.png'
+              alt='漫画のイラスト'
+              loading='lazy'
+            />
+          </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h3>
           <p className='my-6 px-4'>
             コメント機能で、考察の内容について語ることができ、
@@ -85,7 +110,13 @@ export default function Top() {
         </div>
         <div className='w-full md:w-6/12'>
           <div className='text-center'>
-            <img src='../images/top-search.png' className='m-auto my-6 w-64' alt='漫画のイラスト' />
+            <Image
+              height={250}
+              width={240}
+              src='/images/top-search.png'
+              alt='漫画のイラスト'
+              loading='lazy'
+            />
           </div>
         </div>
       </div>

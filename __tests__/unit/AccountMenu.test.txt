@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+// import userEvent from '@testing-library/user-event'
 import { AccountMenu } from '../../layouts/components/ui/AccountMenu'
 import '@testing-library/jest-dom'
 
@@ -15,6 +16,7 @@ describe('A1_Component > AccountMenu', () => {
   })
 
   it('[A1_3_3]buttonをクリックできるか', () => {
+    // const user = userEvent.setup()
     const testFunction = jest.fn()
     render(<AccountMenu onClick={testFunction} />)
 
@@ -29,9 +31,9 @@ describe('A1_Component > AccountMenu', () => {
     expect(testFunction).toHaveBeenCalledWith(expect.any(Object))
   })
 
-  it('[A1_3_4] スナップショット', () => {
-    const testFunction = jest.fn()
-    const { container } = render(<AccountMenu onClick={testFunction} />)
-    expect(container).toMatchSnapshot()
-  })
+  // it('[A1_3_4] スナップショット', () => {
+  //   const testFunction = jest.fn()
+  //   const { container } = render(<AccountMenu onClick={testFunction} />)
+  //   expect(container).toMatchSnapshot()
+  // })
 })

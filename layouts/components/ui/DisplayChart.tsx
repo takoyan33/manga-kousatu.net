@@ -11,8 +11,6 @@ import { COLORS } from '../ui'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
-interface DisplayChartParams {}
-
 // eslint-disable-next-line react/display-name
 export const DisplayChart = React.memo(() => {
   const router = useRouter()

@@ -53,7 +53,6 @@ export const Header = () => {
   useEffect(() => {
     if (user) {
       useGetMyUser(setUsers, user.uid)
-      console.log('user', users)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
@@ -88,7 +87,7 @@ export const Header = () => {
     <AppBar position='static' color='transparent'>
       <nav>
         <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
-          <Toolbar style={{ height: '80px' }}>
+          <Toolbar style={{ height: '80px', justifyContent: 'space-between' }}>
             <Link href='/'>
               <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
                 <Image height={20} width={150} src='/logo.png' alt='logo' />
@@ -99,43 +98,45 @@ export const Header = () => {
                 <NotificationsIcon fontSize='small' />
               </button>
             )}
-            <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
-            <Tooltip title='メニュー'>
-              <IconButton
-                onClick={handleClick}
-                size='small'
-                sx={{ ml: 2 }}
-                aria-controls={open ? 'account-menu' : undefined}
-                aria-haspopup='true'
-                aria-expanded={open ? 'true' : undefined}
-              >
-                {/* プロフ画像がある場合 */}
-                {user && users?.profileImage && (
-                  <Avatar
-                    sx={{ width: 32, height: 32 }}
-                    src={users?.profileImage}
-                    className='border'
-                    key={users?.id}
-                  />
-                )}
-                {/* プロフ画像がない場合 */}
-                {user && users?.profileImage === undefined && (
-                  <Avatar
-                    sx={{ width: 32, height: 32 }}
-                    src='/images/avater.svg'
-                    className='border'
-                    key={users?.id}
-                  />
-                )}
-                {/* ユーザーじゃない場合 */}
-                {!user && <span>三</span>}
-              </IconButton>
-            </Tooltip>
-            {user && (
-              <div className='ml-4 mr-6 text-center'>
-                <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
-              </div>
-            )}
+            <div className=''>
+              <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
+              <Tooltip title='メニュー'>
+                <IconButton
+                  onClick={handleClick}
+                  size='small'
+                  sx={{ ml: 2 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup='true'
+                  aria-expanded={open ? 'true' : undefined}
+                >
+                  {/* プロフ画像がある場合 */}
+                  {user && users?.profileImage && (
+                    <Avatar
+                      sx={{ width: 32, height: 32 }}
+                      src={users?.profileImage}
+                      className='border'
+                      key={users?.id}
+                    />
+                  )}
+                  {/* プロフ画像がない場合 */}
+                  {user && users?.profileImage === undefined && (
+                    <Avatar
+                      sx={{ width: 32, height: 32 }}
+                      src='/images/avater.svg'
+                      className='border'
+                      key={users?.id}
+                    />
+                  )}
+                  {/* ユーザーじゃない場合 */}
+                  {!user && <span>三</span>}
+                </IconButton>
+              </Tooltip>
+              {user && (
+                <div className='ml-4 mr-6 text-center'>
+                  <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
+                </div>
+              )}
+            </div>
           </Toolbar>
         </div>
       </nav>

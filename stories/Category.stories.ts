@@ -1,0 +1,45 @@
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
+
+import { Category } from './components/Category'
+
+// More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
+const meta: Meta<typeof Category> = {
+  title: 'ui/Category',
+  component: Category,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+  argTypes: {},
+  args: {
+    category: 'ONEPIECE',
+  },
+}
+
+export default meta
+type Story = StoryObj<typeof Category>
+
+export const onepiece: Story = {
+  args: {
+    category: 'ONEPIECE',
+  },
+}
+
+export const zyuzyutu: Story = {
+  args: {
+    category: '呪術廻戦',
+  },
+}
+
+export const tooribe: Story = {
+  args: {
+    category: '東京リベンジャーズ',
+  },
+}
+
+export const kingdom: Story = {
+  args: {
+    category: 'キングダム',
+  },
+}

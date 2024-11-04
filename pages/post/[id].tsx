@@ -376,7 +376,7 @@ const Post = () => {
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
                   }[singlePost.category]
-                }-500 my-4 inline-block rounded-xl  border p-1 text-center  font-bold hover:text-white`}
+                }-500 my-4 border p-1 hover:text-white`}
                 text={singlePost.category}
                 href={`/post/categories/${singlePost.category}`}
               />

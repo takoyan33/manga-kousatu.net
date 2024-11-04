@@ -23,14 +23,13 @@ Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる we
 
 ### フロントエンド
 
-- [Next.js](https://nextjs.org/) 12.1.6
+- [Next.js](https://nextjs.org/) 14.0.0
 - [React](https://ja.reactjs.org/) 18.2.0
 - [typescript](https://www.typescriptlang.org/) 4.7.4
 
 ### バックエンド
 
 - [Firebase](https://firebase.google.com/) 9.8.4
-
 
 ### 認証
 
@@ -45,7 +44,7 @@ Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる we
 
 ### ホスティング
 
-Vercel
+- Vercel
 
 ### テスト
 - [Jest]() 2.1.1
@@ -87,17 +86,13 @@ moment.js,Tailwind CSS,Material-UI,Swiper
 
 ### こだわりポイント
 
-・firestore でクラッド処理を行なっている点
+・firestoreを使って、CRUD処理を行っている点
 
-・ユーザーの名前変更やプロフ画像の変更
+・単体テストやE2Eテストを行なっている点
 
-### 今後の計画
+・Storybookを使用してコンポーネントを管理している点
 
-・全ファイルを TypeScript 化する
-
-・投稿の個別ページの作成
-
-・投稿検索機能実装
+・CommitLintを使用してコミットメッセージの規約を設けている点
 
 # Author
  

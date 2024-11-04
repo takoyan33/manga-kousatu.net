@@ -114,28 +114,28 @@ const Daitails = ({ post }) => {
         <div color='text.secondary'>
           {post.fields.categori.stringValue === 'ONEPIECE' && (
             <SiteCategory
-              className='m-6 inline-block bg-blue-500 p-1 text-center text-white'
+              className='m-6 bg-blue-500 p-1  text-white'
               text='ONE PIECE'
               href='/post/category/ONEPIECE'
             />
           )}
           {post.fields.categori.stringValue === '呪術廻戦' && (
             <SiteCategory
-              className='m-6 inline-block bg-purple-500 p-1 text-center text-white'
+              className='m-6 bg-purple-500 p-1  text-white'
               text='呪術廻戦'
               href='/post/category/呪術廻戦'
             />
           )}
           {post.fields.categori.stringValue === '東京リベンジャーズ' && (
             <SiteCategory
-              className='m-6 inline-block bg-rose-500 p-1 text-center text-white'
+              className='m-6 bg-rose-500 p-1  text-white'
               text='東京リベンジャーズ'
               href='/post/category/東京リベンジャーズ'
             />
           )}
           {post.fields.categori.stringValue === 'キングダム' && (
             <SiteCategory
-              className='m-6 inline-block bg-yellow-500 p-1 text-center text-white'
+              className='m-6 bg-yellow-500 p-1  text-white'
               text='キングダム'
               href='/post/category/キングダム'
             />

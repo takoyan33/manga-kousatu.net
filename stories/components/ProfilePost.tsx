@@ -19,7 +19,7 @@ export const ProfilePost = React.memo(
         </p>
         <p className='m-5'>名前：{username}</p>
         <p className='m-5'>プロフィール：{bio}</p>
-        <p className='m-5'>好きな漫画：{favorite.join(', ')}</p>
+        <p className='m-5'>好きな漫画：{favorite?.join(', ')}</p>
       </div>
     )
   },

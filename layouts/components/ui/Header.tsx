@@ -1,6 +1,7 @@
 import CachedIcon from '@mui/icons-material/Cached'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import Logout from '@mui/icons-material/Logout'
+import MenuIcon from '@mui/icons-material/Menu'
 import NotificationsIcon from '@mui/icons-material/Notifications'
 import PersonIcon from '@mui/icons-material/Person'
 import Settings from '@mui/icons-material/Settings'
@@ -128,7 +129,7 @@ export const Header = () => {
                     />
                   )}
                   {/* ユーザーじゃない場合 */}
-                  {!user && <span>三</span>}
+                  {!user && <MenuIcon fontSize='small' />}
                 </IconButton>
               </Tooltip>
               {user && (

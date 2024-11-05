@@ -237,18 +237,18 @@ const Details = ({ post }) => {
           </Select>
         </FormControl>
       </div>
-      <div className='m-auto max-w-7xl'>
-        <Grid container spacing={1}>
-          {posts
-            .filter((post) => {
-              if (searchName === '') {
-                return post
-              } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-                return post
-              }
-            })
-            .map((post) => {
-              return (
+      <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
+        {posts
+          .filter((post) => {
+            if (searchName === '') {
+              return post
+            } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+              return post
+            }
+          })
+          .map((post) => {
+            return (
+              <div className='w-1/4' key={post.id}>
                 <CardPost
                   key={post.id}
                   downloadURL={post.downloadURL}
@@ -265,12 +265,12 @@ const Details = ({ post }) => {
                   selected={post.selected}
                   userid={post.userid}
                 />
-              )
-            })}
-          {posts.length === 0 && (
-            <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
-          )}
-        </Grid>
+              </div>
+            )
+          })}
+        {posts.length === 0 && (
+          <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
+        )}
       </div>
     </>
   )

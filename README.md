@@ -1,5 +1,7 @@
 # Manga Study
 
+![image](/public/images/site_top.png)
+
 ## 目次
 - [システムの特徴](#system-feature)
 - [使用技術について](#technology-used)

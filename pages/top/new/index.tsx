@@ -16,8 +16,6 @@ export default function Index() {
   const [searchName, setSearchName] = useState<string>('')
   const [loadIndex, setLoadIndex] = useState<number>(9)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
-  const auth = getAuth()
-  const user = auth.currentUser
 
   const displayMore = () => {
     if (loadIndex > postData.length) {
@@ -26,13 +24,6 @@ export default function Index() {
       setLoadIndex(loadIndex + 9)
     }
   }
-
-  // interface NetabareItem {
-  //   sortId: number
-  //   label: string
-  //   value: string
-  //   onClick: () => void
-  // }
 
   useEffect(() => {
     useFetchPosts(setPostData)
@@ -52,13 +43,6 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
-  console.log(postData)
-
-  // interface CategoryParams {
-  //   id: string | ParsedUrlQueryInput
-  //   title: string | ParsedUrlQueryInput
-  // }
-
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />

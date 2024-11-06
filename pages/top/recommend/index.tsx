@@ -18,13 +18,6 @@ export default function Index() {
     }
   }
 
-  // interface NetabareItem {
-  //   sortId: number
-  //   label: string
-  //   value: string
-  //   onClick: () => void
-  // }
-
   useEffect(() => {
     useFetchPosts(setPostData)
   }, [])
@@ -43,12 +36,6 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
-  console.log(postData)
-
-  // interface CategoryParams {
-  //   id: string | ParsedUrlQueryInput
-  //   title: string | ParsedUrlQueryInput
-  // }
 
   return (
     <div className='m-auto w-11/12 md:w-full'>

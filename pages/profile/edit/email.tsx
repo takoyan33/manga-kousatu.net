@@ -60,7 +60,7 @@ export default function Emaildedit() {
       >
         <TextField
           id='outlined-basic'
-          label='新しいメールアドレス'
+          placeholder='新しいメールアドレス'
           variant='outlined'
           value={email}
           onChange={(event) => setEmail(event.target.value)}

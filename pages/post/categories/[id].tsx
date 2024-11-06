@@ -203,7 +203,7 @@ const Details = ({ post }) => {
         <TextField
           id='outlined-basic'
           type='search'
-          label='記事を検索する'
+          placeholder='記事を検索する'
           variant='outlined'
           onChange={(event) => {
             setSearchName(event.target.value)

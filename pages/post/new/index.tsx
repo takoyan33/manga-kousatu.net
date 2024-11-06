@@ -208,7 +208,7 @@ export default function Post() {
               error={'title' in errors}
               helperText={errors.title?.message}
               id='input-title'
-              label='最新話の考察'
+              placeholder='最新話の考察'
               variant='outlined'
               className='m-auto w-full'
             />

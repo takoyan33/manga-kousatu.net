@@ -165,7 +165,7 @@ export default function Profile() {
       <TextField
         type='text'
         id='outlined-basic'
-        label='考察記事を検索する'
+        placeholder='考察記事を検索する'
         variant='outlined'
         onChange={(event) => {
           setSearchName(event.target.value)

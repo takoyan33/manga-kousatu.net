@@ -78,7 +78,7 @@ export const CardPost = React.memo(
               <Image
                 className='cardPost-img rounded text-center'
                 src={downloadURL}
-                alt='画像'
+                alt={`${title}の画像`}
                 layout='fill'
               />
             </div>
@@ -98,7 +98,7 @@ export const CardPost = React.memo(
                     <Avatar
                       className='max-w-sm border text-center'
                       sx={{ width: 30, height: 30 }}
-                      alt='投稿者プロフィール'
+                      alt='投稿者プロフィール画像'
                       src={users?.profileImage}
                     />
                   </dl>

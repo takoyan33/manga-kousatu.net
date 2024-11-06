@@ -92,12 +92,6 @@ export default function Index() {
   }
 
   const filteredPosts = filterPostData()
-  console.log(postData)
-
-  // interface CategoryParams {
-  //   id: string | ParsedUrlQueryInput
-  //   title: string | ParsedUrlQueryInput
-  // }
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
@@ -141,7 +135,7 @@ export default function Index() {
         <TextField
           id='outlined-basic'
           type='search'
-          label='記事を検索する'
+          placeholder='記事を検索する'
           variant='outlined'
           onChange={(event) => {
             setSearchName(event.target.value)

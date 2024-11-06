@@ -1,9 +1,15 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { TextField } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import React from 'react'
+import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { useSignup } from './useAuth'
@@ -24,6 +30,18 @@ const schema = yup.object({
 })
 
 export default function SignUp() {
+  const [showPassword, setShowPassword] = React.useState(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
   const router = useRouter()
   const googleProvider = new GoogleAuthProvider()
   const {
@@ -75,45 +93,65 @@ export default function SignUp() {
           </div>
           <TextField
             id='email'
-            label='sample@gmail.com'
+            placeholder='sample@gmail.com'
             className='m-auto w-80'
             variant='outlined'
             {...register('email', { required: true })}
             error={Boolean(errors.email)}
-            helperText={errors.email?.message}
             autoComplete='email'
           />
+          <span className='text-sm text-red-600'>{errors.email?.message}</span>
 
           <div className='mt-6 mb-2'>
-            <SiteLabel name='パスワード(8文字以上)' required htmlFor='email' />
+            <SiteLabel name='パスワード(8文字以上)' required htmlFor='password' />
           </div>
-          <TextField
-            id='password'
-            label='Password'
-            type='password'
-            variant='outlined'
+          <OutlinedInput
             className='m-auto w-80'
+            placeholder='Password'
+            id='password'
             {...register('password', { minLength: 8 })}
             error={Boolean(errors.password)}
-            helperText={errors.password?.message}
-            autoComplete='new-password'
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label={showPassword ? 'hide the password' : 'display the password'}
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge='end'
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
+          <span className='text-sm text-red-600'>{errors.password?.message}</span>
           <div className='mt-6 mb-2'>
             <SiteLabel name='確認用パスワード(8文字以上)' required htmlFor='confirmPassword' />
           </div>
-          <TextField
-            id='confirmPassword'
-            label='Password'
-            type='password'
-            variant='outlined'
+          <OutlinedInput
             className='m-auto w-80'
-            {...register('confirmPassword', {
-              validate: (value) => value === watch('password'),
-            })}
+            placeholder='Password'
+            id='confirmPassword'
+            {...register('confirmPassword', { minLength: 8 })}
             error={Boolean(errors.confirmPassword)}
-            helperText={errors.confirmPassword?.message}
-            autoComplete='new-password'
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position='end'>
+                <IconButton
+                  aria-label={showPassword ? 'hide the password' : 'display the password'}
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  onMouseUp={handleMouseUpPassword}
+                  edge='end'
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
+          <span className='text-sm text-red-600'>{errors.confirmPassword?.message}</span>
           <SiteButton
             id='signUp'
             onClick={handleSubmit(handleSignUp)}

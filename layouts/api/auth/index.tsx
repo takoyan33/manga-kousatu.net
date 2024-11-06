@@ -87,7 +87,7 @@ export default function Index() {
           <label className='my-4 text-center'>メールアドレス*</label>
           <TextField
             id='outlined-basic'
-            label='sample@gmail.com'
+            placeholder='sample@gmail.com'
             className='m-auto w-80'
             variant='outlined'
             onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
@@ -99,7 +99,7 @@ export default function Index() {
           <label className='my-4 text-center'>パスワード（8文字以上)*</label>
           <TextField
             id='outlined-basic'
-            label='Password'
+            placeholder='Password'
             variant='outlined'
             type='password'
             className='m-auto w-80'

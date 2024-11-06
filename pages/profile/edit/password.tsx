@@ -29,7 +29,7 @@ export default function Password() {
           required
           fullWidth
           id='email'
-          label='sample@gmail.com'
+          placeholder='sample@gmail.com'
           name='email'
           autoComplete='email'
           autoFocus

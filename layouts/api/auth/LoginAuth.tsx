@@ -1,8 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
+import Visibility from '@mui/icons-material/Visibility'
+import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { TextField } from '@mui/material'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import OutlinedInput from '@mui/material/OutlinedInput'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import React from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
@@ -61,6 +67,18 @@ export default function LoginAuth() {
       })
   }
 
+  const [showPassword, setShowPassword] = React.useState(false)
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show)
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
   return (
     <>
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
@@ -72,30 +90,42 @@ export default function LoginAuth() {
           <div>
             <TextField
               id='email'
-              label='sample@gmail.com'
+              placeholder='sample@gmail.com'
               className='m-auto mb-6 w-80'
               variant='outlined'
               {...register('email')}
               error={'email' in errors}
-              helperText={errors.email?.message}
               autoComplete='email'
             />
+            <span className='text-sm text-red-600'>{errors.email?.message}</span>
             <div className='mt-6 mb-2'>
-              <SiteLabel name='パスワード(8文字以上)' required htmlFor='email' />
+              <SiteLabel name='パスワード(8文字以上)' required htmlFor='password' />
             </div>
           </div>
           <div className='m-auto'>
-            <TextField
+            <OutlinedInput
+              className='m-auto w-80'
+              placeholder='Password'
+              required
               id='password'
-              label='Password'
-              variant='outlined'
-              type='password'
-              className='m-auto mb-6 w-80'
-              {...register('password')}
-              error={'password' in errors}
-              helperText={errors.password?.message}
-              autoComplete='current-password'
+              {...register('password', { minLength: 8 })}
+              error={Boolean(errors.password)}
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position='end'>
+                  <IconButton
+                    aria-label={showPassword ? 'hide the password' : 'display the password'}
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    onMouseUp={handleMouseUpPassword}
+                    edge='end'
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
+            <span className='text-sm text-red-600'>{errors.password?.message}</span>
           </div>
           <p className='pb-6 pt-6 text-center underline'>
             <Link href='/profile/edit/password'>パスワードをお忘れの方はこちら</Link>

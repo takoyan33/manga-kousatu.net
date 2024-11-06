@@ -147,7 +147,7 @@ export default function RegisterProfile() {
         </div>
         <TextField
           id='profileText'
-          label='よろしくお願いします。'
+          placeholder='よろしくお願いします。'
           type='text'
           variant='outlined'
           className='w-100 m-auto'

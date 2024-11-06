@@ -24,7 +24,7 @@ export const CommonInput = React.memo(
         <TextField
           id={id}
           type={type}
-          label={label}
+          placeholder={label}
           className={className}
           variant={variant}
           onChange={onChange}

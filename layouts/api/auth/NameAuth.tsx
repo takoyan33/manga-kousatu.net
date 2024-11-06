@@ -71,7 +71,7 @@ export default function NameAuth() {
 
         <TextField
           id='outlined-basic'
-          label='名前'
+          placeholder='名前'
           variant='outlined'
           onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
             setDisplayName(event.target.value)

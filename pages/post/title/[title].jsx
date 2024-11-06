@@ -222,7 +222,7 @@ const Post = () => {
                     >
                       <TextField
                         id='outlined-basic'
-                        label='タイトル（最大20文字)'
+                        placeholder='タイトル（最大20文字)'
                         variant='outlined'
                         type='text'
                         value={title1}
@@ -230,7 +230,7 @@ const Post = () => {
                       />
 
                       <TextField
-                        label='内容(最大500文字）'
+                        placeholder='内容(最大500文字）'
                         className='m-auto w-full'
                         id='filled-multiline-static'
                         multiline

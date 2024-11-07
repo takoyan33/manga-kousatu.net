@@ -6,14 +6,14 @@ import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
+import { POST_CATEGORIES, CommonHead, CardPost, BreadList } from 'layouts/components/ui'
 import {
   useFetchPosts,
   useGetOldPosts,
   useGetLikePosts,
   useGetNetabrePosts,
   useGetNoNetabrePosts,
-} from 'layouts/components/hooks'
-import { POST_CATEGORIES, CommonHead, CardPost, BreadList } from 'layouts/components/ui'
+} from 'layouts/hooks'
 // import { Changetab } from 'layouts/components/ui/Changetab'
 import { GetPost } from 'types/post'
 

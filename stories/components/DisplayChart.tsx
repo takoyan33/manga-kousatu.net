@@ -1,25 +1,23 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-import Grid from '@material-ui/core/Grid'
-import TextField from '@mui/material/TextField'
+import { deleteUser } from 'firebase/auth'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
-import { CommonHead, CardPost, COLORS } from 'layouts/components/ui'
-import { useAuthContext } from 'layouts/context/AuthContext'
-import { useGetLikedPosts, useGetMyUser } from 'layouts/hooks'
-import { postsRef } from 'layouts/utils/post'
+import { COLORS } from '../../layouts/components/ui'
+import { useAuthContext } from '../../layouts/context/AuthContext'
+import { useGetMyPosts, useGetMyUser } from '../../layouts/hooks'
+import { postsRef } from '../../layouts/utils/post'
+// import { SiteButton } from 'layouts/components/button'
 import { GetPost } from 'types/post'
+import { GetUser } from 'types/user'
 
-export default function Profile() {
+// eslint-disable-next-line react/display-name
+export const DisplayChart = React.memo(() => {
   const router = useRouter()
   const { user } = useAuthContext()
-  const [users, setUsers] = useState(null)
-  //データベースを取得
-  // const [posts, setPostData] = useState([])
-  const [likedPosts, setLikedPosts] = useState<Array<GetPost>>([])
-  const [searchName, setSearchName] = useState('')
-  const [onpiece, setOnpiece] = useState([])
+  const [users, setUsers] = useState<GetUser>()
+  const [postsData, setPostData] = useState<Array<GetPost>>([])
+  const [onePiece, setOnePiece] = useState([])
   const [kingdom, setKingdom] = useState([])
   const [tokyo, setTokyo] = useState([])
   const [kaisen, setKaisen] = useState([])
@@ -45,21 +43,22 @@ export default function Profile() {
     where('category', '==', 'キングダム'),
   )
 
-  const getDataone = async () => {
+  const getOnePosts = async () => {
     //firestoreからデータ取得
     await getDocs(myOnePosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
-      setOnpiece(
+      setOnePiece(
         querySnapshot.docs.map((data) => {
           //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
           //スプレッド構文で展開して、新しい配列を作成
         }),
       )
+      console.log(onePiece)
     })
   }
 
-  const getKaisenPost = async () => {
+  const getKaisenPosts = async () => {
     //firestoreからデータ取得
     await getDocs(myKaisenPosts).then((querySnapshot) => {
       //コレクションのドキュメントを取得
@@ -105,25 +104,64 @@ export default function Profile() {
     if (!user) {
       router.push('/register')
     } else {
-      useGetLikedPosts(setLikedPosts, user.email)
-      useGetMyUser(setUsers, user.email)
-      getDataone()
-      getKaisenPost()
+      useGetMyPosts(setPostData, user.email)
+      useGetMyUser(setUsers, user.uid)
+      console.log(users)
+      getOnePosts()
+      getKaisenPosts()
       getTokyoPosts()
       getKingPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const MANGA_DATA = [
-    { name: 'ONE PIECE', value: onpiece.length },
+  const deleteuser = async () => {
+    //userを削除する
+    if (user) {
+      deleteUser(user)
+        //user削除
+        .then(() => {
+          localStorage.removeItem('Token')
+          //tokenを削除
+          alert('退会しました。TOP画面に戻ります。')
+          router.push('/top')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }
+
+  type MangaData = {
+    name: string
+    value: number
+  }
+
+  const MANGA_DATA: MangaData[] = [
+    { name: 'ONE PIECE', value: onePiece.length },
     { name: '呪術廻戦', value: kaisen.length },
     { name: 'キングダム', value: kingdom.length },
     { name: '東京リベンジャーズ', value: tokyo.length },
   ]
 
+  type LabelProps = {
+    cx: number
+    cy: number
+    midAngle: number
+    innerRadius: number
+    outerRadius: number
+    percent: number
+  }
+
   const RADIAN = Math.PI / 180
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }: LabelProps) => {
     const radius = innerRadius + (outerRadius - innerRadius) * 0.6
     const x = cx + radius * Math.cos(-midAngle * RADIAN)
     const y = cy + radius * Math.sin(-midAngle * RADIAN)
@@ -134,68 +172,25 @@ export default function Profile() {
       </text>
     )
   }
-
   return (
-    <>
-      <CommonHead />
-      <h2 className='m-5 my-12 text-center text-2xl font-semibold'>いいねした投稿</h2>
-
-      <div>
-        <ResponsiveContainer height={256}>
-          <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
-            <Pie
-              dataKey='value'
-              data={MANGA_DATA}
-              cx='50%'
-              cy='50%'
-              outerRadius={80}
-              labelLine={false}
-              label={renderCustomizedLabel}
-              isAnimationActive={true}
-            >
-              {MANGA_DATA.map((entry, index) => (
-                <Cell fill={COLORS[index % COLORS.length]} key={index} />
-              ))}
-            </Pie>
-            <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-
-      <TextField
-        type='text'
-        id='outlined-basic'
-        placeholder='考察記事を検索する'
-        variant='outlined'
-        onChange={(event) => {
-          setSearchName(event.target.value)
-        }}
-      />
-      <p className='text-1xl text-center'>投稿数 {likedPosts.length}件</p>
-      <Grid container className='m-auto'>
-        {likedPosts.map((post) => {
-          return (
-            <>
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
-            </>
-          )
-        })}
-      </Grid>
-    </>
+    <ResponsiveContainer height={256}>
+      <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+        <Pie
+          dataKey='value'
+          data={MANGA_DATA}
+          cx='50%'
+          cy='50%'
+          outerRadius={80}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          isAnimationActive={true}
+        >
+          {MANGA_DATA.map((entry, index) => (
+            <Cell fill={COLORS[index % COLORS.length]} key={index} />
+          ))}
+        </Pie>
+        <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
+      </PieChart>
+    </ResponsiveContainer>
   )
-}
+})

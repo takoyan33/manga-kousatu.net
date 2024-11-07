@@ -63,7 +63,7 @@ export default function RegisterProfile() {
       bio: bio,
       email: user.email,
       profileImage: result,
-      userId: user.uid,
+      userid: user.uid,
       favorite: selected,
       admin: 0,
     })

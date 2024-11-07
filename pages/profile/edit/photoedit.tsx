@@ -35,7 +35,13 @@ export default function Photoedit() {
   }
 
   const updateName = async () => {
-    const result = await postImage(image)
+    //セットしたIDをセットする
+    let result = ''
+    if (image) {
+      result = await postImage(image)
+    } else {
+      result = ''
+    }
     setResult(result)
     updateProfile(auth.currentUser, {
       photoURL: result,

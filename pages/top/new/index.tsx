@@ -1,14 +1,14 @@
 import { getAuth } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
+import { CommonHead, CardPost, TopTitle, BreadList } from 'layouts/components/ui'
 import {
   useFetchPosts,
   // useGetOldPosts,
   // useGetLikePosts,
   // useGetNetabrePosts,
   // useGetNoNetabrePosts,
-} from 'layouts/components/hooks'
-import { CommonHead, CardPost, TopTitle, BreadList } from 'layouts/components/ui'
+} from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
 export default function Index() {

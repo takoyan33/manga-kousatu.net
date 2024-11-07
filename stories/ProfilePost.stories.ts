@@ -22,4 +22,4 @@ const meta: Meta<typeof ProfilePost> = {
 export default meta
 type Story = StoryObj<typeof ProfilePost>
 
-export const closed: Story = {}
+export const normal: Story = {}

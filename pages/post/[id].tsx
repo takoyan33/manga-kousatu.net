@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -22,22 +23,15 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import parse from 'html-react-parser'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import Image from 'react-image-resizer'
 import Modal from 'react-modal'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { database } from 'firebaseConfig'
-import {
-  useGetPost,
-  useGetUsers,
-  useGetCategoryPosts,
-  deleteComment,
-  getComments,
-} from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { CommonHead, RecommendCardPost, BreadList } from 'layouts/components/ui'
@@ -53,6 +47,13 @@ import 'react-toastify/dist/ReactToastify.css'
 //   TwitterIcon,
 // } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
+import {
+  useGetPost,
+  useGetUsers,
+  useGetCategoryPosts,
+  deleteComment,
+  getComments,
+} from 'layouts/hooks'
 import { GetComment } from 'types/comment'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
@@ -289,9 +290,11 @@ const Post = () => {
           <BreadList secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
-              <img
+              <Image
                 className='Post-img rounded text-center'
                 src={singlePost?.downloadURL}
+                height={150}
+                width={150}
                 alt='画像'
               />
             </button>
@@ -307,7 +310,11 @@ const Post = () => {
                 alt='contextImage'
               />
             </div>
-            <button onClick={closeModal}>閉じる</button>
+            <div className='my-6 flex justify-center'>
+              <button onClick={closeModal} className='text-center'>
+                閉じる
+              </button>
+            </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
             {singlePost?.title}
@@ -362,21 +369,21 @@ const Post = () => {
               singlePost?.category,
             ) && (
               <SiteCategory
-                className={`border-${
+                className={`border border-${
                   {
                     ONEPIECE: 'cyan',
                     呪術廻戦: 'purple',
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
-                  }[singlePost.category]
+                  }[singlePost?.category]
                 }-500 hover:bg-${
                   {
                     ONEPIECE: 'cyan',
                     呪術廻戦: 'purple',
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
-                  }[singlePost.category]
-                }-500 my-4 border p-1 hover:text-white`}
+                  }[singlePost?.category]
+                }-500 my-4 p-1 hover:text-white`}
                 text={singlePost.category}
                 href={`/post/categories/${singlePost.category}`}
               />

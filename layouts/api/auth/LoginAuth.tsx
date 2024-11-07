@@ -132,6 +132,7 @@ export default function LoginAuth() {
           </p>
           <SiteButton
             onClick={handleSubmit(handleSignIn)}
+            id='login'
             text='ログイン'
             className='m-auto my-4 w-80 text-center'
           />

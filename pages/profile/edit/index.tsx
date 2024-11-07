@@ -11,11 +11,11 @@ import { ToastContainer } from 'react-toastify'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
 import { SiteButton } from 'layouts/components/button'
-import { useGetMyUser } from 'layouts/components/hooks'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { SiteLabel } from 'layouts/components/text'
 import { CommonHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
+import { useGetMyUser } from 'layouts/hooks'
 import { GetUser } from 'types/user'
 
 export default function Edit() {
@@ -54,10 +54,14 @@ export default function Edit() {
   }
 
   const updateUserData = async (id: string) => {
-    //更新する
     const fieldToEdit = doc(database, 'users', id)
     //セットしたIDをセットする
-    const result = await postImage(image)
+    let result = ''
+    if (image) {
+      result = await postImage(image)
+    } else {
+      result = ''
+    }
     setResult(result)
     updateDoc(fieldToEdit, {
       userName: username,

@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -31,13 +32,6 @@ import Modal from 'react-modal'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { database } from 'firebaseConfig'
-import {
-  useGetPost,
-  useGetUsers,
-  useGetCategoryPosts,
-  deleteComment,
-  getComments,
-} from 'layouts/components/hooks'
 import { SiteCategory } from 'layouts/components/text'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { CommonHead, RecommendCardPost, BreadList } from 'layouts/components/ui'
@@ -53,6 +47,13 @@ import 'react-toastify/dist/ReactToastify.css'
 //   TwitterIcon,
 // } from 'react-share'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
+import {
+  useGetPost,
+  useGetUsers,
+  useGetCategoryPosts,
+  deleteComment,
+  getComments,
+} from 'layouts/hooks'
 import { GetComment } from 'types/comment'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'

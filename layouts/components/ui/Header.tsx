@@ -24,9 +24,9 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useLogOut } from '../../../layouts/api/auth/useAuth'
 import { SiteButton } from '../../../layouts/components/button'
-import { useGetMyUser } from '../../../layouts/components/hooks'
 import { NotificationModal } from '../../../layouts/components/ui'
 import { useAuthContext } from '../../../layouts/context/AuthContext'
+import { useGetMyUser } from '../../../layouts/hooks'
 import { GetUser } from 'types/user'
 
 const ACCOUNT_MENU_ITEMS = [
@@ -103,6 +103,7 @@ export const Header = () => {
               )}
               <IconButton
                 onClick={handleClick}
+                id='humbuger-menu'
                 size='small'
                 sx={{ ml: 2 }}
                 aria-controls={open ? 'account-menu' : undefined}
@@ -205,6 +206,7 @@ export const Header = () => {
               <Logout fontSize='small' />
             </ListItemIcon>
             <Button
+              id='logout'
               color='inherit'
               onClick={handleLogout}
               style={{ fontSize: '16px', padding: '0px' }}

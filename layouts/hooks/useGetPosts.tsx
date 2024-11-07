@@ -1,8 +1,8 @@
 import { onSnapshot, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
-import { database } from '../../../firebaseConfig'
-import { postsRef } from '../../../layouts/utils/post'
+import { database } from '../../firebaseConfig'
+import { postsRef } from '../../layouts/utils/post'
 
 //新しいpostを取得
 export const useFetchPosts = async (setPostData: any) => {

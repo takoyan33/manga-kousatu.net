@@ -18,14 +18,4 @@ const meta: Meta<typeof Footer> = {
 export default meta
 type Story = StoryObj<typeof Footer>
 
-export const normal: Story = {
-  // args: {
-  //   text: 'Footer',
-  // },
-}
-
-export const disabled: Story = {
-  args: {
-    disabled: true,
-  },
-}
+export const normal: Story = {}

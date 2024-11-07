@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
-import { useFetchPosts } from 'layouts/components/hooks'
 import { CommonHead, CardPost, TopTitle, BreadList } from 'layouts/components/ui'
+import { useFetchPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
 export default function Index() {

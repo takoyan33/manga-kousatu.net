@@ -36,30 +36,34 @@ const Post = () => {
         id={users?.id}
       />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>過去の投稿</h2>
-      <Grid container className='m-auto'>
-        {postsData.length === 0 && <p className='text-center'>まだ投稿していません</p>}
-        {postsData &&
+      <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
+        {postsData.length === 0 ? (
+          <p className='my-2 text-center'>まだ投稿していません</p>
+        ) : (
           postsData.map((post) => {
             return (
-              <CardPost
-                key={post.id}
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
+              <div className='w-1/4' key={post.id}>
+                <CardPost
+                  key={post.id}
+                  downloadURL={post.downloadURL}
+                  title={post.title}
+                  category={post.category}
+                  netabare={post.netabare}
+                  context={post.context}
+                  createTime={post.createTime}
+                  displayName={post.displayName}
+                  email={post.email}
+                  id={post.id}
+                  photoURL={post.photoURL}
+                  likes={post.likes}
+                  selected={post.selected}
+                  userid={post.userid}
+                />
+              </div>
             )
-          })}
-      </Grid>
+          })
+        )}
+      </div>
     </>
   )
 }

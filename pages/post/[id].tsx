@@ -22,11 +22,11 @@ import {
   serverTimestamp,
 } from 'firebase/firestore'
 import parse from 'html-react-parser'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import Image from 'react-image-resizer'
 import Modal from 'react-modal'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
@@ -289,9 +289,11 @@ const Post = () => {
           <BreadList secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
-              <img
+              <Image
                 className='Post-img rounded text-center'
                 src={singlePost?.downloadURL}
+                height={150}
+                width={150}
                 alt='画像'
               />
             </button>
@@ -307,7 +309,11 @@ const Post = () => {
                 alt='contextImage'
               />
             </div>
-            <button onClick={closeModal}>閉じる</button>
+            <div className='my-6 flex justify-center'>
+              <button onClick={closeModal} className='text-center'>
+                閉じる
+              </button>
+            </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
             {singlePost?.title}
@@ -362,21 +368,21 @@ const Post = () => {
               singlePost?.category,
             ) && (
               <SiteCategory
-                className={`border-${
+                className={`border border-${
                   {
                     ONEPIECE: 'cyan',
                     呪術廻戦: 'purple',
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
-                  }[singlePost.category]
+                  }[singlePost?.category]
                 }-500 hover:bg-${
                   {
                     ONEPIECE: 'cyan',
                     呪術廻戦: 'purple',
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
-                  }[singlePost.category]
-                }-500 my-4 border p-1 hover:text-white`}
+                  }[singlePost?.category]
+                }-500 my-4 p-1 hover:text-white`}
                 text={singlePost.category}
                 href={`/post/categories/${singlePost.category}`}
               />

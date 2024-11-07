@@ -26,14 +26,14 @@ export const Category = React.memo(({ category }: CategoryParams) => {
       )}
       {category === '東京リベンジャーズ' && (
         <SiteCategory
-          className='border border-rose-500  p-1   hover:bg-rose-500 hover:text-white'
+          className='border border-rose-500  p-1  hover:bg-rose-500 hover:text-white'
           text={`#${category}`}
           href={`/post/categories/${category}`}
         />
       )}
       {category === 'キングダム' && (
         <SiteCategory
-          className=' border border-yellow-500  p-1   hover:bg-yellow-500 hover:text-white'
+          className='border border-yellow-500  p-1   hover:bg-yellow-500 hover:text-white'
           text={`#${category}`}
           href={`/post/categories/${category}`}
         />

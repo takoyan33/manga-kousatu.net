@@ -7,7 +7,6 @@ import { useAuthContext } from '../../context/AuthContext'
 import { useGetMyPosts, useGetMyUser } from '../../hooks'
 import { postsRef } from '../../utils/post'
 import { COLORS } from '../ui'
-// import { SiteButton } from 'layouts/components/button'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
@@ -106,7 +105,6 @@ export const DisplayChart = React.memo(() => {
     } else {
       useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)
-      console.log(users)
       getOnePosts()
       getKaisenPosts()
       getTokyoPosts()
@@ -115,22 +113,22 @@ export const DisplayChart = React.memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const deleteuser = async () => {
-    //userを削除する
-    if (user) {
-      deleteUser(user)
-        //user削除
-        .then(() => {
-          localStorage.removeItem('Token')
-          //tokenを削除
-          alert('退会しました。TOP画面に戻ります。')
-          router.push('/top')
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }
+  // const deleteuser = async () => {
+  //   //userを削除する
+  //   if (user) {
+  //     deleteUser(user)
+  //       //user削除
+  //       .then(() => {
+  //         localStorage.removeItem('Token')
+  //         //tokenを削除
+  //         alert('退会しました。TOP画面に戻ります。')
+  //         router.push('/top')
+  //       })
+  //       .catch((error) => {
+  //         console.log(error)
+  //       })
+  //   }
+  // }
 
   type MangaData = {
     name: string

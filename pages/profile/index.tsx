@@ -1,16 +1,12 @@
 import TextField from '@mui/material/TextField'
-import { deleteUser } from 'firebase/auth'
-import { getDocs, query, where } from 'firebase/firestore'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { SiteButton } from '../../layouts/components/button'
-import { CommonHead, ProfileId, COLORS, AccountMenu } from 'layouts/components/ui'
+import { CommonHead, ProfileId } from 'layouts/components/ui'
 import { DisplayChart } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { useGetMyPosts, useGetMyUser } from 'layouts/hooks'
-import { postsRef } from 'layouts/utils/post'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
@@ -37,23 +33,6 @@ export default function Profile() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  // const deleteuser = async () => {
-  //   //userを削除する
-  //   if (user) {
-  //     deleteUser(user)
-  //       //user削除
-  //       .then(() => {
-  //         localStorage.removeItem('Token')
-  //         //tokenを削除
-  //         alert('退会しました。TOP画面に戻ります。')
-  //         router.push('/top')
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //       })
-  //   }
-  // }
 
   const filterPostData = () => {
     return postsData.filter((post) => {
@@ -142,14 +121,12 @@ export default function Profile() {
             ) : (
               filteredPosts.map((post) => (
                 <tr className='border-b bg-white' key={post.id}>
-                  <Link href={`/post/${post.id}`}>
-                    <th
-                      scope='row'
-                      className='whitespace-nowrap px-6 py-4 font-medium text-gray-900  hover:text-blue-600'
-                    >
-                      {post.title}
-                    </th>
-                  </Link>
+                  <th
+                    scope='row'
+                    className='whitespace-nowrap px-6 py-4 font-medium text-gray-900  hover:text-blue-600'
+                  >
+                    <Link href={`/post/${post.id}`}>{post.title}</Link>
+                  </th>
                   <td className='px-6 py-4'>{post.category}</td>
                   <td className='px-6 py-4'> {post.createTime}</td>
                   <td className='px-6 py-4'> {post.likes}</td>

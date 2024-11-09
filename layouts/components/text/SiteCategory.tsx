@@ -10,9 +10,12 @@ interface CategoryParams {
 // eslint-disable-next-line react/display-name
 export const SiteCategory = memo(({ href, text, className }: CategoryParams) => {
   return (
-    <span className={'inline-block rounded border text-center text-sm font-bold' + className}>
-      <Link href={href}>{text}</Link>
-    </span>
+    <Link
+      href={href}
+      className={'inline-block rounded border text-center text-sm font-bold' + className}
+    >
+      {text}
+    </Link>
   )
 })
 

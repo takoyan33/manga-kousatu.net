@@ -71,51 +71,53 @@ export const CardPost = React.memo(
     }
 
     return (
-      <Link href={`/post/${id}`}>
-        <div className='m-auto my-2 hover:opacity-80'>
-          <dl>
+      <div className='m-auto my-2 hover:opacity-80'>
+        <dl>
+          <Link href={`/post/${id}`}>
             <div className='cardPost-img'>
               <Image
                 className='cardPost-img rounded text-center'
                 src={downloadURL}
                 alt={`${title}の画像`}
-                layout='fill'
+                fill
+                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                priority
               />
             </div>
+          </Link>
+          <div>
+            <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
+            <div className='flex'>
+              <Category category={category} />
+              {netabare === 'ネタバレ有' && (
+                <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
+                  {netabare}
+                </dl>
+              )}
+            </div>
             <div>
-              <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
-              <div className='flex'>
-                <Category category={category} />
-                {netabare === 'ネタバレ有' && (
-                  <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
-                    {netabare}
-                  </dl>
-                )}
-              </div>
-              <div>
-                <div className='m-auto flex py-2'>
-                  <dl>
-                    <Avatar
-                      className='max-w-sm border text-center'
-                      sx={{ width: 30, height: 30 }}
-                      alt='投稿者プロフィール画像'
-                      src={users?.profileImage}
-                    />
-                  </dl>
-                  <dl className='ml-1 mt-1'>
-                    {users?.userName}
-                    <span className=' ml-2 text-pink-400'>
-                      <FavoriteIcon />
-                    </span>
-                    <span className='ml-1'>{likes}</span>
-                  </dl>
-                  <dl className='ml-2 mt-1 text-gray-600'>{daysAgo(createTime)}</dl>
-                </div>
+              <div className='m-auto flex py-2'>
+                <dl>
+                  <Avatar
+                    className='max-w-sm border text-center'
+                    sx={{ width: 30, height: 30 }}
+                    alt='投稿者プロフィール画像'
+                    src={users?.profileImage}
+                  />
+                </dl>
+                <dl className='ml-1 mt-1'>
+                  {users?.userName ? users?.userName : 'ユーザー名未設定'}
+                  <span className=' ml-2 text-pink-400'>
+                    <FavoriteIcon />
+                  </span>
+                  <span className='ml-1'>{likes}</span>
+                </dl>
+                <dl className='ml-2 mt-1 text-gray-600'>{daysAgo(createTime)}</dl>
               </div>
             </div>
-          </dl>
-        </div>
-      </Link>
+          </div>
+        </dl>
+      </div>
     )
   },
 )

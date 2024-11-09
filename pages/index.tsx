@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { POST_CATEGORIES, CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
-import { useFetchPosts, useGetOldPosts } from 'layouts/hooks'
+import { useFetchPosts, useGetOldPosts, useGetNewPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -12,6 +12,7 @@ export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [oldPostData, setOldPostData] = useState<Array<GetPost>>([])
   // const [recommendPostData, setRecommendPostData] = useState<Array<GetPost>>([])
+  // const [filteredPosts, setFilteredPosts] = useState(postData)
 
   // interface NetabareItem {
   //   sortId: number
@@ -21,9 +22,11 @@ export default function Index() {
   // }
 
   useEffect(() => {
-    useFetchPosts(setPostData)
     useGetOldPosts(setOldPostData)
-    // setRecommendPostData(postData.sort(() => Math.random() - 0.5).slice(0, 3))
+    useGetNewPosts(setPostData)
+    // const shuffledPosts = postData.sort(() => Math.random() - 0.5).slice(0, 5)
+
+    // setFilteredPosts(shuffledPosts)
   }, [])
 
   // interface CategoryParams {
@@ -50,10 +53,10 @@ export default function Index() {
         slidesPerView={3.5}
         breakpoints={breakpoints}
       >
-        {postData.length === 0 ? (
+        {oldPostData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
-          postData.map((post) => (
+          oldPostData.map((post) => (
             <SwiperSlide key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
@@ -115,10 +118,10 @@ export default function Index() {
         slidesPerView={3.5}
         breakpoints={breakpoints}
       >
-        {oldPostData.length === 0 ? (
+        {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
-          oldPostData.map((post) => (
+          postData.map((post) => (
             <SwiperSlide key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
@@ -139,7 +142,7 @@ export default function Index() {
           ))
         )}
       </Swiper>
-      <h2 className='mb-4 mt-12 text-left text-xl font-semibold'>カテゴリで探す</h2>
+      <TopTitle title='カテゴリで探す' />
       {POST_CATEGORIES.map((category) => {
         const CategoriesInfo = {
           id: category.id,

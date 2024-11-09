@@ -1,8 +1,14 @@
 import { test } from '@playwright/test'
 
 export const localhost = 'http://localhost:8080'
+
 export const testUser = {
   email: 'harrier2070+2@gmail.com',
+  password: 'password1234!',
+}
+
+export const otherUser = {
+  email: 'harrier2070+3@gmail.com',
   password: 'password1234!',
 }
 
@@ -136,8 +142,150 @@ test('//Setting Test', async ({ page }) => {
 
 //投稿、編集
 
-//削除
+test('Add Post Test', async ({ page }) => {
+  await test.setTimeout(120000)
+
+  //ログイン
+  await page.goto(localhost + '/login/')
+  await page.fill('#email', testUser.email)
+  await page.fill('#password', testUser.password)
+  await page.locator('#login').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
+
+  // トップページへ
+  await page.waitForTimeout(2000)
+  await page.locator('#add-post').click()
+  await page.waitForTimeout(2000)
+
+  // 投稿
+  await page.locator('#thumbnail-input').setInputFiles(editTestProfile.image)
+  await page.waitForTimeout(3000)
+  await page.fill('#title', 'test title')
+  await page.check('input[name="categori"][value="ONEPIECE"]')
+  await page.waitForTimeout(1000)
+  await page.check('input[name="netabare"][value="ネタバレ有"]')
+  await page.waitForTimeout(1000)
+  await page.check('input[name="display"][value="true"]')
+  await page.waitForTimeout(1000)
+  await page.locator('#submit').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
+
+  // ログアウト
+  await page.waitForTimeout(1000)
+  await page.locator('#humbuger-menu').click()
+  await page.waitForTimeout(1000)
+  await page.locator('#logout').click()
+  await page.waitForURL(localhost + '/login/')
+  await page.waitForTimeout(3000)
+})
+
+//編集と削除
+test('Delete Post Test', async ({ page }) => {
+  await test.setTimeout(120000)
+
+  //ログイン
+  await page.goto(localhost + '/login/')
+  await page.fill('#email', testUser.email)
+  await page.fill('#password', testUser.password)
+  await page.locator('#login').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
+
+  // トップページへ
+  await page.waitForTimeout(2000)
+  await page.locator('#add-post').click()
+  await page.waitForTimeout(2000)
+
+  // 投稿削除
+  await page.fill('#title', 'test title')
+  await page.locator('#file-input').setInputFiles(editTestProfile.image)
+  await page.waitForTimeout(2000)
+  await page.fill('#managa-name', 'test content')
+  await page.fill('#tags', 'test title')
+  await page.fill('#netabare', 'test title')
+  await page.fill('#editor', 'test title')
+  await page.locator('#submit').click()
+  await page.waitForTimeout(2000)
+
+  // ログアウト
+  // await page.waitForTimeout(1000)
+  // await page.locator('#logout').click()
+  // await page.waitForURL(localhost + '/login/')
+  // await page.waitForTimeout(3000)
+})
 
 //コメントのテスト
+test('Comment Test', async ({ page }) => {
+  await test.setTimeout(120000)
 
-//プロフィール確認
+  //ログイン
+  await page.goto(localhost + '/login/')
+  await page.fill('#email', otherUser.email)
+  await page.fill('#password', otherUser.password)
+  await page.locator('#login').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
+
+  // トップページへ
+  await page.waitForTimeout(2000)
+  await page.locator('#add-post').click()
+  await page.waitForTimeout(2000)
+
+  // コメントの追加
+  await page.waitForTimeout(2000)
+  await page.goto(localhost + '/post/2')
+  await page.fill('#input-comment', 'test comment')
+  await page.locator('#add-comment').click()
+  await page.waitForTimeout(2000)
+
+  // コメントの編集
+  await page.locator('#edit-comment').click()
+  await page.waitForTimeout(2000)
+  await page.fill('#input-update-comment', 'test comment')
+  await page.locator('#update-comment').click()
+  await page.waitForTimeout(2000)
+
+  // コメントの削除
+
+  await page.locator('#delete-comment').click()
+  await page.waitForTimeout(2000)
+
+  // ログアウト
+  await page.waitForTimeout(1000)
+  await page.locator('#logout').click()
+  await page.waitForURL(localhost + '/login/')
+  await page.waitForTimeout(3000)
+})
+
+//いいねのテスト
+test('Favorite Test', async ({ page }) => {
+  await test.setTimeout(120000)
+
+  //ログイン
+  await page.goto(localhost + '/login/')
+  await page.fill('#email', otherUser.email)
+  await page.fill('#password', otherUser.password)
+  await page.locator('#login').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
+
+  // いいね
+  await page.waitForTimeout(2000)
+  await page.goto(localhost + '/post/2')
+  await page.locator('#add-favorite').click()
+  await page.waitForTimeout(2000)
+
+  //いいね削除
+  await page.locator('#delete-favorite').click()
+  await page.waitForTimeout(2000)
+
+  // ログアウト
+  await page.waitForTimeout(2000)
+  await page.locator('#humbuger-menu').click()
+  await page.waitForTimeout(1000)
+  await page.locator('#logout').click()
+  await page.waitForURL(localhost + '/login/')
+  await page.waitForTimeout(3000)
+})

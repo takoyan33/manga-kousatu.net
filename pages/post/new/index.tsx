@@ -140,7 +140,7 @@ export default function Post() {
           setTags([])
           setUserId('')
           setTimeout(() => {
-            router.push('/top')
+            router.push('/')
           }, 2000)
         })
         .catch((err) => {
@@ -186,15 +186,6 @@ export default function Post() {
             text=''
             createcontextObjectURL=''
           />
-
-          <input
-            id='file-input'
-            className='hidden'
-            type='file'
-            accept='image/*,.png,.jpg,.jpeg,.gif'
-            name='myImage'
-            onChange={uploadImage}
-          />
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label' htmlFor='input-title' className='mb-2'>
               タイトル（最大20文字)
@@ -207,7 +198,7 @@ export default function Post() {
               {...register('title')}
               error={'title' in errors}
               helperText={errors.title?.message}
-              id='input-title'
+              id='title'
               placeholder='最新話の考察'
               variant='outlined'
               className='m-auto w-full'
@@ -228,6 +219,7 @@ export default function Post() {
               }}
               render={({ field }) => (
                 <RadioGroup
+                  id='managa-name'
                   aria-labelledby='demo-radio-buttons-group-label'
                   name={field.name}
                   value={field.value}
@@ -269,7 +261,12 @@ export default function Post() {
                 required: '必須項目です',
               }}
               render={({ field }) => (
-                <RadioGroup aria-label='ネタバレ' name={field.name} value={field.value}>
+                <RadioGroup
+                  aria-label='ネタバレ'
+                  name={field.name}
+                  value={field.value}
+                  id='netabare'
+                >
                   {FORM_NETABARE.map((netabare) => (
                     <FormControlLabel
                       key={netabare.id}
@@ -296,7 +293,7 @@ export default function Post() {
             <p className='my-4 text-right'>現在の文字数：{lengthData && lengthData}</p>
           </div>
           <div className='my-8'>
-            <label htmlFor='file-input'>他の写真（最大1枚）</label>
+            <label htmlFor='other-file-input'>他の写真（最大1枚）</label>
 
             <ImageUploadContext
               onChange={uploadToClientContext}
@@ -305,7 +302,7 @@ export default function Post() {
               createObjectURL=''
             />
             <input
-              id='file-input'
+              id='other-file-input'
               className='hidden'
               type='file'
               multiple
@@ -330,6 +327,7 @@ export default function Post() {
             }}
             render={({ field }) => (
               <RadioGroup
+                id='display'
                 aria-label='ネタバレ'
                 name={field.name}
                 value={field.value}
@@ -350,6 +348,7 @@ export default function Post() {
             )}
           />
           <SiteButton
+            id='submit'
             text='投稿する'
             className='m-auto my-10 text-center'
             onClick={handleSubmit(addPost)}

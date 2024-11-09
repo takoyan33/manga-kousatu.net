@@ -27,6 +27,7 @@ const Richedita = ({ onChange, value }: RicheditaProps) => {
   return (
     <div className='center-input border pb-20'>
       <Editor
+        id='editor'
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
         localization={{

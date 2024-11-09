@@ -130,7 +130,12 @@ export const Header = () => {
               </IconButton>
               {user && (
                 <div className='ml-4 mr-6 text-center'>
-                  <SiteButton href='/post/new' text='投稿する' className='w-50 m-auto my-2' />
+                  <SiteButton
+                    href='/post/new'
+                    text='投稿する'
+                    className='w-50 m-auto my-2'
+                    id='add-post'
+                  />
                 </div>
               )}
             </div>

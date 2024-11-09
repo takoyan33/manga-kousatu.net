@@ -18,4 +18,4 @@ const meta: Meta<typeof OpenButton> = {
 export default meta
 type Story = StoryObj<typeof OpenButton>
 
-export const normal: Story = {}
+export const normalOpenButton: Story = {}

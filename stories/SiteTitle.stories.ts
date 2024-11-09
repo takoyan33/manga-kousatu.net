@@ -18,13 +18,13 @@ const meta: Meta<typeof SiteLabel> = {
 export default meta
 type Story = StoryObj<typeof SiteLabel>
 
-export const normal: Story = {
+export const normalSiteLabel: Story = {
   args: {
     required: false,
   },
 }
 
-export const required: Story = {
+export const requiredSiteLabel: Story = {
   args: {
     required: true,
   },

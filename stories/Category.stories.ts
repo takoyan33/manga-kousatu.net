@@ -20,25 +20,25 @@ const meta: Meta<typeof Category> = {
 export default meta
 type Story = StoryObj<typeof Category>
 
-export const onepiece: Story = {
+export const onepieceCategory: Story = {
   args: {
     category: 'ONEPIECE',
   },
 }
 
-export const zyuzyutu: Story = {
+export const zyuzyutuCategory: Story = {
   args: {
     category: '呪術廻戦',
   },
 }
 
-export const tooribe: Story = {
+export const tooribeCategory: Story = {
   args: {
     category: '東京リベンジャーズ',
   },
 }
 
-export const kingdom: Story = {
+export const kingdomCategory: Story = {
   args: {
     category: 'キングダム',
   },

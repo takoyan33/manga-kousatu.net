@@ -27,4 +27,10 @@ const meta: Meta<typeof CardPost> = {
 export default meta
 type Story = StoryObj<typeof CardPost>
 
-export const normal: Story = {}
+export const normalCardPost: Story = {}
+
+export const noImageCardPost: Story = {
+  args: {
+    downloadURL: '',
+  },
+}

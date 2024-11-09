@@ -54,6 +54,7 @@ import {
   deleteComment,
   getComments,
   useGetMyUser,
+  useGetOtherUser,
 } from 'layouts/hooks'
 import { GetComment } from 'types/comment'
 import { GetPost } from 'types/post'
@@ -68,7 +69,7 @@ const Post = () => {
   const [comment, setComment] = useState<string>('')
   const [comments, setComments] = useState<Array<GetComment>>([])
   const [myUser, setMyUser] = useState(null)
-  const [users, setUsers] = useState<Array<GetUser>>([])
+  const [users, setUsers] = useState(null)
   const [singlePost, setSinglePost] = useState<GetPost>(null)
   const [likecount, setLikecount] = useState<number>(0)
   const [categoryPosts, setCategoryPosts] = useState([])
@@ -91,14 +92,16 @@ const Post = () => {
 
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
-    useGetUsers(setUsers)
-    useGetMyUser(setMyUser, user.uid)
+    if (user) {
+      useGetMyUser(setMyUser, user.uid)
+    }
     getComments(setComments, routerid)
   }, [routerid])
 
   useEffect(() => {
     if (singlePost && singlePost.category) {
       useGetCategoryPosts(setCategoryPosts, singlePost.category, routerid)
+      useGetOtherUser(setUsers, singlePost?.userid)
     }
   }, [singlePost])
 
@@ -106,20 +109,20 @@ const Post = () => {
   const deletePost = (routerId) => {
     //data.idを送っているのでidを受け取る
     const deletePost = doc(database, 'posts', routerId.toString())
-    const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
+    // const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
-    if (checkSaveFlg) {
-      deleteDoc(deletePost)
-        .then(() => {
-          successNotify('記事を削除しました')
-          setTimeout(() => {
-            router.push('/top')
-          }, 2000)
-        })
-        .catch(() => {
-          errorNotify('失敗しました')
-        })
-    }
+    // if (checkSaveFlg) {
+    deleteDoc(deletePost)
+      .then(() => {
+        successNotify('記事を削除しました')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+      .catch(() => {
+        errorNotify('失敗しました')
+      })
+    // }
   }
 
   //いいねの追加
@@ -166,12 +169,12 @@ const Post = () => {
       comment: data.comment,
       userid: user.uid,
       postid: routerid,
-      username: myUser.userName,
+      username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
       createTime: newDate,
       timestamp: serverTimestamp(),
       userEmail: user.email,
       isEdit: false,
-      userPhoto: myUser.profileImage,
+      userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
@@ -188,10 +191,9 @@ const Post = () => {
     const commentDate = doc(database, 'comments', commentId)
     updateDoc(commentDate, {
       comment: comment,
-      userid: user.uid,
-      username: myUser.userName,
+      username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
       userEmail: user.email,
-      userPhoto: myUser.profileImage,
+      userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       isEdit: true,
     })
       .then(() => {
@@ -342,33 +344,25 @@ const Post = () => {
               <span className='ml-1'>{singlePost?.likes}</span>
             </span>
           </div>
-          {users &&
-            users.map((user) => {
-              return (
-                <div key={user.userid}>
-                  {singlePost?.email === user.email && (
-                    <Link href={`/profile/${user.userid}`}>
-                      <div className='m-auto my-4 flex  px-2'>
-                        <div key={user.id}>
-                          <div>
-                            <Avatar
-                              className='m-auto max-w-sm border text-center'
-                              alt='プロフィール'
-                              sx={{ width: 50, height: 50 }}
-                              src={user.profileImage}
-                            />
-                          </div>
-                        </div>
-                        <div className='ml-6 mt-1'>
-                          <span className='text-sm'>{user.userName}</span>
-                          <div className=' text-sm text-gray-500'>{user.bio}</div>
-                        </div>
-                      </div>
-                    </Link>
-                  )}
+          <Link href={`/profile/${users?.userid}`}>
+            <div className='m-auto my-4 flex  px-2'>
+              <div key={users?.id}>
+                <div>
+                  <Avatar
+                    className='m-auto max-w-sm border text-center'
+                    alt='プロフィール'
+                    sx={{ width: 50, height: 50 }}
+                    src={users?.profileImage}
+                  />
                 </div>
-              )
-            })}
+              </div>
+              <div className='ml-6 mt-1'>
+                <span className='text-sm'>{users?.userName}</span>
+                <div className=' text-sm text-gray-500'>{users?.bio}</div>
+              </div>
+            </div>
+          </Link>
+
           {singlePost?.editTime && (
             <div>
               <AccessTimeIcon />
@@ -445,81 +439,66 @@ const Post = () => {
             {singlePost?.likes}
           </div>
 
-          {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
+          {singlePost?.likesEmail && user?.email == singlePost?.email && (
             <p>自分の投稿なのでいいねできません</p>
-          ) : (
-            <>
-              {singlePost?.likesEmail && user ? (
-                singlePost?.likesEmail.includes(user.email) ? (
-                  <>
-                    <p>いいね済み</p>
-                    <button
-                      className='my-2 inline'
-                      onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
-                      id='delete-favorite'
-                    >
-                      <span className='py-4 text-pink-400 hover:text-pink-700'>
-                        <FavoriteIcon />
-                        いいね解除する
-                      </span>
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
-                    id='add-favorite'
-                  >
-                    <FavoriteIconAnim on={on} />
-                    <span>いいねする</span>
-                  </button>
-                )
-              ) : (
-                <></>
-              )}
-            </>
+          )}
+          {user && singlePost?.likesEmail?.includes(user.email) && (
+            <div>
+              <p>いいね済み</p>
+              <button
+                className='my-2 inline'
+                onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
+                id='delete-favorite'
+              >
+                <span className='py-4 text-pink-400 hover:text-pink-700'>
+                  <FavoriteIcon />
+                  いいね解除
+                </span>
+              </button>
+            </div>
+          )}
+          {user && !singlePost?.likesEmail?.includes(user.email) && (
+            <button
+              onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
+              id='add-favorite'
+            >
+              <FavoriteIconAnim on={on} />
+              <span>いいねする</span>
+            </button>
           )}
 
-          {singlePost &&
-            singlePost.selected.map((tag, i) => (
-              <span
-                className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
-                key={i}
-              >
-                #{tag}
-              </span>
-            ))}
+          {singlePost?.selected.map((tag, i) => (
+            <span
+              className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
+              key={i}
+            >
+              #{tag}
+            </span>
+          ))}
 
           <div className='cursor-pointer'>
-            {users?.map((user) => {
-              return (
-                <div key={user.id}>
-                  {singlePost?.email === user.email && (
-                    <Link href={`/profile/${user.userid}`}>
-                      <div className='m-auto my-8 flex border py-8  px-2'>
-                        <div>
-                          <Avatar
-                            className='m-auto max-w-sm border text-center'
-                            alt='プロフィール'
-                            sx={{ width: 80, height: 80 }}
-                            src={user.profileImage}
-                          />
-                        </div>
-                        <div className='ml-6 mt-4'>
-                          <span className=''>
-                            <AccountBoxIcon />
-                            {user?.userName ? user?.userName : 'ユーザー名未設定'}
-                          </span>
-                          <div className=' mt-2 pb-2 text-gray-500'>
-                            <BorderColorIcon />
-                            {user.bio}
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  )}
+            <Link href={`/profile/${users?.userid}`}>
+              <div className='m-auto my-8 flex border py-8  px-2'>
+                <div>
+                  <Avatar
+                    className='m-auto max-w-sm border text-center'
+                    alt='プロフィール'
+                    sx={{ width: 80, height: 80 }}
+                    src={users?.profileImage}
+                  />
                 </div>
-              )
-            })}
+                <div className='ml-6 mt-4'>
+                  <span className=''>
+                    <AccountBoxIcon />
+                    {users?.userName ? users?.userName : 'ユーザー名未設定'}
+                  </span>
+                  <div className=' mt-2 pb-2 text-gray-500'>
+                    <BorderColorIcon />
+                    {users?.bio}
+                  </div>
+                </div>
+              </div>
+            </Link>
           </div>
         </div>
 
@@ -530,86 +509,85 @@ const Post = () => {
           </p>
         </div>
 
-        {comments &&
-          comments.map((comment) => {
-            return (
-              <article className='mb-6 rounded-lg border bg-white p-6 text-base' key={comment.id}>
-                <footer className='mb-2 flex items-center justify-between'>
-                  <div className='flex items-center'>
-                    <Avatar
-                      className='m-auto max-w-sm border text-center'
-                      alt='プロフィール'
-                      sx={{ width: 30, height: 30 }}
-                      src={comment.userPhoto}
-                    />
-                    <p className='mx-3 inline-flex items-center text-sm font-semibold text-gray-900'>
-                      {comment.username}
-                    </p>
-                    <p className='text-sm text-gray-600 dark:text-gray-400'>{comment.createTime}</p>
-                  </div>
-                </footer>
+        {comments?.map((comment) => {
+          return (
+            <article className='mb-6 rounded-lg border bg-white p-6 text-base' key={comment.id}>
+              <div className='mb-2 flex items-center justify-between'>
+                <div className='flex items-center'>
+                  <Avatar
+                    className='m-auto max-w-sm border text-center'
+                    alt='プロフィール'
+                    sx={{ width: 30, height: 30 }}
+                    src={comment.userPhoto}
+                  />
+                  <p className='mx-3 inline-flex items-center text-sm font-semibold text-gray-900'>
+                    {comment.username}
+                  </p>
+                  <p className='text-sm text-gray-600 dark:text-gray-400'>{comment.createTime}</p>
+                </div>
+              </div>
 
-                <p className='my-4 whitespace-pre-wrap break-words'>{comment.comment}</p>
-                {user && (
-                  <>
-                    {user.email === comment.userEmail && (
-                      <div className='flex'>
-                        <button
-                          id='edit-comment'
-                          onClick={openCommentModal}
-                          className='text-whit mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
-                        >
-                          編集
-                        </button>
-                        <button
-                          onClick={() => deleteComment(comment.id)}
-                          className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
-                          id='delete-comment'
-                        >
-                          削除
-                        </button>
-                      </div>
-                    )}
-                  </>
-                )}
-                <Modal
-                  isOpen={isCommentModalOpen}
-                  onRequestClose={closeCommentModal}
-                  contentLabel='comment Modal'
-                >
-                  <div>
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                      コメント<span className='text-red-600'>*</span>
-                    </FormLabel>
-                  </div>
-                  <div>
-                    <input
-                      id='input-update-comment'
-                      className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                      defaultValue={comment.comment}
-                      type='text'
-                      onChange={(event) => setComment(event.target.value)}
-                    />
-                    <div className='mt-4 flex justify-center'>
+              <p className='my-4 whitespace-pre-wrap break-words'>{comment.comment}</p>
+              {user && (
+                <>
+                  {user.email === comment.userEmail && (
+                    <div className='flex'>
                       <button
-                        onClick={() => updateComment(comment.id)}
-                        className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
-                        id='update-comment'
+                        id='edit-comment'
+                        onClick={openCommentModal}
+                        className='text-whit mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
                       >
-                        更新する
+                        編集
                       </button>
                       <button
-                        onClick={closeCommentModal}
+                        onClick={() => deleteComment(comment.id)}
                         className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
+                        id='delete-comment'
                       >
-                        閉じる
+                        削除
                       </button>
                     </div>
+                  )}
+                </>
+              )}
+              <Modal
+                isOpen={isCommentModalOpen}
+                onRequestClose={closeCommentModal}
+                contentLabel='comment Modal'
+              >
+                <div>
+                  <FormLabel id='demo-radio-buttons-group-label'>
+                    コメント<span className='text-red-600'>*</span>
+                  </FormLabel>
+                </div>
+                <div>
+                  <input
+                    id='input-update-comment'
+                    className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
+                    defaultValue={comment.comment}
+                    type='text'
+                    onChange={(event) => setComment(event.target.value)}
+                  />
+                  <div className='mt-4 flex justify-center'>
+                    <button
+                      onClick={() => updateComment(comment.id)}
+                      className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
+                      id='update-comment'
+                    >
+                      更新する
+                    </button>
+                    <button
+                      onClick={closeCommentModal}
+                      className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
+                    >
+                      閉じる
+                    </button>
                   </div>
-                </Modal>
-              </article>
-            )
-          })}
+                </div>
+              </Modal>
+            </article>
+          )
+        })}
         {!user && (
           <>
             <div className='my-4 text-center'>

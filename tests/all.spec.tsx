@@ -182,7 +182,7 @@ test('Add Post Test', async ({ page }) => {
 })
 
 //編集と削除
-test('Delete Post Test', async ({ page }) => {
+test('EditDelete Post Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
@@ -195,27 +195,29 @@ test('Delete Post Test', async ({ page }) => {
 
   // 記事詳細へ
   await page.waitForTimeout(2000)
-  await page.waitForURL(localhost + '/post/10')
+  await page.goto(localhost + '/post/10')
+  await page.waitForTimeout(2000)
   await page.locator('#edit-post').click()
 
   // 投稿編集
   await page.fill('#title', 'test title2')
   await page.locator('#file-input').setInputFiles(editTestProfile.image)
   await page.waitForTimeout(2000)
-  await page.fill('#managa-name', 'test content')
-  await page.fill('#tags', 'test title')
-  await page.fill('#netabare', 'test title')
-  await page.fill('#editor', 'test title')
+  // await page.check('input[name="category"][value="ONEPIECE"]')
+  // await page.waitForTimeout(1000)
+  await page.check('input[name="netabare"][value="ネタバレ無"]')
+  await page.waitForTimeout(1000)
+  await page.check('input[name="display"][value="true"]')
+  await page.waitForTimeout(1000)
   await page.locator('#submit').click()
   await page.waitForTimeout(2000)
 
   // 投稿削除
-
-  // ログアウト
-  // await page.waitForTimeout(1000)
-  // await page.locator('#logout').click()
-  // await page.waitForURL(localhost + '/login/')
-  // await page.waitForTimeout(3000)
+  await page.goto(localhost + '/post/10')
+  await page.waitForTimeout(2000)
+  await page.locator('#delete-post').click()
+  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost)
 })
 
 //コメントのテスト
@@ -224,28 +226,25 @@ test('Comment Test', async ({ page }) => {
 
   //ログイン
   await page.goto(localhost + '/login/')
-  await page.fill('#email', otherUser.email)
-  await page.fill('#password', otherUser.password)
+  await page.fill('#email', testUser.email)
+  await page.fill('#password', testUser.password)
   await page.locator('#login').click()
   await page.waitForTimeout(2000)
   await page.waitForURL(localhost)
-
-  // トップページへ
-  await page.waitForTimeout(2000)
-  await page.locator('#add-post').click()
-  await page.waitForTimeout(2000)
 
   // コメントの追加
   await page.waitForTimeout(2000)
   await page.goto(localhost + '/post/2')
   await page.fill('#input-comment', 'test comment')
+  await page.waitForTimeout(2000)
   await page.locator('#add-comment').click()
   await page.waitForTimeout(2000)
 
   // コメントの編集
   await page.locator('#edit-comment').click()
   await page.waitForTimeout(2000)
-  await page.fill('#input-update-comment', 'test comment')
+  await page.fill('#input-update-comment', 'test comment222')
+  await page.waitForTimeout(2000)
   await page.locator('#update-comment').click()
   await page.waitForTimeout(2000)
 
@@ -253,12 +252,6 @@ test('Comment Test', async ({ page }) => {
 
   await page.locator('#delete-comment').click()
   await page.waitForTimeout(2000)
-
-  // ログアウト
-  await page.waitForTimeout(1000)
-  await page.locator('#logout').click()
-  await page.waitForURL(localhost + '/login/')
-  await page.waitForTimeout(3000)
 })
 
 //いいねのテスト
@@ -267,8 +260,8 @@ test('Favorite Test', async ({ page }) => {
 
   //ログイン
   await page.goto(localhost + '/login/')
-  await page.fill('#email', otherUser.email)
-  await page.fill('#password', otherUser.password)
+  await page.fill('#email', testUser.email)
+  await page.fill('#password', testUser.password)
   await page.locator('#login').click()
   await page.waitForTimeout(2000)
   await page.waitForURL(localhost)
@@ -276,18 +269,11 @@ test('Favorite Test', async ({ page }) => {
   // いいね
   await page.waitForTimeout(2000)
   await page.goto(localhost + '/post/2')
+  await page.waitForTimeout(2000)
   await page.locator('#add-favorite').click()
   await page.waitForTimeout(2000)
 
   //いいね削除
   await page.locator('#delete-favorite').click()
   await page.waitForTimeout(2000)
-
-  // ログアウト
-  await page.waitForTimeout(2000)
-  await page.locator('#humbuger-menu').click()
-  await page.waitForTimeout(1000)
-  await page.locator('#logout').click()
-  await page.waitForURL(localhost + '/login/')
-  await page.waitForTimeout(3000)
 })

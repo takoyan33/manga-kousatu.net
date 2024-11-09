@@ -18,8 +18,4 @@ const meta: Meta<typeof AccountMenu> = {
 export default meta
 type Story = StoryObj<typeof AccountMenu>
 
-export const normal: Story = {
-  // args: {
-  //   text: 'AccountMenu',
-  // },
-}
+export const normalAccountMenu: Story = {}

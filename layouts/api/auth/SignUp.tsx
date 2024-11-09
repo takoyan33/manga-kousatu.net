@@ -156,14 +156,15 @@ export default function SignUp() {
             id='signUp'
             onClick={handleSubmit(handleSignUp)}
             text='新規登録'
-            className='m-auto my-4 w-80 text-center'
+            className='my-4 w-80 text-center'
+            varient='contained'
           />
           <p className='text-center'>または</p>
           <SiteButton
             id='googleSignUp'
             text='Googleで新規登録'
             onClick={SignUpWithGoogle}
-            className='m-auto my-4 w-80 text-center'
+            className='my-4 w-80 text-center'
             google
           />
           <p className='my-8 text-center'>

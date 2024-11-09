@@ -30,6 +30,15 @@ export const useFetchPosts = async (setPostData: any) => {
 
 //古いpostを取得
 export const useGetOldPosts = async (setPostData: any) => {
+  const oldPost = query(postsRef, orderBy('timestamp', 'asc'))
+
+  onSnapshot(oldPost, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
+}
+
+//新しいpostを取得
+export const useGetNewPosts = async (setPostData: any) => {
   const oldPost = query(postsRef, orderBy('timestamp', 'desc'))
 
   onSnapshot(oldPost, (querySnapshot) => {
@@ -130,7 +139,7 @@ export const useGetCategoryPosts = async (setPostData, postCategory: string, rou
 }
 
 //特定カテゴリの古い投稿を取得
-export const useGetCategoriOldPosts = async (setPostData, postCategory: string) => {
+export const useGetCategoryOldPosts = async (setPostData, postCategory: string) => {
   const categoryPosts = query(postsRef, where('category', '==', postCategory), orderBy('timestamp'))
 
   onSnapshot(categoryPosts, (querySnapshot) => {
@@ -139,7 +148,7 @@ export const useGetCategoriOldPosts = async (setPostData, postCategory: string) 
 }
 
 //特定カテゴリのいいね順の投稿を取得
-export const useGetCategoriLikePosts = async (setPostData, postCategory: string) => {
+export const useGetCategoryLikePosts = async (setPostData, postCategory: string) => {
   const categoryPosts = query(
     postsRef,
     where('category', '==', postCategory),

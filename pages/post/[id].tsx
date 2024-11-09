@@ -53,6 +53,7 @@ import {
   useGetCategoryPosts,
   deleteComment,
   getComments,
+  useGetMyUser,
 } from 'layouts/hooks'
 import { GetComment } from 'types/comment'
 import { GetPost } from 'types/post'
@@ -66,6 +67,7 @@ const schema = yup.object({
 const Post = () => {
   const [comment, setComment] = useState<string>('')
   const [comments, setComments] = useState<Array<GetComment>>([])
+  const [myUser, setMyUser] = useState(null)
   const [users, setUsers] = useState<Array<GetUser>>([])
   const [singlePost, setSinglePost] = useState<GetPost>(null)
   const [likecount, setLikecount] = useState<number>(0)
@@ -90,6 +92,7 @@ const Post = () => {
   useEffect(() => {
     useGetPost(setSinglePost, routerid)
     useGetUsers(setUsers)
+    useGetMyUser(setMyUser, user.uid)
     getComments(setComments, routerid)
   }, [routerid])
 
@@ -163,12 +166,12 @@ const Post = () => {
       comment: data.comment,
       userid: user.uid,
       postid: routerid,
-      username: user.displayName,
+      username: myUser.userName,
       createTime: newDate,
       timestamp: serverTimestamp(),
       userEmail: user.email,
       isEdit: false,
-      userPhoto: user.photoURL,
+      userPhoto: myUser.profileImage,
       id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
@@ -183,13 +186,12 @@ const Post = () => {
   //コメントの編集
   const updateComment = (commentId: string) => {
     const commentDate = doc(database, 'comments', commentId)
-    console.log(commentDate)
     updateDoc(commentDate, {
       comment: comment,
       userid: user.uid,
-      username: user.displayName,
+      username: myUser.userName,
       userEmail: user.email,
-      userPhoto: user.photoURL,
+      userPhoto: myUser.profileImage,
       isEdit: true,
     })
       .then(() => {
@@ -268,6 +270,7 @@ const Post = () => {
                       <SendIcon />
                     </ListItemIcon>
                     <Link
+                      id='edit-post'
                       href={{
                         pathname: `/post/edit/${singlePost.id}`,
                       }}
@@ -279,7 +282,9 @@ const Post = () => {
                     <ListItemIcon>
                       <SendIcon />
                     </ListItemIcon>
-                    <button onClick={() => deletePost(routerid)}>記事を削除する</button>
+                    <button onClick={() => deletePost(routerid)} id='delete-post'>
+                      記事を削除する
+                    </button>
                   </ListItemButton>
                 </List>
               </>
@@ -290,25 +295,31 @@ const Post = () => {
           <BreadList secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
-              <Image
-                className='Post-img rounded text-center'
-                src={singlePost?.downloadURL}
-                height={150}
-                width={150}
-                alt='画像'
-              />
+              {singlePost?.downloadURL && (
+                <Image
+                  className='Post-img rounded text-center'
+                  src={singlePost.downloadURL}
+                  height={150}
+                  width={150}
+                  alt='画像'
+                  priority
+                />
+              )}
             </button>
             {!singlePost?.downloadURL && <p>画像なし</p>}
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
-              <Image
-                className='m-auto max-w-sm text-center'
-                height={400}
-                width={400}
-                src={singlePost?.downloadURL}
-                alt='contextImage'
-              />
+              {singlePost?.downloadURL && (
+                <Image
+                  className='m-auto max-w-sm text-center'
+                  height={400}
+                  width={400}
+                  src={singlePost.downloadURL}
+                  alt='contextImage'
+                  priority
+                />
+              )}
             </div>
             <div className='my-6 flex justify-center'>
               <button onClick={closeModal} className='text-center'>
@@ -445,6 +456,7 @@ const Post = () => {
                     <button
                       className='my-2 inline'
                       onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
+                      id='delete-favorite'
                     >
                       <span className='py-4 text-pink-400 hover:text-pink-700'>
                         <FavoriteIcon />
@@ -453,7 +465,10 @@ const Post = () => {
                     </button>
                   </>
                 ) : (
-                  <button onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}>
+                  <button
+                    onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
+                    id='add-favorite'
+                  >
                     <FavoriteIconAnim on={on} />
                     <span>いいねする</span>
                   </button>
@@ -491,7 +506,8 @@ const Post = () => {
                         </div>
                         <div className='ml-6 mt-4'>
                           <span className=''>
-                            <AccountBoxIcon /> {user.userName}
+                            <AccountBoxIcon />
+                            {user?.userName ? user?.userName : 'ユーザー名未設定'}
                           </span>
                           <div className=' mt-2 pb-2 text-gray-500'>
                             <BorderColorIcon />
@@ -539,6 +555,7 @@ const Post = () => {
                     {user.email === comment.userEmail && (
                       <div className='flex'>
                         <button
+                          id='edit-comment'
                           onClick={openCommentModal}
                           className='text-whit mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
                         >
@@ -547,6 +564,7 @@ const Post = () => {
                         <button
                           onClick={() => deleteComment(comment.id)}
                           className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
+                          id='delete-comment'
                         >
                           削除
                         </button>
@@ -566,17 +584,28 @@ const Post = () => {
                   </div>
                   <div>
                     <input
-                      id='outlined-basic'
+                      id='input-update-comment'
                       className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                       defaultValue={comment.comment}
                       type='text'
                       onChange={(event) => setComment(event.target.value)}
                     />
-                    <button onClick={() => updateComment(comment.id)} className='m-auto my-8 w-80'>
-                      更新する
-                    </button>
+                    <div className='mt-4 flex justify-center'>
+                      <button
+                        onClick={() => updateComment(comment.id)}
+                        className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
+                        id='update-comment'
+                      >
+                        更新する
+                      </button>
+                      <button
+                        onClick={closeCommentModal}
+                        className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
+                      >
+                        閉じる
+                      </button>
+                    </div>
                   </div>
-                  <button onClick={closeCommentModal}>閉じる</button>
                 </Modal>
               </article>
             )
@@ -607,7 +636,7 @@ const Post = () => {
                     あなたのコメント
                   </label>
                   <textarea
-                    id='comment'
+                    id='input-comment'
                     rows={6}
                     className='w-full border-0 px-0 text-sm text-gray-900 focus:outline-none focus:ring-0  dark:placeholder-gray-400 '
                     placeholder='コメントを入力してください'
@@ -617,6 +646,7 @@ const Post = () => {
                 </div>
                 {errors.comment && <p className='text-red-500'>コメントは必須です</p>}
                 <button
+                  id='add-comment'
                   type='submit'
                   onClick={handleSubmit(addComment)}
                   className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs  font-medium focus:ring-4'

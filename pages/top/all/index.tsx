@@ -117,7 +117,7 @@ export default function Index() {
                   query: CategoriesInfo,
                 }}
               >
-                <a>#{category.title}</a>
+                #{category.title}
               </Link>
             </span>
           </span>

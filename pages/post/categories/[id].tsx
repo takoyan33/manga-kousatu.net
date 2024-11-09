@@ -11,8 +11,8 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 //import useGetCategoryPosts,
-// useGetCategoriOldPosts,
-// useGetCategoriLikePosts,
+// useGetCategoryOldPosts,
+// useGetCategoryLikePosts,
 // 'layouts/components/hooks'
 import { postsRef } from 'layouts/utils/post'
 

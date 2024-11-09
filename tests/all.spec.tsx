@@ -193,13 +193,13 @@ test('Delete Post Test', async ({ page }) => {
   await page.waitForTimeout(2000)
   await page.waitForURL(localhost)
 
-  // トップページへ
+  // 記事詳細へ
   await page.waitForTimeout(2000)
-  await page.locator('#add-post').click()
-  await page.waitForTimeout(2000)
+  await page.waitForURL(localhost + '/post/10')
+  await page.locator('#edit-post').click()
 
-  // 投稿削除
-  await page.fill('#title', 'test title')
+  // 投稿編集
+  await page.fill('#title', 'test title2')
   await page.locator('#file-input').setInputFiles(editTestProfile.image)
   await page.waitForTimeout(2000)
   await page.fill('#managa-name', 'test content')
@@ -208,6 +208,8 @@ test('Delete Post Test', async ({ page }) => {
   await page.fill('#editor', 'test title')
   await page.locator('#submit').click()
   await page.waitForTimeout(2000)
+
+  // 投稿削除
 
   // ログアウト
   // await page.waitForTimeout(1000)

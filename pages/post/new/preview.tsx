@@ -185,7 +185,6 @@ export default function Post() {
           <ImageUpload
             onChange={uploadImage}
             createObjectURL={createObjectURL}
-            text=''
             createcontextObjectURL=''
           />
 

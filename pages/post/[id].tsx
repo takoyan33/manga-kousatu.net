@@ -270,6 +270,7 @@ const Post = () => {
                       <SendIcon />
                     </ListItemIcon>
                     <Link
+                      id='edit-post'
                       href={{
                         pathname: `/post/edit/${singlePost.id}`,
                       }}
@@ -281,7 +282,9 @@ const Post = () => {
                     <ListItemIcon>
                       <SendIcon />
                     </ListItemIcon>
-                    <button onClick={() => deletePost(routerid)}>記事を削除する</button>
+                    <button onClick={() => deletePost(routerid)} id='delete-post'>
+                      記事を削除する
+                    </button>
                   </ListItemButton>
                 </List>
               </>

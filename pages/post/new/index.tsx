@@ -183,12 +183,11 @@ export default function Post() {
           <ImageUpload
             onChange={uploadImage}
             createObjectURL={createObjectURL}
-            text=''
             createcontextObjectURL=''
           />
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label' htmlFor='input-title' className='mb-2'>
-              タイトル（最大20文字)
+              タイトル（最大20文字）
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
               </span>
@@ -205,7 +204,7 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <FormLabel id='demo-radio-buttons-group-label'>
+            <FormLabel id='managa-name'>
               作品名
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
@@ -220,16 +219,16 @@ export default function Post() {
               render={({ field }) => (
                 <RadioGroup
                   id='managa-name'
-                  aria-labelledby='demo-radio-buttons-group-label'
+                  aria-labelledby='managa-name'
                   name={field.name}
                   value={field.value}
                 >
-                  {FORM_CATEGORIES.map((categori) => (
+                  {FORM_CATEGORIES.map((category) => (
                     <FormControlLabel
-                      key={categori.id}
-                      value={categori.value}
+                      key={category.id}
+                      value={category.value}
                       control={<Radio />}
-                      label={categori.label}
+                      label={category.label}
                       {...register('categori')}
                     />
                   ))}
@@ -239,7 +238,7 @@ export default function Post() {
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
           <div className='my-8'>
-            <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
+            <FormLabel id='tags'>タグ</FormLabel>
             <TagsInput
               value={tags}
               onChange={setTags}
@@ -248,7 +247,7 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <FormLabel id='demo-radio-buttons-group-label'>
+            <FormLabel id='netabare'>
               ネタバレについて
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
@@ -283,7 +282,7 @@ export default function Post() {
           </div>
           <div className='my-8'>
             <FormLabel id='demo-radio-buttons-group-label'>
-              内容(最大500文字）
+              内容（最大500文字）
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
               </span>

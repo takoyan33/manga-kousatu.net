@@ -135,9 +135,7 @@ const PostEdit = () => {
                 <div>
                   <h2 className='my-12 text-center text-2xl font-semibold'>考察記事の編集</h2>
                   <div>
-                    <FormLabel id='demo-radio-buttons-group-label'>
-                      サムネイル<span className='text-red-600'>*</span>
-                    </FormLabel>
+                    <p>現在のサムネイル</p>
                     <Image
                       className='m-auto max-w-sm text-center'
                       height={400}
@@ -146,7 +144,7 @@ const PostEdit = () => {
                       alt='サムネイル'
                     />
                     {!post?.downloadURL && <p className='text-center'>サムネイルがありません</p>}
-                    <ImageUpload onChange={uploadImage} createObjectURL={createObjectURL} text='' />
+                    <ImageUpload onChange={uploadImage} createObjectURL={createObjectURL} />
                     <input
                       id='file-input'
                       className='hidden'
@@ -156,13 +154,16 @@ const PostEdit = () => {
                       onChange={uploadImage}
                     />
                   </div>
-                  <FormLabel id='demo-radio-buttons-group-label'>
-                    タイトル<span className='text-red-600'>*</span>
+                  <FormLabel id='title' htmlFor='input-title'>
+                    タイトル（最大20文字）
+                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                      必須
+                    </span>
                   </FormLabel>
                 </div>
                 <div>
                   <input
-                    id='outlined-basic'
+                    id='title'
                     placeholder='タイトル（最大20文字)'
                     className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                     defaultValue={post?.title}
@@ -171,8 +172,11 @@ const PostEdit = () => {
                   />
                 </div>
                 <div>
-                  <FormLabel id='demo-radio-buttons-group-label'>
-                    作品名<span className='text-red-600'>*</span>
+                  <FormLabel id='managa-name'>
+                    作品名
+                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                      必須
+                    </span>
                   </FormLabel>
                 </div>
                 <p>現在の作品：{post?.category}</p>
@@ -184,34 +188,38 @@ const PostEdit = () => {
                   }}
                   render={({ field }) => (
                     <RadioGroup
-                      aria-labelledby='demo-radio-buttons-group-label'
+                      id='managa-name'
+                      aria-labelledby='managa-name'
                       name={field.value}
                       onChange={(e) => {
                         field.onChange(e)
                         setCategori(e.target.value)
                       }}
                     >
-                      {FORM_CATEGORIES.map((Categori) => (
+                      {FORM_CATEGORIES.map((category) => (
                         <FormControlLabel
-                          key={Categori.id}
-                          value={Categori.value}
+                          key={category.id}
+                          value={category.value}
                           control={<Radio />}
-                          label={Categori.label}
+                          label={category.label}
                         />
                       ))}
                     </RadioGroup>
                   )}
                 />
 
-                <FormLabel id='demo-radio-buttons-group-label'>タグ</FormLabel>
+                <FormLabel id='tags'>タグ</FormLabel>
                 <TagsInput
                   value={selected}
                   onChange={setSelected}
-                  name='selected'
+                  name='tags'
                   placeHolder='タグを追加してください'
                 />
-                <FormLabel id='demo-radio-buttons-group-label'>
-                  ネタバレについて<span className='text-red-600'>*</span>
+                <FormLabel id='netabare'>
+                  ネタバレについて
+                  <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                    必須
+                  </span>
                 </FormLabel>
                 <p>現在のネタバレ：{post?.netabare}</p>
                 <Controller
@@ -243,23 +251,29 @@ const PostEdit = () => {
                   )}
                 />
                 <div>
-                  <FormLabel id='demo-radio-buttons-group-label'>
-                    内容<span className='text-red-600'>*</span>(最大500文字）
+                  <FormLabel id='content'>
+                    内容（最大500文字）
+                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                      必須
+                    </span>
                   </FormLabel>
                 </div>
                 <p>現在の文章</p>
                 <textarea
                   placeholder='内容(最大500文字）'
                   className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
-                  id='filled-multiline-static'
+                  id='content'
                   rows={14}
                   defaultValue={post?.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
-                <Richedita onChange={handleEditorChange} value={post?.context} />
+                {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
 
                 <FormLabel id='demo-radio-buttons-group-label'>
-                  公開について<span className='text-red-600'>*</span>
+                  公開について
+                  <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
+                    必須
+                  </span>
                 </FormLabel>
                 <p>現在の公開：{post?.display ? <p>公開</p> : <p>下書き</p>}</p>
 

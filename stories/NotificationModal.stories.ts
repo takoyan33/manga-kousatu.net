@@ -18,7 +18,7 @@ const meta: Meta<typeof NotificationModal> = {
 export default meta
 type Story = StoryObj<typeof NotificationModal>
 
-export const closed: Story = {}
+export const closedNotificationModal: Story = {}
 
 // export const opened: Story = {
 // args: {

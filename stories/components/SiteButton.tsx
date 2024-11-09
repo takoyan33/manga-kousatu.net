@@ -3,11 +3,14 @@ import Link from 'next/link'
 import { DOMAttributes } from 'react'
 
 interface SiteButtonProps {
+  id?: string
   href?: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
   text?: string
   className?: string
   disabled?: boolean
+  varient?: 'outlined' | 'contained'
+  google?: boolean
 }
 
 export const SiteButton = ({
@@ -16,16 +19,19 @@ export const SiteButton = ({
   text = 'ボタン',
   className,
   disabled,
+  varient = 'outlined',
+  google,
 }: SiteButtonProps) => {
   return (
     <div className={className}>
       <Link href={href}>
         <Button
-          variant='outlined'
+          variant={varient}
           onClick={onClick}
           disabled={disabled}
           type='submit'
           sx={{ textTransform: 'none' }}
+          className={google ? 'google-btn' : 'incomplete'}
         >
           {text}
         </Button>

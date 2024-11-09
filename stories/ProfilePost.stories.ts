@@ -22,4 +22,10 @@ const meta: Meta<typeof ProfilePost> = {
 export default meta
 type Story = StoryObj<typeof ProfilePost>
 
-export const normal: Story = {}
+export const normalProfilePost: Story = {}
+
+export const noImageProfilePost: Story = {
+  args: {
+    profileImage: '',
+  },
+}

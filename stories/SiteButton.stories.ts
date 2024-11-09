@@ -7,9 +7,9 @@ import { SiteButton } from './components/SiteButton'
 const meta: Meta<typeof SiteButton> = {
   title: 'ui/SiteButton',
   component: SiteButton,
-  parameters: {
-    layout: 'centered',
-  },
+  // parameters: {
+  //   layout: 'centered',
+  // },
   tags: ['autodocs'],
   argTypes: {},
   args: { onClick: fn() },
@@ -18,14 +18,25 @@ const meta: Meta<typeof SiteButton> = {
 export default meta
 type Story = StoryObj<typeof SiteButton>
 
-export const normal: Story = {
-  // args: {
-  //   text: 'SiteButton',
-  // },
+export const outlinedButton: Story = {}
+export const containedButton: Story = {
+  args: {
+    varient: 'contained',
+  },
 }
-
-export const disabled: Story = {
+export const disabledButton: Story = {
   args: {
     disabled: true,
+  },
+}
+export const centerOutlinedButton: Story = {
+  args: {
+    className: 'text-center',
+  },
+}
+
+export const googleContainedButton: Story = {
+  args: {
+    google: true,
   },
 }

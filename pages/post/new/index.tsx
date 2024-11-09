@@ -111,7 +111,8 @@ export default function Post() {
       console.log('contextSetImage', contextSetImage)
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
-      const postRef = await doc(database, 'posts', (posts.length + 1).toString())
+      const randomSuffix = Math.floor(Math.random() * 1000)
+      const postRef = await doc(database, 'posts', `${posts.length + 1}-${randomSuffix}`)
       await setDoc(postRef, {
         title: data.title,
         context: html,
@@ -186,7 +187,7 @@ export default function Post() {
             createcontextObjectURL=''
           />
           <div className='my-8'>
-            <FormLabel id='demo-radio-buttons-group-label' htmlFor='input-title' className='mb-2'>
+            <FormLabel id='label-title' htmlFor='title' className='mb-2'>
               タイトル（最大20文字）
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
@@ -204,7 +205,7 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <FormLabel id='managa-name'>
+            <FormLabel id='label-managa-name'>
               作品名
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
@@ -238,7 +239,7 @@ export default function Post() {
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
           <div className='my-8'>
-            <FormLabel id='tags'>タグ</FormLabel>
+            <FormLabel id='label-tags'>タグ</FormLabel>
             <TagsInput
               value={tags}
               onChange={setTags}
@@ -281,7 +282,7 @@ export default function Post() {
             {errors.netabare && <p>{errors.netabare.message}</p>}
           </div>
           <div className='my-8'>
-            <FormLabel id='demo-radio-buttons-group-label'>
+            <FormLabel id='label-content'>
               内容（最大500文字）
               <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                 必須
@@ -311,7 +312,7 @@ export default function Post() {
             />
           </div>
 
-          <FormLabel id='demo-radio-buttons-group-label'>
+          <FormLabel id='label-display'>
             公開について
             <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
               必須

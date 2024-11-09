@@ -154,7 +154,7 @@ const PostEdit = () => {
                       onChange={uploadImage}
                     />
                   </div>
-                  <FormLabel id='title' htmlFor='input-title'>
+                  <FormLabel id='label-title' htmlFor='title'>
                     タイトル（最大20文字）
                     <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                       必須
@@ -172,7 +172,7 @@ const PostEdit = () => {
                   />
                 </div>
                 <div>
-                  <FormLabel id='managa-name'>
+                  <FormLabel id='label-managa-name'>
                     作品名
                     <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                       必須
@@ -208,7 +208,7 @@ const PostEdit = () => {
                   )}
                 />
 
-                <FormLabel id='tags'>タグ</FormLabel>
+                <FormLabel id='label-tags'>タグ</FormLabel>
                 <TagsInput
                   value={selected}
                   onChange={setSelected}
@@ -251,7 +251,7 @@ const PostEdit = () => {
                   )}
                 />
                 <div>
-                  <FormLabel id='content'>
+                  <FormLabel id='label-content'>
                     内容（最大500文字）
                     <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                       必須
@@ -269,7 +269,7 @@ const PostEdit = () => {
                 />
                 {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
 
-                <FormLabel id='demo-radio-buttons-group-label'>
+                <FormLabel id='label-display'>
                   公開について
                   <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
                     必須
@@ -324,7 +324,12 @@ const PostEdit = () => {
                   /> */}
                 {/* </div> */}
 
-                <SiteButton onClick={updatePost} text='更新する' className='text-center' />
+                <SiteButton
+                  onClick={updatePost}
+                  text='更新する'
+                  className='text-center'
+                  id='submit'
+                />
               </Stack>
             </div>
           </div>

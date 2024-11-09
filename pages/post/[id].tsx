@@ -106,20 +106,20 @@ const Post = () => {
   const deletePost = (routerId) => {
     //data.idを送っているのでidを受け取る
     const deletePost = doc(database, 'posts', routerId.toString())
-    const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
+    // const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
-    if (checkSaveFlg) {
-      deleteDoc(deletePost)
-        .then(() => {
-          successNotify('記事を削除しました')
-          setTimeout(() => {
-            router.push('/top')
-          }, 2000)
-        })
-        .catch(() => {
-          errorNotify('失敗しました')
-        })
-    }
+    // if (checkSaveFlg) {
+    deleteDoc(deletePost)
+      .then(() => {
+        successNotify('記事を削除しました')
+        setTimeout(() => {
+          router.push('/')
+        }, 2000)
+      })
+      .catch(() => {
+        errorNotify('失敗しました')
+      })
+    // }
   }
 
   //いいねの追加
@@ -166,12 +166,12 @@ const Post = () => {
       comment: data.comment,
       userid: user.uid,
       postid: routerid,
-      username: myUser.userName,
+      username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
       createTime: newDate,
       timestamp: serverTimestamp(),
       userEmail: user.email,
       isEdit: false,
-      userPhoto: myUser.profileImage,
+      userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       id: routerid + (comments.length + 1).toString(),
     })
       .then(() => {
@@ -188,10 +188,9 @@ const Post = () => {
     const commentDate = doc(database, 'comments', commentId)
     updateDoc(commentDate, {
       comment: comment,
-      userid: user.uid,
-      username: myUser.userName,
+      username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
       userEmail: user.email,
-      userPhoto: myUser.profileImage,
+      userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       isEdit: true,
     })
       .then(() => {
@@ -445,38 +444,31 @@ const Post = () => {
             {singlePost?.likes}
           </div>
 
-          {user && singlePost?.likesEmail && user.email == singlePost?.email ? (
+          {singlePost?.likesEmail && user?.email == singlePost?.email && (
             <p>自分の投稿なのでいいねできません</p>
+          )}
+          {user && singlePost?.likesEmail?.includes(user.email) ? (
+            <div>
+              <p>いいね済み</p>
+              <button
+                className='my-2 inline'
+                onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
+                id='delete-favorite'
+              >
+                <span className='py-4 text-pink-400 hover:text-pink-700'>
+                  <FavoriteIcon />
+                  いいね解除
+                </span>
+              </button>
+            </div>
           ) : (
-            <>
-              {singlePost?.likesEmail && user ? (
-                singlePost?.likesEmail.includes(user.email) ? (
-                  <>
-                    <p>いいね済み</p>
-                    <button
-                      className='my-2 inline'
-                      onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
-                      id='delete-favorite'
-                    >
-                      <span className='py-4 text-pink-400 hover:text-pink-700'>
-                        <FavoriteIcon />
-                        いいね解除する
-                      </span>
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
-                    id='add-favorite'
-                  >
-                    <FavoriteIconAnim on={on} />
-                    <span>いいねする</span>
-                  </button>
-                )
-              ) : (
-                <></>
-              )}
-            </>
+            <button
+              onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
+              id='add-favorite'
+            >
+              <FavoriteIconAnim on={on} />
+              <span>いいねする</span>
+            </button>
           )}
 
           {singlePost &&

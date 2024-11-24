@@ -1,5 +1,7 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
+import { A11y, Navigation, Pagination, Scrollbar } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { POST_CATEGORIES, CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
 import { useFetchPosts, useGetOldPosts, useGetNewPosts } from 'layouts/hooks'
@@ -43,6 +45,8 @@ export default function Index() {
     },
   }
 
+  const [firstSwiper, setFirstSwiper] = useState(0)
+
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
@@ -52,6 +56,11 @@ export default function Index() {
         spaceBetween={10}
         slidesPerView={3.5}
         breakpoints={breakpoints}
+        modules={[Navigation]}
+        navigation={{
+          nextEl: '.next-button-recommend',
+          prevEl: '.prev-button-recommend',
+        }}
       >
         {oldPostData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
@@ -80,43 +89,89 @@ export default function Index() {
 
       <TopTitle title='新着記事' url='/top/new' />
 
-      <Swiper
-        className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
-        spaceBetween={10}
-        slidesPerView={3.5}
-        breakpoints={breakpoints}
-      >
-        {postData.length === 0 ? (
-          <p className='my-2 text-center'>記事がありません。</p>
-        ) : (
-          postData.map((post) => (
-            <SwiperSlide key={post.id}>
-              <CardPost
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
-                id={post.id}
-                photoURL={post.photoURL}
-                likes={post.likes}
-                selected={post.selected}
-                userid={post.userid}
-              />
-            </SwiperSlide>
-          ))
-        )}
-      </Swiper>
+      <div className='m-auto flex items-center justify-center md:flex-row'>
+        <div className='prev-button w-20 cursor-pointer'>
+          <Image
+            src='/images/prev-arrow.svg'
+            width={20}
+            height={20}
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            className='cursor-pointer'
+            alt='スライドショーのナビゲーション'
+          />
+        </div>
+
+        <Swiper
+          className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
+          spaceBetween={10}
+          slidesPerView={3.5}
+          modules={[Navigation]}
+          breakpoints={breakpoints}
+          onSwiper={(swiper) => {
+            setFirstSwiper(swiper.activeIndex)
+          }}
+          onSlideChange={(swiper) => {
+            setFirstSwiper(swiper.activeIndex)
+          }}
+          navigation={{
+            nextEl: '.next-button',
+            prevEl: '.prev-button',
+          }}
+        >
+          {postData.length === 0 ? (
+            <p className='my-2 text-center'>記事がありません。</p>
+          ) : (
+            postData.map((post) => (
+              <SwiperSlide key={post.id}>
+                <CardPost
+                  downloadURL={post.downloadURL}
+                  title={post.title}
+                  category={post.category}
+                  netabare={post.netabare}
+                  context={post.context}
+                  createTime={post.createTime}
+                  displayName={post.displayName}
+                  email={post.email}
+                  id={post.id}
+                  photoURL={post.photoURL}
+                  likes={post.likes}
+                  selected={post.selected}
+                  userid={post.userid}
+                />
+              </SwiperSlide>
+            ))
+          )}
+        </Swiper>
+
+        <div className='next-button w-20 cursor-pointer'>
+          <Image
+            src='/images/next-arrow.svg'
+            width={20}
+            height={20}
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+            className='cursor-pointer'
+            alt='スライドショーのナビゲーション'
+          />
+        </div>
+      </div>
 
       <TopTitle title='投稿一覧' url='/top/all' />
       <Swiper
         className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
         spaceBetween={10}
         slidesPerView={3.5}
+        modules={[Navigation]}
         breakpoints={breakpoints}
+        navigation={{
+          nextEl: '.next-button-all',
+          prevEl: '.prev-button-all',
+        }}
       >
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>

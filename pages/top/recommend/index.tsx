@@ -49,7 +49,7 @@ export default function Index() {
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           filteredPosts.map((post) => (
-            <div className='w-1/4' key={post.id}>
+            <div className='w-full md:w-1/4' key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
                 title={post.title}

@@ -49,3 +49,10 @@ a {
   border-radius: 5px;
   transition: 0.5s;
 }
+
+.prev-button,
+.next-button {
+  z-index: 10; /* ボタンを上層に配置 */
+  cursor: pointer; /* カーソルをクリック可能に */
+  pointer-events: auto; /* クリック可能にする */
+}

@@ -73,7 +73,7 @@ export const CardPost = React.memo(
     return (
       <div className='m-auto my-2 hover:opacity-80'>
         <dl>
-          <Link href={`/post/${id}`}>
+          <Link href={`/post/${id}`} className='cursor-pointer'>
             <div className='cardPost-img'>
               <Image
                 className='cardPost-img rounded text-center'

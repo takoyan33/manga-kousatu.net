@@ -146,9 +146,9 @@ export default function LoginAuth() {
           />
           <p className='my-8 text-center'>
             ユーザー未登録の方はこちら
-            <Link href='/register'>
-              <span className='text-blue-500 underline'>新規登録</span>
-            </Link>
+            <span className='cursor-pointer text-blue-500 underline'>
+              <Link href='/register'>新規登録</Link>
+            </span>
           </p>
         </form>
       </div>

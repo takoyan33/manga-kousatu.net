@@ -46,6 +46,8 @@ export default function Index() {
   }
 
   const [firstSwiper, setFirstSwiper] = useState(0)
+  const [firstSwiperAll, setFirstSwiperAll] = useState(0)
+  const [firstSwiperNew, setFirstSwiperNew] = useState(0)
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
@@ -53,17 +55,19 @@ export default function Index() {
       <TopTitle title='おすすめ記事' url='/top/recommend' />
       <div className='m-auto flex items-center justify-center md:flex-row'>
         <div className='prev-button-recommend mr-0 w-48 cursor-pointer md:mr-4 md:w-20'>
-          <Image
-            src='/images/prev-arrow.svg'
-            width={20}
-            height={20}
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-            className='cursor-pointer'
-            alt='スライドショーのナビゲーション'
-          />
+          {firstSwiper !== 0 && (
+            <Image
+              src='/images/prev-arrow.svg'
+              width={20}
+              height={20}
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
+          )}
         </div>
         <Swiper
           className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
@@ -71,6 +75,12 @@ export default function Index() {
           slidesPerView={3.5}
           breakpoints={breakpoints}
           modules={[Navigation]}
+          onSwiper={(swiper) => {
+            setFirstSwiper(swiper.activeIndex)
+          }}
+          onSlideChange={(swiper) => {
+            setFirstSwiper(swiper.activeIndex)
+          }}
           navigation={{
             nextEl: '.next-button-recommend',
             prevEl: '.prev-button-recommend',
@@ -120,17 +130,19 @@ export default function Index() {
 
       <div className='m-auto flex items-center justify-center md:flex-row'>
         <div className='prev-button mr-4 w-48 cursor-pointer md:w-20'>
-          <Image
-            src='/images/prev-arrow.svg'
-            width={20}
-            height={20}
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-            className='cursor-pointer'
-            alt='スライドショーのナビゲーション'
-          />
+          {firstSwiperAll !== 0 && (
+            <Image
+              src='/images/prev-arrow.svg'
+              width={20}
+              height={20}
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
+          )}
         </div>
 
         <Swiper
@@ -140,10 +152,10 @@ export default function Index() {
           modules={[Navigation]}
           breakpoints={breakpoints}
           onSwiper={(swiper) => {
-            setFirstSwiper(swiper.activeIndex)
+            setFirstSwiperAll(swiper.activeIndex)
           }}
           onSlideChange={(swiper) => {
-            setFirstSwiper(swiper.activeIndex)
+            setFirstSwiperAll(swiper.activeIndex)
           }}
           navigation={{
             nextEl: '.next-button',
@@ -193,17 +205,19 @@ export default function Index() {
       <TopTitle title='投稿一覧' url='/top/all' />
       <div className='m-auto flex items-center justify-center md:flex-row'>
         <div className='prev-button-all mr-4 w-48 cursor-pointer md:w-20'>
-          <Image
-            src='/images/prev-arrow.svg'
-            width={20}
-            height={20}
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-            className='cursor-pointer'
-            alt='スライドショーのナビゲーション'
-          />
+          {firstSwiperNew !== 0 && (
+            <Image
+              src='/images/prev-arrow.svg'
+              width={20}
+              height={20}
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
+          )}
         </div>
         <Swiper
           className='m-auto flex flex-col flex-wrap justify-center  md:flex-row'
@@ -211,6 +225,12 @@ export default function Index() {
           slidesPerView={3.5}
           modules={[Navigation]}
           breakpoints={breakpoints}
+          onSwiper={(swiper) => {
+            setFirstSwiperNew(swiper.activeIndex)
+          }}
+          onSlideChange={(swiper) => {
+            setFirstSwiperNew(swiper.activeIndex)
+          }}
           navigation={{
             nextEl: '.next-button-all',
             prevEl: '.prev-button-all',

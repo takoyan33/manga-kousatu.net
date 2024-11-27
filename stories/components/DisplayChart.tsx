@@ -133,7 +133,7 @@ export const DisplayChart = React.memo(() => {
   }
 
   type MangaData = {
-    name: string
+    name: 'ONE PIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
     value: number
   }
 

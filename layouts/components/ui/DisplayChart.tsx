@@ -1,4 +1,3 @@
-import { deleteUser } from 'firebase/auth'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -113,25 +112,8 @@ export const DisplayChart = React.memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // const deleteuser = async () => {
-  //   //userを削除する
-  //   if (user) {
-  //     deleteUser(user)
-  //       //user削除
-  //       .then(() => {
-  //         localStorage.removeItem('Token')
-  //         //tokenを削除
-  //         alert('退会しました。TOP画面に戻ります。')
-  //         router.push('/top')
-  //       })
-  //       .catch((error) => {
-  //         console.log(error)
-  //       })
-  //   }
-  // }
-
   type MangaData = {
-    name: string
+    name: 'ONE PIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
     value: number
   }
 

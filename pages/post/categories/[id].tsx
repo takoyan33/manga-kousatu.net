@@ -196,7 +196,7 @@ const Details = ({ post }) => {
     <>
       <CommonHead />
       <p className='my-4'>
-        <Link href='/top'>トップ</Link> ＞ 投稿記事 ＞ カテゴリ ＞{post.fields.title.stringValue}
+        <Link href='/'>トップ</Link> ＞ 投稿記事 ＞ カテゴリ ＞{post.fields.title.stringValue}
       </p>
       <h1 className='my-12 text-left text-2xl font-semibold'>{post.fields.title.stringValue}</h1>
       <div className='m-auto my-10 flex justify-center'>

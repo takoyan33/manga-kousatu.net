@@ -1,5 +1,5 @@
 export interface GetPost {
-  category: string
+  category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   context: string
   contextImage: string
   createTime: string
@@ -23,7 +23,7 @@ export interface SingleGetPostParams {
   downloadURL: string
   id: string
   title: string
-  category: string
+  category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   netabare: string
   context: string
   email: string

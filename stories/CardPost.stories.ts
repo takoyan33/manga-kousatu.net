@@ -17,7 +17,7 @@ const meta: Meta<typeof CardPost> = {
     id: '1',
     likes: 10,
     title: 'タイトル',
-    category: 'ボタン',
+    category: '呪術廻戦',
     netabare: 'ボタン',
     createTime: '2024-01-01T00:00:00.000Z',
     userid: 'ボタン',

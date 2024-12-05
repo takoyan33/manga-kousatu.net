@@ -8,7 +8,7 @@ import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
 import { auth } from '../../../firebaseConfig'
 import { postImage } from 'layouts/api/upload'
-import { CommonHead } from 'layouts/components/ui'
+import { NoIndexHead } from 'layouts/components/ui'
 
 export default function Photoedit() {
   const [image, setImage] = useState<string>()
@@ -58,7 +58,7 @@ export default function Photoedit() {
 
   return (
     <div>
-      <CommonHead />
+      <NoIndexHead />
 
       <h2 className='my-12 text-center text-2xl font-semibold'>プロフィール画像の編集</h2>
 

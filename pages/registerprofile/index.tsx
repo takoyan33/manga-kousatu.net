@@ -19,7 +19,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { SiteLabel } from 'layouts/components/text'
-import { CommonHead } from 'layouts/components/ui'
+import { NoIndexHead } from 'layouts/components/ui'
 
 export default function RegisterProfile() {
   const [selected, setSelected] = useState<string[]>(['ワンピース'])
@@ -84,7 +84,7 @@ export default function RegisterProfile() {
 
   return (
     <div>
-      <CommonHead />
+      <NoIndexHead />
 
       <Stack component='form' className='m-auto' noValidate spacing={2} sx={{ width: '38ch' }}>
         <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール登録</h2>

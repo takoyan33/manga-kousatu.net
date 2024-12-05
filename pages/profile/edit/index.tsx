@@ -13,7 +13,7 @@ import { postImage } from 'layouts/api/upload'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { SiteLabel } from 'layouts/components/text'
-import { CommonHead } from 'layouts/components/ui'
+import { NoIndexHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { useGetMyUser } from 'layouts/hooks'
 import { GetUser } from 'types/user'
@@ -87,7 +87,7 @@ export default function Edit() {
 
   return (
     <div className='m-auto max-w-5xl'>
-      <CommonHead />
+      <NoIndexHead />
       <ToastContainer />
       <div key={users?.id}>
         <h2 className='my-12 text-center text-2xl font-semibold'>プロフィールの編集</h2>

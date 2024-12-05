@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { SiteButton } from '../../layouts/components/button'
 import { CommonHead, ProfileId } from 'layouts/components/ui'
 import { DisplayChart } from 'layouts/components/ui'
+import { NoIndexHead } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { useGetMyPosts, useGetMyUser } from 'layouts/hooks'
 import { GetPost } from 'types/post'
@@ -49,7 +50,7 @@ export default function Profile() {
 
   return (
     <>
-      <CommonHead />
+      <NoIndexHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
       {/* <AccountMenu onClick={deleteuser} /> */}
       <ProfileId

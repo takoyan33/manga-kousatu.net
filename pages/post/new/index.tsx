@@ -14,7 +14,7 @@ import { postImage, postContextImage } from 'layouts/api'
 import 'moment/locale/ja'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import ImageUpload from 'layouts/utils/ImageUpload'
 import ImageUploadContext from 'layouts/utils/ImageUploadContext'
@@ -24,8 +24,8 @@ import { postsRef } from 'layouts/utils/post'
 // フォームの型
 interface RegisterPostParams {
   title: string
-  categori: string
-  netabare: string
+  categori: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
+  netabare: 'ネタバレ有' | 'ネタバレ無' | '不明'
   context: string
   display: boolean
 }
@@ -169,7 +169,7 @@ export default function Post() {
   }
   return (
     <div>
-      <CommonHead />
+      <NoIndexHead />
       <ToastContainer />
       <h2 className='my-12 text-center text-2xl font-semibold'>考察記事の投稿</h2>
       <Box

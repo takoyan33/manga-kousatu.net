@@ -14,7 +14,7 @@ import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import ImageUpload from 'layouts/utils/ImageUpload'
 // import { GetPost } from 'types/post'
 
@@ -114,7 +114,7 @@ const PostEdit = () => {
 
   return (
     <>
-      <CommonHead />
+      <NoIndexHead />
 
       <div className='m-auto max-w-5xl'>
         <div>

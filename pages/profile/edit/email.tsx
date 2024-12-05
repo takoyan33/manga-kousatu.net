@@ -6,6 +6,7 @@ import { getDocs } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { CommonHead } from 'layouts/components/ui'
+import { NoIndexHead } from 'layouts/components/ui'
 import { postsRef } from 'layouts/utils/post'
 
 export default function Emaildedit() {
@@ -45,7 +46,7 @@ export default function Emaildedit() {
 
   return (
     <div>
-      <CommonHead />
+      <NoIndexHead />
       <h2 className='my-5'>メールアドレスの編集</h2>
 
       <p className='my-5'>メールアドレス： {user && <span>{user.email}</span>}</p>

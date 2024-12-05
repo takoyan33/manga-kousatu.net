@@ -14,7 +14,7 @@ import { postImage, postContextImage } from 'layouts/api'
 import 'moment/locale/ja'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import ImageUpload from 'layouts/utils/ImageUpload'
 import ImageUploadContext from 'layouts/utils/ImageUploadContext'
@@ -170,7 +170,7 @@ export default function Post() {
   }
   return (
     <div>
-      <CommonHead />
+      <NoIndexHead />
       <ToastContainer />
       <h2 className='my-12 text-center text-2xl font-semibold'>投稿のプレビュー</h2>
       <Box

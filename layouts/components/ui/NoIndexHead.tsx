@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 
 // eslint-disable-next-line react/display-name
-export const CommonHead: React.VFC = React.memo(() => {
+export const NoIndexHead: React.VFC = React.memo(() => {
   const title = 'Manga Study'
   const description = 'Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。'
   const url = 'https://manga-kousatu-net.vercel.app/'
@@ -12,6 +12,7 @@ export const CommonHead: React.VFC = React.memo(() => {
   return (
     <Head>
       <title>Manga Study</title>
+      <meta name='robots' content='noindex' />
       <meta name='viewport' content='width=device-width,initial-scale=1.0' />
       <meta name='description' content={description} />
       <meta property='og:url' content={url} />

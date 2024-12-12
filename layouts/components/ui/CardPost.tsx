@@ -51,7 +51,7 @@ export const CardPost = React.memo(
     }, [])
 
     return (
-      <div className='m-auto my-2 hover:opacity-80'>
+      <div className='m-auto my-2 mx-4 hover:opacity-80'>
         <dl>
           <Link href={`/post/${id}`} className='cursor-pointer'>
             <div className='cardPost-img'>
@@ -85,14 +85,14 @@ export const CardPost = React.memo(
                     src={users?.profileImage}
                   />
                 </dl>
-                <dl className='ml-1 mt-1'>
+                <dl className='ml-1 mt-1 text-sm'>
                   {users?.userName ? users?.userName : 'ユーザー名未設定'}
                   <span className=' ml-2 text-pink-400'>
                     <FavoriteIcon />
                   </span>
-                  <span className='ml-1'>{likes}</span>
+                  <span className='ml-1 text-sm'>{likes}</span>
                 </dl>
-                <dl className='ml-2 mt-1 text-gray-600'>{FixDaysAgo(createTime)}</dl>
+                <span className='ml-2 mt-1 text-sm text-gray-600'>{FixDaysAgo(createTime)}</span>
               </div>
             </div>
           </div>

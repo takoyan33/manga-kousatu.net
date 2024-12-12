@@ -1,0 +1,44 @@
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+
+interface BreadcrumbsParams {
+  secondTitle: string
+  secondUrl?: string
+  thirdTitle?: string
+  thirdUrl?: string
+}
+
+// eslint-disable-next-line react/display-name
+export const Breadcrumbs = React.memo(
+  ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
+    return (
+      <div className='flex'>
+        <Link href='/'>トップ</Link>
+        {secondTitle && (
+          <span>
+            <div className='w-20 cursor-pointer md:ml-4 md:w-20'>
+              <Image
+                src='/images/next-arrow.svg'
+                width={20}
+                height={20}
+                style={{
+                  width: '30%',
+                  height: 'auto',
+                }}
+                className='cursor-pointer'
+                alt='スライドショーのナビゲーション'
+              />
+            </div>
+          </span>
+        )}
+        {secondTitle && <Link href={secondUrl || '/'}>{secondTitle}</Link>}
+        {thirdTitle && (
+          <span>
+            ＞<Link href={thirdUrl || '/'}>{thirdTitle}</Link>
+          </span>
+        )}
+      </div>
+    )
+  },
+)

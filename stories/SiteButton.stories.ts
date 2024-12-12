@@ -11,7 +11,33 @@ const meta: Meta<typeof SiteButton> = {
   //   layout: 'centered',
   // },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    id: {
+      // description: 'id',
+    },
+    href: {
+      // description: 'id',
+    },
+    onClick: {
+      description: 'function',
+    },
+    text: {
+      // description: 'id',
+    },
+    className: {
+      // description: 'id',
+    },
+    disabled: {
+      control: { type: 'boolean' },
+      // description: 'id',
+    },
+    varient: {
+      description: 'ボタンのスタイルを枠線ボタン(outlined), 塗りボタン(contained)で選べます',
+    },
+    google: {
+      description: 'googleのロゴが付くかどうかを選択できます',
+    },
+  },
   args: { onClick: fn() },
 }
 

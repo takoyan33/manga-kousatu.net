@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
-import { CommonHead, CardPost, TopTitle, BreadList } from 'layouts/components/ui'
+import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'
 import { useFetchPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
@@ -40,7 +40,7 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
-      <BreadList secondTitle='おすすめ記事' />
+      <Breadcrumbs secondTitle='おすすめ記事' />
       <TopTitle title='おすすめ記事' />
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (

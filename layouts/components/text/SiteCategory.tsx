@@ -3,7 +3,7 @@ import { DOMAttributes, FC, memo, ReactNode } from 'react'
 
 interface CategoryParams {
   href: string
-  text: string
+  text: 'ONE PIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   className: string
 }
 

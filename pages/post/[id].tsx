@@ -34,7 +34,7 @@ import * as yup from 'yup'
 import { database } from 'firebaseConfig'
 import { SiteCategory } from 'layouts/components/text'
 import { successNotify, errorNotify } from 'layouts/components/text'
-import { CommonHead, RecommendCardPost, BreadList } from 'layouts/components/ui'
+import { CommonHead, RecommendCardPost, Breadcrumbs } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -294,7 +294,7 @@ const Post = () => {
           </>
         )}
         <div className='rounded-xl md:border md:p-10'>
-          <BreadList secondTitle='投稿記事' thirdTitle={singlePost?.title} />
+          <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
               {singlePost?.downloadURL && (

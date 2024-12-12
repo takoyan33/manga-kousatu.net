@@ -16,7 +16,7 @@ interface SiteButtonProps {
 export const SiteButton = ({
   href = '',
   onClick,
-  text = 'ボタン',
+  text = '',
   className,
   disabled,
   varient = 'outlined',

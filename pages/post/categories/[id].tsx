@@ -237,7 +237,7 @@ const Details = ({ post }) => {
           </Select>
         </FormControl>
       </div>
-      <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
+      <div className='m-auto flex flex-col flex-wrap justify-start gap-y-4 md:flex-row'>
         {posts
           .filter((post) => {
             if (searchName === '') {
@@ -248,7 +248,7 @@ const Details = ({ post }) => {
           })
           .map((post) => {
             return (
-              <div className='w-1/4' key={post.id}>
+              <div className='w-full md:w-1/4' key={post.id}>
                 <CardPost
                   key={post.id}
                   downloadURL={post.downloadURL}

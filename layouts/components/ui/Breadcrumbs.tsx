@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 
-interface BreadListParams {
+interface BreadcrumbsParams {
   secondTitle: string
   secondUrl?: string
   thirdTitle?: string
@@ -9,8 +9,8 @@ interface BreadListParams {
 }
 
 // eslint-disable-next-line react/display-name
-export const BreadList = React.memo(
-  ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadListParams) => {
+export const Breadcrumbs = React.memo(
+  ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
     return (
       <div>
         <Link href='/'>トップ</Link>

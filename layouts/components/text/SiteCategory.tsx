@@ -14,7 +14,7 @@ export const SiteCategory = memo(({ href, text, className }: CategoryParams) => 
       href={href}
       className={'inline-block rounded border text-center text-sm font-bold' + className}
     >
-      {text}
+      #{text}
     </Link>
   )
 })

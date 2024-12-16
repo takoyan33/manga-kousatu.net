@@ -358,7 +358,7 @@ const Post = () => {
               </div>
               <div className='ml-6 mt-1'>
                 <span className='text-sm'>{users?.userName}</span>
-                <div className=' text-sm text-gray-500'>{users?.bio}</div>
+                <div className='text-sm text-gray-500'>{users?.bio}</div>
               </div>
             </div>
           </Link>
@@ -395,11 +395,11 @@ const Post = () => {
             )}
 
             <span
-              className={`mx-1 mt-1 inline-block rounded-xl border p-1 text-center ${
-                singlePost?.netabare === 'ネタバレ有' ? 'border-red-500' : 'border-gray-700'
+              className={`mx-1 mt-1 inline-block rounded border p-1 text-center text-sm ${
+                singlePost?.netabare === 'spoil' ? 'border-red-500' : 'border-gray-700'
               }`}
             >
-              {singlePost?.netabare}
+              ネタバレ有
             </span>
 
             {/* <div className='mt-2 mb-8'>

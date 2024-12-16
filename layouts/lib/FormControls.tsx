@@ -25,16 +25,16 @@ export const FORM_NETABARE = [
   {
     id: 1,
     label: 'ネタバレ有(漫画・アニメよりも先行している内容の場合）',
-    value: 'ネタバレ有',
+    value: 'spoil',
   },
   {
     id: 2,
     label: 'ネタバレ無',
-    value: 'ネタバレ無',
+    value: 'notSpoil',
   },
   {
     id: 3,
     label: '不明',
-    value: '不明',
+    value: 'unknown',
   },
 ]

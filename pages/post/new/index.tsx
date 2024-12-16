@@ -13,7 +13,7 @@ import { database } from 'firebaseConfig'
 import { postImage, postContextImage } from 'layouts/api'
 import 'moment/locale/ja'
 import { SiteButton } from 'layouts/components/button'
-import { successNotify, errorNotify } from 'layouts/components/text'
+import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
 import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import ImageUpload from 'layouts/utils/ImageUpload'
@@ -187,12 +187,9 @@ export default function Post() {
             createcontextObjectURL=''
           />
           <div className='my-8'>
-            <FormLabel id='label-title' htmlFor='title' className='mb-2'>
-              タイトル（最大20文字）
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </FormLabel>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='タイトル（最大20文字）' required htmlFor='title' />
+            </div>
 
             <TextField
               {...register('title')}
@@ -205,12 +202,9 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <FormLabel id='label-managa-name'>
-              作品名
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </FormLabel>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='作品名' required htmlFor='label-managa-name' />
+            </div>
             <Controller
               name='categori'
               control={control}
@@ -239,7 +233,9 @@ export default function Post() {
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
           <div className='my-8'>
-            <FormLabel id='label-tags'>タグ</FormLabel>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='タグ' required htmlFor='tags' />
+            </div>
             <TagsInput
               value={tags}
               onChange={setTags}
@@ -248,12 +244,9 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <FormLabel id='netabare'>
-              ネタバレについて
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </FormLabel>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
+            </div>
             <Controller
               name='netabare'
               control={control}
@@ -282,18 +275,17 @@ export default function Post() {
             {errors.netabare && <p>{errors.netabare.message}</p>}
           </div>
           <div className='my-8'>
-            <FormLabel id='label-content'>
-              内容（最大500文字）
-              <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                必須
-              </span>
-            </FormLabel>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
+            </div>
 
             <Richedita onChange={handleEditorChange} value='' />
             <p className='my-4 text-right'>現在の文字数：{lengthData && lengthData}</p>
           </div>
           <div className='my-8'>
-            <label htmlFor='other-file-input'>他の写真（最大1枚）</label>
+            <div className='mt-6 mb-2'>
+              <SiteLabel name='他の写真（最大1枚）' htmlFor='label-content' />
+            </div>
 
             <ImageUploadContext
               onChange={uploadToClientContext}
@@ -311,13 +303,7 @@ export default function Post() {
               onChange={uploadToClientContext}
             />
           </div>
-
-          <FormLabel id='label-display'>
-            公開について
-            <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-              必須
-            </span>
-          </FormLabel>
+          <SiteLabel name='公開について' required htmlFor='label-display' />
 
           <Controller
             name='display'

@@ -45,7 +45,7 @@ export const CardPost = React.memo(
             <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
             <div className='flex'>
               <Category category={category} />
-              {netabare === 'ネタバレ有' && (
+              {netabare === 'spoil' && (
                 <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
                   {netabare}
                 </dl>

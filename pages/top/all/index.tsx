@@ -67,13 +67,13 @@ export default function Index() {
     {
       sortId: 1,
       label: 'ネタバレ有',
-      value: 'ネタバレ有',
+      value: 'spoil',
       onClick: () => useGetNetabrePosts(setPostData),
     },
     {
       sortId: 2,
       label: 'ネタバレ無',
-      value: 'ネタバレ無',
+      value: 'notSpoil',
       onClick: () => useGetNoNetabrePosts(setPostData),
     },
   ]

@@ -6,6 +6,7 @@ import React from 'react'
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
+import { SiteSpoil } from 'layouts/components/text'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
 import { SingleGetPostParams } from 'types/post'
 import { GetUser } from 'types/user'
@@ -69,11 +70,7 @@ export const CardPost = React.memo(
             <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
             <div className='flex'>
               <Category category={category} />
-              {netabare === 'ネタバレ有' && (
-                <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
-                  {netabare}
-                </dl>
-              )}
+              <SiteSpoil netabare={netabare} />
             </div>
             <div>
               <div className='m-auto flex py-2'>

@@ -113,12 +113,12 @@ export const DisplayChart = React.memo(() => {
   }, [])
 
   type MangaData = {
-    name: 'ONE PIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
+    name: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
     value: number
   }
 
   const MANGA_DATA: MangaData[] = [
-    { name: 'ONE PIECE', value: onePiece.length },
+    { name: 'ONEPIECE', value: onePiece.length },
     { name: '呪術廻戦', value: kaisen.length },
     { name: 'キングダム', value: kingdom.length },
     { name: '東京リベンジャーズ', value: tokyo.length },

@@ -56,7 +56,7 @@ export const useGetLikePosts = async (setPostData: any) => {
 
 //ネタバレ有りでpostを取得
 export const useGetNetabrePosts = async (setPostData: any) => {
-  const netabarePost = query(postsRef, where('netabare', '==', 'ネタバレ有'))
+  const netabarePost = query(postsRef, where('netabare', '==', 'spoil'))
 
   onSnapshot(netabarePost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
@@ -65,7 +65,7 @@ export const useGetNetabrePosts = async (setPostData: any) => {
 
 //ネタバレなしでpostを取得
 export const useGetNoNetabrePosts = async (setPostData: any) => {
-  const noNetabarePost = query(postsRef, where('netabare', '==', 'ネタバレ無'))
+  const noNetabarePost = query(postsRef, where('netabare', '==', 'notSpoil'))
 
   onSnapshot(noNetabarePost, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))

@@ -3,7 +3,7 @@ import { DOMAttributes, FC, memo, ReactNode } from 'react'
 
 interface CategoryParams {
   href: string
-  text: 'ONE PIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
+  text: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   className: string
 }
 
@@ -14,7 +14,7 @@ export const SiteCategory = memo(({ href, text, className }: CategoryParams) => 
       href={href}
       className={'inline-block rounded border text-center text-sm font-bold' + className}
     >
-      {text}
+      #{text}
     </Link>
   )
 })

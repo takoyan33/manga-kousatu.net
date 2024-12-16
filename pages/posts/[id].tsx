@@ -115,7 +115,7 @@ const Daitails = ({ post }) => {
           {post.fields.categori.stringValue === 'ONEPIECE' && (
             <SiteCategory
               className='m-6 bg-blue-500 p-1  text-white'
-              text='ONE PIECE'
+              text='ONEPIECE'
               href='/post/category/ONEPIECE'
             />
           )}

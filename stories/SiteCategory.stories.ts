@@ -13,7 +13,7 @@ const meta: Meta<typeof SiteCategory> = {
   tags: ['autodocs'],
   argTypes: {},
   args: {
-    text: 'カテゴリ',
+    text: '呪術廻戦',
     href: '/aa/',
     className: 'border border-cyan-500 py-1 px-2 hover:bg-cyan-500 hover:text-white',
   },

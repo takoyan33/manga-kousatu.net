@@ -4,8 +4,8 @@ import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState, useMemo, useCallback } from 'react'
 import Image from 'react-image-resizer'
-import { useGetOtherUser } from '../../../layouts/hooks'
-import { Category } from '../text/Category'
+import { Category } from 'layouts/components/text'
+import { useGetOtherUser } from 'layouts/hooks'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
 import { SingleGetPostParams } from 'types/post'
 import { GetUser } from 'types/user'
@@ -45,7 +45,7 @@ export const RecommendCardPost = React.memo(
           <div className='flex '>
             <h3 className='my-1 mr-3 text-left text-lg font-semibold'>{title}</h3>
             <Category category={category} />
-            {netabare === 'ネタバレ有' ? (
+            {netabare === 'spoil' ? (
               <div>
                 <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
                   {netabare}

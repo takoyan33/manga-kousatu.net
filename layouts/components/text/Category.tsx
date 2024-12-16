@@ -22,7 +22,7 @@ export const Category = React.memo(({ category }: CategoryParams) => {
     <div className='my-1'>
       <SiteCategory
         className={`border ${border} p-1 ${hover}`}
-        text={`#${category}`}
+        text={category}
         href={`/post/categories/${category}`}
       />
     </div>

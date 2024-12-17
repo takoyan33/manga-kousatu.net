@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,18 +13,32 @@ interface BreadcrumbsParams {
 export const Breadcrumbs = React.memo(
   ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
     return (
-      <div>
+      <div className='flex'>
         <Link href='/'>トップ</Link>
         {secondTitle && (
-          <span>
-            ＞ <Link href={secondUrl || '/'}>{secondTitle}</Link>
+          <span className='ml-2 mr-2'>
+            <Image
+              src='/images/next-arrow.svg'
+              width={21}
+              height={21}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
           </span>
         )}
+        {secondTitle && <Link href={secondUrl || '/'}>{secondTitle}</Link>}
         {thirdTitle && (
-          <span>
-            ＞<Link href={thirdUrl || '/'}>{thirdTitle}</Link>
+          <span className='ml-2 mr-2'>
+            <Image
+              src='/images/next-arrow.svg'
+              width={21}
+              height={21}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
           </span>
         )}
+        {thirdTitle && <Link href={thirdUrl || '/'}>{thirdTitle}</Link>}
       </div>
     )
   },

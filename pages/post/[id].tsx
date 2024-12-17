@@ -258,7 +258,7 @@ const Post = () => {
             {user.email === singlePost?.email && (
               <>
                 <List
-                  sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
+                  sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper', zIndex: 0 }}
                   component='nav'
                   aria-labelledby='nested-list-subheader'
                   subheader={
@@ -312,9 +312,14 @@ const Post = () => {
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
+              <button onClick={closeModal} className='text-center'>
+                閉じる
+              </button>
+            </div>
+            <div className='z-20 my-6 flex justify-center'>
               {singlePost?.downloadURL && (
                 <Image
-                  className='m-auto max-w-sm text-center'
+                  className='z-20 m-auto max-w-sm text-center'
                   height={400}
                   width={400}
                   src={singlePost.downloadURL}
@@ -322,11 +327,6 @@ const Post = () => {
                   priority
                 />
               )}
-            </div>
-            <div className='my-6 flex justify-center'>
-              <button onClick={closeModal} className='text-center'>
-                閉じる
-              </button>
             </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>

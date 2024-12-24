@@ -1,17 +1,9 @@
 import AccountCircle from '@mui/icons-material/AccountCircle'
-import {
-  Button,
-  TextField,
-  Stack,
-  Input,
-  InputLabel,
-  InputAdornment,
-  FormControl,
-} from '@mui/material'
+import { TextField, Stack, Input, InputAdornment } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import { setDoc, doc } from 'firebase/firestore'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TagsInput } from 'react-tag-input-component'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
@@ -27,7 +19,6 @@ export default function RegisterProfile() {
   const [username, setUsername] = useState<number>(null)
   const [bio, setBio] = useState<number>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [result, setResult] = useState<string>('')
 
   const router = useRouter()
   const auth = getAuth()
@@ -55,7 +46,6 @@ export default function RegisterProfile() {
     } else {
       result = ''
     }
-    setResult(result)
     const userRef = await doc(database, 'users', user.uid)
     //写真のurlをセットする
     await setDoc(userRef, {

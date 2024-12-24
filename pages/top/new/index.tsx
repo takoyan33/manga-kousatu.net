@@ -1,4 +1,3 @@
-import { getAuth } from 'firebase/auth'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'

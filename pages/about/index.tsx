@@ -1,5 +1,4 @@
-import { COPY_WRITES, CommonHead } from '../../layouts/components/ui'
-import { POST_CATEGORIES, CardPost, TopTitle } from 'layouts/components/ui'
+import { COPY_WRITES, CommonHead, TopTitle } from '../../layouts/components/ui'
 
 export default function About() {
   return (

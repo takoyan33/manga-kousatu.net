@@ -1,4 +1,3 @@
-import Grid from '@material-ui/core/Grid'
 import { getAuth } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'

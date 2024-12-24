@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Stack, FormLabel } from '@mui/material'
 import { doc, getDoc, updateDoc } from 'firebase/firestore'
-import dynamic from 'next/dynamic'
+// import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -23,7 +23,7 @@ const schema = yup.object({
 })
 
 const PostEdit = () => {
-  const [ID, setID] = useState<string>(null)
+  // const [ID, setID] = useState<string>(null)
   const [image, setImage] = useState<number>(null)
   const [context, setContext] = useState<string>('')
   const [categori, setCategori] = useState<string>('')
@@ -31,7 +31,7 @@ const PostEdit = () => {
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   //データベースを取得
   const [post, setPost] = useState<any>()
-  const [lengthData, setPostsLength] = useState<number>(null)
+  // const [lengthData, setPostsLength] = useState<number>(null)
   const [netabare, setNetabare] = useState<string>('')
   const [display, setDisplay] = useState<string>('')
   const [selected, setSelected] = useState<string[]>(['最終回'])
@@ -65,7 +65,7 @@ const PostEdit = () => {
 
   useEffect(() => {
     useUseGetPost()
-    setID(routerid)
+    // setID(routerid)
     setContext(post?.context)
     setPostTitle(post?.title)
   }, [])
@@ -94,23 +94,23 @@ const PostEdit = () => {
       })
   }
 
-  const Richedita = React.useMemo(
-    () =>
-      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
-        loading: () => <p>リッチエディタ is loading</p>,
-        ssr: false,
-      }),
-    [],
-  )
+  // const Richedita = React.useMemo(
+  //   () =>
+  //     dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+  //       loading: () => <p>リッチエディタ is loading</p>,
+  //       ssr: false,
+  //     }),
+  //   [],
+  // )
 
-  const [plainText, setPlainText] = useState<string>('')
-  const [html, setHtml] = useState<string>('')
+  // const [plainText, setPlainText] = useState<string>('')
+  // const [html, setHtml] = useState<string>('')
 
-  const handleEditorChange = (plainText, html) => {
-    setPlainText(plainText)
-    setHtml(html)
-    setPostsLength(plainText.length)
-  }
+  // const handleEditorChange = (plainText, html) => {
+  //   setPlainText(plainText)
+  //   setHtml(html)
+  //   setPostsLength(plainText.length)
+  // }
 
   return (
     <>

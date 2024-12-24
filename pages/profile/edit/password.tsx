@@ -7,7 +7,7 @@ import { NoIndexHead } from 'layouts/components/ui'
 
 export default function Password() {
   const [email, setEmail] = useState('')
-  const { success, error, passwordReset } = usePasswordReset()
+  const { success, error } = usePasswordReset()
 
   // const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
   //   event.preventDefault()

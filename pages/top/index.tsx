@@ -18,9 +18,15 @@ export default function Top() {
             自由に投稿・閲覧できるwebサイトです。
           </p>
         </div>
-        <div className='w-full md:w-6/12'>
+        <div className='m-auto w-full md:w-6/12'>
           <div className='text-center'>
-            <Image height={200} width={200} src='/images/top-home.png' alt='漫画のイラスト' />
+            <Image
+              height={200}
+              width={200}
+              src='/images/top-home.png'
+              alt='漫画のイラスト'
+              className='m-auto'
+            />
           </div>
         </div>
       </div>
@@ -35,6 +41,7 @@ export default function Top() {
               src='/images/top-1.png'
               alt='漫画のイラスト'
               loading='lazy'
+              className='m-auto'
             />
           </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の投稿</h3>
@@ -51,6 +58,7 @@ export default function Top() {
               src='/images/top-2.png'
               alt='漫画のイラスト'
               loading='lazy'
+              className='m-auto'
             />
           </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>記事の閲覧</h3>
@@ -68,6 +76,7 @@ export default function Top() {
               src='/images/top-3.png'
               alt='漫画のイラスト'
               loading='lazy'
+              className='m-auto'
             />
           </div>
           <h3 className='my-6 text-center text-2xl font-semibold text-sky-600'>コメント機能</h3>
@@ -104,6 +113,7 @@ export default function Top() {
               id='go-index'
               href='/'
               text='記事を見る'
+              varient='contained'
               className='w-50 text-lef m-auto my-2 inline-block'
             />
           </div>
@@ -116,6 +126,7 @@ export default function Top() {
               src='/images/top-search.png'
               alt='漫画のイラスト'
               loading='lazy'
+              className='m-auto'
             />
           </div>
         </div>

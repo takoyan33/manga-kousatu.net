@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import { TextField, Box, FormLabel } from '@mui/material'
+import { TextField, Box } from '@mui/material'
 import { onSnapshot, setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
@@ -42,14 +42,14 @@ const schema = yup.object({
 export default function Post() {
   const [processing, setProcessing] = useState<boolean>(false)
   const [tags, setTags] = useState<string[]>(['最終回'])
-  const [context, setContext] = useState<string>('')
+  // const [context, setContext] = useState<string>('')
   const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState<File | null>(null)
   const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
-  const [userid, setUserId] = useState<string | null>(null)
-  const [photoURL, setPhotoURL] = useState<string>('')
+  // const [userid, setUserId] = useState<string | null>(null)
+  // const [photoURL, setPhotoURL] = useState<string>('')
   const [posts, setPosts] = useState<any[]>([])
   const [lengthData, setPostsLength] = useState<number | null>(null)
   const { user } = useAuthContext()
@@ -108,7 +108,7 @@ export default function Post() {
       const topImage: string = await postImage(image)
       //写真のurlをセットする
       const contextSetImage: string = await postContextImage(contextImage)
-      console.log('contextSetImage', contextSetImage)
+      // console.log('contextSetImage', contextSetImage)
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
       const randomSuffix = Math.floor(Math.random() * 1000)
@@ -136,17 +136,16 @@ export default function Post() {
         .then(() => {
           successNotify('記事投稿ができました！')
           setProcessing(false)
-          setContext('')
-          setPhotoURL('')
+          // setContext('')
+          // setPhotoURL('')
           setTags([])
-          setUserId('')
+          // setUserId('')
           setTimeout(() => {
             router.push('/')
           }, 2000)
         })
-        .catch((err) => {
+        .catch(() => {
           errorNotify('記事投稿に失敗しました！')
-          console.error(err)
         })
     }
   }
@@ -159,11 +158,11 @@ export default function Post() {
       }),
     [],
   )
-  const [plainText, setPlainText] = useState<string>('')
+  // const [plainText, setPlainText] = useState<string>('')
   const [html, setHtml] = useState<string>('')
 
   const handleEditorChange = (plainText: string, html: string): void => {
-    setPlainText(plainText)
+    // setPlainText(plainText)
     setHtml(html)
     setPostsLength(plainText.length)
   }

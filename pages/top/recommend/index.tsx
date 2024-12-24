@@ -6,7 +6,6 @@ import { GetPost } from 'types/post'
 
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
-  const [searchName, setSearchName] = useState<string>('')
   const [loadIndex, setLoadIndex] = useState<number>(9)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
@@ -23,16 +22,7 @@ export default function Index() {
   }, [])
 
   const filterPostData = () => {
-    return postData
-      .filter((post) => {
-        if (searchName === '') {
-          return true
-        } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-          return true
-        }
-        return false
-      })
-      .slice(0, loadIndex)
+    return postData.slice(0, loadIndex)
   }
 
   const filteredPosts = filterPostData()
@@ -45,8 +35,6 @@ export default function Index() {
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
-        ) : filteredPosts.length === 0 ? (
-          <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
           filteredPosts.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>

@@ -38,15 +38,11 @@ const schema = yup.object({
 export default function Post() {
   const [processing, setProcessing] = useState(false)
   const [tags, setTags] = useState(['最終回'])
-  const [context, setContext] = useState('')
   const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState(null)
   const [contextImage, setContextImage] = useState<File[]>([])
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState('')
-  const [userid, setUserId] = useState(null)
-  const [result, setResult] = useState('')
-  const [photoURL, setPhotoURL] = useState('')
   const [posts, setPosts] = useState([])
   const [lengthData, setPostsLength] = useState(null)
   const { user } = useAuthContext()
@@ -112,8 +108,6 @@ export default function Post() {
       //日本時間を代入
       const newDate = new Date().toLocaleString('ja-JP')
       const postRef = await doc(database, 'posts', (posts.length + 1).toString())
-      console.log(display)
-      setResult(result)
       await setDoc(postRef, {
         title: data.title,
         context: html,
@@ -137,10 +131,7 @@ export default function Post() {
         .then(() => {
           successNotify('記事投稿ができました！')
           setProcessing(false)
-          setContext('')
-          setPhotoURL('')
           setTags([])
-          setUserId('')
           setTimeout(() => {
             router.push('/top')
           }, 2000)
@@ -160,11 +151,11 @@ export default function Post() {
       }),
     [],
   )
-  const [plainText, setPlainText] = useState('')
+  // const [plainText, setPlainText] = useState('')
   const [html, setHtml] = useState('')
 
   const handleEditorChange = (plainText: string, html: string) => {
-    setPlainText(plainText)
+    // setPlainText(plainText)
     setHtml(html)
     setPostsLength(plainText.length)
   }

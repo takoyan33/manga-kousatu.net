@@ -1,4 +1,14 @@
 {
-  "extends": ["next/core-web-vitals"],
-  "plugins": ["react", "react-hooks"]
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    // 必要に応じてルールを設定
+    "@typescript-eslint/no-explicit-any": "error" // any型を禁止する場合
+    // 他のルール...
+  }
 }

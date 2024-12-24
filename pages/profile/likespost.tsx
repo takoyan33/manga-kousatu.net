@@ -153,9 +153,9 @@ export default function Profile() {
               label={renderCustomizedLabel}
               isAnimationActive={true}
             >
-              {MANGA_DATA.map((entry, index) => (
+              {MANGA_DATA.map((entry, index) => 
                 <Cell fill={COLORS[index % COLORS.length]} key={index} />
-              ))}
+              )}
             </Pie>
             <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
           </PieChart>

@@ -12,7 +12,6 @@ import { NoIndexHead } from 'layouts/components/ui'
 
 export default function Photoedit() {
   const [image, setImage] = useState<string>()
-  const [result, setResult] = useState('')
   const router = useRouter()
   const [createObjectURL, setCreateObjectURL] = useState<string>(null)
   const user = auth.currentUser
@@ -42,13 +41,11 @@ export default function Photoedit() {
     } else {
       result = ''
     }
-    setResult(result)
     updateProfile(auth.currentUser, {
       photoURL: result,
     })
       .then(() => {
         alert('プロフィールを更新しました。')
-        setResult('')
         router.push('/profile')
       })
       .catch((error) => {

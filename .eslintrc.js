@@ -10,7 +10,7 @@ module.exports = {
   root: true,
   rules: {
     // 使っていない変数を警告しない
-    'no-unused-vars': 'off',
+    'no-unused-vars': 'warn',
     // ReactHookのルールを無効化
     'react-hooks/rules-of-hooks': 'off',
     // インポート文の順序を統一
@@ -28,6 +28,17 @@ module.exports = {
     // Props の型チェックを行う
     'react/prop-types': 'warn',
     // any型の使用を制限
-    '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/no-explicit-any': 'off',
+
+    // console.log() などのconsole系メソッドの使用を警告 (デバッグが終わったら削除を促す)
+    'no-console': 'warn',
+    // debugger文の使用を禁止
+    'no-debugger': 'error',
+    // 三項演算子のネストを禁止 (可読性のため)
+    'no-nested-ternary': 'warn',
+    // 不必要な括弧を警告
+    'no-extra-parens': 'warn',
+    // オブジェクトのキーをクォートで囲む必要がない場合に警告
+    'quote-props': ['warn', 'consistent-as-needed'],
   },
 }

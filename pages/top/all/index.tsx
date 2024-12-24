@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
-import { POST_CATEGORIES, CommonHead, CardPost, Breadcrumbs } from 'layouts/components/ui'
+import { POST_CATEGORIES, CommonHead, CardPost, Breadcrumbs, TopTitle } from 'layouts/components/ui'
 import {
   useFetchPosts,
   useGetOldPosts,
@@ -97,8 +97,8 @@ export default function Index() {
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead />
       <Breadcrumbs secondTitle='投稿一覧' />
-      <h2 className='my-12 text-left text-2xl font-semibold'>投稿一覧</h2>
-      <h2 className='text-left text-xl font-semibold'>カテゴリ</h2>
+      <TopTitle title='投稿一覧' />
+      <h3 className='text-left text-xl font-semibold'>カテゴリ</h3>
       {POST_CATEGORIES.map((category) => {
         // userの情報
         const CategoriesInfo = {
@@ -108,7 +108,7 @@ export default function Index() {
         return (
           <span key={category.id}>
             <span
-              className={`m-6 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white ${category.className}`}
+              className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
             >
               <Link
                 as={`/post/categories/${category.title}`}

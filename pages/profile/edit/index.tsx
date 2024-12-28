@@ -176,7 +176,7 @@ export default function Edit() {
               />
             </div>
             <div className='mb-2'>
-              <SiteLabel name=' 好きな漫画（最大10作品）' htmlFor='likeManga' />
+              <SiteLabel name='好きな漫画（最大10作品）' htmlFor='likeManga' />
             </div>
             <div className='m-auto text-center'>
               <TagsInput

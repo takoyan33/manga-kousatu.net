@@ -84,7 +84,7 @@ export const CardPost = React.memo(
                 </dl>
                 <dl className='ml-1 mt-1 text-sm'>
                   {users?.userName ? users?.userName : 'ユーザー名未設定'}
-                  <span className=' ml-2 text-pink-400'>
+                  <span className='ml-2 text-pink-400'>
                     <FavoriteIcon />
                   </span>
                   <span className='ml-1 text-sm'>{likes}</span>

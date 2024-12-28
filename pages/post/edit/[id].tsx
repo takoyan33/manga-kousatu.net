@@ -237,7 +237,7 @@ const PostEdit = () => {
                   />
                 )}
                 <div className='mb-2'>
-                  <SiteLabel name=' 内容（最大500文字）' required htmlFor='label-content' />
+                  <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
                 </div>
                 <textarea
                   placeholder='内容(最大500文字）'
@@ -250,7 +250,7 @@ const PostEdit = () => {
                 {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
 
                 <div className='mb-2'>
-                  <SiteLabel name=' 公開について' required htmlFor='label-display' />
+                  <SiteLabel name='公開について' required htmlFor='label-display' />
                 </div>
                 {post && (
                   <Controller

@@ -43,6 +43,7 @@ export const DisplayChart = React.memo(() => {
     where('category', '==', 'キングダム'),
   )
 
+  // onepieceのpostの取得
   const getOnePosts = async () => {
     //firestoreからデータ取得
     await getDocs(myOnePosts).then((querySnapshot) => {
@@ -58,6 +59,7 @@ export const DisplayChart = React.memo(() => {
     })
   }
 
+  // onepieceのpostの取得
   const getKaisenPosts = async () => {
     //firestoreからデータ取得
     await getDocs(myKaisenPosts).then((querySnapshot) => {
@@ -72,6 +74,7 @@ export const DisplayChart = React.memo(() => {
     })
   }
 
+  // onepieceのpostの取得
   const getTokyoPosts = async () => {
     //firestoreからデータ取得
     await getDocs(myTokyoPosts).then((querySnapshot) => {
@@ -86,6 +89,7 @@ export const DisplayChart = React.memo(() => {
     })
   }
 
+  // onepieceのpostの取得
   const getKingPosts = async () => {
     //firestoreからデータ取得
     await getDocs(MyKingPosts).then((querySnapshot) => {
@@ -115,6 +119,7 @@ export const DisplayChart = React.memo(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // userの削除
   const deleteuser = async () => {
     //userを削除する
     if (user) {

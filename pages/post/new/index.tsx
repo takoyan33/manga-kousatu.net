@@ -73,12 +73,13 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
+  //投稿のアップロード
   const useFetchPosts = async () => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
-
+  //画像のアップロード
   const uploadImage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
@@ -86,7 +87,7 @@ export default function Post() {
       setCreateObjectURL(URL.createObjectURL(file))
     }
   }
-
+  //他の画像のアップロード
   const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
@@ -97,6 +98,7 @@ export default function Post() {
 
   const router = useRouter()
 
+  //投稿の追加
   const addPost: SubmitHandler<RegisterPostParams> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
@@ -150,6 +152,7 @@ export default function Post() {
     }
   }
 
+  // リッチエディタの追加
   const Richedita = React.useMemo(
     () =>
       dynamic(() => import('../../../layouts/components/ui/Richedita'), {

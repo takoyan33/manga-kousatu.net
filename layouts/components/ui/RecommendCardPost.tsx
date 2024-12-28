@@ -60,7 +60,7 @@ export const RecommendCardPost = React.memo(
               </dl>
               <dl className='ml-1 mt-1'>
                 {users?.userName}
-                <span className=' ml-2 text-pink-400'>
+                <span className='ml-2 text-pink-400'>
                   <FavoriteIcon />
                 </span>
                 <span className='ml-1'>{likes}</span>

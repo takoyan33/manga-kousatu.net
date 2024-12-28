@@ -490,7 +490,7 @@ const Post = () => {
                     <AccountBoxIcon />
                     {users?.userName ? users?.userName : 'ユーザー名未設定'}
                   </span>
-                  <div className=' mt-2 pb-2 text-gray-500'>
+                  <div className='mt-2 pb-2 text-gray-500'>
                     <BorderColorIcon />
                     {users?.bio}
                   </div>

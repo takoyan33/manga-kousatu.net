@@ -14,6 +14,7 @@ interface SiteButtonProps {
 }
 
 export const SiteButton = ({
+  id = '',
   href = '',
   onClick,
   text = 'ボタン',
@@ -26,6 +27,7 @@ export const SiteButton = ({
     <div className={className}>
       <Link href={href}>
         <Button
+          id={id}
           variant={varient}
           onClick={onClick}
           disabled={disabled}

@@ -1,14 +1,15 @@
 import { test } from '@playwright/test'
+import { defineConfig, devices } from '@playwright/test'
 
 export const localhost = 'http://localhost:8080'
 
 export const testUser = {
-  email: 'harrier2070+2@gmail.com',
+  email: 'harrier2070+3@gmail.com',
   password: 'password1234!',
 }
 
 export const otherUser = {
-  email: 'harrier2070+3@gmail.com',
+  email: 'harrier2070+4@gmail.com',
   password: 'password1234!',
 }
 
@@ -195,6 +196,7 @@ test('EditDelete Post Test', async ({ page }) => {
 
   // 記事詳細へ
   await page.waitForTimeout(2000)
+  //ここのidを動的に
   await page.goto(localhost + '/post/10')
   await page.waitForTimeout(2000)
   await page.locator('#edit-post').click()
@@ -213,6 +215,7 @@ test('EditDelete Post Test', async ({ page }) => {
   await page.waitForTimeout(2000)
 
   // 投稿削除
+  //ここのidを動的に
   await page.goto(localhost + '/post/10')
   await page.waitForTimeout(2000)
   await page.locator('#delete-post').click()

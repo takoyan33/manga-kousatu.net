@@ -1,20 +1,21 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
-import { Stack, FormLabel } from '@mui/material'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { Stack } from '@mui/material'
+import { doc, updateDoc } from 'firebase/firestore'
 // import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
-import Image from 'react-image-resizer'
 import { TagsInput } from 'react-tag-input-component'
 import * as yup from 'yup'
 import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api'
 import { SiteButton } from 'layouts/components/button'
+import { SiteLabel } from 'layouts/components/text'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { useGetPost } from 'layouts/hooks'
 import ImageUpload from 'layouts/utils/ImageUpload'
 // import { GetPost } from 'types/post'
 
@@ -26,7 +27,7 @@ const PostEdit = () => {
   // const [ID, setID] = useState<string>(null)
   const [image, setImage] = useState<number>(null)
   const [context, setContext] = useState<string>('')
-  const [categori, setCategori] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   //データベースを取得
@@ -43,6 +44,7 @@ const PostEdit = () => {
     resolver: yupResolver(schema),
   })
 
+  //画像の取得
   const uploadImage = (event) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
@@ -51,25 +53,14 @@ const PostEdit = () => {
     }
   }
 
-  const useUseGetPost = async () => {
-    try {
-      const ref = await doc(database, 'posts', routerid)
-      const snap = await getDoc(ref)
-      await setPost(snap.data())
-      await setCategori(post?.category)
-      console.log('post', post)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   useEffect(() => {
-    useUseGetPost()
-    // setID(routerid)
+    useGetPost(setPost, routerid)
     setContext(post?.context)
     setPostTitle(post?.title)
+    console.log(post)
   }, [])
 
+  //投稿を更新
   const updatePost = async () => {
     const result = await postImage(image)
     const fieldToEdit = doc(database, 'posts', routerid)
@@ -78,7 +69,7 @@ const PostEdit = () => {
       downloadURL: result,
       title: postTitle,
       netabare: netabare,
-      categori: categori,
+      categori: category,
       context: context,
       edittime: newdate,
       selected: selected,
@@ -94,6 +85,7 @@ const PostEdit = () => {
       })
   }
 
+  // TODO: リッチエディタの導入
   // const Richedita = React.useMemo(
   //   () =>
   //     dynamic(() => import('../../../layouts/components/ui/Richedita'), {
@@ -120,7 +112,7 @@ const PostEdit = () => {
         <div>
           <div>
             <div className='my-4 lg:w-full '>
-              <Link href='/top'>トップ</Link>＞ 投稿記事 ＞
+              <Link href='/top'>トップ</Link>＞ 記事一覧 ＞
               <Link href={`/post/${routerid}`}>
                 <span>{post?.title}</span>
               </Link>
@@ -136,7 +128,7 @@ const PostEdit = () => {
                   <h2 className='my-12 text-center text-2xl font-semibold'>考察記事の編集</h2>
                   <div>
                     <p>現在のサムネイル</p>
-                    <Image
+                    <img
                       className='m-auto max-w-sm text-center'
                       height={400}
                       width={400}
@@ -154,12 +146,9 @@ const PostEdit = () => {
                       onChange={uploadImage}
                     />
                   </div>
-                  <FormLabel id='label-title' htmlFor='title'>
-                    タイトル（最大20文字）
-                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                      必須
-                    </span>
-                  </FormLabel>
+                  <div className='mb-2'>
+                    <SiteLabel name='タイトル（最大20文字）' required htmlFor='title' />
+                  </div>
                 </div>
                 <div>
                   <input
@@ -171,94 +160,85 @@ const PostEdit = () => {
                     onChange={(event) => setPostTitle(event.target.value)}
                   />
                 </div>
-                <div>
-                  <FormLabel id='label-managa-name'>
-                    作品名
-                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                      必須
-                    </span>
-                  </FormLabel>
+                <div className='mb-2'>
+                  <SiteLabel name='作品名' required htmlFor='category' />
                 </div>
-                <p>現在の作品：{post?.category}</p>
-                <Controller
-                  name='category'
-                  control={control}
-                  rules={{
-                    required: '必須項目です',
-                  }}
-                  render={({ field }) => (
-                    <RadioGroup
-                      id='managa-name'
-                      aria-labelledby='managa-name'
-                      name={field.value}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        setCategori(e.target.value)
-                      }}
-                    >
-                      {FORM_CATEGORIES.map((category) => (
-                        <FormControlLabel
-                          key={category.id}
-                          value={category.value}
-                          control={<Radio />}
-                          label={category.label}
-                        />
-                      ))}
-                    </RadioGroup>
-                  )}
-                />
+                {post && (
+                  <Controller
+                    name='category'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <RadioGroup
+                        id='managa-name'
+                        aria-labelledby='managa-name'
+                        defaultValue={post?.category}
+                        onChange={(e) => {
+                          field.onChange(e)
+                          setCategory(e.target.value)
+                        }}
+                      >
+                        {FORM_CATEGORIES.map((category) => (
+                          <FormControlLabel
+                            key={category.id}
+                            value={category.value}
+                            control={<Radio />}
+                            label={category.label}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
+                )}
 
-                <FormLabel id='label-tags'>タグ</FormLabel>
+                <div className='mb-2'>
+                  <SiteLabel name='タグ' htmlFor='tags' />
+                </div>
                 <TagsInput
                   value={selected}
                   onChange={setSelected}
                   name='tags'
                   placeHolder='タグを追加してください'
                 />
-                <FormLabel id='netabare'>
-                  ネタバレについて
-                  <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                    必須
-                  </span>
-                </FormLabel>
-                <p>現在のネタバレ：{post?.netabare}</p>
-                <Controller
-                  name='netabare'
-                  control={control}
-                  rules={{
-                    required: '必須項目です',
-                  }}
-                  render={({ field }) => (
-                    <RadioGroup
-                      aria-label='ネタバレ'
-                      name={field.name}
-                      value={field.value}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        setNetabare(e.target.value)
-                      }}
-                    >
-                      {FORM_NETABARE.map((netabare) => (
-                        <FormControlLabel
-                          key={netabare.id}
-                          value={netabare.value}
-                          control={<Radio />}
-                          label={netabare.label}
-                          {...register('netabare')}
-                        />
-                      ))}
-                    </RadioGroup>
-                  )}
-                />
-                <div>
-                  <FormLabel id='label-content'>
-                    内容（最大500文字）
-                    <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                      必須
-                    </span>
-                  </FormLabel>
+                <div className='mb-2'>
+                  <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
                 </div>
-                <p>現在の文章</p>
+                {post && (
+                  <Controller
+                    name='netabare'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <RadioGroup
+                        aria-label='ネタバレ'
+                        name={field.name}
+                        value={field.value}
+                        defaultValue={post?.netabare}
+                        onChange={(e) => {
+                          field.onChange(e)
+                          setNetabare(e.target.value)
+                        }}
+                      >
+                        {FORM_NETABARE.map((netabare) => (
+                          <FormControlLabel
+                            key={netabare.id}
+                            value={netabare.value}
+                            control={<Radio />}
+                            label={netabare.label}
+                            {...register('netabare')}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
+                )}
+                <div className='mb-2'>
+                  <SiteLabel name=' 内容（最大500文字）' required htmlFor='label-content' />
+                </div>
                 <textarea
                   placeholder='内容(最大500文字）'
                   className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
@@ -269,41 +249,39 @@ const PostEdit = () => {
                 />
                 {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
 
-                <FormLabel id='label-display'>
-                  公開について
-                  <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>
-                    必須
-                  </span>
-                </FormLabel>
-                <p>現在の公開：{post?.display ? <p>公開</p> : <p>下書き</p>}</p>
-
-                <Controller
-                  name='display'
-                  control={control}
-                  rules={{
-                    required: '必須項目です',
-                  }}
-                  render={({ field }) => (
-                    <RadioGroup
-                      aria-label='公開'
-                      name={field.name}
-                      value={field.value}
-                      onChange={(e) => {
-                        field.onChange(e)
-                        setDisplay(e.target.value)
-                      }}
-                    >
-                      {DISPLAY_DATA.map((display) => (
-                        <FormControlLabel
-                          key={display.id}
-                          value={display.value.toString()}
-                          control={<Radio />}
-                          label={display.label}
-                        />
-                      ))}
-                    </RadioGroup>
-                  )}
-                />
+                <div className='mb-2'>
+                  <SiteLabel name=' 公開について' required htmlFor='label-display' />
+                </div>
+                {post && (
+                  <Controller
+                    name='display'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <RadioGroup
+                        aria-label='公開'
+                        name={field.name}
+                        value={field.value}
+                        defaultValue={post?.display.toString()}
+                        onChange={(e) => {
+                          field.onChange(e)
+                          setDisplay(e.target.value)
+                        }}
+                      >
+                        {DISPLAY_DATA.map((display) => (
+                          <FormControlLabel
+                            key={display.id}
+                            value={display.value.toString()}
+                            control={<Radio />}
+                            label={display.label}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
+                )}
                 {/* 
                 <div className='my-8'>
                   <label htmlFor='file-input'>他の写真（最大1枚）</label> */}

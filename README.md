@@ -62,7 +62,7 @@ Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる we
 
 ### ライブラリ
 
-moment.js,Tailwind CSS,Material-UI,Swiper
+moment.js,Tailwind CSS,Material-UI,Swiper, scaffdog
 
 <h2 id="technology-used">ディレクトリ構成</h2>
 

@@ -42,17 +42,15 @@ export const RecommendCardPost = React.memo(
           />
         </Link>
         <div className='ml-4'>
-          <div className='flex '>
+          <div className='flex'>
             <h3 className='my-1 mr-3 text-left text-lg font-semibold'>{title}</h3>
             <Category category={category} />
-            {netabare === 'spoil' ? (
+            {netabare === 'spoil' && (
               <div>
                 <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
                   {netabare}
                 </dl>
               </div>
-            ) : (
-              <dl></dl>
             )}
           </div>
           <div>

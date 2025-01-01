@@ -39,7 +39,13 @@ export default function Index() {
   }
 
   useEffect(() => {
-    useFetchPosts(setPostData)
+    // useFetchPosts(setPostData)
+    const fetchData = async () => {
+      const data = await useFetchPosts()
+      setPostData(data)
+    }
+
+    fetchData()
   }, [])
 
   const SORT_LIST: NetabareItem[] = [
@@ -47,19 +53,26 @@ export default function Index() {
       sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: () => useFetchPosts(setPostData),
+      onClick: async () => {
+        const data = await useFetchPosts()
+        setPostData(data)
+      },
     },
     {
       sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: () => useGetOldPosts(setPostData),
+      onClick: async () => {
+        useGetOldPosts(setPostData)
+      },
     },
     {
       sortId: 9,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: () => useGetLikePosts(setPostData),
+      onClick: async () => {
+        useGetLikePosts(setPostData)
+      },
     },
   ]
 
@@ -68,22 +81,24 @@ export default function Index() {
       sortId: 1,
       label: 'ネタバレ有',
       value: 'spoil',
-      onClick: () => useGetNetabrePosts(setPostData),
+      onClick: async () => {
+        useGetNetabrePosts(setPostData)
+      },
     },
     {
       sortId: 2,
       label: 'ネタバレ無',
       value: 'notSpoil',
-      onClick: () => useGetNoNetabrePosts(setPostData),
+      onClick: async () => {
+        useGetNoNetabrePosts(setPostData)
+      },
     },
   ]
 
   const filterPostData = () => {
     return postData
       .filter((post) => {
-        if (searchName === '') {
-          return true
-        } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+        if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
           return true
         }
         return false
@@ -165,11 +180,11 @@ export default function Index() {
         </FormControl>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
-        {postData.length === 0 ? (
-          <p className='my-2 text-center'>記事がありません。</p>
-        ) : filteredPosts.length === 0 ? (
+        {postData.length === 0 && <p className='my-2 text-center'>記事がありません。</p>}
+        {postData.length > 0 && filteredPosts.length === 0 && (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
-        ) : (
+        )}
+        {filteredPosts.length > 0 &&
           filteredPosts.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
               <CardPost
@@ -188,8 +203,7 @@ export default function Index() {
                 userid={post.userid}
               />
             </div>
-          ))
-        )}
+          ))}
       </div>
       <div className='text-center'>
         {postData.length > 9 && (

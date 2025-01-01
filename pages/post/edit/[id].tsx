@@ -111,7 +111,7 @@ const PostEdit = () => {
       <div className='m-auto max-w-5xl'>
         <div>
           <div>
-            <div className='my-4 lg:w-full '>
+            <div className='my-4 lg:w-full'>
               <Link href='/top'>トップ</Link>＞ 記事一覧 ＞
               <Link href={`/post/${routerid}`}>
                 <span>{post?.title}</span>

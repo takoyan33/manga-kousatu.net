@@ -187,7 +187,7 @@ const Daitails = ({ post }) => {
                               />
                             </div>
                           </div>
-                          <div className='ml-6 mt-4 '>
+                          <div className='ml-6 mt-4'>
                             <span className='text-xl'>
                               <AccountBoxIcon /> {user.username}
                             </span>

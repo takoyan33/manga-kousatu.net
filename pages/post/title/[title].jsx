@@ -186,7 +186,7 @@ const Post = () => {
           {firedata.map((data) => {
             return (
               <div key={data.id}>
-                <div className='my-4 lg:w-full '>
+                <div className='my-4 lg:w-full'>
                   {user && (
                     <>
                       {user.email === data.email && (

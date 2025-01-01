@@ -43,7 +43,7 @@ export const RecommendCardPost = React.memo(
           />
         </Link>
         <div className='ml-4'>
-          <div className='flex '>
+          <div className='flex'>
             <h3 className='my-1 mr-3 text-left text-lg font-semibold'>{title}</h3>
             <Category category={category} />
             <SiteSpoil netabare={netabare} />

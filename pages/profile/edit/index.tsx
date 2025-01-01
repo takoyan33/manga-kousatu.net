@@ -197,7 +197,7 @@ export default function Edit() {
             </div>
             <br />
             <div className='my-4 text-center'>
-              <Button variant='outlined' className='m-auto w-80 '>
+              <Button variant='outlined' className='m-auto w-80'>
                 <Link href='/profile'>戻る</Link>
               </Button>
             </div>

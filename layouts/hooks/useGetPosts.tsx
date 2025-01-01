@@ -1,16 +1,19 @@
-import { onSnapshot, query, orderBy, where, doc, getDoc } from 'firebase/firestore'
+import { onSnapshot, query, orderBy, where, doc, getDoc, getDocs } from 'firebase/firestore'
 // import React, { useEffect, useState } from 'react'
 // import useSWR from 'swr'
 import { database } from '../../firebaseConfig'
 import { postsRef } from '../../layouts/utils/post'
+import { GetPost } from 'types/post'
 
 //新しいpostを取得
-export const useFetchPosts = async (setPostData: any): Promise<void> => {
-  onSnapshot(postsRef, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+export const useFetchPosts = async (): Promise<GetPost[]> => {
+  const querySnapshot = await getDocs(postsRef)
+  const data = querySnapshot.docs.map((doc) => ({
+    ...(doc.data() as GetPost),
+    id: doc.id,
+  }))
+  return data
 }
-
 //新しいpostを取得
 // export const useFetchPosts = async () => {
 //   const [value, setValue] = useState([])

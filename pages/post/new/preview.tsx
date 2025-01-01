@@ -218,12 +218,12 @@ export default function Post() {
                   name={field.name}
                   value={field.value}
                 >
-                  {FORM_CATEGORIES.map((categori) => (
+                  {FORM_CATEGORIES.map((category) => (
                     <FormControlLabel
-                      key={categori.id}
-                      value={categori.value}
+                      key={category.id}
+                      value={category.value}
                       control={<Radio />}
-                      label={categori.label}
+                      label={category.label}
                       {...register('categori')}
                     />
                   ))}

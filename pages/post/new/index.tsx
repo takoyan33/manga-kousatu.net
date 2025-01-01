@@ -74,7 +74,7 @@ export default function Post() {
   })
 
   //投稿のアップロード
-  const useFetchPosts = async () => {
+  const useFetchPosts = async (): Promise<void> => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
@@ -99,7 +99,7 @@ export default function Post() {
   const router = useRouter()
 
   //投稿の追加
-  const addPost: SubmitHandler<RegisterPostParams> = async (data) => {
+  const addPost: SubmitHandler<RegisterPostParams> = async (data): Promise<void> => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる

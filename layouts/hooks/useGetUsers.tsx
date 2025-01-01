@@ -3,7 +3,7 @@ import { database } from '../../firebaseConfig'
 import { usersRef } from '../../layouts/utils/post'
 
 //自分のuserを取得
-export const useGetMyUser = async (setUsers, uid: string) => {
+export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> => {
   try {
     const ref = await doc(database, 'users', uid)
     const snap = await getDoc(ref)
@@ -14,7 +14,7 @@ export const useGetMyUser = async (setUsers, uid: string) => {
 }
 
 //他のuserを取得
-export const useGetOtherUser = async (setUsers, uid: string) => {
+export const useGetOtherUser = async (setUsers: any, uid: string): Promise<void> => {
   try {
     const ref = await doc(database, 'users', uid)
     const snap = await getDoc(ref)
@@ -25,7 +25,7 @@ export const useGetOtherUser = async (setUsers, uid: string) => {
 }
 
 //user全体を取得
-export const useGetUsers = async (setUsers) => {
+export const useGetUsers = async (setUsers: any): Promise<void> => {
   await getDocs(usersRef).then((response) => {
     //コレクションのドキュメントを取得
     setUsers(

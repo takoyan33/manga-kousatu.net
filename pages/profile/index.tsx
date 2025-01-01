@@ -35,11 +35,9 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const filterPostData = () => {
+  const filterPostData = (): any => {
     return postsData.filter((post) => {
-      if (searchName === '') {
-        return true
-      } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+      if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
         return true
       }
       return false

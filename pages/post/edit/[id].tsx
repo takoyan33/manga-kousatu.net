@@ -45,7 +45,7 @@ const PostEdit = () => {
   })
 
   //画像の取得
-  const uploadImage = (event) => {
+  const uploadImage = (event): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setImage(file)
@@ -61,7 +61,7 @@ const PostEdit = () => {
   }, [])
 
   //投稿を更新
-  const updatePost = async () => {
+  const updatePost = async (): Promise<void> => {
     const result = await postImage(image)
     const fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')

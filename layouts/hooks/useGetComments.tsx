@@ -2,9 +2,9 @@ import {
   onSnapshot,
   collection,
   query,
-  orderBy,
+  // orderBy,
   where,
-  getDocs,
+  // getDocs,
   doc,
   deleteDoc,
 } from 'firebase/firestore'
@@ -12,7 +12,7 @@ import { database } from '../../firebaseConfig'
 import { successNotify, errorNotify } from '../../layouts/components/text'
 
 //特定の投稿のコメントを全て取得
-export const getComments = async (setComments, routerId) => {
+export const getComments = async (setComments, routerId: string): Promise<void> => {
   const commentsRef = collection(database, 'comments')
   const postComments = await query(commentsRef, where('postid', '==', routerId))
   onSnapshot(postComments, (querySnapshot) => {
@@ -25,7 +25,7 @@ export const getComments = async (setComments, routerId) => {
 //コメントの投稿
 
 //コメントの削除
-export const deleteComment = async (commentId: string) => {
+export const deleteComment = async (commentId: string): Promise<void> => {
   const deleteComment = doc(database, 'comments', commentId)
   deleteDoc(deleteComment)
     .then(() => {

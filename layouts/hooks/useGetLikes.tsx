@@ -2,7 +2,7 @@ import { arrayUnion, arrayRemove, updateDoc, doc, deleteDoc } from 'firebase/fir
 import { database } from '../../firebaseConfig'
 
 //いいねの追加
-export const LikeAdd = (routerId: string, likes: number, email: string) => {
+export const LikeAdd = async (routerId: string, likes: number, email: string): Promise<void> => {
   const post = doc(database, 'posts', routerId)
   updateDoc(post, {
     likes: likes + 1,
@@ -21,7 +21,7 @@ export const LikeAdd = (routerId: string, likes: number, email: string) => {
 }
 
 //いいねの削除
-export const LikeDelete = (routerid: string, likes: number, email: string) => {
+export const LikeDelete = async (routerid: string, likes: number, email: string): Promise<void> => {
   const post = doc(database, 'posts', routerid)
   updateDoc(post, {
     likes: likes - 1,

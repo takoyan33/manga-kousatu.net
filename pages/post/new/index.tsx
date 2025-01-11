@@ -73,7 +73,7 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
-  //投稿のアップロード
+  //投稿の取得
   const useFetchPosts = async (): Promise<void> => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))

@@ -51,25 +51,19 @@ export default function Index() {
       sortId: 1,
       label: '新しい順',
       value: '新しい順',
-      onClick: async () => {
-        useFetchPosts(setPostData)
-      },
+      onClick: () => useFetchPosts(setPostData),
     },
     {
       sortId: 2,
       label: '古い順',
       value: '古い順',
-      onClick: async () => {
-        useGetOldPosts(setPostData)
-      },
+      onClick: () => useGetOldPosts(setPostData),
     },
     {
       sortId: 9,
       label: 'いいね順',
       value: 'いいね順',
-      onClick: async () => {
-        useGetLikePosts(setPostData)
-      },
+      onClick: () => useGetLikePosts(setPostData),
     },
   ]
 
@@ -78,17 +72,13 @@ export default function Index() {
       sortId: 1,
       label: 'ネタバレ有',
       value: 'spoil',
-      onClick: async () => {
-        useGetNetabrePosts(setPostData)
-      },
+      onClick: () => useGetNetabrePosts(setPostData),
     },
     {
       sortId: 2,
       label: 'ネタバレ無',
       value: 'notSpoil',
-      onClick: async () => {
-        useGetNoNetabrePosts(setPostData)
-      },
+      onClick: () => useGetNoNetabrePosts(setPostData),
     },
   ]
 
@@ -157,32 +147,32 @@ export default function Index() {
           <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
-            {NETABARE_LIST.map((netabare) => (
+            {NETABARE_LIST.map((netabare) => 
               <MenuItem key={netabare.sortId} value={netabare.value} onClick={netabare.onClick}>
                 {netabare.label}
               </MenuItem>
-            ))}
+            )}
           </Select>
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
           <InputLabel id='demo-select-small'>新しい順</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
-            {SORT_LIST.map((sort) => (
+            {SORT_LIST.map((sort) => 
               <MenuItem key={sort.sortId} value={sort.value} onClick={sort.onClick}>
                 {sort.label}
               </MenuItem>
-            ))}
+            )}
           </Select>
         </FormControl>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 && <p className='my-2 text-center'>記事がありません。</p>}
-        {postData.length > 0 && filteredPosts.length === 0 && (
+        {postData.length > 0 && filteredPosts.length === 0 && 
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
-        )}
+        }
         {filteredPosts.length > 0 &&
-          filteredPosts.map((post) => (
+          filteredPosts.map((post) => 
             <div className='w-full md:w-1/4' key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
@@ -196,17 +186,17 @@ export default function Index() {
                 userid={post.userid}
               />
             </div>
-          ))}
+          )}
       </div>
       <div className='text-center'>
-        {postData.length > 9 && (
+        {postData.length > 9 && 
           <SiteButton
             text='さらに表示'
             disabled={isEmpty ? true : false}
             onClick={displayMore}
             className='w-50 m-auto my-2'
           />
-        )}
+        }
       </div>
     </div>
   )

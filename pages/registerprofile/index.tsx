@@ -16,8 +16,8 @@ import { NoIndexHead } from 'layouts/components/ui'
 export default function RegisterProfile() {
   const [selected, setSelected] = useState<string[]>(['ワンピース'])
   const [image, setImage] = useState<any>(null)
-  const [username, setUsername] = useState<number>(null)
-  const [bio, setBio] = useState<number>(null)
+  const [username, setUsername] = useState<number>()
+  const [bio, setBio] = useState<number>()
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
 
   const router = useRouter()
@@ -46,14 +46,17 @@ export default function RegisterProfile() {
     } else {
       result = ''
     }
+    if (!user?.uid) {
+      throw new Error('User ID is undefined');
+    }
     const userRef = await doc(database, 'users', user.uid)
     //写真のurlをセットする
     await setDoc(userRef, {
       userName: username,
       bio: bio,
-      email: user.email,
+      email: user?.email,
       profileImage: result,
-      userid: user.uid,
+      userid: user?.uid,
       favorite: selected,
       admin: 0,
     })

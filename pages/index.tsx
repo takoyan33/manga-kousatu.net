@@ -45,9 +45,9 @@ export default function Index() {
     },
   }
 
-  const [firstSwiper, setFirstSwiper] = useState(0)
-  const [firstSwiperAll, setFirstSwiperAll] = useState(0)
-  const [firstSwiperNew, setFirstSwiperNew] = useState(0)
+  const [firstSwiper, setFirstSwiper] = useState<number>(0)
+  const [firstSwiperAll, setFirstSwiperAll] = useState<number>(0)
+  const [firstSwiperNew, setFirstSwiperNew] = useState<number>(0)
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
@@ -101,12 +101,8 @@ export default function Index() {
                   netabare={post.netabare}
                   context={post.context}
                   createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
                   id={post.id}
-                  photoURL={post.photoURL}
                   likes={post.likes}
-                  selected={post.selected}
                   userid={post.userid}
                 />
               </SwiperSlide>
@@ -177,12 +173,8 @@ export default function Index() {
                   netabare={post.netabare}
                   context={post.context}
                   createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
                   id={post.id}
-                  photoURL={post.photoURL}
                   likes={post.likes}
-                  selected={post.selected}
                   userid={post.userid}
                 />
               </SwiperSlide>
@@ -251,12 +243,8 @@ export default function Index() {
                   netabare={post.netabare}
                   context={post.context}
                   createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
                   id={post.id}
-                  photoURL={post.photoURL}
                   likes={post.likes}
-                  selected={post.selected}
                   userid={post.userid}
                 />
               </SwiperSlide>

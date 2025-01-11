@@ -249,19 +249,14 @@ const Details = ({ post }) => {
             return (
               <div className='w-full md:w-1/4' key={post.id}>
                 <CardPost
-                  key={post.id}
                   downloadURL={post.downloadURL}
                   title={post.title}
                   category={post.category}
                   netabare={post.netabare}
                   context={post.context}
                   createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
                   id={post.id}
-                  photoURL={post.photoURL}
                   likes={post.likes}
-                  selected={post.selected}
                   userid={post.userid}
                 />
               </div>

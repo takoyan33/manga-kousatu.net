@@ -6,7 +6,7 @@ import React, { useState, useCallback } from 'react'
 import { database } from 'firebaseConfig.js'
 
 export default function NameAuth() {
-  const [ID, setID] = useState<number>(null)
+  const [ID, setID] = useState<number>()
   const [title, setTitle] = useState<string>('')
   const [context, setContext] = useState<string>('')
   const [categori, setCategori] = useState<string>('')
@@ -17,44 +17,26 @@ export default function NameAuth() {
   const [isUpdate, setIsUpdate] = useState<boolean>(false)
   const postsData = collection(database, 'posts')
   const [firedata, setFiredata] = useState([])
-  const [downloadURL, setDownloadURL] = useState<string>(null)
+  const [downloadURL, setDownloadURL] = useState<string>()
   const [result, setResult] = useState<string>('')
 
   const updateName = async () => {
-    updateProfile(auth.currentUser, {
-      displayName: displayName,
-    })
-      .then(() => {
-        alert('プロフィールを更新しました。')
-        setDisplayName('')
-        setResult('')
-        getallPost()
-        router.push('/profile')
+    if (auth.currentUser) {
+      updateProfile(auth.currentUser, {
+        displayName: displayName,
       })
-      .catch((error) => {
-        console.error(error)
-      })
-  }
-
-  const getallPost = async () => {
-    await getDocs(postsData).then((response) => {
-      setFiredata(
-        response.docs.map((data) => {
-          return { ...data.data(), id: data.id }
-        }),
-      )
-    })
-  }
-
-  const getID = (id, title, context, downloadURL, categori, cratetime, displayname, createtime) => {
-    setID(id)
-    setContext(context)
-    setTitle(title)
-    setDownloadURL(downloadURL)
-    setIsUpdate(true)
-    setCategori(categori)
-    setCreatetime(cratetime)
-    setDisplayName(displayname)
+        .then(() => {
+          alert('プロフィールを更新しました。')
+          setDisplayName('')
+          setResult('')
+          router.push('/profile')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
+    } else {
+      console.error('No user is currently signed in.')
+    }
   }
 
   return (

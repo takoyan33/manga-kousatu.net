@@ -1,4 +1,16 @@
-export const FORM_CATEGORIES = [
+type FormCategory = {
+  id: number
+  label: string
+  value: string
+}
+
+type FormNetabare = {
+  id: number
+  label: string
+  value: 'spoil' | 'notSpoil' | 'unknown'
+}
+
+export const FORM_CATEGORIES: FormCategory[] = [
   {
     id: 1,
     label: 'ONE PIECE',
@@ -21,10 +33,10 @@ export const FORM_CATEGORIES = [
   },
 ]
 
-export const FORM_NETABARE = [
+export const FORM_NETABARE: FormNetabare[] = [
   {
     id: 1,
-    label: 'ネタバレ有(漫画・アニメよりも先行している内容の場合）',
+    label: 'ネタバレ有',
     value: 'spoil',
   },
   {

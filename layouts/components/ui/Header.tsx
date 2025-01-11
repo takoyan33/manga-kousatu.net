@@ -48,7 +48,7 @@ export const Header = () => {
   const { user } = useAuthContext()
   const router = useRouter()
   const { logout } = useLogOut()
-  const [notificationOpen, setNotificationOpen] = useState(false)
+  const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
   const [users, setUsers] = useState<GetUser>()
 
   useEffect(() => {
@@ -62,25 +62,25 @@ export const Header = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
-  const handleClose = () => {
+  const handleClose = (): void => {
     setAnchorEl(null)
   }
 
-  const handleLogout = async () => {
+  const handleLogout = async (): Promise<void> => {
     await logout()
     setAnchorEl(null)
-    setUsers(null)
+    setUsers(undefined)
     setTimeout(() => {
       router.push('/login')
     }, 2000)
   }
 
-  const handleNotificationOpen = () => {
+  const handleNotificationOpen = (): void => {
     setNotificationOpen(true)
     handleClose()
   }
 
-  const handleNotificationClose = () => {
+  const handleNotificationClose = (): void => {
     setNotificationOpen(false)
   }
 

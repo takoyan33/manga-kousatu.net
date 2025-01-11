@@ -1,4 +1,4 @@
-export const FixDaysAgo = (createTime: string) => {
+export const FixDaysAgo = (createTime: string): string => {
   const inputDate: any = new Date(createTime)
   const currentDate: any = new Date()
 

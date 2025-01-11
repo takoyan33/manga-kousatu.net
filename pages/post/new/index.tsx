@@ -45,7 +45,7 @@ export default function Post() {
   // const [context, setContext] = useState<string>('')
   const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState<File | null>(null)
-  const [contextImage, setContextImage] = useState<File[]>([])
+  const [contextImage, setContextImage] = useState<File | null>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
   // const [userid, setUserId] = useState<string | null>(null)
@@ -73,12 +73,13 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
-  const useFetchPosts = async () => {
+  //投稿のアップロード
+  const useFetchPosts = async (): Promise<void> => {
     await onSnapshot(q, (querySnapshot) => {
       setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }
-
+  //画像のアップロード
   const uploadImage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
@@ -86,18 +87,19 @@ export default function Post() {
       setCreateObjectURL(URL.createObjectURL(file))
     }
   }
-
+  //他の画像のアップロード
   const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-      setContextImage((prevContextImages) => [...prevContextImages, file])
+      setContextImage(file)
       setCreateContextObjectURL(URL.createObjectURL(file))
     }
   }
 
   const router = useRouter()
 
-  const addPost: SubmitHandler<RegisterPostParams> = async (data) => {
+  //投稿の追加
+  const addPost: SubmitHandler<RegisterPostParams> = async (data): Promise<void> => {
     // 処理中(true)なら非同期処理せずに抜ける
     if (processing) return
     // 処理中フラグを上げる
@@ -150,6 +152,7 @@ export default function Post() {
     }
   }
 
+  // リッチエディタの追加
   const Richedita = React.useMemo(
     () =>
       dynamic(() => import('../../../layouts/components/ui/Richedita'), {

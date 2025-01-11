@@ -35,11 +35,9 @@ export default function Profile() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const filterPostData = () => {
+  const filterPostData = (): any => {
     return postsData.filter((post) => {
-      if (searchName === '') {
-        return true
-      } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
+      if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
         return true
       }
       return false
@@ -55,11 +53,11 @@ export default function Profile() {
       {/* <AccountMenu onClick={deleteuser} /> */}
       <ProfileId
         key={users?.id}
-        profileImage={users?.profileImage}
-        userName={users?.userName}
-        bio={users?.bio}
-        favorite={users?.favorite}
-        id={''}
+        profileImage={users?.profileImage ?? ''}
+        userName={users?.userName ?? ''}
+        bio={users?.bio ?? ''}
+        favorite={users?.favorite ?? []}
+        id={users?.id ?? ''}
       />
       <div className='text-center'>
         <SiteButton
@@ -88,7 +86,7 @@ export default function Profile() {
 
       <div className='relative my-10 overflow-x-auto shadow-md sm:rounded-lg'>
         <table className='w-full text-left text-sm text-gray-500'>
-          <thead className='bg-gray-50 text-xs uppercase text-gray-700 '>
+          <thead className='bg-gray-50 text-xs uppercase text-gray-700'>
             <tr>
               <th scope='col' className='px-6 py-3'>
                 タイトル

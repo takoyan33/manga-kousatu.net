@@ -55,7 +55,7 @@ export const getStaticProps = async (context) => {
 }
 
 const Daitails = ({ post }) => {
-  const [users, setUsers] = useState(null)
+  const [users, setUsers] = useState<any>(null)
   const your = query(usersRef, where('email', '==', post.fields.email.stringValue))
 
   const usersData = async () => {
@@ -187,7 +187,7 @@ const Daitails = ({ post }) => {
                               />
                             </div>
                           </div>
-                          <div className='ml-6 mt-4 '>
+                          <div className='ml-6 mt-4'>
                             <span className='text-xl'>
                               <AccountBoxIcon /> {user.username}
                             </span>

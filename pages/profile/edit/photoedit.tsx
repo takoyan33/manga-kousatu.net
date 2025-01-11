@@ -11,9 +11,9 @@ import { postImage } from 'layouts/api/upload'
 import { NoIndexHead } from 'layouts/components/ui'
 
 export default function Photoedit() {
-  const [image, setImage] = useState<string>()
+  const [image, setImage] = useState<any>()
   const router = useRouter()
-  const [createObjectURL, setCreateObjectURL] = useState<string>(null)
+  const [createObjectURL, setCreateObjectURL] = useState<string>()
   const user = auth.currentUser
 
   useEffect(() => {
@@ -41,16 +41,20 @@ export default function Photoedit() {
     } else {
       result = ''
     }
-    updateProfile(auth.currentUser, {
-      photoURL: result,
-    })
-      .then(() => {
-        alert('プロフィールを更新しました。')
-        router.push('/profile')
+    if (auth.currentUser) {
+      updateProfile(auth.currentUser, {
+        photoURL: result,
       })
-      .catch((error) => {
-        console.log(error)
-      })
+        .then(() => {
+          alert('プロフィールを更新しました。')
+          router.push('/profile')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    } else {
+      console.error('No user is currently signed in.')
+    }
   }
 
   return (

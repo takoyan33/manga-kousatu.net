@@ -25,7 +25,7 @@ const schema = yup.object({
 
 const PostEdit = () => {
   // const [ID, setID] = useState<string>(null)
-  const [image, setImage] = useState<number>(null)
+  const [image, setImage] = useState<File>()
   const [context, setContext] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
@@ -38,14 +38,14 @@ const PostEdit = () => {
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const router = useRouter()
-  const routerid: string = router.query.id.toString()
+  const routerid = router?.query.id ? router.query.id.toString() : ''
 
   const { register, control } = useForm({
     resolver: yupResolver(schema),
   })
 
   //画像の取得
-  const uploadImage = (event) => {
+  const uploadImage = (event): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
       setImage(file)
@@ -61,7 +61,7 @@ const PostEdit = () => {
   }, [])
 
   //投稿を更新
-  const updatePost = async () => {
+  const updatePost = async (): Promise<void> => {
     const result = await postImage(image)
     const fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
@@ -111,7 +111,7 @@ const PostEdit = () => {
       <div className='m-auto max-w-5xl'>
         <div>
           <div>
-            <div className='my-4 lg:w-full '>
+            <div className='my-4 lg:w-full'>
               <Link href='/top'>トップ</Link>＞ 記事一覧 ＞
               <Link href={`/post/${routerid}`}>
                 <span>{post?.title}</span>
@@ -237,7 +237,7 @@ const PostEdit = () => {
                   />
                 )}
                 <div className='mb-2'>
-                  <SiteLabel name=' 内容（最大500文字）' required htmlFor='label-content' />
+                  <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
                 </div>
                 <textarea
                   placeholder='内容(最大500文字）'
@@ -250,7 +250,7 @@ const PostEdit = () => {
                 {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
 
                 <div className='mb-2'>
-                  <SiteLabel name=' 公開について' required htmlFor='label-display' />
+                  <SiteLabel name='公開について' required htmlFor='label-display' />
                 </div>
                 {post && (
                   <Controller

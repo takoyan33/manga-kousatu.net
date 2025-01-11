@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -16,8 +20,16 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
-    }
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "strictNullChecks": true
   },
   "include": [
     "next-env.d.ts",
@@ -48,7 +60,12 @@
     "layouts/components/ui/CardPost.jsx",
     "pages/post/edit/[id].tsx",
     "pages/main.jsx",
-    "__tests__/unit/page.test.jsx"
-, "tests/all.spec.tsx", "tests/example.spec.tsx"  ],
-  "exclude": ["node_modules"]
+    "__tests__/unit/page.test.jsx",
+    "tests/all.spec.tsx",
+    "tests/example.spec.tsx",
+    ".next/types/**/*.ts"
+, "pages/post/new/preview.tsx"  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

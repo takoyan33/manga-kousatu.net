@@ -8,7 +8,7 @@ import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
-import { SingleGetPostParams } from 'types/post'
+import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
@@ -20,13 +20,13 @@ export const CardPost = React.memo(
     title,
     category,
     netabare,
-    displayName,
-    email,
-    photoURL,
+    // displayName,
+    // email,
+    // photoURL,
     createTime,
-    selected,
+    // selected,
     userid,
-  }: SingleGetPostParams) => {
+  }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
     const [comments, setComments] = useState('')
 
@@ -84,7 +84,7 @@ export const CardPost = React.memo(
                 </dl>
                 <dl className='ml-1 mt-1 text-sm'>
                   {users?.userName ? users?.userName : 'ユーザー名未設定'}
-                  <span className=' ml-2 text-pink-400'>
+                  <span className='ml-2 text-pink-400'>
                     <FavoriteIcon />
                   </span>
                   <span className='ml-1 text-sm'>{likes}</span>

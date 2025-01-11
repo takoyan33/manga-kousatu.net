@@ -1,5 +1,5 @@
 import { Player } from '@lottiefiles/react-lottie-player'
-import { useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import heartAnimation from 'layouts/assets/heart-animation.json'
 
 export const FavoriteIconAnim: React.FC<{

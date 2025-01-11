@@ -25,8 +25,8 @@ export default function Edit() {
   const [users, setUsers] = useState<GetUser>()
   const router = useRouter()
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [username, setUsername] = useState<string>(null)
-  const [bio, setBio] = useState<string>(null)
+  const [username, setUsername] = useState<string>()
+  const [bio, setBio] = useState<string>()
   const [selected, setSelected] = useState<string[]>([''])
 
   useEffect(() => {
@@ -176,7 +176,7 @@ export default function Edit() {
               />
             </div>
             <div className='mb-2'>
-              <SiteLabel name=' 好きな漫画（最大10作品）' htmlFor='likeManga' />
+              <SiteLabel name='好きな漫画（最大10作品）' htmlFor='likeManga' />
             </div>
             <div className='m-auto text-center'>
               <TagsInput
@@ -190,14 +190,14 @@ export default function Edit() {
             <div className='my-4 text-center'>
               <SiteButton
                 id='updateProfile'
-                onClick={() => updateUserData(users?.userid)}
+                onClick={() => users && updateUserData(users.userid)}
                 text='更新する'
                 className='text-center'
               />
             </div>
             <br />
             <div className='my-4 text-center'>
-              <Button variant='outlined' className='m-auto w-80 '>
+              <Button variant='outlined' className='m-auto w-80'>
                 <Link href='/profile'>戻る</Link>
               </Button>
             </div>

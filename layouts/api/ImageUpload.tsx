@@ -3,7 +3,7 @@ import { postImage } from './upload'
 
 export default function UploadImage() {
   const [image, setImage] = useState(null)
-  const [createObjectURL, setCreateObjectURL] = useState(null)
+  const [createObjectURL, setCreateObjectURL] = useState<any>()
 
   const uploadToClient = (event) => {
     if (event.target.files && event.target.files[0]) {

@@ -25,7 +25,7 @@ const schema = yup.object({
 
 const PostEdit = () => {
   // const [ID, setID] = useState<string>(null)
-  const [image, setImage] = useState<number>(null)
+  const [image, setImage] = useState<File>()
   const [context, setContext] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
@@ -38,7 +38,7 @@ const PostEdit = () => {
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const router = useRouter()
-  const routerid: string = router.query.id.toString()
+  const routerid = router?.query.id ? router.query.id.toString() : ''
 
   const { register, control } = useForm({
     resolver: yupResolver(schema),

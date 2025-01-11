@@ -28,11 +28,11 @@ const Post = () => {
 
       <ProfileId
         key={users?.id}
-        profileImage={users?.profileImage}
-        userName={users?.userName}
-        bio={users?.bio}
-        favorite={users?.favorite}
-        id={users?.id}
+        profileImage={users?.profileImage ?? ''}
+        userName={users?.userName ?? ''}
+        bio={users?.bio ?? ''}
+        favorite={users?.favorite ?? []}
+        id={users?.id ?? ''}
       />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>過去の投稿</h2>
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
@@ -43,19 +43,14 @@ const Post = () => {
             return (
               <div className='w-1/4' key={post.id}>
                 <CardPost
-                  key={post.id}
                   downloadURL={post.downloadURL}
                   title={post.title}
                   category={post.category}
                   netabare={post.netabare}
                   context={post.context}
                   createTime={post.createTime}
-                  displayName={post.displayName}
-                  email={post.email}
                   id={post.id}
-                  photoURL={post.photoURL}
                   likes={post.likes}
-                  selected={post.selected}
                   userid={post.userid}
                 />
               </div>

@@ -69,7 +69,7 @@ export const Header = () => {
   const handleLogout = async (): Promise<void> => {
     await logout()
     setAnchorEl(null)
-    setUsers(null)
+    setUsers(undefined)
     setTimeout(() => {
       router.push('/login')
     }, 2000)

@@ -66,11 +66,11 @@ const schema = yup.object({
 const Post = () => {
   const [comment, setComment] = useState<string>('')
   const [comments, setComments] = useState<Array<GetComment>>([])
-  const [myUser, setMyUser] = useState(null)
-  const [users, setUsers] = useState(null)
-  const [singlePost, setSinglePost] = useState<GetPost>(null)
+  const [myUser, setMyUser] = useState<any>(null)
+  const [users, setUsers] = useState<any>(null)
+  const [singlePost, setSinglePost] = useState<GetPost>()
   const [likecount, setLikecount] = useState<number>(0)
-  const [categoryPosts, setCategoryPosts] = useState([])
+  const [categoryPosts, setCategoryPosts] = useState<any>([])
   const [on, setOn] = useState<boolean>(false)
   const router = useRouter()
   const routerid: any = router.query.id
@@ -165,12 +165,12 @@ const Post = () => {
 
     await setDoc(postRef, {
       comment: data.comment,
-      userid: user.uid,
+      userid: user?.uid,
       postid: routerid,
       username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
       createTime: newDate,
       timestamp: serverTimestamp(),
-      userEmail: user.email,
+      userEmail: user?.email,
       isEdit: false,
       userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       id: routerid + (comments.length + 1).toString(),
@@ -190,7 +190,7 @@ const Post = () => {
     updateDoc(commentDate, {
       comment: comment,
       username: myUser?.userName ? myUser.userName : 'ユーザー名未設定',
-      userEmail: user.email,
+      userEmail: user?.email,
       userPhoto: myUser?.profileImage ? myUser.profileImage : '',
       isEdit: true,
     })
@@ -368,9 +368,7 @@ const Post = () => {
             </div>
           )}
           <div color='text.secondary'>
-            {['ONEPIECE', '呪術廻戦', '東京リベンジャーズ', 'キングダム'].includes(
-              singlePost?.category,
-            ) && (
+            {singlePost?.category && (
               <SiteCategory
                 className={`border border-${
                   {
@@ -440,22 +438,22 @@ const Post = () => {
           {singlePost?.likesEmail && user?.email == singlePost?.email && (
             <p>自分の投稿なのでいいねできません</p>
           )}
-          {user && singlePost?.likesEmail?.includes(user.email) && (
+          {user?.email && singlePost?.likesEmail?.includes(user.email) && (
             <div>
               <p>いいね済み</p>
-              <button
+              {/* <button
                 className='my-2 inline'
-                onClick={() => LikeDelete(routerid, singlePost.likes, user.email)}
+                onClick={() => LikeDelete(routerid, singlePost.likes, user?.email)}
                 id='delete-favorite'
               >
                 <span className='py-4 text-pink-400 hover:text-pink-700'>
                   <FavoriteIcon />
                   いいね解除
                 </span>
-              </button>
+              </button> */}
             </div>
           )}
-          {user && !singlePost?.likesEmail?.includes(user.email) && (
+          {/* {user?.email && !singlePost?.likesEmail?.includes(user.email) && 
             <button
               onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
               id='add-favorite'
@@ -463,7 +461,7 @@ const Post = () => {
               <FavoriteIconAnim on={on} />
               <span>いいねする</span>
             </button>
-          )}
+          } */}
 
           {singlePost?.selected.map((tag, i) => (
             <span

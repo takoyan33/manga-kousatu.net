@@ -15,10 +15,10 @@ export const DisplayChart = React.memo(() => {
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
-  const [onePiece, setOnePiece] = useState([])
-  const [kingdom, setKingdom] = useState([])
-  const [tokyo, setTokyo] = useState([])
-  const [kaisen, setKaisen] = useState([])
+  const [onePiece, setOnePiece] = useState<any>([])
+  const [kingdom, setKingdom] = useState<any>([])
+  const [tokyo, setTokyo] = useState<any>([])
+  const [kaisen, setKaisen] = useState<any>([])
 
   const myOnePosts = query(
     postsRef,
@@ -42,14 +42,10 @@ export const DisplayChart = React.memo(() => {
   )
 
   const getOnePosts = async () => {
-    //firestoreからデータ取得
     await getDocs(myOnePosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
       setOnePiece(
         querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
         }),
       )
       console.log(onePiece)
@@ -57,42 +53,30 @@ export const DisplayChart = React.memo(() => {
   }
 
   const getKaisenPosts = async () => {
-    //firestoreからデータ取得
     await getDocs(myKaisenPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
       setKaisen(
         querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
         }),
       )
     })
   }
 
   const getTokyoPosts = async () => {
-    //firestoreからデータ取得
     await getDocs(myTokyoPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
       setTokyo(
         querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
         }),
       )
     })
   }
 
   const getKingPosts = async () => {
-    //firestoreからデータ取得
     await getDocs(MyKingPosts).then((querySnapshot) => {
-      //コレクションのドキュメントを取得
       setKingdom(
         querySnapshot.docs.map((data) => {
-          //配列なので、mapで展開する
           return { ...data.data(), id: data.id }
-          //スプレッド構文で展開して、新しい配列を作成
         }),
       )
     })

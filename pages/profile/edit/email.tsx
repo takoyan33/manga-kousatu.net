@@ -22,9 +22,13 @@ export default function Emaildedit() {
   }, [])
 
   const updateEmail = async () => {
-    sendEmailVerification(auth.currentUser).then(() => {
-      alert('確認メールを送信しました。')
-    })
+    if (auth.currentUser) {
+      sendEmailVerification(auth.currentUser).then(() => {
+        alert('確認メールを送信しました。')
+      })
+    } else {
+      alert('ユーザーが見つかりません。')
+    }
   }
 
   return (

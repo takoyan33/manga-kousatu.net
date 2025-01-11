@@ -19,10 +19,10 @@ export default function Profile() {
   // const [posts, setPostData] = useState([])
   const [likedPosts, setLikedPosts] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState('')
-  const [onpiece, setOnpiece] = useState([])
-  const [kingdom, setKingdom] = useState([])
-  const [tokyo, setTokyo] = useState([])
-  const [kaisen, setKaisen] = useState([])
+  const [onpiece, setOnpiece] = useState<any>([])
+  const [kingdom, setKingdom] = useState<any>([])
+  const [tokyo, setTokyo] = useState<any>([])
+  const [kaisen, setKaisen] = useState<any>([])
 
   const myOnePosts = query(
     postsRef,
@@ -153,9 +153,9 @@ export default function Profile() {
               label={renderCustomizedLabel}
               isAnimationActive={true}
             >
-              {MANGA_DATA.map((entry, index) => 
+              {MANGA_DATA.map((entry, index) => (
                 <Cell fill={COLORS[index % COLORS.length]} key={index} />
-              )}
+              ))}
             </Pie>
             <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />
           </PieChart>
@@ -177,19 +177,14 @@ export default function Profile() {
           return (
             <>
               <CardPost
-                key={post.id}
                 downloadURL={post.downloadURL}
                 title={post.title}
                 category={post.category}
                 netabare={post.netabare}
                 context={post.context}
                 createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
                 id={post.id}
-                photoURL={post.photoURL}
                 likes={post.likes}
-                selected={post.selected}
                 userid={post.userid}
               />
             </>

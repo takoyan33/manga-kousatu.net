@@ -25,8 +25,8 @@ export default function Edit() {
   const [users, setUsers] = useState<GetUser>()
   const router = useRouter()
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  const [username, setUsername] = useState<string>(null)
-  const [bio, setBio] = useState<string>(null)
+  const [username, setUsername] = useState<string>()
+  const [bio, setBio] = useState<string>()
   const [selected, setSelected] = useState<string[]>([''])
 
   useEffect(() => {
@@ -190,7 +190,7 @@ export default function Edit() {
             <div className='my-4 text-center'>
               <SiteButton
                 id='updateProfile'
-                onClick={() => updateUserData(users?.userid)}
+                onClick={() => users && updateUserData(users.userid)}
                 text='更新する'
                 className='text-center'
               />

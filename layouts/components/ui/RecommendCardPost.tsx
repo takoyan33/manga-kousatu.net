@@ -13,16 +13,7 @@ import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
-  ({
-    downloadURL,
-    id,
-    likes,
-    title,
-    category,
-    netabare,
-    createTime,
-    userid,
-  }: SingleGetPostParams) => {
+  ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: any) => {
     const [users, setUsers] = useState<GetUser>()
     const [comments, setComments] = useState('')
 

@@ -39,13 +39,11 @@ export default function Index() {
   }
 
   useEffect(() => {
-    // useFetchPosts(setPostData)
-    const fetchData = async () => {
-      const data = await useFetchPosts()
-      setPostData(data)
-    }
-
-    fetchData()
+    useFetchPosts(setPostData)
+    // const fetchData = async () => {
+    //   const data = await useFetchPosts()
+    //   setPostData(data)
+    // }
   }, [])
 
   const SORT_LIST: NetabareItem[] = [
@@ -54,8 +52,7 @@ export default function Index() {
       label: '新しい順',
       value: '新しい順',
       onClick: async () => {
-        const data = await useFetchPosts()
-        setPostData(data)
+        useFetchPosts(setPostData)
       },
     },
     {
@@ -194,12 +191,8 @@ export default function Index() {
                 netabare={post.netabare}
                 context={post.context}
                 createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
                 id={post.id}
-                photoURL={post.photoURL}
                 likes={post.likes}
-                selected={post.selected}
                 userid={post.userid}
               />
             </div>

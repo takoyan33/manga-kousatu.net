@@ -53,11 +53,11 @@ export default function Profile() {
       {/* <AccountMenu onClick={deleteuser} /> */}
       <ProfileId
         key={users?.id}
-        profileImage={users?.profileImage}
-        userName={users?.userName}
-        bio={users?.bio}
-        favorite={users?.favorite}
-        id={''}
+        profileImage={users?.profileImage ?? ''}
+        userName={users?.userName ?? ''}
+        bio={users?.bio ?? ''}
+        favorite={users?.favorite ?? []}
+        id={users?.id ?? ''}
       />
       <div className='text-center'>
         <SiteButton

@@ -8,7 +8,7 @@ interface ModalProps {
   handleClose?: DOMAttributes<HTMLButtonElement>['onClick']
 }
 
-export const NotificationModal = ({ open, handleClose }: ModalProps) => {
+export const NotificationModal = ({ open = false, handleClose }: ModalProps) => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box className='m-auto mt-20 h-3/4 max-w-5xl bg-white p-4' sx={{ overflowY: 'scroll' }}>

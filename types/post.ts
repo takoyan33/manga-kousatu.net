@@ -34,3 +34,15 @@ export interface SingleGetPostParams {
   selected: string[]
   userid: string
 }
+
+export interface CardPostParams {
+  downloadURL: string
+  id: string
+  title: string
+  category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
+  netabare: string
+  context: string
+  createTime: string
+  likes: number
+  userid: string
+}

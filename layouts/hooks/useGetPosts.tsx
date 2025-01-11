@@ -6,13 +6,10 @@ import { postsRef } from '../../layouts/utils/post'
 import { GetPost } from 'types/post'
 
 //新しいpostを取得
-export const useFetchPosts = async (): Promise<GetPost[]> => {
-  const querySnapshot = await getDocs(postsRef)
-  const data = querySnapshot.docs.map((doc) => ({
-    ...(doc.data() as GetPost),
-    id: doc.id,
-  }))
-  return data
+export const useFetchPosts = async (setPostData) => {
+  onSnapshot(postsRef, (querySnapshot) => {
+    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  })
 }
 //新しいpostを取得
 // export const useFetchPosts = async () => {

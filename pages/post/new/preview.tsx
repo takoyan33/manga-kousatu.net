@@ -39,12 +39,12 @@ export default function Post() {
   const [processing, setProcessing] = useState(false)
   const [tags, setTags] = useState(['最終回'])
   const q = query(postsRef, orderBy('timestamp', 'desc'))
-  const [image, setImage] = useState(null)
-  const [contextImage, setContextImage] = useState<File[]>([])
-  const [createObjectURL, setCreateObjectURL] = useState<string>('')
+  const [image, setImage] = useState<File | null>(null)
+  const [contextImage, setContextImage] = useState<any>([])
+  const [createObjectURL, setCreateObjectURL] = useState<any>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState('')
-  const [posts, setPosts] = useState([])
-  const [lengthData, setPostsLength] = useState(null)
+  const [posts, setPosts] = useState<any>([])
+  const [lengthData, setPostsLength] = useState<any>(null)
   const { user } = useAuthContext()
   const [display, setDisplay] = useState('')
 
@@ -83,7 +83,7 @@ export default function Post() {
   const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-      setContextImage((prevContextImages) => [...prevContextImages, file])
+      setContextImage(file)
       setCreateContextObjectURL(URL.createObjectURL(file))
     }
   }

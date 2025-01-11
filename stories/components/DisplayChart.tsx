@@ -17,10 +17,10 @@ export const DisplayChart = React.memo(() => {
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
-  const [onePiece, setOnePiece] = useState([])
-  const [kingdom, setKingdom] = useState([])
-  const [tokyo, setTokyo] = useState([])
-  const [kaisen, setKaisen] = useState([])
+  const [onePiece, setOnePiece] = useState<any>([])
+  const [kingdom, setKingdom] = useState<any>([])
+  const [tokyo, setTokyo] = useState<any>([])
+  const [kaisen, setKaisen] = useState<any>([])
 
   const myOnePosts = query(
     postsRef,

@@ -45,7 +45,7 @@ export default function Post() {
   // const [context, setContext] = useState<string>('')
   const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState<File | null>(null)
-  const [contextImage, setContextImage] = useState<File[]>([])
+  const [contextImage, setContextImage] = useState<File | null>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
   // const [userid, setUserId] = useState<string | null>(null)
@@ -91,7 +91,7 @@ export default function Post() {
   const uploadToClientContext = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0]
-      setContextImage((prevContextImages) => [...prevContextImages, file])
+      setContextImage(file)
       setCreateContextObjectURL(URL.createObjectURL(file))
     }
   }

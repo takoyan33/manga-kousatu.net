@@ -15,13 +15,12 @@ import {
   MenuItem,
   ListItemIcon,
   Divider,
-  Tooltip,
   Button,
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLogOut } from '../../../layouts/api/auth/useAuth'
 import { SiteButton } from '../../../layouts/components/button'
 import { NotificationModal } from '../../../layouts/components/ui'

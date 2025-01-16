@@ -1,6 +1,6 @@
 /** @type {import('eslint').ESLint.ConfigData} */
 module.exports = {
-  extends: ['eslint:recommended', 'next/core-web-vitals', 'prettier'],
+  extends: ['eslint:recommended', 'next/core-web-vitals', 'prettier', 'next'],
   parserOptions: {
     project: './tsconfig.json',
   },
@@ -9,6 +9,8 @@ module.exports = {
   },
   root: true,
   rules: {
+    // '@next/next/no-img-element': 'warn',
+    // '@next/next/no-page-custom-font': 'warn',
     // 使っていない変数を警告しない
     'no-unused-vars': 'warn',
     // ReactHookのルールを無効化
@@ -29,6 +31,24 @@ module.exports = {
     'react/prop-types': 'warn',
     // any型の使用を制限
     '@typescript-eslint/no-explicit-any': 'off',
+    // 'react/jsx-key': [
+    //   'warn',
+    //   {
+    //     checkFragmentShorthand: true,
+    //     checkKeyMustBeforeSpread: true,
+    //     warnOnDuplicates: true,
+    //   },
+    // ],
+    // 'react/jsx-no-bind': [
+    //   'warn',
+    //   {
+    //     allowArrowFunctions: true,
+    //     allowBind: false,
+    //     allowFunctions: false,
+    //     ignoreDOMComponents: false,
+    //     ignoreRefs: false,
+    //   },
+    // ],
 
     // console.log() などのconsole系メソッドの使用を警告 (デバッグが終わったら削除を促す)
     'no-console': 'warn',
@@ -40,5 +60,10 @@ module.exports = {
     'no-extra-parens': 'warn',
     // オブジェクトのキーをクォートで囲む必要がない場合に警告
     'quote-props': ['warn', 'consistent-as-needed'],
+    'sort-keys': ['warn', 'asc', { caseSensitive: true, minKeys: 2, natural: false }],
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error',
+    curly: ['warn'],
+    eqeqeq: ['warn', 'always', { null: 'ignore' }],
   },
 }

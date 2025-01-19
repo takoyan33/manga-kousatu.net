@@ -8,15 +8,14 @@ import OutlinedInput from '@mui/material/OutlinedInput'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { useLogin } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
 import 'react-toastify/dist/ReactToastify.css'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { SiteLabel } from 'layouts/components/text'
+import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
 import { LoginUserFormInput } from 'types/auth'
 
 // バリデーションルール
@@ -29,6 +28,7 @@ export default function LoginAuth() {
   const auth = getAuth()
   const router = useRouter()
   const googleProvider = new GoogleAuthProvider()
+  const [isPending, startTransition] = useTransition()
 
   const {
     register,
@@ -38,33 +38,36 @@ export default function LoginAuth() {
     resolver: yupResolver(schema),
   })
 
-  const { success, error, login } = useLogin()
+  const { login } = useLogin()
 
-  const handleSignIn = async (data: LoginUserFormInput) => {
-    try {
-      await login(data.email, data.password)
-      successNotify('ログインしました')
-      setTimeout(() => {
-        router.push('/')
-      }, 2000)
-    } catch (e) {
-      errorNotify('ログインに失敗しました')
-      console.log(e)
-    }
+  const handleSignIn = (data: LoginUserFormInput) => {
+    startTransition(() => {
+      login(data.email, data.password)
+        .then(() => {
+          successNotify('ログインしました')
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
+        })
+        .catch(() => {
+          errorNotify('ログインに失敗しました')
+        })
+    })
   }
 
   const SignInWithGoogle = async () => {
-    await signInWithPopup(auth, googleProvider)
-      .then(() => {
-        successNotify('ログインしました')
-        setTimeout(() => {
-          router.push('/')
-        }, 2000)
-      })
-      .catch((e) => {
-        errorNotify('ログインに失敗しました')
-        console.log(e)
-      })
+    startTransition(() => {
+      signInWithPopup(auth, googleProvider)
+        .then(() => {
+          successNotify('ログインしました')
+          setTimeout(() => {
+            router.push('/')
+          }, 2000)
+        })
+        .catch(() => {
+          errorNotify('ログインに失敗しました')
+        })
+    })
   }
 
   const [showPassword, setShowPassword] = React.useState(false)
@@ -136,6 +139,7 @@ export default function LoginAuth() {
             text='ログイン'
             className='m-auto my-4 w-80 text-center'
             varient='contained'
+            disabled={isPending}
           />
           <p className='text-center'>または</p>
           <SiteButton
@@ -143,6 +147,7 @@ export default function LoginAuth() {
             onClick={SignInWithGoogle}
             className='m-auto my-4 w-80 text-center'
             google
+            disabled={isPending}
           />
           <p className='my-8 text-center'>
             ユーザー未登録の方はこちら

@@ -4,8 +4,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import SendIcon from '@mui/icons-material/Send'
-import { FormLabel } from '@mui/material'
-import { Avatar } from '@mui/material'
+import { FormLabel, Avatar } from '@mui/material'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -30,8 +29,7 @@ import Modal from 'react-modal'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { database } from 'firebaseConfig'
-import { SiteCategory } from 'layouts/components/text'
-import { successNotify, errorNotify } from 'layouts/components/text'
+import { SiteCategory, successNotify, errorNotify } from 'layouts/components/text'
 import { CommonHead, RecommendCardPost, Breadcrumbs } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import 'react-toastify/dist/ReactToastify.css'
@@ -306,7 +304,7 @@ const Post = () => {
                 />
               )}
             </button>
-            {!singlePost?.downloadURL && <p>画像なし</p>}
+            {!singlePost?.downloadURL && <span>画像なし</span>}
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
@@ -384,14 +382,14 @@ const Post = () => {
                     東京リベンジャーズ: 'rose',
                     キングダム: 'yellow',
                   }[singlePost?.category]
-                }-500 my-4 p-1 hover:text-white`}
+                }-500 span-1 my-4 hover:text-white`}
                 text={singlePost.category}
                 href={`/post/categories/${singlePost.category}`}
               />
             )}
 
             <span
-              className={`mx-1 mt-1 inline-block rounded border p-1 text-center text-sm ${
+              className={`span-1 mx-1 mt-1 inline-block rounded border text-center text-sm ${
                 singlePost?.netabare === 'spoil' ? 'border-red-500' : 'border-gray-700'
               }`}
             >
@@ -411,9 +409,9 @@ const Post = () => {
                 </div> */}
 
             {singlePost?.context && (
-              <p className='text-left' style={{ whiteSpace: 'pre-line' }}>
+              <span className='text-left' style={{ whiteSpace: 'pre-line' }}>
                 {parse(singlePost.context)}
-              </p>
+              </span>
             )}
           </div>
           <br />

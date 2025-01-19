@@ -51,9 +51,9 @@ export default function Index() {
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <head>
+      {/* <head>
         <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />
-      </head>
+      </head> */}
       <CommonHead />
       <TopTitle title='おすすめ記事' url='/top/recommend' />
       <div className='m-auto flex items-center justify-center md:flex-row'>

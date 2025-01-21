@@ -9,8 +9,7 @@ import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api/upload'
 import 'react-toastify/dist/ReactToastify.css'
 import { SiteButton } from 'layouts/components/button'
-import { successNotify, errorNotify } from 'layouts/components/text'
-import { SiteLabel } from 'layouts/components/text'
+import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
 import { NoIndexHead } from 'layouts/components/ui'
 
 export default function RegisterProfile() {
@@ -47,7 +46,7 @@ export default function RegisterProfile() {
       result = ''
     }
     if (!user?.uid) {
-      throw new Error('User ID is undefined');
+      throw new Error('User ID is undefined')
     }
     const userRef = await doc(database, 'users', user.uid)
     //写真のurlをセットする

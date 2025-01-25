@@ -14,9 +14,8 @@ import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
 import { useSignup } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
-import { SiteLabel } from 'layouts/components/text'
+import { SiteLabel, successNotify, errorNotify } from 'layouts/components/text'
 import 'react-toastify/dist/ReactToastify.css'
-import { successNotify, errorNotify } from 'layouts/components/text'
 import { RegisterUserFormInput } from 'types/auth'
 
 // バリデーションルール

@@ -2,12 +2,11 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { Category } from '../../layouts/components/text/Category'
 import { useGetOtherUser } from '../../layouts/hooks'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
-import { SingleGetPostParams } from 'types/post'
+import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
@@ -21,7 +20,7 @@ export const CardPost = React.memo(
     netabare,
     createTime,
     userid,
-  }: SingleGetPostParams) => {
+  }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
 
     useEffect(() => {

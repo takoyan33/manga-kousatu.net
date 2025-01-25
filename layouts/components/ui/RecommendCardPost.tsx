@@ -7,12 +7,12 @@ import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
-import { SingleGetPostParams } from 'types/post'
+import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
-  ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: any) => {
+  ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
     const [comments, setComments] = useState('')
 

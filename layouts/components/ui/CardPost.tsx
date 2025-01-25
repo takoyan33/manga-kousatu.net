@@ -2,8 +2,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
@@ -13,22 +12,9 @@ import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
 export const CardPost = React.memo(
-  ({
-    downloadURL,
-    id,
-    likes,
-    title,
-    category,
-    netabare,
-    // displayName,
-    // email,
-    // photoURL,
-    createTime,
-    // selected,
-    userid,
-  }: CardPostParams) => {
+  ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
-    const [comments, setComments] = useState('')
+    // const [comments, setComments] = useState('')
 
     // const useGetPostComment = async () => {
     //   const commentseRef = collection(database, 'comments')

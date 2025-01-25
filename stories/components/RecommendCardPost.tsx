@@ -7,7 +7,7 @@ import Image from 'react-image-resizer'
 import { Category } from 'layouts/components/text'
 import { useGetOtherUser } from 'layouts/hooks'
 import { FixDaysAgo } from 'layouts/utils/Date_helper'
-import { SingleGetPostParams } from 'types/post'
+import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
@@ -21,7 +21,7 @@ export const RecommendCardPost = React.memo(
     netabare,
     createTime,
     userid,
-  }: SingleGetPostParams) => {
+  }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
     const [comments, setComments] = useState('')
 

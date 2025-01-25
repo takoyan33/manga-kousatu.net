@@ -101,7 +101,9 @@ export default function Post() {
   //投稿の追加
   const addPost: SubmitHandler<RegisterPostParams> = async (data): Promise<void> => {
     // 処理中(true)なら非同期処理せずに抜ける
-    if (processing) {return}
+    if (processing) {
+      return
+    }
     // 処理中フラグを上げる
     setProcessing(true)
     if (image === null) {
@@ -213,14 +215,14 @@ export default function Post() {
               rules={{
                 required: '必須項目です',
               }}
-              render={({ field }) => 
+              render={({ field }) => (
                 <RadioGroup
                   id='managa-name'
                   aria-labelledby='managa-name'
                   name={field.name}
                   value={field.value}
                 >
-                  {FORM_CATEGORIES.map((category) => 
+                  {FORM_CATEGORIES.map((category) => (
                     <FormControlLabel
                       key={category.id}
                       value={category.value}
@@ -228,9 +230,9 @@ export default function Post() {
                       label={category.label}
                       {...register('categori')}
                     />
-                  )}
+                  ))}
                 </RadioGroup>
-              }
+              )}
             />
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
@@ -255,14 +257,14 @@ export default function Post() {
               rules={{
                 required: '必須項目です',
               }}
-              render={({ field }) => 
+              render={({ field }) => (
                 <RadioGroup
                   aria-label='ネタバレ'
                   name={field.name}
                   value={field.value}
                   id='netabare'
                 >
-                  {FORM_NETABARE.map((netabare) => 
+                  {FORM_NETABARE.map((netabare) => (
                     <FormControlLabel
                       key={netabare.id}
                       value={netabare.value}
@@ -270,9 +272,9 @@ export default function Post() {
                       label={netabare.label}
                       {...register('netabare')}
                     />
-                  )}
+                  ))}
                 </RadioGroup>
-              }
+              )}
             />
             {errors.netabare && <p>{errors.netabare.message}</p>}
           </div>
@@ -313,7 +315,7 @@ export default function Post() {
             rules={{
               required: '必須項目です',
             }}
-            render={({ field }) => 
+            render={({ field }) => (
               <RadioGroup
                 id='display'
                 aria-label='ネタバレ'
@@ -324,16 +326,16 @@ export default function Post() {
                   setDisplay(e.target.value)
                 }}
               >
-                {DISPLAY_DATA.map((display) => 
+                {DISPLAY_DATA.map((display) => (
                   <FormControlLabel
                     key={display.id}
                     value={display.value.toString()}
                     control={<Radio />}
                     label={display.label}
                   />
-                )}
+                ))}
               </RadioGroup>
-            }
+            )}
           />
           <SiteButton
             id='submit'

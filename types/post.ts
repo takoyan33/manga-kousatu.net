@@ -1,4 +1,5 @@
-export interface GetPost {
+//取得POSTの型
+export type GetPost = {
   category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   context: string
   contextImage: string
@@ -19,30 +20,16 @@ export interface GetPost {
   userid: string
 }
 
-export interface SingleGetPostParams {
-  downloadURL: string
-  id: string
-  title: string
-  category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
-  netabare: string
-  context: string
-  email: string
-  photoURL: string
-  displayName: string
-  createTime: string
-  likes: number
-  selected: string[]
-  userid: string
-}
-
-export interface CardPostParams {
-  downloadURL: string
-  id: string
-  title: string
-  category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
-  netabare: string
-  context: string
-  createTime: string
-  likes: number
-  userid: string
-}
+//CardPost時の型
+export type CardPostParams = Pick<
+  GetPost,
+  | 'downloadURL'
+  | 'id'
+  | 'title'
+  | 'category'
+  | 'netabare'
+  | 'context'
+  | 'createTime'
+  | 'likes'
+  | 'userid'
+>

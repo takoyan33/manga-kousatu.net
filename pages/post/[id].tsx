@@ -439,27 +439,27 @@ const Post = () => {
           {user?.email && singlePost?.likesEmail?.includes(user.email) && (
             <div>
               <p>いいね済み</p>
-              {/* <button
+              <button
                 className='my-2 inline'
-                onClick={() => LikeDelete(routerid, singlePost.likes, user?.email)}
+                onClick={() => LikeDelete(routerid, singlePost.likes, user?.email || '')}
                 id='delete-favorite'
               >
                 <span className='py-4 text-pink-400 hover:text-pink-700'>
                   <FavoriteIcon />
                   いいね解除
                 </span>
-              </button> */}
+              </button>
             </div>
           )}
-          {/* {user?.email && !singlePost?.likesEmail?.includes(user.email) && 
+          {user?.email && !singlePost?.likesEmail?.includes(user.email) && (
             <button
-              onClick={() => LikeAdd(routerid, singlePost.likes, user.email)}
+              onClick={() => LikeAdd(routerid, singlePost?.likes || 0, user.email || '')}
               id='add-favorite'
             >
               <FavoriteIconAnim on={on} />
               <span>いいねする</span>
             </button>
-          } */}
+          )}
 
           {singlePost?.selected.map((tag, i) => (
             <span
@@ -643,12 +643,8 @@ const Post = () => {
                 netabare={post.netabare}
                 context={post.context}
                 createTime={post.createTime}
-                displayName={post.displayName}
-                email={post.email}
                 id={post.id}
-                photoURL={post.photoURL}
                 likes={post.likes}
-                selected={post.selected}
                 userid={post.userid}
               />
             )

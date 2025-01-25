@@ -6,19 +6,9 @@ import React, { useState, useCallback } from 'react'
 import { database } from 'firebaseConfig.js'
 
 export default function NameAuth() {
-  const [ID, setID] = useState<number>()
-  const [title, setTitle] = useState<string>('')
-  const [context, setContext] = useState<string>('')
-  const [categori, setCategori] = useState<string>('')
   const auth = getAuth()
   const [displayName, setDisplayName] = useState<string>('')
   const router = useRouter()
-  const [createtime, setCreatetime] = useState<string>('')
-  const [isUpdate, setIsUpdate] = useState<boolean>(false)
-  const postsData = collection(database, 'posts')
-  const [firedata, setFiredata] = useState([])
-  const [downloadURL, setDownloadURL] = useState<string>()
-  const [result, setResult] = useState<string>('')
 
   const updateName = async () => {
     if (auth.currentUser) {
@@ -28,7 +18,6 @@ export default function NameAuth() {
         .then(() => {
           alert('プロフィールを更新しました。')
           setDisplayName('')
-          setResult('')
           router.push('/profile')
         })
         .catch((error) => {

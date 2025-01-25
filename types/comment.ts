@@ -1,3 +1,4 @@
+//コメントの型定義
 export interface GetComment {
   comment: string
   createTime: string

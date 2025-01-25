@@ -94,7 +94,7 @@ export const usePasswordReset = () => {
       })
   }
 
-  return { success, error, passwordReset }
+  return { error, success, passwordReset }
 }
 
 //Googleログイン

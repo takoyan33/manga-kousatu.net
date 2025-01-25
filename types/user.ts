@@ -1,3 +1,4 @@
+//単一ユーザーの型
 export interface GetUser {
   admin: number
   bio: string
@@ -9,10 +10,5 @@ export interface GetUser {
   userName: string
 }
 
-export interface ProfileParams {
-  profileImage: string
-  id: string
-  userName: string
-  bio: string
-  favorite: string[]
-}
+//プロフィールユーザーの型
+export type ProfileParams = Pick<GetUser, 'profileImage' | 'id' | 'userName' | 'bio' | 'favorite'>

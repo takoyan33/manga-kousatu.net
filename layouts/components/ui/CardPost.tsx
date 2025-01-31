@@ -38,7 +38,7 @@ export const CardPost = React.memo(
     }, [])
 
     return (
-      <div className='m-auto my-2 mx-4 hover:opacity-80'>
+      <article className='m-auto my-2 mx-4 hover:opacity-80'>
         <dl>
           <Link href={`/post/${id}`} className='cursor-pointer'>
             <div className='cardPost-img'>
@@ -80,7 +80,7 @@ export const CardPost = React.memo(
             </div>
           </div>
         </dl>
-      </div>
+      </article>
     )
   },
 )

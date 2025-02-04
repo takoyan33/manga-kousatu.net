@@ -3,7 +3,7 @@
 import { createContext, useState, useContext, useEffect } from 'react'
 import { auth } from '../../firebaseConfig'
 
-const AuthContext = createContext()
+const AuthContext = createContext(null)
 
 export function useAuthContext() {
   return useContext(AuthContext)

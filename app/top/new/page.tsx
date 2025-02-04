@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'
@@ -21,22 +23,16 @@ export default function Index() {
     useFetchPosts(setPostData)
   }, [])
 
-  const filterPostData = () => {
-    return postData.slice(0, loadIndex)
-  }
-
-  const filteredPosts = filterPostData()
-
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <CommonHead title='Manga Study - おすすめの記事' />
-      <Breadcrumbs secondTitle='おすすめ記事' />
-      <TopTitle title='おすすめ記事' />
+      <CommonHead title='Manga Study - 記事投稿' />
+      <Breadcrumbs secondTitle='新着記事' />
+      <TopTitle title='新着記事' />
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
-          filteredPosts.map((post) => (
+          postData.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}

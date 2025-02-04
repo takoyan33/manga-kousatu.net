@@ -46,7 +46,7 @@ const LOGIN_ADMIN_MENU_ITEMS = [
 
 export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  // const { user } = useAuthContext()
+  const { user }: any = useAuthContext()
   const router = useRouter()
   const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
@@ -97,11 +97,11 @@ export const Header = () => {
             </Link>
             <div className='flex'>
               <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
-              {/* {user && (
+              {user && (
                 <button onClick={handleNotificationOpen}>
                   <NotificationsIcon fontSize='small' />
                 </button>
-              )} */}
+              )}
               <IconButton
                 onClick={handleClick}
                 id='humbuger-menu'
@@ -111,7 +111,7 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                {/* {user && users?.profileImage && (
+                {user && users?.profileImage && (
                   <Avatar
                     sx={{ width: 32, height: 32 }}
                     src={users?.profileImage}
@@ -127,9 +127,9 @@ export const Header = () => {
                     key={users?.id}
                   />
                 )}
-                {!user && <MenuIcon fontSize='small' />} */}
+                {!user && <MenuIcon fontSize='small' />}
               </IconButton>
-              {/* {user && (
+              {user && (
                 <div className='ml-4 mr-6 text-center'>
                   <SiteButton
                     href='/post/new'
@@ -138,7 +138,7 @@ export const Header = () => {
                     id='add-post'
                   />
                 </div>
-              )} */}
+              )}
             </div>
           </Toolbar>
         </div>
@@ -179,7 +179,7 @@ export const Header = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {/* {!user && (
+        {!user && (
           <MenuItem>
             <ListItemIcon>
               <Logout fontSize='small' />
@@ -194,8 +194,8 @@ export const Header = () => {
             </ListItemIcon>
             <Link href='/register'>新規登録</Link>
           </MenuItem>
-        )} */}
-        {/* {user?.displayName && <MenuItem>{user.displayName}</MenuItem>}
+        )}
+        {user?.displayName && <MenuItem>{user.displayName}</MenuItem>}
         {user?.displayName === null && users && <MenuItem>{users[0]?.userName}</MenuItem>}
         {user?.displayName === null && <MenuItem>ユーザー名未設定</MenuItem>}
         <Divider />
@@ -205,8 +205,8 @@ export const Header = () => {
               <ListItemIcon>{item.icon}</ListItemIcon>
               <Link href={item.href}>{item.text}</Link>
             </MenuItem>
-          ))} */}
-        {/* {user && (
+          ))}
+        {user && (
           <MenuItem style={{ padding: '0 16px' }}>
             <ListItemIcon>
               <Logout fontSize='small' />
@@ -220,7 +220,7 @@ export const Header = () => {
               ログアウト
             </Button>
           </MenuItem>
-        )} */}
+        )}
         {ACCOUNT_MENU_ITEMS.map((item) => (
           <MenuItem key={item.text} onClick={handleClose}>
             <ListItemIcon>{item.icon}</ListItemIcon>

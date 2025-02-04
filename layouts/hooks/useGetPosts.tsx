@@ -93,12 +93,13 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<
 //特定のpostを取得
 export const useGetPost = async (setSinglePost, routerId: string): Promise<void> => {
   try {
-    console.log(routerId)
     const ref = await doc(database, 'posts', routerId)
+    console.log(ref)
     const snap = await getDoc(ref)
     setSinglePost(snap.data())
     console.log(snap.data())
   } catch (error) {
+    console.log('エラー')
     console.log(error)
   }
 }

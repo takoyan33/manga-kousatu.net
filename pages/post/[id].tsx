@@ -69,6 +69,7 @@ const Post = () => {
       await useGetPost(setSinglePost, routerid)
       if (singlePost == undefined) {
         console.log('記事なし')
+        // router.push('/404')
       }
     }
 

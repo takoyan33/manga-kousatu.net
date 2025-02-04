@@ -1,3 +1,5 @@
+'use client'
+
 import { getAuth } from 'firebase/auth'
 import Image from 'next/image'
 import { SiteButton } from '../../layouts/components/button'
@@ -95,7 +97,7 @@ export default function Top() {
           </h2>
           <p className='my-6 text-center text-xl md:text-left'>漫画の考察記事を投稿、閲覧しよう</p>
           <div className='m-auto'>
-            {!user && (
+            {/* {!user && (
               <>
                 <SiteButton
                   href='/register'
@@ -108,7 +110,7 @@ export default function Top() {
                   className='w-50 text-lef m-auto my-2 mx-4 inline-block'
                 />
               </>
-            )}
+            )} */}
             <SiteButton
               id='go-index'
               href='/'

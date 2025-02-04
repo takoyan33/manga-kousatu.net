@@ -36,7 +36,7 @@ import 'react-toastify/dist/ReactToastify.css'
 // } from 'react-share'
 import { TopPostComment } from 'layouts/components/ui/TopPostComment'
 import { TopPostLike } from 'layouts/components/ui/TopPostLike'
-import { useGetPost, useGetCategoryPosts, useGetMyUser, useGetOtherUser } from 'layouts/hooks'
+import { useGetPost, useGetCategoryPosts, useGetOtherUser } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
 // バリデーションルール
@@ -45,7 +45,6 @@ const schema = yup.object({
 })
 
 const Post = () => {
-  const [myUser, setMyUser] = useState<any>(null)
   const [users, setUsers] = useState<any>(null)
   const [singlePost, setSinglePost] = useState<GetPost>()
   const [categoryPosts, setCategoryPosts] = useState<any>([])
@@ -66,11 +65,15 @@ const Post = () => {
   })
 
   useEffect(() => {
-    useGetPost(setSinglePost, routerid)
-    if (user) {
-      useGetMyUser(setMyUser, user.uid)
+    const fetchPost = async () => {
+      await useGetPost(setSinglePost, routerid)
+      if (singlePost == undefined) {
+        console.log('記事なし')
+      }
     }
-  }, [routerid])
+
+    fetchPost()
+  }, [])
 
   useEffect(() => {
     if (singlePost && singlePost.category) {
@@ -112,7 +115,7 @@ const Post = () => {
 
   return (
     <>
-      <CommonHead />
+      <CommonHead title='Manga Study - 記事詳細' />
       <ToastContainer />
       <div className='m-auto my-4 w-11/12 md:w-full'>
         {user && (

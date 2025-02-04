@@ -1,13 +1,11 @@
-import type { VFC } from 'react'
-
 type CommonSelectViewProps = {} & CommonSelectProps
 
-const CommonSelectView: VFC<CommonSelectViewProps> = (props) => {
+const CommonSelectView = (props) => {
   return null
 }
 
 type CommonSelectProps = {}
 
-export const CommonSelect: VFC<CommonSelectProps> = (props) => {
+export const CommonSelect = (props) => {
   return <CommonSelectView {...props} />
 }

@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'
-import {
-  useFetchPosts,
-  // useGetOldPosts,
-  // useGetLikePosts,
-  // useGetNetabrePosts,
-  // useGetNoNetabrePosts,
-} from 'layouts/hooks'
+import { useFetchPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
-  const [searchName, setSearchName] = useState<string>('')
   const [loadIndex, setLoadIndex] = useState<number>(9)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
@@ -28,44 +21,28 @@ export default function Index() {
     useFetchPosts(setPostData)
   }, [])
 
-  const filterPostData = () => {
-    return postData
-      .filter((post) => {
-        if (searchName === '') {
-          return true
-        } else if (post.title.toLowerCase().includes(searchName.toLowerCase())) {
-          return true
-        }
-        return false
-      })
-      .slice(0, loadIndex)
-  }
-
-  const filteredPosts = filterPostData()
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <CommonHead />
+      <CommonHead title='Manga Study - 記事投稿' />
       <Breadcrumbs secondTitle='新着記事' />
       <TopTitle title='新着記事' />
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
-        ) : filteredPosts.length === 0 ? (
-          <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         ) : (
-          filteredPosts.map((post) => (
+          postData.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
-                <CardPost
-                  downloadURL={post.downloadURL}
-                  title={post.title}
-                  category={post.category}
-                  netabare={post.netabare}
-                  context={post.context}
-                  createTime={post.createTime}
-                  id={post.id}
-                  likes={post.likes}
-                  userid={post.userid}
-                />
+              <CardPost
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                id={post.id}
+                likes={post.likes}
+                userid={post.userid}
+              />
             </div>
           ))
         )}

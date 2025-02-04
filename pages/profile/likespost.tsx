@@ -137,7 +137,7 @@ export default function Profile() {
 
   return (
     <>
-      <CommonHead />
+      <CommonHead title='Manga Study - いいねした投稿' />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>いいねした投稿</h2>
 
       <div>

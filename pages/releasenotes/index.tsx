@@ -3,7 +3,7 @@ import { CommonHead, RELEASE_NOTES } from 'layouts/components/ui'
 export default function ReleaseNotes() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <CommonHead />
+      <CommonHead title='Manga Study - リリースノート' />
       <h1 className='m-5 my-12 text-center text-2xl font-semibold'>Manga Study - 更新履歴</h1>
       {RELEASE_NOTES.map(({ version, date, features }) => (
         <div key={version}>

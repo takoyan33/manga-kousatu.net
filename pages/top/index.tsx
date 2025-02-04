@@ -8,7 +8,7 @@ export default function Top() {
   const user = auth.currentUser
   return (
     <div>
-      <CommonHead />
+      <CommonHead title='Manga Study - トップ' />
       <div className='d-block m-auto my-20 w-80 md:flex md:w-full md:justify-center'>
         <div className='w-full md:w-6/12'>
           <h1 className='my-6 text-left text-4xl font-semibold text-sky-600'>Manga Study</h1>

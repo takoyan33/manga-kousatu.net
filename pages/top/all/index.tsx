@@ -97,7 +97,7 @@ export default function Index() {
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <CommonHead />
+      <CommonHead title='Manga Study - 全ての記事' />
       <Breadcrumbs secondTitle='投稿一覧' />
       <TopTitle title='投稿一覧' />
       <h3 className='text-left text-xl font-semibold'>カテゴリ</h3>
@@ -147,32 +147,32 @@ export default function Index() {
           <InputLabel id='demo-select-small'>ネタバレ</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='ネタバレ'>
-            {NETABARE_LIST.map((netabare) => 
+            {NETABARE_LIST.map((netabare) => (
               <MenuItem key={netabare.sortId} value={netabare.value} onClick={netabare.onClick}>
                 {netabare.label}
               </MenuItem>
-            )}
+            ))}
           </Select>
         </FormControl>
         <FormControl sx={{ m: 1, minWidth: 120 }} size='small'>
           <InputLabel id='demo-select-small'>新しい順</InputLabel>
 
           <Select labelId='demo-select-small' id='demo-select-small' label='新しい順'>
-            {SORT_LIST.map((sort) => 
+            {SORT_LIST.map((sort) => (
               <MenuItem key={sort.sortId} value={sort.value} onClick={sort.onClick}>
                 {sort.label}
               </MenuItem>
-            )}
+            ))}
           </Select>
         </FormControl>
       </div>
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 && <p className='my-2 text-center'>記事がありません。</p>}
-        {postData.length > 0 && filteredPosts.length === 0 && 
+        {postData.length > 0 && filteredPosts.length === 0 && (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
-        }
+        )}
         {filteredPosts.length > 0 &&
-          filteredPosts.map((post) => 
+          filteredPosts.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
               <CardPost
                 downloadURL={post.downloadURL}
@@ -186,17 +186,17 @@ export default function Index() {
                 userid={post.userid}
               />
             </div>
-          )}
+          ))}
       </div>
       <div className='text-center'>
-        {postData.length > 9 && 
+        {postData.length > 9 && (
           <SiteButton
             text='さらに表示'
             disabled={isEmpty ? true : false}
             onClick={displayMore}
             className='w-50 m-auto my-2'
           />
-        }
+        )}
       </div>
     </div>
   )

@@ -192,7 +192,7 @@ const Details = ({ post }) => {
 
   return (
     <>
-      <CommonHead />
+      <CommonHead title='Manga Study - 投稿記事カテゴリ' />
       <p className='my-4'>
         <Link href='/'>トップ</Link> ＞ 投稿記事 ＞ カテゴリ ＞{post.fields.title.stringValue}
       </p>

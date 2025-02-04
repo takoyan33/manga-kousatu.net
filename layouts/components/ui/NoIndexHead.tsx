@@ -2,7 +2,7 @@ import Head from 'next/head'
 import React from 'react'
 
 // eslint-disable-next-line react/display-name
-export const NoIndexHead: React.VFC = React.memo(() => {
+export const NoIndexHead = React.memo(() => {
   const title: string = 'Manga Study'
   const description: string =
     'Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。'

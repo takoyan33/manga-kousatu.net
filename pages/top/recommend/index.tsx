@@ -29,7 +29,7 @@ export default function Index() {
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
-      <CommonHead />
+      <CommonHead title='Manga Study - おすすめの記事' />
       <Breadcrumbs secondTitle='おすすめ記事' />
       <TopTitle title='おすすめ記事' />
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
@@ -38,17 +38,17 @@ export default function Index() {
         ) : (
           filteredPosts.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
-                <CardPost
-                  downloadURL={post.downloadURL}
-                  title={post.title}
-                  category={post.category}
-                  netabare={post.netabare}
-                  context={post.context}
-                  createTime={post.createTime}
-                  id={post.id}
-                  likes={post.likes}
-                  userid={post.userid}
-                />
+              <CardPost
+                downloadURL={post.downloadURL}
+                title={post.title}
+                category={post.category}
+                netabare={post.netabare}
+                context={post.context}
+                createTime={post.createTime}
+                id={post.id}
+                likes={post.likes}
+                userid={post.userid}
+              />
             </div>
           ))
         )}

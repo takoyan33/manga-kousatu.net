@@ -58,8 +58,6 @@ export const TopPostComment = React.memo(() => {
     const newDate = new Date().toLocaleString('ja-JP')
     const postRef = await doc(database, 'comments', routerid + (comments.length + 2).toString())
 
-    console.log(myUser?.profileImage)
-
     await setDoc(postRef, {
       comment: data.comment,
       userid: user?.uid,

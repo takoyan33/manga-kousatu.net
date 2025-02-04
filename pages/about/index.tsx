@@ -4,7 +4,7 @@ export default function About() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <div className='min-h-screen'>
-        <CommonHead />
+        <CommonHead title='Manga Study - About' />
         <TopTitle title='About' />
         <div>
           <p className='mb-6 text-lg'>

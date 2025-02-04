@@ -24,7 +24,7 @@ const Post = () => {
 
   return (
     <>
-      <CommonHead />
+      <CommonHead title='Manga Study - プロフィール' />
 
       <ProfileId
         key={users?.id}

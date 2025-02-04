@@ -54,7 +54,7 @@ export default function Index() {
       {/* <head>
         <script src='https://unpkg.com/react-scan/dist/auto.global.js' async />
       </head> */}
-      <CommonHead />
+      <CommonHead title='Manga Study' />
       <TopTitle title='おすすめ記事' url='/top/recommend' />
       <div className='m-auto flex items-center justify-center md:flex-row'>
         <div className='prev-button-recommend mr-0 w-48 cursor-pointer md:mr-4 md:w-20'>

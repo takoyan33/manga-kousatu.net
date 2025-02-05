@@ -12,18 +12,23 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
+// interface NetabareItem {
+//   sortId: number
+//   label: string
+//   value: string
+//   onClick: () => void
+// }
+
+// interface CategoryParams {
+//   id: string | ParsedUrlQueryInput
+//   title: string | ParsedUrlQueryInput
+// }
+
 export default function Index() {
   const [postData, setPostData] = useState<Array<GetPost>>([])
   const [oldPostData, setOldPostData] = useState<Array<GetPost>>([])
   // const [recommendPostData, setRecommendPostData] = useState<Array<GetPost>>([])
   // const [filteredPosts, setFilteredPosts] = useState(postData)
-
-  // interface NetabareItem {
-  //   sortId: number
-  //   label: string
-  //   value: string
-  //   onClick: () => void
-  // }
 
   useEffect(() => {
     useGetOldPosts(setOldPostData)
@@ -32,11 +37,6 @@ export default function Index() {
 
     // setFilteredPosts(shuffledPosts)
   }, [])
-
-  // interface CategoryParams {
-  //   id: string | ParsedUrlQueryInput
-  //   title: string | ParsedUrlQueryInput
-  // }
 
   const breakpoints = {
     0: {

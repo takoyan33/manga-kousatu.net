@@ -37,6 +37,10 @@ const schema = yup.object({
   title: yup.string().required('必須です'),
 })
 
+// interface addPostPost {
+//   toLocaleString(timeZone): string
+// }
+
 export default function Post() {
   const [processing, setProcessing] = useState(false)
   const [tags, setTags] = useState(['最終回'])
@@ -47,7 +51,7 @@ export default function Post() {
   const [createContextObjectURL, setCreateContextObjectURL] = useState('')
   const [posts, setPosts] = useState<any>([])
   const [lengthData, setPostsLength] = useState<any>(null)
-  const { user } = useAuthContext()
+  const { user }: any = useAuthContext()
   const [display, setDisplay] = useState('')
 
   useEffect(() => {
@@ -92,13 +96,11 @@ export default function Post() {
 
   const router = useRouter()
 
-  // interface addPostPost {
-  //   toLocaleString(timeZone): string
-  // }
-
   const addPost: SubmitHandler<PreviewFormInput> = async (data) => {
     // 処理中(true)なら非同期処理せずに抜ける
-    if (processing) return
+    if (processing) {
+      return
+    }
     // 処理中フラグを上げる
     setProcessing(true)
     if (image === null) {

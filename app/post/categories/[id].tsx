@@ -53,6 +53,13 @@ export const getStaticProps = async (context) => {
   }
 }
 
+// interface NetabareItem {
+//   sortId: number
+//   label: string
+//   value: string
+//   onClick: () => void
+// }
+
 const Details = ({ post }) => {
   //データベースを取得
   const q = query(postsRef, orderBy('timestamp', 'desc'))
@@ -148,13 +155,6 @@ const Details = ({ post }) => {
     useGetLikePosts()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.query])
-
-  // interface NetabareItem {
-  //   sortId: number
-  //   label: string
-  //   value: string
-  //   onClick: () => void
-  // }
 
   const SORT_LIST = [
     {

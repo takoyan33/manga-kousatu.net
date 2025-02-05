@@ -6,7 +6,7 @@ import Image from 'react-image-resizer'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
-import { FixDaysAgo } from 'layouts/utils/Date_helper'
+import { FixDaysAgo } from 'utils/date-helper'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 

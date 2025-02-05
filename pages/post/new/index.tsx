@@ -16,10 +16,10 @@ import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
 import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
-import ImageUpload from 'layouts/utils/ImageUpload'
-import ImageUploadContext from 'layouts/utils/ImageUploadContext'
+import ImageUpload from 'utils/image-upload'
+import ImageUploadContext from 'utils/image-upload-context'
 import 'react-toastify/dist/ReactToastify.css'
-import { postsRef } from 'layouts/utils/post'
+import { postsRef } from 'utils/post'
 
 // フォームの型
 interface RegisterPostParams {

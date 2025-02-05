@@ -6,9 +6,9 @@ import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
-import { FixDaysAgo } from 'layouts/utils/Date_helper'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
+import { FixDaysAgo } from 'utils/date-helper'
 
 // eslint-disable-next-line react/display-name
 export const CardPost = React.memo(

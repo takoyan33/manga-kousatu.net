@@ -12,7 +12,7 @@ import { CommonHead, CardPost } from 'layouts/components/ui'
 // useGetCategoryOldPosts,
 // useGetCategoryLikePosts,
 // 'layouts/components/hooks'
-import { postsRef } from 'layouts/utils/post'
+import { postsRef } from 'utils/post'
 
 export const getStaticPaths = async () => {
   const res = await fetch(

@@ -21,11 +21,9 @@ const schema = yup.object({
 })
 
 // eslint-disable-next-line react/display-name
-export const TopPostComment = React.memo(() => {
+export const TopPostComment = React.memo(({ routerid }: any) => {
   const auth = getAuth()
   const user = auth.currentUser
-  const router = useRouter()
-  const routerid: any = router.query.id
   useEffect(() => {
     if (user) {
       useGetMyUser(setMyUser, user.uid)
@@ -93,7 +91,7 @@ export const TopPostComment = React.memo(() => {
     })
       .then(() => {
         successNotify('コメントを更新しました')
-        router.push(`/post/${routerid}`)
+        // router.push(`/post/${routerid}`)
         setIsCommentModalOpen(false)
       })
       .catch((err) => {

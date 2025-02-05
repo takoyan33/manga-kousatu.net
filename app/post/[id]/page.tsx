@@ -68,6 +68,7 @@ const Post = ({ params }: any) => {
 
   useEffect(() => {
     const fetchPost = async () => {
+      console.log(routerid)
       await useGetPost(setSinglePost, routerid)
       if (singlePost == undefined) {
         console.log('記事なし')
@@ -96,7 +97,7 @@ const Post = ({ params }: any) => {
       .then(() => {
         successNotify('記事を削除しました')
         setTimeout(() => {
-          router.push('/')
+          // router.push('/')
         }, 2000)
       })
       .catch(() => {
@@ -121,9 +122,9 @@ const Post = ({ params }: any) => {
       <CommonHead title='Manga Study - 記事詳細' />
       <ToastContainer />
       <div className='m-auto my-4 w-11/12 md:w-full'>
-        {user && (
+        {user && 
           <>
-            {user.email === singlePost?.email && (
+            {user.email === singlePost?.email && 
               <>
                 <List
                   sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper', zIndex: 0 }}
@@ -158,14 +159,14 @@ const Post = ({ params }: any) => {
                   </ListItemButton>
                 </List>
               </>
-            )}
+            }
           </>
-        )}
+        }
         <div className='rounded-xl md:border md:p-10'>
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={openModal}>
-              {singlePost?.downloadURL && (
+              {singlePost?.downloadURL && 
                 <Image
                   className='Post-img rounded text-center'
                   src={singlePost.downloadURL}
@@ -174,7 +175,7 @@ const Post = ({ params }: any) => {
                   alt='画像'
                   priority
                 />
-              )}
+              }
             </button>
             {!singlePost?.downloadURL && <span>画像なし</span>}
           </div>
@@ -185,7 +186,7 @@ const Post = ({ params }: any) => {
               </button>
             </div>
             <div className='z-20 my-6 flex justify-center'>
-              {singlePost?.downloadURL && (
+              {singlePost?.downloadURL && 
                 <Image
                   className='z-20 m-auto max-w-sm text-center'
                   height={400}
@@ -194,7 +195,7 @@ const Post = ({ params }: any) => {
                   alt='contextImage'
                   priority
                 />
-              )}
+              }
             </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
@@ -231,14 +232,14 @@ const Post = ({ params }: any) => {
             </div>
           </Link>
 
-          {singlePost?.editTime && (
+          {singlePost?.editTime && 
             <div>
               <AccessTimeIcon />
               編集日時：{singlePost.editTime}
             </div>
-          )}
+          }
           <div color='text.secondary'>
-            {singlePost?.category && (
+            {singlePost?.category && 
               <SiteCategory
                 className={`border border-${
                   {
@@ -258,7 +259,7 @@ const Post = ({ params }: any) => {
                 text={singlePost.category}
                 href={`/post/categories/${singlePost.category}`}
               />
-            )}
+            }
 
             <span
               className={`span-1 mx-1 mt-1 inline-block rounded border text-center text-sm ${
@@ -280,11 +281,11 @@ const Post = ({ params }: any) => {
                   </LineShareButton>
                 </div> */}
 
-            {singlePost?.context && (
+            {singlePost?.context && 
               <span className='text-left' style={{ whiteSpace: 'pre-line' }}>
                 {parse(singlePost.context)}
               </span>
-            )}
+            }
           </div>
           <br />
           {/* {singlePost?.contextImage && (
@@ -298,16 +299,16 @@ const Post = ({ params }: any) => {
               />
             </div>
           )} */}
-          <TopPostLike />
+          <TopPostLike routerid={routerid} />
 
-          {singlePost?.selected.map((tag, i) => (
+          {singlePost?.selected.map((tag, i) => 
             <span
               className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
               key={i}
             >
               #{tag}
             </span>
-          ))}
+          )}
 
           <div className='cursor-pointer'>
             <Link href={`/profile/${users?.userid}`}>
@@ -335,7 +336,7 @@ const Post = ({ params }: any) => {
           </div>
         </div>
 
-        <TopPostComment />
+        <TopPostComment routerid={routerid} />
       </div>
 
       <h2 className='my-4 text-xl'>こちらもおすすめ</h2>
@@ -357,9 +358,9 @@ const Post = ({ params }: any) => {
               />
             )
           })}
-          {categoryPosts.length === 0 && (
+          {categoryPosts.length === 0 && 
             <p className='m-auto my-6 text-center text-2xl'>まだ投稿されていません</p>
-          )}
+          }
         </div>
       </div>
     </>

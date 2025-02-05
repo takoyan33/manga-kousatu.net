@@ -3,7 +3,6 @@
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { getAuth } from 'firebase/auth'
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
-import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import * as yup from 'yup'
 import { database } from 'firebaseConfig'
@@ -12,11 +11,9 @@ import { useGetPost } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 
 // eslint-disable-next-line react/display-name
-export const TopPostLike = React.memo(() => {
+export const TopPostLike = React.memo(({ routerid }: any) => {
   const auth = getAuth()
   const user = auth.currentUser
-  const router = useRouter()
-  const routerid: any = router.query.id
 
   const [singlePost, setSinglePost] = useState<GetPost>()
   const [likecount, setLikecount] = useState<number>(0)

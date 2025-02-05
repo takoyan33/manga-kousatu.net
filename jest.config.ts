@@ -12,6 +12,12 @@ const config: Config = {
   testEnvironmentOptions: {
     customExportConditions: ['browser', 'node'],
   },
+  testPathIgnorePatterns: ['<rootDir>/tests/all.spec.tsx'],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  moduleNameMapper: {
+    '^layouts/(.*)$': '<rootDir>/layouts/$1',
+    '^utils/(.*)$': '<rootDir>/utils/$1',
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

@@ -1,31 +1,5 @@
-import { test } from '@playwright/test'
-import { defineConfig, devices } from '@playwright/test'
-
-export const localhost = 'http://localhost:8080'
-
-export const testUser = {
-  email: 'harrier2070+3@gmail.com',
-  password: 'password1234!',
-}
-
-export const otherUser = {
-  email: 'harrier2070+4@gmail.com',
-  password: 'password1234!',
-}
-
-export const testProfile = {
-  name: 'test123',
-  profileText: 'よろしくお願いします。',
-  image:
-    '/Users/abeshmupeii/Desktop/01_engineer💻/01_React系/02_Next/01_開発物/manga-kousatu.net/public/images/book-reading.png',
-}
-
-export const editTestProfile = {
-  name: 'test123456',
-  profileText: 'よろしくお願いします!!!!!',
-  image:
-    '/Users/abeshmupeii/Desktop/01_engineer💻/01_React系/02_Next/01_開発物/manga-kousatu.net/public/images/book-reading.png',
-}
+import { test, defineConfig, devices } from '@playwright/test'
+import { login, testUser, localhost, otherUser, testProfile, editTestProfile } from './login'
 
 test('SignUp Test', async ({ page }) => {
   await test.setTimeout(120000)
@@ -38,6 +12,7 @@ test('SignUp Test', async ({ page }) => {
   await page.locator('#signUp').click()
   await page.waitForTimeout(2000)
 
+  //プロフィール登録
   await page.locator('#file-input').setInputFiles(testProfile.image)
   await page.waitForTimeout(2000)
   await page.fill('#name', testProfile.name)
@@ -47,7 +22,6 @@ test('SignUp Test', async ({ page }) => {
   await page.waitForURL(localhost + '/top/')
 
   // ログアウト
-  // await page.goto(localhost + '/profile/')
   await page.waitForTimeout(2000)
   await page.locator('#humbuger-menu').click()
   await page.waitForTimeout(1000)
@@ -56,16 +30,15 @@ test('SignUp Test', async ({ page }) => {
   await page.waitForTimeout(3000)
 })
 
-test('Login Test', async ({ page }) => {
+test('Login Test', async ({ page, browser }) => {
   await test.setTimeout(120000)
 
+  const context = await browser.newContext({
+    recordVideo: { dir: 'videos/' },
+  })
+
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // ログアウト
   await page.waitForTimeout(2000)
@@ -74,6 +47,8 @@ test('Login Test', async ({ page }) => {
   await page.locator('#logout').click()
   await page.waitForURL(localhost + '/login/')
   await page.waitForTimeout(3000)
+
+  await context.close()
 })
 
 // プロフィール編集
@@ -81,12 +56,7 @@ test('ProfileEdit Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // プロフィールからプロフィール編集画面へ
   await page.goto(localhost + '/profile/')
@@ -113,25 +83,12 @@ test('ProfileEdit Test', async ({ page }) => {
   await page.waitForTimeout(3000)
 })
 
-// 設定テスト
-test('//Setting Test', async ({ page }) => {
+// 退会テスト 未作成
+test('Account Delete Test', async ({ page }) => {
   await test.setTimeout(120000)
 
-  // パスワード変更
-  await page.goto(localhost + '/profile/edit/password')
-  await page.waitForTimeout(2000)
-  await page.fill('#password', testUser.password)
-  await page.locator('#submit').click()
-  await page.waitForTimeout(2000)
-  await page.pause()
-
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // 退会
   await page.goto(localhost + '/profile/edit/settings')
@@ -141,18 +98,20 @@ test('//Setting Test', async ({ page }) => {
   await page.waitForURL(localhost + '/top/')
 })
 
-//投稿、編集
+// パスワード変更
+// await page.goto(localhost + '/profile/edit/password')
+// await page.waitForTimeout(2000)
+// await page.fill('#password', testUser.password)
+// await page.locator('#submit').click()
+// await page.waitForTimeout(2000)
+// await page.pause()
 
+//投稿、編集
 test('Add Post Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // トップページへ
   await page.waitForTimeout(2000)
@@ -165,7 +124,7 @@ test('Add Post Test', async ({ page }) => {
   await page.fill('#title', 'test title')
   await page.check('input[name="categori"][value="ONEPIECE"]')
   await page.waitForTimeout(1000)
-  await page.check('input[name="netabare"][value="ネタバレ有"]')
+  await page.check('input[name="netabare"][value="spoil"]')
   await page.waitForTimeout(1000)
   await page.check('input[name="display"][value="true"]')
   await page.waitForTimeout(1000)
@@ -187,12 +146,7 @@ test('EditDelete Post Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // 記事詳細へ
   await page.waitForTimeout(2000)
@@ -207,7 +161,7 @@ test('EditDelete Post Test', async ({ page }) => {
   await page.waitForTimeout(2000)
   // await page.check('input[name="category"][value="ONEPIECE"]')
   // await page.waitForTimeout(1000)
-  await page.check('input[name="netabare"][value="ネタバレ無"]')
+  await page.check('input[name="netabare"][value="spoil"]')
   await page.waitForTimeout(1000)
   await page.check('input[name="display"][value="true"]')
   await page.waitForTimeout(1000)
@@ -228,12 +182,7 @@ test('Comment Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // コメントの追加
   await page.waitForTimeout(2000)
@@ -262,12 +211,7 @@ test('Favorite Test', async ({ page }) => {
   await test.setTimeout(120000)
 
   //ログイン
-  await page.goto(localhost + '/login/')
-  await page.fill('#email', testUser.email)
-  await page.fill('#password', testUser.password)
-  await page.locator('#login').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+  await login(page)
 
   // いいね
   await page.waitForTimeout(2000)

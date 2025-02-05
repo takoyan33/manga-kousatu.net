@@ -25,7 +25,7 @@ describe('A1_Component > ProfilePost', () => {
       <ProfilePost
         id={1}
         profileImage={profileImage}
-        username={username}
+        userName={username}
         bio={bio}
         favorite={favorite}
       />,

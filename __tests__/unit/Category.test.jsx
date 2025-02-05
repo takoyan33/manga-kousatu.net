@@ -4,15 +4,15 @@ import '@testing-library/jest-dom'
 
 describe('A1_Component > Category', () => {
   it('[A1_6_1] レンダリングされているか', () => {
-    render(<Category category='ワンピース' />)
+    render(<Category category='ONEPIECE' />)
   })
 
   it('[A1_6_2] Pageのスナップショット', () => {
-    const { container } = render(<Category category='ワンピース' />)
+    const { container } = render(<Category category='ONEPIECE' />)
     expect(container).toMatchSnapshot()
   })
   // it('[A1_6_2] buttonをクリックできるか', () => {
-  //   render(<Category text='test' />)
+  //   render(<Category text='ONEPIECE' />)
   //   fireEvent.click(screen.getByRole('button', { name: 'open-button' }))
   // })
 

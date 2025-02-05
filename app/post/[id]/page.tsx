@@ -1,3 +1,5 @@
+'use client'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
@@ -14,7 +16,7 @@ import { doc, deleteDoc } from 'firebase/firestore'
 import parse from 'html-react-parser'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+// import { useRouter, useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import Modal from 'react-modal'
@@ -44,12 +46,12 @@ const schema = yup.object({
   comment: yup.string().required('必須です'),
 })
 
-const Post = () => {
+const Post = ({ params }: any) => {
   const [users, setUsers] = useState<any>(null)
   const [singlePost, setSinglePost] = useState<GetPost>()
   const [categoryPosts, setCategoryPosts] = useState<any>([])
-  const router = useRouter()
-  const routerid: any = router.query.id
+  // const router = useRouter()
+  const { routerid } = params
   const auth = getAuth()
   const user = auth.currentUser
 

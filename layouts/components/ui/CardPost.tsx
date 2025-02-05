@@ -1,3 +1,5 @@
+"use client"
+
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
 import Image from 'next/image'

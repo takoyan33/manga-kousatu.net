@@ -1,9 +1,11 @@
+'use client'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { TextField, Box } from '@mui/material'
 import { onSnapshot, setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useState, useEffect } from 'react'
 import { SubmitHandler, useForm, Controller } from 'react-hook-form'
 import { TagsInput } from 'react-tag-input-component'

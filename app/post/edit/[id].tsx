@@ -1,3 +1,5 @@
+'use client'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Stack } from '@mui/material'

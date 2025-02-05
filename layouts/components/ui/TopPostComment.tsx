@@ -1,3 +1,5 @@
+'use client'
+
 import { yupResolver } from '@hookform/resolvers/yup'
 import { FormLabel, Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'

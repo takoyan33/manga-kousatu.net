@@ -1,3 +1,5 @@
+'use client'
+
 import { CommonHead, RELEASE_NOTES } from 'layouts/components/ui'
 
 export default function ReleaseNotes() {

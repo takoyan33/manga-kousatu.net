@@ -1,3 +1,5 @@
+'use client'
+
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { getAuth } from 'firebase/auth'
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'

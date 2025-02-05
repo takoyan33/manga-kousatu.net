@@ -1,3 +1,5 @@
+'use client'
+
 import LoginAuth from 'layouts/api/auth/LoginAuth'
 import { CommonHead } from 'layouts/components/ui'
 

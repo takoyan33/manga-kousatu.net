@@ -1,3 +1,5 @@
+'use client'
+
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import { TextField, Stack, Input, InputAdornment } from '@mui/material'
 import { getAuth } from 'firebase/auth'

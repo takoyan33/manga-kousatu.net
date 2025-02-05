@@ -1,3 +1,5 @@
+'use client'
+
 import { getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -12,7 +14,7 @@ import { GetUser } from 'types/user'
 // eslint-disable-next-line react/display-name
 export const DisplayChart = React.memo(() => {
   const router = useRouter()
-  const { user } = useAuthContext()
+  const { user }: any = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [onePiece, setOnePiece] = useState<any>([])

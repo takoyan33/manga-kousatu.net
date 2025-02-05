@@ -7,7 +7,7 @@ import { collection, onSnapshot, query, orderBy } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState, useMemo } from 'react'
 import { database } from '../../../firebaseConfig'
-import { postsRef } from 'layouts/utils/post'
+import { postsRef } from 'utils/post'
 
 // type Props = {
 //   getallPost?: () => Promise<void>;

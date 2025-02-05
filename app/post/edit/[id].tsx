@@ -17,7 +17,7 @@ import { SiteButton } from 'layouts/components/button'
 import { SiteLabel, successNotify, errorNotify } from 'layouts/components/text'
 import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useGetPost } from 'layouts/hooks'
-import ImageUpload from 'layouts/utils/ImageUpload'
+import ImageUpload from 'utils/image-upload'
 // import { GetPost } from 'types/post'
 
 const schema = yup.object({

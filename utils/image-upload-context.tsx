@@ -1,6 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { ImageUploadProps } from 'layouts/types'
+import { ImageUploadProps } from 'types/other'
 
 //React.memo化
 const ImageUploadContext = ({ onChange, createcontextObjectURL }: ImageUploadProps) => {

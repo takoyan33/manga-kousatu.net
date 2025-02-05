@@ -1,6 +1,6 @@
-import { TextField, Box, FormLabel } from '@mui/material'
+import { FormLabel } from '@mui/material'
 import React from 'react'
-import { ImageUploadProps } from 'layouts/types'
+import { ImageUploadProps } from 'types/other'
 
 //React.memo化
 const ImageUpload = ({ onChange, createObjectURL }: ImageUploadProps) => {

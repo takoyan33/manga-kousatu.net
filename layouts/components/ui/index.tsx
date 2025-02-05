@@ -1,5 +1,5 @@
-export * from '../../lib/Objects'
-export * from '../../lib/FormControls'
+export * from '../../../lib/objects'
+export * from '../../../lib/form-controls'
 export * from './ProfileId'
 export * from './ProfilePost'
 export * from './CommonHead'

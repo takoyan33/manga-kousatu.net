@@ -10,7 +10,7 @@ import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { CommonHead, CardPost, COLORS } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { useGetLikedPosts, useGetMyUser } from 'layouts/hooks'
-import { postsRef } from 'layouts/utils/post'
+import { postsRef } from 'utils/post'
 import { GetPost } from 'types/post'
 
 export default function Profile() {

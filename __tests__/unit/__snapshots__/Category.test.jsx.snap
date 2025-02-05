@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > Category [A1_6_2] Pageのスナップショット 1`] = `
+<div>
+  <div
+    class="my-1"
+  >
+    <a
+      class="inline-block rounded border text-center text-sm font-boldborder border-cyan-500 p-1 hover:bg-cyan-500 hover:text-white"
+      href="/post/categories/ONEPIECE"
+    >
+      #
+      ONEPIECE
+    </a>
+  </div>
+</div>
+`;

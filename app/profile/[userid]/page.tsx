@@ -1,5 +1,7 @@
+'use client'
+
 import { getAuth } from 'firebase/auth'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { CommonHead, ProfileId, CardPost } from 'layouts/components/ui'
 import { useGetOtherUser, useGetUsersPosts } from 'layouts/hooks'

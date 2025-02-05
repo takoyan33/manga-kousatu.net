@@ -1,7 +1,7 @@
 import { Button, Box, TextField } from '@mui/material'
 import { getAuth, updateProfile, deleteUser } from 'firebase/auth'
 import { collection, getDocs } from 'firebase/firestore'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useState, useCallback } from 'react'
 import { database } from 'firebaseConfig.js'
 

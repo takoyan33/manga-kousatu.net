@@ -9,7 +9,7 @@ import {
   UserCredential,
 } from 'firebase/auth'
 import { doc, deleteDoc } from 'firebase/firestore'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { database } from '../../../firebaseConfig'
 import { successNotify, errorNotify } from '../../../layouts/components/text'

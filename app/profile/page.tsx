@@ -1,6 +1,8 @@
+"use client"
+
 import TextField from '@mui/material/TextField'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from '../../layouts/components/button'
 import { ProfileId, DisplayChart, NoIndexHead } from 'layouts/components/ui'
@@ -107,16 +109,16 @@ export default function Profile() {
             </tr>
           </thead>
           <tbody>
-            {postsData.length === 0 ? (
+            {postsData.length === 0 ? 
               <tr className='my-2 text-center'>
                 <td>記事がありません。</td>
               </tr>
-            ) : filteredPosts.length === 0 ? (
+             : filteredPosts.length === 0 ? 
               <tr className='m-auto my-10 text-center text-xl'>
                 <td>検索した名前の記事がありませんでした。</td>
               </tr>
-            ) : (
-              filteredPosts.map((post) => (
+             : 
+              filteredPosts.map((post) => 
                 <tr className='border-b bg-white' key={post.id}>
                   <th
                     scope='row'
@@ -132,8 +134,8 @@ export default function Profile() {
                     <Link href={`/post/edit/${post.id}`}>編集する</Link>
                   </td>
                 </tr>
-              ))
-            )}
+              )
+            }
           </tbody>
         </table>
       </div>

@@ -1,7 +1,7 @@
 'use client'
 
 import { getDocs, query, where } from 'firebase/firestore'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { useAuthContext } from '../../context/AuthContext'

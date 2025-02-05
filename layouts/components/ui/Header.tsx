@@ -52,12 +52,12 @@ export const Header = () => {
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
   const [users, setUsers] = useState<GetUser>()
 
-  // useEffect(() => {
-  //   if (user) {
-  //     useGetMyUser(setUsers, user.uid)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [user])
+  useEffect(() => {
+    if (user) {
+      useGetMyUser(setUsers, user.uid)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {

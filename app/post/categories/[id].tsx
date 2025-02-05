@@ -7,7 +7,7 @@ import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import { getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { CommonHead, CardPost } from 'layouts/components/ui'
 //import useGetCategoryPosts,

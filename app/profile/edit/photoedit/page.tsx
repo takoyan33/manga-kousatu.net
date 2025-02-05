@@ -1,12 +1,14 @@
+'use client'
+
 /* eslint-disable jsx-a11y/alt-text */
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { updateProfile } from 'firebase/auth'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
-import { auth } from '../../../firebaseConfig'
+import { auth } from '../../../../firebaseConfig'
 import { postImage } from 'layouts/api/upload'
 import { NoIndexHead } from 'layouts/components/ui'
 

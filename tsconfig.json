@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": false,
@@ -20,9 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "plugins": [
       {
@@ -54,7 +48,7 @@
     "pages/ninjas/[id].tsx",
     "pages/posts/[id].js",
     "pages/post/categories/[id].tsx",
-    "layouts/context/AuthContext.js",
+    "layouts/context/auth-context.js",
     "pages/post/[id].tsx",
     "layouts/components/ui/CardPost.jsx",
     "layouts/components/ui/CardPost.jsx",
@@ -63,9 +57,8 @@
     "__tests__/unit/page.test.jsx",
     "tests/all.spec.tsx",
     "tests/example.spec.tsx",
-    ".next/types/**/*.ts"
-, "pages/post/new/preview.tsx"  ],
-  "exclude": [
-    "node_modules"
-  ]
+    ".next/types/**/*.ts",
+    "pages/post/new/preview.tsx"
+  ],
+  "exclude": ["node_modules"]
 }

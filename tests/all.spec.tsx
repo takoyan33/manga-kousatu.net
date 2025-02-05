@@ -83,7 +83,7 @@ test('ProfileEdit Test', async ({ page }) => {
   await page.waitForTimeout(3000)
 })
 
-// 退会テスト 未作成
+// 退会テスト
 test('Account Delete Test', async ({ page }) => {
   await test.setTimeout(120000)
 
@@ -91,9 +91,9 @@ test('Account Delete Test', async ({ page }) => {
   await login(page)
 
   // 退会
-  await page.goto(localhost + '/profile/edit/settings')
+  await page.goto(localhost + '/profile')
   await page.waitForTimeout(2000)
-  await page.locator('#deleteUser').click()
+  await page.locator('#account-delete').click()
   await page.waitForTimeout(2000)
   await page.waitForURL(localhost + '/top/')
 })

@@ -24,8 +24,8 @@ import React, { useEffect, useState } from 'react'
 import { useLogOut } from '../../../layouts/api/auth/useAuth'
 import { SiteButton } from '../../../layouts/components/button'
 import { NotificationModal } from '../../../layouts/components/ui'
-import { useAuthContext } from '../../../layouts/context/AuthContext'
 import { useGetMyUser } from '../../../layouts/hooks'
+import { useAuthContext } from '../../context/auth-context'
 import { GetUser } from 'types/user'
 
 const ACCOUNT_MENU_ITEMS = [

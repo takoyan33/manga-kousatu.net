@@ -1,9 +1,10 @@
 import TextField from '@mui/material/TextField'
+import { deleteUser } from 'firebase/auth'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from '../../layouts/components/button'
-import { ProfileId, DisplayChart, NoIndexHead } from 'layouts/components/ui'
+import { ProfileId, DisplayChart, NoIndexHead, AccountMenu } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/AuthContext'
 import { useGetMyPosts, useGetMyUser } from 'layouts/hooks'
 import { GetPost } from 'types/post'
@@ -44,11 +45,28 @@ export default function Profile() {
 
   const filteredPosts = filterPostData()
 
+  //userを削除
+  const onDeleteUser = async () => {
+    if (user) {
+      deleteUser(user)
+        //user削除
+        .then(() => {
+          //tokenを削除
+          localStorage.removeItem('Token')
+          alert('退会しました。TOP画面に戻ります。')
+          router.push('/top')
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    }
+  }
+
   return (
     <>
       <NoIndexHead />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
-      {/* <AccountMenu onClick={deleteuser} /> */}
+      <AccountMenu onClick={onDeleteUser} />
       <ProfileId
         key={users?.id}
         profileImage={users?.profileImage ?? ''}

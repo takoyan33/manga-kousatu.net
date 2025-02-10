@@ -73,21 +73,23 @@ export const TopPostLike = React.memo(() => {
         <p className='mb-4'>自分の投稿なのでいいねできません</p>
       )}
 
-      {user?.email != singlePost?.email && singlePost?.likesEmail?.includes(user?.email || '') && (
-        <div>
-          <p>いいね済み</p>
-          <button
-            className='my-2 inline'
-            onClick={() => LikeDelete(routerid, singlePost.likes, user?.email || '')}
-            id='delete-favorite'
-          >
-            <span className='py-4 text-pink-400 hover:text-pink-700'>
-              <FavoriteIcon />
-              いいね解除
-            </span>
-          </button>
-        </div>
-      )}
+      {user &&
+        user?.email != singlePost?.email &&
+        singlePost?.likesEmail?.includes(user?.email || '') && (
+          <div>
+            <p>いいね済み</p>
+            <button
+              className='my-2 inline'
+              onClick={() => LikeDelete(routerid, singlePost.likes, user?.email || '')}
+              id='delete-favorite'
+            >
+              <span className='py-4 text-pink-400 hover:text-pink-700'>
+                <FavoriteIcon />
+                いいね解除
+              </span>
+            </button>
+          </div>
+        )}
       {user?.email != singlePost?.email && !singlePost?.likesEmail?.includes(user?.email || '') && (
         <button
           onClick={() => LikeAdd(routerid, singlePost?.likes || 0, user?.email || '')}

@@ -15,7 +15,6 @@ import {
   MenuItem,
   ListItemIcon,
   Divider,
-  Button,
 } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -54,24 +53,19 @@ export const Header = () => {
     if (user) {
       useGetMyUser(setUsers, user.uid)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
+  // メニューの開閉
   const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = (): void => {
-    setAnchorEl(null)
-  }
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget)
+  const handleClose = () => setAnchorEl(null)
 
-  const handleLogout = async (): Promise<void> => {
+  // ログアウト処理
+  const handleLogout = async () => {
     await logout()
     setAnchorEl(null)
     setUsers(undefined)
-    setTimeout(() => {
-      router.push('/login')
-    }, 2000)
+    setTimeout(() => router.push('/login'), 2000)
   }
 
   const handleNotificationOpen = (): void => {
@@ -88,18 +82,24 @@ export const Header = () => {
       <nav>
         <div style={{ maxWidth: '1100px', margin: '0 auto', height: '80px' }}>
           <Toolbar style={{ height: '80px', justifyContent: 'space-between' }}>
+            {/* ロゴ */}
             <Link href='/'>
               <Typography sx={{ flexGrow: 1, textAlign: 'left' }}>
                 <Image height={20} width={150} src='/logo.png' alt='logo' />
               </Typography>
             </Link>
+
             <div className='flex'>
               <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
+
+              {/* 通知アイコン */}
               {user && (
                 <button onClick={handleNotificationOpen}>
                   <NotificationsIcon fontSize='small' />
                 </button>
               )}
+
+              {/* ユーザーメニュー */}
               <IconButton
                 onClick={handleClick}
                 id='humbuger-menu'
@@ -112,7 +112,7 @@ export const Header = () => {
                 {user && users?.profileImage && (
                   <Avatar
                     sx={{ width: 32, height: 32 }}
-                    src={users?.profileImage}
+                    src={users.profileImage}
                     className='border'
                     key={users?.id}
                   />
@@ -122,11 +122,12 @@ export const Header = () => {
                     sx={{ width: 32, height: 32 }}
                     src='/images/avater.svg'
                     className='border'
-                    key={users?.id}
                   />
                 )}
                 {!user && <MenuIcon fontSize='small' />}
               </IconButton>
+
+              {/* 投稿ボタン */}
               {user && (
                 <div className='ml-4 mr-6 text-center'>
                   <SiteButton
@@ -142,6 +143,7 @@ export const Header = () => {
         </div>
       </nav>
 
+      {/* メニュー */}
       <Menu
         anchorEl={anchorEl}
         id='account-menu'
@@ -154,12 +156,7 @@ export const Header = () => {
             overflow: 'visible',
             filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
             mt: 1.5,
-            '& .MuiAvatar-root': {
-              width: 32,
-              height: 32,
-              ml: -0.5,
-              mr: 1,
-            },
+            '& .MuiAvatar-root': { width: 32, height: 32, ml: -0.5, mr: 1 },
             '&:before': {
               content: '""',
               display: 'block',
@@ -177,52 +174,43 @@ export const Header = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {!user && (
-          <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize='small' />
-            </ListItemIcon>
-            <Link href='/login'>ログイン</Link>
-          </MenuItem>
-        )}
-        {!user && (
-          <MenuItem>
-            <ListItemIcon>
-              <Logout fontSize='small' />
-            </ListItemIcon>
-            <Link href='/register'>新規登録</Link>
-          </MenuItem>
-        )}
-        {user?.displayName && <MenuItem>{user.displayName}</MenuItem>}
-        {user?.displayName === null && users && <MenuItem>{users[0]?.userName}</MenuItem>}
-        {user?.displayName === null && <MenuItem>ユーザー名未設定</MenuItem>}
-        <Divider />
-        {user &&
-          LOGIN_ADMIN_MENU_ITEMS.map((item) => (
-            <MenuItem key={item.text} onClick={handleClose}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <Link href={item.href}>{item.text}</Link>
+        {!user ? (
+          <div>
+            <MenuItem component={Link} href='/login'>
+              <ListItemIcon>
+                <Logout fontSize='small' />
+              </ListItemIcon>
+              ログイン
             </MenuItem>
-          ))}
-        {user && (
-          <MenuItem style={{ padding: '0 16px' }}>
-            <ListItemIcon>
-              <Logout fontSize='small' />
-            </ListItemIcon>
-            <Button
-              id='logout'
-              color='inherit'
-              onClick={handleLogout}
-              style={{ fontSize: '16px', padding: '0px' }}
-            >
+            <MenuItem component={Link} href='/register'>
+              <ListItemIcon>
+                <Logout fontSize='small' />
+              </ListItemIcon>
+              新規登録
+            </MenuItem>
+          </div>
+        ) : (
+          <div>
+            <MenuItem>{user.displayName || users?.userName || 'ユーザー名未設定'}</MenuItem>
+            <Divider />
+            {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
+              <MenuItem key={item.text} component={Link} href={item.href}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                {item.text}
+              </MenuItem>
+            ))}
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize='small' />
+              </ListItemIcon>
               ログアウト
-            </Button>
-          </MenuItem>
+            </MenuItem>
+          </div>
         )}
         {ACCOUNT_MENU_ITEMS.map((item) => (
-          <MenuItem key={item.text} onClick={handleClose}>
+          <MenuItem key={item.text} component={Link} href={item.href}>
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <Link href={item.href}>{item.text}</Link>
+            {item.text}
           </MenuItem>
         ))}
       </Menu>

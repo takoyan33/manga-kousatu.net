@@ -15,10 +15,12 @@ export const DisplayChart = React.memo(() => {
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
-  const [onePiece, setOnePiece] = useState<any>([])
-  const [kingdom, setKingdom] = useState<any>([])
-  const [tokyo, setTokyo] = useState<any>([])
-  const [kaisen, setKaisen] = useState<any>([])
+  const [mangaData, setMangaData] = useState<any[]>([
+    { name: 'ONEPIECE', value: 0 },
+    { name: '呪術廻戦', value: 0 },
+    { name: 'キングダム', value: 0 },
+    { name: '東京リベンジャーズ', value: 0 },
+  ])
 
   const myOnePosts = query(
     postsRef,
@@ -41,45 +43,24 @@ export const DisplayChart = React.memo(() => {
     where('category', '==', 'キングダム'),
   )
 
-  const getOnePosts = async () => {
-    await getDocs(myOnePosts).then((querySnapshot) => {
-      setOnePiece(
-        querySnapshot.docs.map((data) => {
-          return { ...data.data(), id: data.id }
-        }),
-      )
-      console.log(onePiece)
-    })
-  }
+  const mangaCategories = [
+    { name: 'ONEPIECE', query: myOnePosts },
+    { name: '呪術廻戦', query: myKaisenPosts },
+    { name: 'キングダム', query: MyKingPosts },
+    { name: '東京リベンジャーズ', query: myTokyoPosts },
+  ]
 
-  const getKaisenPosts = async () => {
-    await getDocs(myKaisenPosts).then((querySnapshot) => {
-      setKaisen(
-        querySnapshot.docs.map((data) => {
-          return { ...data.data(), id: data.id }
-        }),
-      )
+  const fetchPosts = async (categoryQuery: any, categoryName: string) => {
+    const querySnapshot = await getDocs(categoryQuery)
+    const posts = querySnapshot.docs.map((doc) => {
+      const data = doc.data() as any // Explicitly cast the data to the correct type
+      return { ...data, id: doc.id }
     })
-  }
-
-  const getTokyoPosts = async () => {
-    await getDocs(myTokyoPosts).then((querySnapshot) => {
-      setTokyo(
-        querySnapshot.docs.map((data) => {
-          return { ...data.data(), id: data.id }
-        }),
-      )
-    })
-  }
-
-  const getKingPosts = async () => {
-    await getDocs(MyKingPosts).then((querySnapshot) => {
-      setKingdom(
-        querySnapshot.docs.map((data) => {
-          return { ...data.data(), id: data.id }
-        }),
-      )
-    })
+    setMangaData((prevData) =>
+      prevData.map((item) =>
+        item.name === categoryName ? { ...item, value: posts.length } : item,
+      ),
+    )
   }
 
   useEffect(() => {
@@ -88,25 +69,9 @@ export const DisplayChart = React.memo(() => {
     } else {
       useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)
-      getOnePosts()
-      getKaisenPosts()
-      getTokyoPosts()
-      getKingPosts()
+      mangaCategories.forEach(({ query, name }) => fetchPosts(query, name))
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  type MangaData = {
-    name: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
-    value: number
-  }
-
-  const MANGA_DATA: MangaData[] = [
-    { name: 'ONEPIECE', value: onePiece.length },
-    { name: '呪術廻戦', value: kaisen.length },
-    { name: 'キングダム', value: kingdom.length },
-    { name: '東京リベンジャーズ', value: tokyo.length },
-  ]
+  }, [user, router])
 
   type LabelProps = {
     cx: number
@@ -136,12 +101,13 @@ export const DisplayChart = React.memo(() => {
       </text>
     )
   }
+
   return (
     <ResponsiveContainer height={256}>
       <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
         <Pie
           dataKey='value'
-          data={MANGA_DATA}
+          data={mangaData}
           cx='50%'
           cy='50%'
           outerRadius={80}
@@ -149,7 +115,7 @@ export const DisplayChart = React.memo(() => {
           label={renderCustomizedLabel}
           isAnimationActive={true}
         >
-          {MANGA_DATA.map((entry, index) => (
+          {mangaData.map((entry, index) => (
             <Cell fill={COLORS[index % COLORS.length]} key={index} />
           ))}
         </Pie>

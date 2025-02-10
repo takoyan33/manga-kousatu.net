@@ -1,3 +1,4 @@
+// 日付に変換
 export const FixDaysAgo = (createTime: string): string => {
   const inputDate: any = new Date(createTime)
   const currentDate: any = new Date()

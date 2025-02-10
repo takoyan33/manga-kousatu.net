@@ -15,7 +15,7 @@ import { postImage } from 'layouts/api/upload'
 import { SiteButton } from 'layouts/components/button'
 import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
 import { NoIndexHead } from 'layouts/components/ui'
-import { useAuthContext } from 'layouts/context/AuthContext'
+import { useAuthContext } from 'layouts/context/auth-context'
 import { useGetMyUser } from 'layouts/hooks'
 import { GetUser } from 'types/user'
 

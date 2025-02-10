@@ -1,10 +1,10 @@
-import { deleteUser } from 'firebase/auth'
+// import { deleteUser } from 'firebase/auth'
 import { getDocs, query, where } from 'firebase/firestore'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { COLORS } from '../../layouts/components/ui'
-import { useAuthContext } from '../../layouts/context/AuthContext'
+import { useAuthContext } from '../../layouts/context/auth-context'
 import { useGetMyPosts, useGetMyUser } from '../../layouts/hooks'
 import { postsRef } from '../../utils/post'
 // import { SiteButton } from 'layouts/components/button'
@@ -120,22 +120,6 @@ export const DisplayChart = React.memo(() => {
   }, [])
 
   // userの削除
-  const deleteuser = async () => {
-    //userを削除する
-    if (user) {
-      deleteUser(user)
-        //user削除
-        .then(() => {
-          localStorage.removeItem('Token')
-          //tokenを削除
-          alert('退会しました。TOP画面に戻ります。')
-          router.push('/top')
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }
-  }
 
   type MangaData = {
     name: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'

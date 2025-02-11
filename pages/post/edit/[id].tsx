@@ -53,7 +53,17 @@ const PostEdit = () => {
   }
 
   useEffect(() => {
-    useGetPost(setPost, routerid)
+    const fetchPost = async () => {
+      const post = await useGetPost(routerid) // useGetPostで取得
+      if (post) {
+        setPost(post) // 成功したら状態を更新
+      } else {
+        console.log('記事が見つかりません')
+        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+      }
+    }
+
+    fetchPost()
     setContext(post?.context)
     setPostTitle(post?.title)
     console.log(post)

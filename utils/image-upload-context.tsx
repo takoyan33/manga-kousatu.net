@@ -5,11 +5,13 @@ import { ImageUploadProps } from 'types/other'
 const ImageUploadContext = ({ onChange, createcontextObjectURL }: ImageUploadProps) => {
   return (
     <div>
-      <img
-        className='m-auto flex w-full items-center  justify-center'
-        src={createcontextObjectURL}
-        alt='サムネイル'
-      />
+      {createcontextObjectURL && (
+        <img
+          className='m-auto flex w-full items-center  justify-center'
+          src={createcontextObjectURL}
+          alt='サムネイル'
+        />
+      )}
       <label
         htmlFor='file-input'
         className='bg-primary-900 text-white-900 dark:bg-dark-900 mb-6 flex w-full items-center justify-center rounded px-4 py-2'

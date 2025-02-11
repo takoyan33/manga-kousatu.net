@@ -23,21 +23,19 @@ const schema = yup.object({
 })
 
 const PostEdit = () => {
-  // const [ID, setID] = useState<string>(null)
+  const [processing, setProcessing] = useState<boolean>(false)
   const [image, setImage] = useState<File>()
   const [context, setContext] = useState<string>('')
   const [category, setCategory] = useState<string>('')
   const [postTitle, setPostTitle] = useState<string>('')
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
-  //データベースを取得
   const [post, setPost] = useState<any>()
-  // const [lengthData, setPostsLength] = useState<number>(null)
   const [netabare, setNetabare] = useState<string>('')
   const [display, setDisplay] = useState<string>('')
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const router = useRouter()
-  const routerid = router?.query.id ? router.query.id.toString() : ''
+  const routerid = router.query.id as string
 
   const { register, control } = useForm({
     resolver: yupResolver(schema),
@@ -66,11 +64,16 @@ const PostEdit = () => {
     fetchPost()
     setContext(post?.context)
     setPostTitle(post?.title)
-    console.log(post)
   }, [])
 
   //投稿を更新
   const updatePost = async (): Promise<void> => {
+    // 処理中(true)なら非同期処理せずに抜ける
+    if (processing) {
+      return
+    }
+    // 処理中フラグを上げる
+    setProcessing(true)
     const result = await postImage(image)
     const fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
@@ -82,14 +85,18 @@ const PostEdit = () => {
       context: context,
       edittime: newdate,
       selected: selected,
-      display: JSON.parse(display),
+      display: display,
     })
       .then(() => {
         successNotify('記事を更新しました')
-        router.push(`/post/${routerid}`)
+        setProcessing(false)
+        setTimeout(() => {
+          router.push(`/post/${routerid}`)
+        }, 2000)
       })
       .catch((err) => {
         errorNotify('記事の更新に失敗しました')
+        setProcessing(false)
         console.log(err)
       })
   }
@@ -310,12 +317,17 @@ const PostEdit = () => {
                     onChange={uploadToClientContext}
                   /> */}
                 {/* </div> */}
-
+                {processing && (
+                  <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+                    <p className='text-xl font-bold text-white'>投稿中...</p>
+                  </div>
+                )}
                 <SiteButton
                   onClick={updatePost}
                   text='更新する'
                   className='text-center'
                   id='submit'
+                  disabled={processing}
                 />
               </Stack>
             </div>

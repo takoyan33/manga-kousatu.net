@@ -66,20 +66,20 @@ const Post = () => {
   useEffect(() => {
     if (!routerid) {
       return
-    } // routerIdがない場合は何もしない
+    }
 
     const fetchPost = async () => {
-      const post = await useGetPost(routerid) // useGetPostで取得
+      const post = await useGetPost(routerid)
       if (post) {
-        setSinglePost(post) // 成功したら状態を更新
+        setSinglePost(post)
       } else {
         console.log('記事が見つかりません')
-        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+        router.push('/404')
       }
     }
 
     fetchPost()
-  }, [routerid]) // routerIdが変更されるたびに1回だけ実行されるようにする
+  }, [])
 
   // 関連記事とユーザー情報を取得
   useEffect(() => {

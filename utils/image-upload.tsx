@@ -1,20 +1,18 @@
-import { FormLabel } from '@mui/material'
 import React from 'react'
+import { SiteLabel } from 'layouts/components/text'
 import { ImageUploadProps } from 'types/other'
 
-//React.memo化
 const ImageUpload = ({ onChange, createObjectURL }: ImageUploadProps) => {
   return (
     <div>
-      <FormLabel id='demo-radio-buttons-group-label' htmlFor='thumbnail-input' className='mb-4'>
-        サムネイル
-        <span className='ml-2 mb-1 rounded-lg bg-red-500 py-1 px-2 text-sm text-white'>必須</span>
-      </FormLabel>
-      <img
-        className='m-auto flex w-60 items-center justify-center'
-        src={createObjectURL}
-        alt='サムネイル'
-      />
+      <SiteLabel name='サムネイル' required htmlFor='thumbnail-input' />
+      {createObjectURL && (
+        <img
+          className='m-auto flex w-60 items-center justify-center'
+          src={createObjectURL}
+          alt=''
+        />
+      )}
       <div className='m-auto my-4 text-center'>
         <label
           htmlFor='thumbnail-input'

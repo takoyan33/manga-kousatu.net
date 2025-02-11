@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { POST_CATEGORIES, CommonHead, CardPost, Breadcrumbs, TopTitle } from 'layouts/components/ui'
 import {
@@ -14,7 +14,6 @@ import {
   useGetNetabrePosts,
   useGetNoNetabrePosts,
 } from 'layouts/hooks'
-// import { Changetab } from 'layouts/components/ui/Changetab'
 import { GetPost } from 'types/post'
 
 export default function Index() {
@@ -31,7 +30,7 @@ export default function Index() {
     }
   }
 
-  interface NetabareItem {
+  interface SearchItem {
     sortId: number
     label: string
     value: string
@@ -40,13 +39,9 @@ export default function Index() {
 
   useEffect(() => {
     useFetchPosts(setPostData)
-    // const fetchData = async () => {
-    //   const data = await useFetchPosts()
-    //   setPostData(data)
-    // }
   }, [])
 
-  const SORT_LIST: NetabareItem[] = [
+  const SORT_LIST: SearchItem[] = [
     {
       sortId: 1,
       label: '新しい順',
@@ -67,7 +62,7 @@ export default function Index() {
     },
   ]
 
-  const NETABARE_LIST: NetabareItem[] = [
+  const NETABARE_LIST: SearchItem[] = [
     {
       sortId: 1,
       label: 'ネタバレ有',
@@ -82,18 +77,13 @@ export default function Index() {
     },
   ]
 
-  const filterPostData = () => {
+  const filteredPosts = useMemo(() => {
     return postData
-      .filter((post) => {
-        if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
-          return true
-        }
-        return false
-      })
+      .filter(
+        (post) => searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase()),
+      )
       .slice(0, loadIndex)
-  }
-
-  const filteredPosts = filterPostData()
+  }, [postData, searchName, loadIndex])
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
@@ -101,37 +91,22 @@ export default function Index() {
       <Breadcrumbs secondTitle='投稿一覧' />
       <TopTitle title='投稿一覧' />
       <h3 className='text-left text-xl font-semibold'>カテゴリ</h3>
-      {POST_CATEGORIES.map((category) => {
-        // userの情報
-        const CategoriesInfo = {
-          id: category.id,
-          title: category.title,
-        }
-        return (
-          <span key={category.id}>
-            <span
-              className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
+      {POST_CATEGORIES.map((category) => (
+        <span key={category.id}>
+          <span
+            className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
+          >
+            <Link
+              as={`/post/categories/${category.title}`}
+              href={{ pathname: category.link, query: { id: category.id, title: category.title } }}
             >
-              <Link
-                as={`/post/categories/${category.title}`}
-                href={{
-                  pathname: category.link,
-                  query: CategoriesInfo,
-                }}
-              >
-                #{category.title}
-              </Link>
-            </span>
+              #{category.title}
+            </Link>
           </span>
-        )
-      })}
+        </span>
+      ))}
       <p className='text-1xl text-center'>
-        {searchName === ''
-          ? `投稿数 ${postData.length}件`
-          : `検索結果 ${
-              postData.filter((data) => data.title.toLowerCase().includes(searchName.toLowerCase()))
-                .length
-            }件`}
+        {searchName === '' ? `投稿数 ${postData.length}件` : `検索結果 ${filteredPosts.length}件`}
       </p>
       <div className='m-auto my-10 flex justify-center'>
         <TextField
@@ -171,31 +146,22 @@ export default function Index() {
         {postData.length > 0 && filteredPosts.length === 0 && (
           <p className='m-auto my-10 text-center text-xl'>検索した名前の記事がありませんでした。</p>
         )}
-        {filteredPosts.length > 0 &&
-          filteredPosts.map((post) => (
-            <div className='w-full md:w-1/4' key={post.id}>
-              <CardPost
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                id={post.id}
-                likes={post.likes}
-                userid={post.userid}
-              />
-            </div>
-          ))}
+        {filteredPosts.map((post) => (
+          <div className='w-full md:w-1/4' key={post.id}>
+            <CardPost {...post} />
+          </div>
+        ))}
       </div>
       <div className='text-center'>
         {postData.length > 9 && (
-          <SiteButton
-            text='さらに表示'
-            disabled={isEmpty ? true : false}
-            onClick={displayMore}
-            className='w-50 m-auto my-2'
-          />
+          <div className='text-center'>
+            <SiteButton
+              text='さらに表示'
+              disabled={isEmpty}
+              onClick={() => setLoadIndex((prev) => prev + 9)}
+              className='w-50 m-auto my-2'
+            />
+          </div>
         )}
       </div>
     </div>

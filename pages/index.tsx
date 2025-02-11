@@ -19,11 +19,6 @@ export default function Index() {
     useGetNewPosts(setPostData)
   }, [])
 
-  const breakpoints = {
-    0: { slidesPerView: 1.5 },
-    768: { slidesPerView: 3.5 },
-  }
-
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead title='Manga Study' />
@@ -73,6 +68,10 @@ function SwiperSection({
   prevClass: string
   nextClass: string
 }) {
+  const breakpoints = {
+    0: { slidesPerView: 1.5 },
+    768: { slidesPerView: 3.5 },
+  }
   return (
     <div className='m-auto flex items-center justify-center md:flex-row'>
       <div className={`${prevClass} mr-4 w-48 cursor-pointer md:w-20`}>
@@ -88,12 +87,10 @@ function SwiperSection({
         className='m-auto flex flex-col flex-wrap justify-center md:flex-row'
         spaceBetween={10}
         slidesPerView={3.5}
-        breakpoints={{
-          0: { slidesPerView: 1.5 },
-          768: { slidesPerView: 3.5 },
-        }}
+        breakpoints={breakpoints}
         modules={[Navigation]}
         navigation={{ nextEl: `.${nextClass}`, prevEl: `.${prevClass}` }}
+        lazyPreloadPrevNext={2}
       >
         {posts.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>

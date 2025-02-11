@@ -7,8 +7,8 @@ import InputAdornment from '@mui/material/InputAdornment'
 import OutlinedInput from '@mui/material/OutlinedInput'
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React from 'react'
+import { useRouter } from 'next/router'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
@@ -29,7 +29,7 @@ const schema = yup.object({
 })
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 

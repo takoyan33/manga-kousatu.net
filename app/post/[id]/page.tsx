@@ -58,37 +58,43 @@ const Post = ({ params }: any) => {
   // const QUOTE = `記事をシェアしました。 ${singlePost.title} 漫画考察.net`
 
   const {
-    register,
-    handleSubmit,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   })
 
+  // 記事を取得
   useEffect(() => {
+    if (!routerid) {
+      return
+    } // routerIdがない場合は何もしない
+
     const fetchPost = async () => {
-      console.log(routerid)
-      await useGetPost(setSinglePost, routerid)
-      if (singlePost == undefined) {
-        console.log('記事なし')
-        // router.push('/404')
+      const post = await useGetPost(routerid) // useGetPostで取得
+      if (post) {
+        setSinglePost(post) // 成功したら状態を更新
+      } else {
+        console.log('記事が見つかりません')
+        router.push('/404') // 記事が見つからない場合は404ページへ遷移
       }
     }
 
     fetchPost()
-  }, [])
+  }, [routerid]) // routerIdが変更されるたびに1回だけ実行されるようにする
 
+  // 関連記事とユーザー情報を取得
   useEffect(() => {
-    if (singlePost && singlePost.category) {
+    if (singlePost?.category) {
+      // singlePostが更新されるたびに実行
       useGetCategoryPosts(setCategoryPosts, singlePost.category, routerid)
-      useGetOtherUser(setUsers, singlePost?.userid)
+      useGetOtherUser(setUsers, singlePost.userid)
     }
-  }, [singlePost])
+  }, [singlePost, routerid]) // singlePostが変更された時だけ実行
 
   //記事の削除
-  const deletePost = (routerId) => {
+  const deletePost = (routerid) => {
     //data.idを送っているのでidを受け取る
-    const deletePost = doc(database, 'posts', routerId.toString())
+    const deletePost = doc(database, 'posts', routerid.toString())
     // const checkSaveFlg = window.confirm('削除しても大丈夫ですか？')
     //確認画面を出す
     // if (checkSaveFlg) {
@@ -107,14 +113,7 @@ const Post = ({ params }: any) => {
 
   //画像のモーダルの開
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  //画像のモーダルの開
-  const openModal = (): void => {
-    setIsModalOpen(true)
-  }
-  //画像のモーダルの締
-  const closeModal = (): void => {
-    setIsModalOpen(false)
-  }
+  const toggleModal = () => setIsModalOpen((prev) => !prev)
 
   return (
     <>
@@ -164,7 +163,7 @@ const Post = ({ params }: any) => {
         <div className='rounded-xl md:border md:p-10'>
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
-            <button onClick={openModal}>
+            <button onClick={toggleModal}>
               {singlePost?.downloadURL && (
                 <Image
                   className='Post-img rounded text-center'
@@ -178,9 +177,9 @@ const Post = ({ params }: any) => {
             </button>
             {!singlePost?.downloadURL && <span>画像なし</span>}
           </div>
-          <Modal isOpen={isModalOpen} onRequestClose={closeModal} contentLabel='Image Modal'>
+          <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
-              <button onClick={closeModal} className='text-center'>
+              <button onClick={toggleModal} className='text-center'>
                 閉じる
               </button>
             </div>
@@ -341,7 +340,7 @@ const Post = ({ params }: any) => {
       <h2 className='my-4 text-xl'>こちらもおすすめ</h2>
       <div className='m-auto mt-8 max-w-7xl'>
         <div>
-          {categoryPosts.map((post) => {
+          {categoryPosts.slice(0, 4).map((post) => {
             return (
               <RecommendCardPost
                 key={post.id}

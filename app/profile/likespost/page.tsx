@@ -10,8 +10,8 @@ import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { CommonHead, CardPost, COLORS } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/auth-context'
 import { useGetLikedPosts, useGetMyUser } from 'layouts/hooks'
-import { postsRef } from 'utils/post'
 import { GetPost } from 'types/post'
+import { postsRef } from 'utils/post'
 
 export default function Profile() {
   const router = useRouter()
@@ -178,17 +178,7 @@ export default function Profile() {
         {likedPosts.map((post) => {
           return (
             <>
-              <CardPost
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                id={post.id}
-                likes={post.likes}
-                userid={post.userid}
-              />
+              <CardPost {...post} />
             </>
           )
         })}

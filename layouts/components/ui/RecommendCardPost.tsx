@@ -2,21 +2,21 @@
 
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
+import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-import Image from 'react-image-resizer'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
-import { FixDaysAgo } from 'utils/date-helper'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
+import { FixDaysAgo } from 'utils/date-helper'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
   ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
-    const [comments, setComments] = useState('')
+    // const [comments, setComments] = useState('')
 
     useEffect(() => {
       useGetOtherUser(setUsers, userid)
@@ -27,8 +27,8 @@ export const RecommendCardPost = React.memo(
       <dl className='m-auto my-2 flex hover:opacity-80'>
         <Link href={`/post/${id}`}>
           <Image
-            className='rounded text-center'
-            height={80}
+            className='w-20 rounded text-center'
+            height={30}
             width={130}
             src={downloadURL}
             alt='画像'

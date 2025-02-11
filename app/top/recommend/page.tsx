@@ -40,17 +40,7 @@ export default function Index() {
         ) : (
           filteredPosts.map((post) => (
             <div className='w-full md:w-1/4' key={post.id}>
-              <CardPost
-                downloadURL={post.downloadURL}
-                title={post.title}
-                category={post.category}
-                netabare={post.netabare}
-                context={post.context}
-                createTime={post.createTime}
-                id={post.id}
-                likes={post.likes}
-                userid={post.userid}
-              />
+              <CardPost {...post} />
             </div>
           ))
         )}

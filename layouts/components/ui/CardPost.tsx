@@ -4,7 +4,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState, useCallback, useMemo } from 'react'
 import { useGetOtherUser } from '../../../layouts/hooks'
 import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
@@ -12,32 +12,20 @@ import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
 import { FixDaysAgo } from 'utils/date-helper'
 
-// eslint-disable-next-line react/display-name
 export const CardPost = React.memo(
   ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
-    const [users, setUsers] = useState<GetUser>()
-    // const [comments, setComments] = useState('')
+    const [users, setUsers] = useState<GetUser | null>(null)
 
-    // const useGetPostComment = async () => {
-    //   const commentseRef = collection(database, 'comments')
-    //   const c = query(commentseRef, where('postid', '==', id))
-    //   try {
-    //     const querySnapshot = await getDocs(c)
-    //     const allcomments = querySnapshot.docs.map((doc) => ({
-    //       ...doc.data(),
-    //       id: doc.id,
-    //     }))
-    //     console.log('allcomments', allcomments)
-    //     setComments(allcomments)
-    //   } catch (error) {
-    //     console.log('Error fetching user data', error)
-    //   }
-    // }
+    // / 親コンポーネントが再レンダリングしない
+    const fetchUser = useCallback(() => {
+      useGetOtherUser(setUsers, userid)
+    }, [userid])
 
     useEffect(() => {
-      useGetOtherUser(setUsers, userid)
-      // useGetPostComment()
-    }, [])
+      fetchUser()
+    }, [fetchUser])
+
+    const formattedDate = useMemo(() => FixDaysAgo(createTime), [createTime])
 
     return (
       <article className='m-auto my-2 mx-4 hover:opacity-80'>
@@ -45,7 +33,7 @@ export const CardPost = React.memo(
           <Link href={`/post/${id}`} className='cursor-pointer'>
             <div className='cardPost-img'>
               <Image
-                className='cardPost-img rounded text-center'
+                className='cardPost-img rounded'
                 src={downloadURL}
                 alt={`${title}の画像`}
                 fill
@@ -61,23 +49,21 @@ export const CardPost = React.memo(
               <SiteSpoil netabare={netabare} />
             </div>
             <div>
-              <div className='m-auto flex py-2'>
-                <dl>
-                  <Avatar
-                    className='max-w-sm border text-center'
-                    sx={{ width: 30, height: 30 }}
-                    alt='投稿者プロフィール画像'
-                    src={users?.profileImage}
-                  />
-                </dl>
-                <dl className='ml-1 mt-1 text-sm'>
+              <div className='m-auto flex items-center py-2'>
+                <Avatar
+                  className='border'
+                  sx={{ width: 30, height: 30 }}
+                  alt='投稿者プロフィール画像'
+                  src={users?.profileImage || 'images/avatar.svg'}
+                />
+                <dl className='ml-1 text-sm'>
                   {users?.userName || 'ユーザー名未設定'}
                   <span className='ml-2 text-pink-400'>
                     <FavoriteIcon />
                   </span>
                   <span className='ml-1 text-sm'>{likes}</span>
                 </dl>
-                <span className='ml-2 mt-1 text-sm text-gray-600'>{FixDaysAgo(createTime)}</span>
+                <span className='ml-2 text-sm text-gray-600'>{formattedDate}</span>
               </div>
             </div>
           </div>
@@ -86,3 +72,5 @@ export const CardPost = React.memo(
     )
   },
 )
+
+CardPost.displayName = 'CardPost'

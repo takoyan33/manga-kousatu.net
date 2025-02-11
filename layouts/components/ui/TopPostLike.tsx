@@ -4,7 +4,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { getAuth } from 'firebase/auth'
 import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import * as yup from 'yup'
 import { database } from 'firebaseConfig'
 import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
 import { useGetPost } from 'layouts/hooks'
@@ -16,48 +15,64 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
   const user = auth.currentUser
 
   const [singlePost, setSinglePost] = useState<GetPost>()
-  const [likecount, setLikecount] = useState<number>(0)
+  const [on, setOn] = useState<boolean>(false) // アニメーションの状態を管理
 
+  // 記事を取得
   useEffect(() => {
-    useGetPost(setSinglePost, routerid)
-  }, [routerid])
+    if (!routerid) {
+      return
+    } // routerIdがない場合は何もしない
 
-  const [on, setOn] = useState<boolean>(false)
+    const fetchPost = async () => {
+      const post = await useGetPost(routerid) // useGetPostで取得
+      if (post) {
+        setSinglePost(post) // 成功したら状態を更新
+      } else {
+        console.log('記事が見つかりません')
+        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+      }
+    }
 
-  //いいねの追加
-  const LikeAdd = (routerId, likes: number, email: string) => {
-    const post = doc(database, 'posts', routerId)
-    updateDoc(post, {
-      likes: likes + 1,
-      likesEmail: arrayUnion(email),
-    })
-      .then(() => {
-        setOn((prev) => !prev)
-        setLikecount(0)
-        setTimeout(() => {
-          useGetPost(setSinglePost, routerId)
-        }, 2000)
+    fetchPost()
+  }, [routerid]) // routerIdが変更されるたびに1回だけ実行されるようにする
+
+  // いいねの追加
+  const addLike = async (routerId: string, likes: number, email: string) => {
+    const postRef = doc(database, 'posts', routerId)
+    try {
+      await updateDoc(postRef, {
+        likes: likes + 1,
+        likesEmail: arrayUnion(email),
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      setOn(true) // アニメーション開始
+
+      setTimeout(() => {
+        setOn(false)
+        useGetPost(routerid)
+      }, 2500)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
-  //いいねの削除
-  const LikeDelete = (routerId, likes: number, email: string) => {
-    const post = doc(database, 'posts', routerId)
-    updateDoc(post, {
-      likes: likes - 1,
-      likesEmail: arrayRemove(email),
-    })
-      .then(() => {
-        setLikecount(0)
-        useGetPost(setSinglePost, routerId)
+  // いいねの削除
+  const removeLike = async (routerId: string, likes: number, email: string) => {
+    const postRef = doc(database, 'posts', routerId)
+    try {
+      await updateDoc(postRef, {
+        likes: likes - 1,
+        likesEmail: arrayRemove(email),
       })
-      .catch((err) => {
-        console.log(err)
-      })
+      setTimeout(() => {
+        useGetPost(routerid)
+      }, 1000)
+    } catch (err) {
+      console.error(err)
+    }
   }
+
+  const isLikedByUser = singlePost?.likesEmail?.includes(user?.email || '') || false
+  const isPostOwner = user?.email === singlePost?.email
 
   return (
     <div>
@@ -68,33 +83,34 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
         {singlePost?.likes}
       </div>
 
-      {singlePost?.likesEmail && user?.email == singlePost?.email && (
-        <p className='mb-4'>自分の投稿なのでいいねできません</p>
-      )}
+      {isPostOwner && <p className='mb-4'>自分の投稿なのでいいねできません</p>}
 
-      {user?.email != singlePost?.email && singlePost?.likesEmail?.includes(user?.email || '') && (
-        <div>
-          <p>いいね済み</p>
-          <button
-            className='my-2 inline'
-            onClick={() => LikeDelete(routerid, singlePost.likes, user?.email || '')}
-            id='delete-favorite'
-          >
-            <span className='py-4 text-pink-400 hover:text-pink-700'>
-              <FavoriteIcon />
-              いいね解除
-            </span>
-          </button>
-        </div>
-      )}
-      {user?.email != singlePost?.email && !singlePost?.likesEmail?.includes(user?.email || '') && (
-        <button
-          onClick={() => LikeAdd(routerid, singlePost?.likes || 0, user?.email || '')}
-          id='add-favorite'
-        >
-          <FavoriteIconAnim on={on} />
-          <span>いいねする</span>
-        </button>
+      {user && !isPostOwner && (
+        <>
+          {isLikedByUser ? (
+            <div>
+              <p>いいね済み</p>
+              <button
+                className='my-2 inline'
+                onClick={() => removeLike(routerid, singlePost?.likes || 0, user?.email || '')}
+                id='delete-favorite'
+              >
+                <span className='py-4 text-pink-400 hover:text-pink-700'>
+                  <FavoriteIcon />
+                  いいね解除
+                </span>
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => addLike(routerid, singlePost?.likes || 0, user?.email || '')}
+              id='add-favorite'
+            >
+              <FavoriteIconAnim on={on} />
+              <span>いいねする</span>
+            </button>
+          )}
+        </>
       )}
     </div>
   )

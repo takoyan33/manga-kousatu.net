@@ -18,12 +18,24 @@ export const TopPostLike = React.memo(() => {
   const [singlePost, setSinglePost] = useState<GetPost>()
   const [on, setOn] = useState<boolean>(false) // アニメーションの状態を管理
 
+  // 記事を取得
   useEffect(() => {
-    if (routerid) {
-      // 投稿データを取得
-      useGetPost(setSinglePost, routerid)
+    if (!routerid) {
+      return
+    } // routerIdがない場合は何もしない
+
+    const fetchPost = async () => {
+      const post = await useGetPost(routerid) // useGetPostで取得
+      if (post) {
+        setSinglePost(post) // 成功したら状態を更新
+      } else {
+        console.log('記事が見つかりません')
+        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+      }
     }
-  }, [routerid])
+
+    fetchPost()
+  }, [routerid]) // routerIdが変更されるたびに1回だけ実行されるようにする
 
   // いいねの追加
   const addLike = async (routerId: string, likes: number, email: string) => {
@@ -37,7 +49,7 @@ export const TopPostLike = React.memo(() => {
 
       setTimeout(() => {
         setOn(false)
-        useGetPost(setSinglePost, routerid)
+        useGetPost(routerid)
       }, 2500)
     } catch (err) {
       console.error(err)
@@ -53,7 +65,7 @@ export const TopPostLike = React.memo(() => {
         likesEmail: arrayRemove(email),
       })
       setTimeout(() => {
-        useGetPost(setSinglePost, routerid)
+        useGetPost(routerid)
       }, 1000)
     } catch (err) {
       console.error(err)

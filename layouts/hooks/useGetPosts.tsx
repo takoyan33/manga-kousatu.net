@@ -91,15 +91,28 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<
 }
 
 //特定のpostを取得
-export const useGetPost = async (setSinglePost, routerId: string): Promise<void> => {
+export const useGetPost = async (routerId: string): Promise<any | null> => {
   try {
-    console.log(routerId)
-    const ref = await doc(database, 'posts', routerId)
+    const ref = doc(database, 'posts', routerId)
     const snap = await getDoc(ref)
-    setSinglePost(snap.data())
-    console.log(snap.data())
+
+    if (!snap.exists()) {
+      console.log('記事が存在しません')
+      return null // ドキュメントが存在しない場合はnullを返す
+    }
+
+    const postData = snap.data()
+    console.log(postData)
+
+    if (!postData || typeof postData !== 'object') {
+      console.error('取得したデータの形式が不正です', postData)
+      return null // データの形式が不正な場合はnullを返す
+    }
+
+    return postData as any // 型アサーションでGetPost型として返す
   } catch (error) {
-    console.log(error)
+    console.error('Error fetching post:', error)
+    return null // エラーが発生した場合はnullを返す
   }
 }
 //特定ユーザーのpostsを取得

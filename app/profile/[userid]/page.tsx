@@ -8,11 +8,11 @@ import { useGetOtherUser, useGetUsersPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
-const Post = () => {
+const Post = ({ params }: any) => {
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const router = useRouter()
-  const { userid }: any = router.query
+  const userid = params.id
   const auth = getAuth()
   const user = auth.currentUser
 

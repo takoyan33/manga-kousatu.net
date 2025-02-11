@@ -4,7 +4,7 @@ import 'styles/globals.css'
 import 'tailwindcss/tailwind.css'
 import type React from 'react'
 import { Header, Footer } from 'layouts/components/ui'
-import { AuthProvider } from 'layouts/context/AuthContext'
+import { AuthProvider } from 'layouts/context/auth-context'
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (

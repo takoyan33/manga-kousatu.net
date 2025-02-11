@@ -29,7 +29,7 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
         setSinglePost(post) // 成功したら状態を更新
       } else {
         console.log('記事が見つかりません')
-        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+        //router.push('/404') // 記事が見つからない場合は404ページへ遷移
       }
     }
 

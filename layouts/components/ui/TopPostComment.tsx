@@ -5,7 +5,7 @@ import { FormLabel, Avatar } from '@mui/material'
 import { getAuth } from 'firebase/auth'
 import { doc, setDoc, updateDoc, serverTimestamp } from 'firebase/firestore'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import Modal from 'react-modal'
@@ -29,7 +29,6 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
   const auth = getAuth()
   const user = auth.currentUser
   const router = useRouter()
-  const routerid: any = router.query.id
 
   const [comment, setComment] = useState<string>('')
   const [comments, setComments] = useState<Array<GetComment>>([])
@@ -134,7 +133,7 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
           {user?.email === comment.userEmail && (
             <div className='flex'>
               <button
-                      id='edit-comment'
+                id='edit-comment'
                 onClick={openCommentModal}
                 className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
               >
@@ -143,7 +142,7 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
               <button
                 onClick={() => deleteComment(comment.id)}
                 className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
-                      id='delete-comment'
+                id='delete-comment'
               >
                 削除
               </button>
@@ -160,7 +159,7 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
                 コメント<span className='text-red-600'>*</span>
               </FormLabel>
               <input
-                  id='input-update-comment'
+                id='input-update-comment'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                 defaultValue={comment.comment}
                 type='text'
@@ -169,8 +168,8 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
               <div className='mt-4 flex justify-center'>
                 <button
                   onClick={() => updateComment(comment.id)}
-                    className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
-                    id='update-comment'
+                  className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
+                  id='update-comment'
                 >
                   更新する
                 </button>
@@ -193,7 +192,7 @@ export const TopPostComment = React.memo(({ routerid }: any) => {
             <Link href='/login'>
               <span className='text-blue-500 underline'>ログイン</span>
             </Link>
-              or
+            or
             <Link href='/register'>
               <span className='text-blue-500 underline'>会員登録</span>
             </Link>

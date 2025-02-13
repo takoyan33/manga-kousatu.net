@@ -12,7 +12,7 @@ const Post = ({ params }: any) => {
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const router = useRouter()
-  const userid = params.id
+  const userid = params.userid
   const auth = getAuth()
   const user = auth.currentUser
 

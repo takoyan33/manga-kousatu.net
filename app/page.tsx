@@ -59,7 +59,7 @@ export default function Index() {
         {POST_CATEGORIES.map((category) => (
           <Link
             key={category.id}
-            href={{ pathname: category.link, query: { id: category.id, title: category.title } }}
+            href={{ pathname: category.link}}
           >
             <span
               className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}

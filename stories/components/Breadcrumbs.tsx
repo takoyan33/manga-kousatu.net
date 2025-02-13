@@ -14,29 +14,40 @@ export const Breadcrumbs = React.memo(
   ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
     return (
       <div className='flex'>
-        <Link href='/'>トップ</Link>
+        <Link href='/' className='hover:text-sky-500'>
+          トップ
+        </Link>
         {secondTitle && (
-          <span>
-            <div className='w-20 cursor-pointer md:ml-4 md:w-20'>
-              <Image
-                src='/images/next-arrow.svg'
-                width={20}
-                height={20}
-                style={{
-                  width: '30%',
-                  height: 'auto',
-                }}
-                className='cursor-pointer'
-                alt='スライドショーのナビゲーション'
-              />
-            </div>
+          <span className='ml-2 mr-2'>
+            <Image
+              src='/images/next-arrow.svg'
+              width={21}
+              height={21}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
           </span>
         )}
-        {secondTitle && <Link href={secondUrl || '/'}>{secondTitle}</Link>}
+        {secondTitle && (
+          <Link href={secondUrl || '/'} className='hover:text-sky-500'>
+            {secondTitle}
+          </Link>
+        )}
         {thirdTitle && (
-          <span>
-            ＞<Link href={thirdUrl || '/'}>{thirdTitle}</Link>
+          <span className='ml-2 mr-2'>
+            <Image
+              src='/images/next-arrow.svg'
+              width={21}
+              height={21}
+              className='cursor-pointer'
+              alt='スライドショーのナビゲーション'
+            />
           </span>
+        )}
+        {thirdTitle && (
+          <Link href={thirdUrl || '/'} className='hover:text-sky-500'>
+            {thirdTitle}
+          </Link>
         )}
       </div>
     )

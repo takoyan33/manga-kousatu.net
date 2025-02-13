@@ -11,7 +11,12 @@ const meta: Meta<typeof AccountMenu> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    onClick: {
+      description: 'クリック時に呼び出されるイベントハンドラー',
+      action: 'clicked',
+    },
+  },
   args: { onClick: fn() },
 }
 

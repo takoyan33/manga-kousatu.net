@@ -14,7 +14,9 @@ export const Breadcrumbs = React.memo(
   ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
     return (
       <div className='flex'>
-        <Link href='/'>トップ</Link>
+        <Link href='/' className='hover:text-sky-500'>
+          トップ
+        </Link>
         {secondTitle && (
           <span className='ml-2 mr-2'>
             <Image
@@ -26,7 +28,11 @@ export const Breadcrumbs = React.memo(
             />
           </span>
         )}
-        {secondTitle && <Link href={secondUrl || '/'}>{secondTitle}</Link>}
+        {secondTitle && (
+          <Link href={secondUrl || '/'} className='hover:text-sky-500'>
+            {secondTitle}
+          </Link>
+        )}
         {thirdTitle && (
           <span className='ml-2 mr-2'>
             <Image
@@ -38,7 +44,11 @@ export const Breadcrumbs = React.memo(
             />
           </span>
         )}
-        {thirdTitle && <Link href={thirdUrl || '/'}>{thirdTitle}</Link>}
+        {thirdTitle && (
+          <Link href={thirdUrl || '/'} className='hover:text-sky-500'>
+            {thirdTitle}
+          </Link>
+        )}
       </div>
     )
   },

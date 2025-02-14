@@ -203,12 +203,6 @@ const Post = () => {
             <span className='text-sm text-gray-500 md:text-base'>
               <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
             </span>
-            <span className='text-sm md:text-base'>
-              <span className='text-pink-400'>
-                <FavoriteIcon />
-              </span>
-              <span className='ml-1'>{singlePost?.likes}</span>
-            </span>
           </div>
           <Link href={`/profile/${users?.userid}`}>
             <div className='m-auto my-4 flex  px-2'>

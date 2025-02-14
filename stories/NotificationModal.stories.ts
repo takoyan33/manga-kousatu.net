@@ -12,16 +12,26 @@ const meta: Meta<typeof NotificationModal> = {
   },
   tags: ['autodocs'],
   argTypes: {},
-  args: { open: false, handleClose: fn() },
+  args: { isOpen: false, handleClose: fn() },
 }
 
 export default meta
 type Story = StoryObj<typeof NotificationModal>
 
-export const closedNotificationModal: Story = {}
+export const closedNotificationModal: Story = {
+  args: {
+    isOpen: false,
+  },
+}
+
+export const openNotificationModal: Story = {
+  args: {
+    isOpen: true,
+  },
+}
 
 // export const opened: Story = {
 // args: {
-//   open: true,
+//   isOpen: true,
 // },
 //}

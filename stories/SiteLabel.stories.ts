@@ -11,7 +11,17 @@ const meta: Meta<typeof SiteLabel> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    name: {
+      description: 'ラベル名',
+    },
+    required: {
+      description: 'false',
+    },
+    htmlFor: {
+      description: 'label',
+    },
+  },
   args: { name: 'ラベル', required: false, htmlFor: 'label' },
 }
 

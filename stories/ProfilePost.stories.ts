@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { fn } from '@storybook/test'
 import { ProfilePost } from './components/ProfilePost'
 
 const meta: Meta<typeof ProfilePost> = {
@@ -9,13 +8,29 @@ const meta: Meta<typeof ProfilePost> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    id: {
+      description: '記事ID',
+    },
+    profileImage: {
+      description: 'プロフィール画像',
+    },
+    username: {
+      description: 'ユーザー名',
+    },
+    bio: {
+      description: '自己紹介',
+    },
+    favorite: {
+      description: 'お気に入りの漫画',
+    },
+  },
   args: {
     id: 1,
     profileImage: '/images/book-reading.png',
     username: '太郎',
     bio: 'こんにちは',
-    favorite: ['a', 'b'],
+    favorite: ['ワンピース', 'ナルト'],
   },
 }
 

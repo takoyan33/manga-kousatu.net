@@ -25,7 +25,7 @@ const meta: Meta<typeof CardPost> = {
       description: 'タイトル',
     },
     category: {
-      description: 'カテゴリー',
+      description: '漫画のカテゴリー',
     },
     netabare: {
       description: 'ネタバレがあるか',

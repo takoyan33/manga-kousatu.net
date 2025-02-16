@@ -2,7 +2,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import SendIcon from '@mui/icons-material/Send'
 import { Avatar } from '@mui/material'
 import List from '@mui/material/List'
@@ -25,7 +24,6 @@ import { SiteCategory, successNotify, errorNotify } from 'layouts/components/tex
 import { CommonHead, RecommendCardPost, Breadcrumbs } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import 'react-toastify/dist/ReactToastify.css'
-
 // import {
 //   FacebookShareButton,
 //   TwitterShareButton,
@@ -163,18 +161,15 @@ const Post = () => {
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={toggleModal}>
-              {singlePost?.downloadURL && (
-                <Image
-                  className='Post-img rounded text-center'
-                  src={singlePost.downloadURL}
-                  height={150}
-                  width={150}
-                  alt='画像'
-                  priority
-                />
-              )}
+              <Image
+                className='Post-img rounded text-center'
+                src={singlePost?.downloadURL || '/images/no-image.jpg'}
+                height={150}
+                width={150}
+                alt='画像'
+                priority
+              />
             </button>
-            {!singlePost?.downloadURL && <span>画像なし</span>}
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
@@ -183,16 +178,14 @@ const Post = () => {
               </button>
             </div>
             <div className='z-20 my-6 flex justify-center'>
-              {singlePost?.downloadURL && (
-                <Image
-                  className='z-20 m-auto max-w-sm text-center'
-                  height={400}
-                  width={400}
-                  src={singlePost.downloadURL}
-                  alt='contextImage'
-                  priority
-                />
-              )}
+              <Image
+                className='z-20 m-auto max-w-sm text-center'
+                height={400}
+                width={400}
+                src={singlePost?.downloadURL || '/images/no-image.jpg'}
+                alt='contextImage'
+                priority
+              />
             </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>

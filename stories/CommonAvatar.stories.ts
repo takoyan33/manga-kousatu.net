@@ -12,7 +12,7 @@ const meta: Meta<typeof CommonAvatar> = {
   tags: ['autodocs'],
   argTypes: {
     displayname: {
-      description: 'タイトル名',
+      description: 'ユーザー名',
     },
   },
   args: {

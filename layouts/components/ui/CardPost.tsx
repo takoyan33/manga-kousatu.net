@@ -44,7 +44,7 @@ export const CardPost = React.memo(
             <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
             <div className='flex'>
               <Category category={category} />
-              <SiteSpoil netabare={netabare} />
+              <SiteSpoil spoil={netabare} />
             </div>
             <div>
               <div className='m-auto flex items-center py-2'>

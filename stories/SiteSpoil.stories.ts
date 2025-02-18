@@ -1,30 +1,31 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { TopTitle } from './components/TopTitle'
+
+import { SiteSpoil } from './components/SiteSpoil'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<typeof TopTitle> = {
-  title: 'ui/TopTitle',
-  component: TopTitle,
+const meta: Meta<typeof SiteSpoil> = {
+  title: 'ui/SiteSpoil',
+  component: SiteSpoil,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {
-    title: {
-      description: 'タイトル名',
+    netabare: {
+      description: 'ネタバレかどうか',
     },
   },
   args: {
-    title: 'ONEPIECE',
+    netabare: 'spoil',
   },
 }
 
 export default meta
-type Story = StoryObj<typeof TopTitle>
+type Story = StoryObj<typeof SiteSpoil>
 
-export const normalTopTitle: Story = {
+export const normalSiteSpoil: Story = {
   args: {
-    title: 'ONEPIECE',
+    netabare: 'spoil',
   },
 }

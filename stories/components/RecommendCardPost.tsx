@@ -1,20 +1,19 @@
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import { Avatar } from '@mui/material'
 import Link from 'next/link'
-import React from 'react'
-import { useEffect, useState, useMemo, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
-import { Category } from 'layouts/components/text'
+import { Category, SiteSpoil } from 'layouts/components/text'
 import { useGetOtherUser } from 'layouts/hooks'
-import { FixDaysAgo } from 'utils/date-helper'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
+import { FixDaysAgo } from 'utils/date-helper'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
   ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
-    const [comments, setComments] = useState('')
+    // const [comments, setComments] = useState('')
 
     useEffect(() => {
       useGetOtherUser(setUsers, userid)
@@ -25,10 +24,10 @@ export const RecommendCardPost = React.memo(
       <dl className='m-auto my-2 flex hover:opacity-80'>
         <Link href={`/post/${id}`}>
           <Image
-            className='rounded text-center'
-            height={80}
+            className='w-20 rounded text-center'
+            height={30}
             width={130}
-            src={downloadURL}
+            src={downloadURL || '/images/no-image.jpg'}
             alt='画像'
           />
         </Link>
@@ -36,13 +35,7 @@ export const RecommendCardPost = React.memo(
           <div className='flex'>
             <h3 className='my-1 mr-3 text-left text-lg font-semibold'>{title}</h3>
             <Category category={category} />
-            {netabare === 'spoil' && (
-              <div>
-                <dl className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
-                  {netabare}
-                </dl>
-              </div>
-            )}
+            <SiteSpoil spoil={netabare} />
           </div>
           <div>
             <div className='m-auto flex py-2'>

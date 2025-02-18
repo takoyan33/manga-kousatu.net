@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
-import FavoriteIcon from '@mui/icons-material/Favorite'
 import SendIcon from '@mui/icons-material/Send'
 import { Avatar } from '@mui/material'
 import List from '@mui/material/List'
@@ -27,7 +26,6 @@ import { SiteCategory, successNotify, errorNotify } from 'layouts/components/tex
 import { CommonHead, RecommendCardPost, Breadcrumbs } from 'layouts/components/ui'
 // import { deletePost } from 'layouts/api/auth'
 import 'react-toastify/dist/ReactToastify.css'
-
 // import {
 //   FacebookShareButton,
 //   TwitterShareButton,
@@ -67,20 +65,20 @@ const Post = ({ params }: any) => {
   useEffect(() => {
     if (!routerid) {
       return
-    } // routerIdがない場合は何もしない
+    }
 
     const fetchPost = async () => {
-      const post = await useGetPost(routerid) // useGetPostで取得
+      const post = await useGetPost(routerid)
       if (post) {
-        setSinglePost(post) // 成功したら状態を更新
+        setSinglePost(post)
       } else {
         console.log('記事が見つかりません')
-        router.push('/404') // 記事が見つからない場合は404ページへ遷移
+        router.push('/404')
       }
     }
 
     fetchPost()
-  }, [routerid]) // routerIdが変更されるたびに1回だけ実行されるようにする
+  }, [])
 
   // 関連記事とユーザー情報を取得
   useEffect(() => {
@@ -164,18 +162,15 @@ const Post = ({ params }: any) => {
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={toggleModal}>
-              {singlePost?.downloadURL && (
-                <Image
-                  className='Post-img rounded text-center'
-                  src={singlePost.downloadURL}
-                  height={150}
-                  width={150}
-                  alt='画像'
-                  priority
-                />
-              )}
+              <Image
+                className='Post-img rounded text-center'
+                src={singlePost?.downloadURL || '/images/no-image.jpg'}
+                height={150}
+                width={150}
+                alt='画像'
+                priority
+              />
             </button>
-            {!singlePost?.downloadURL && <span>画像なし</span>}
           </div>
           <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
@@ -184,16 +179,14 @@ const Post = ({ params }: any) => {
               </button>
             </div>
             <div className='z-20 my-6 flex justify-center'>
-              {singlePost?.downloadURL && (
-                <Image
-                  className='z-20 m-auto max-w-sm text-center'
-                  height={400}
-                  width={400}
-                  src={singlePost.downloadURL}
-                  alt='contextImage'
-                  priority
-                />
-              )}
+              <Image
+                className='z-20 m-auto max-w-sm text-center'
+                height={400}
+                width={400}
+                src={singlePost?.downloadURL || '/images/no-image.jpg'}
+                alt='contextImage'
+                priority
+              />
             </div>
           </Modal>
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
@@ -203,12 +196,6 @@ const Post = ({ params }: any) => {
           <div>
             <span className='text-sm text-gray-500 md:text-base'>
               <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
-            </span>
-            <span className='text-sm md:text-base'>
-              <span className='text-pink-400'>
-                <FavoriteIcon />
-              </span>
-              <span className='ml-1'>{singlePost?.likes}</span>
             </span>
           </div>
           <Link href={`/profile/${users?.userid}`}>

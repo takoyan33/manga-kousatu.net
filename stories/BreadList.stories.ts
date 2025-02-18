@@ -9,7 +9,20 @@ const meta: Meta<typeof Breadcrumbs> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    secondTitle: {
+      description: '２階層のタイトル',
+    },
+    secondUrl: {
+      description: '２階層のUrl',
+    },
+    thirdTitle: {
+      description: '3階層のタイトル',
+    },
+    thirdUrl: {
+      description: '3階層のUrl',
+    },
+  },
   args: {
     secondTitle: 'About',
   },
@@ -18,4 +31,11 @@ const meta: Meta<typeof Breadcrumbs> = {
 export default meta
 type Story = StoryObj<typeof Breadcrumbs>
 
-export const normalBreadcrumbs: Story = {}
+export const secondBreadcrumbs: Story = {}
+
+export const thridBreadcrumbs: Story = {
+  args: {
+    thirdTitle: '呪術廻戦',
+    thirdUrl: 'test',
+  },
+}

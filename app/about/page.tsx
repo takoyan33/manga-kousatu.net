@@ -1,5 +1,4 @@
-'use client'
-
+"use client"
 import { COPY_WRITES, CommonHead, TopTitle } from '../../layouts/components/ui'
 
 export default function About() {

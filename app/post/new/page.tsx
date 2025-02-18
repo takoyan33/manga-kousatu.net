@@ -1,7 +1,7 @@
 'use client'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import { RadioGroup, FormControlLabel, Radio, FormControl, FormHelperText } from '@material-ui/core'
 import { TextField, Box } from '@mui/material'
 import { onSnapshot, setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
@@ -56,6 +56,7 @@ export default function Post() {
   const [lengthData, setPostsLength] = useState<number | null>(null)
   const { user } = useAuthContext()
   const [display, setDisplay] = useState<string>('')
+  const router = useRouter()
 
   useEffect(() => {
     if (!user) {
@@ -98,8 +99,6 @@ export default function Post() {
     }
   }
 
-  const router = useRouter()
-
   //投稿の追加
   const addPost: SubmitHandler<RegisterPostParams> = async (data): Promise<void> => {
     // 処理中(true)なら非同期処理せずに抜ける
@@ -118,7 +117,7 @@ export default function Post() {
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
       const randomSuffix = Math.floor(Math.random() * 1000)
-      const postRef = await doc(database, 'posts', `${posts.length + 1}-${randomSuffix}`)
+      const postRef = await doc(database, 'posts', `${posts.length + 1}${randomSuffix}`)
       await setDoc(postRef, {
         title: data.title,
         context: html,
@@ -129,7 +128,7 @@ export default function Post() {
         category: data.categori,
         createTime: newDate,
         editTime: '',
-        id: (posts.length + 1).toString(),
+        id: `${posts.length + 1}${randomSuffix}`,
         netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
@@ -169,7 +168,6 @@ export default function Post() {
   const [html, setHtml] = useState<string>('')
 
   const handleEditorChange = (plainText: string, html: string): void => {
-    // setPlainText(plainText)
     setHtml(html)
     setPostsLength(plainText.length)
   }
@@ -196,7 +194,6 @@ export default function Post() {
             <div className='mt-6 mb-2'>
               <SiteLabel name='タイトル（最大20文字）' required htmlFor='title' />
             </div>
-
             <TextField
               {...register('title')}
               error={'title' in errors}
@@ -217,14 +214,14 @@ export default function Post() {
               rules={{
                 required: '必須項目です',
               }}
-              render={({ field }) => (
+              render={({ field }) => 
                 <RadioGroup
                   id='managa-name'
                   aria-labelledby='managa-name'
                   name={field.name}
-                  value={field.value}
+                  value={field.value ?? ''}
                 >
-                  {FORM_CATEGORIES.map((category) => (
+                  {FORM_CATEGORIES.map((category) => 
                     <FormControlLabel
                       key={category.id}
                       value={category.value}
@@ -232,9 +229,9 @@ export default function Post() {
                       label={category.label}
                       {...register('categori')}
                     />
-                  ))}
+                  )}
                 </RadioGroup>
-              )}
+              }
             />
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
@@ -256,30 +253,31 @@ export default function Post() {
             <Controller
               name='netabare'
               control={control}
-              rules={{
-                required: '必須項目です',
-              }}
-              render={({ field }) => (
-                <RadioGroup
-                  aria-label='ネタバレ'
-                  name={field.name}
-                  value={field.value}
-                  id='netabare'
-                >
-                  {FORM_NETABARE.map((netabare) => (
-                    <FormControlLabel
-                      key={netabare.id}
-                      value={netabare.value}
-                      control={<Radio />}
-                      label={netabare.label}
-                      {...register('netabare')}
-                    />
-                  ))}
-                </RadioGroup>
-              )}
+              rules={{ required: '必須項目です' }}
+              render={({ field }) => 
+                <FormControl component='fieldset' error={!!errors.netabare}>
+                  <RadioGroup
+                    aria-label='ネタバレ'
+                    name={field.name}
+                    value={field.value ?? ''}
+                    id='netabare'
+                    onChange={(e) => field.onChange(e.target.value)}
+                  >
+                    {FORM_NETABARE.map((netabare) => 
+                      <FormControlLabel
+                        key={netabare.id}
+                        value={netabare.value}
+                        control={<Radio />}
+                        label={netabare.label}
+                      />
+                    )}
+                  </RadioGroup>
+                  {errors.netabare && <FormHelperText>{errors.netabare.message}</FormHelperText>}
+                </FormControl>
+              }
             />
-            {errors.netabare && <p>{errors.netabare.message}</p>}
           </div>
+
           <div className='my-8'>
             <div className='mt-6 mb-2'>
               <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
@@ -317,33 +315,39 @@ export default function Post() {
             rules={{
               required: '必須項目です',
             }}
-            render={({ field }) => (
+            render={({ field }) => 
               <RadioGroup
                 id='display'
                 aria-label='ネタバレ'
                 name={field.name}
-                value={field.value}
+                value={field.value ?? ''}
                 onChange={(e) => {
                   field.onChange(e)
                   setDisplay(e.target.value)
                 }}
               >
-                {DISPLAY_DATA.map((display) => (
+                {DISPLAY_DATA.map((display) => 
                   <FormControlLabel
                     key={display.id}
                     value={display.value.toString()}
                     control={<Radio />}
                     label={display.label}
                   />
-                ))}
+                )}
               </RadioGroup>
-            )}
+            }
           />
+          {processing && 
+            <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
+              <p className='text-xl font-bold text-white'>投稿中...</p>
+            </div>
+          }
           <SiteButton
             id='submit'
             text='投稿する'
             className='m-auto my-10 text-center'
             onClick={handleSubmit(addPost)}
+            disabled={processing}
           />
         </div>
       </Box>

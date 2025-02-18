@@ -11,7 +11,11 @@ const meta: Meta<typeof Category> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    category: {
+      description: '漫画のカテゴリー',
+    },
+  },
   args: {
     category: 'ONEPIECE',
   },

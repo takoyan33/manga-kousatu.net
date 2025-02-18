@@ -46,9 +46,10 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
       })
       setOn(true) // アニメーション開始
 
-      setTimeout(() => {
+      setTimeout(async () => {
         setOn(false)
-        useGetPost(routerid)
+        const post = await useGetPost(routerid)
+        setSinglePost(post)
       }, 2500)
     } catch (err) {
       console.error(err)
@@ -63,8 +64,9 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
         likes: likes - 1,
         likesEmail: arrayRemove(email),
       })
-      setTimeout(() => {
-        useGetPost(routerid)
+      setTimeout(async () => {
+        const post = await useGetPost(routerid)
+        setSinglePost(post)
       }, 1000)
     } catch (err) {
       console.error(err)
@@ -76,13 +78,6 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
 
   return (
     <div>
-      <div className='my-4'>
-        <span className='text-pink-400'>
-          <FavoriteIcon />
-        </span>
-        {singlePost?.likes}
-      </div>
-
       {isPostOwner && <p className='mb-4'>自分の投稿なのでいいねできません</p>}
 
       {user && !isPostOwner && (
@@ -91,13 +86,12 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
             <div>
               <p>いいね済み</p>
               <button
-                className='my-2 inline'
+                className='my-6 inline'
                 onClick={() => removeLike(routerid, singlePost?.likes || 0, user?.email || '')}
                 id='delete-favorite'
               >
-                <span className='py-4 text-pink-400 hover:text-pink-700'>
-                  <FavoriteIcon />
-                  いいね解除
+                <span className='py-12 text-2xl text-pink-700 hover:text-pink-500'>
+                  <FavoriteIcon fontSize='large' />
                 </span>
               </button>
             </div>
@@ -107,9 +101,14 @@ export const TopPostLike = React.memo(({ routerid }: any) => {
               id='add-favorite'
             >
               <FavoriteIconAnim on={on} />
-              <span>いいねする</span>
             </button>
           )}
+          <div className='my-4'>
+            <span className='text-pink-400'>
+              <FavoriteIcon />
+            </span>
+            {singlePost?.likes}
+          </div>
         </>
       )}
     </div>

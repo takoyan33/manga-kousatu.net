@@ -12,7 +12,7 @@ export type GetPost = {
   id: string
   likes: number
   likesEmail: string[]
-  netabare: string
+  netabare: 'spoil' | 'notSpoil'
   photoURL: string | null
   selected: string[]
   timestamp: { seconds: number; nanoseconds: number }

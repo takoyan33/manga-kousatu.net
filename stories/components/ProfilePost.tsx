@@ -15,7 +15,12 @@ export const ProfilePost = React.memo(
     return (
       <div key={id}>
         <div className='m-auto max-w-sm text-center'>
-          <Image height={100} width={100} src={profileImage} alt='プロフィール画像' />
+          <Image
+            height={100}
+            width={100}
+            src={profileImage || '/images/no-image.jpg'}
+            alt='プロフィール画像'
+          />
         </div>
         <p className='m-5' aria-label='name-text'>
           名前：{username}

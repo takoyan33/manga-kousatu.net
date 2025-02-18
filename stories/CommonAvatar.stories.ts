@@ -1,30 +1,30 @@
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
-import { TopTitle } from './components/TopTitle'
+import CommonAvatar from './components/CommonAvatar'
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
-const meta: Meta<typeof TopTitle> = {
-  title: 'ui/TopTitle',
-  component: TopTitle,
+const meta: Meta<typeof CommonAvatar> = {
+  title: 'ui/CommonAvatar',
+  component: CommonAvatar,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
   argTypes: {
-    title: {
-      description: 'タイトル名',
+    displayname: {
+      description: 'ユーザー名',
     },
   },
   args: {
-    title: 'ONEPIECE',
+    displayname: 'ONEPIECE',
   },
 }
 
 export default meta
-type Story = StoryObj<typeof TopTitle>
+type Story = StoryObj<typeof CommonAvatar>
 
 export const normalTopTitle: Story = {
   args: {
-    title: 'ONEPIECE',
+    displayname: 'ONEPIECE',
   },
 }

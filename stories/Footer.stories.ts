@@ -12,7 +12,7 @@ const meta: Meta<typeof Footer> = {
   },
   tags: ['autodocs'],
   argTypes: {},
-  args: { onClick: fn() },
+  args: {},
 }
 
 export default meta

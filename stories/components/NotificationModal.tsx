@@ -3,13 +3,13 @@ import React, { DOMAttributes } from 'react'
 import { RELEASE_NOTES } from '../../layouts/components/ui'
 
 interface ModalProps {
-  open?: boolean
+  isOpen?: boolean
   handleClose?: DOMAttributes<HTMLButtonElement>['onClick']
 }
 
-export const NotificationModal = ({ open = false, handleClose }: ModalProps) => {
+export const NotificationModal = ({ isOpen = false, handleClose }: ModalProps) => {
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Modal open={isOpen} onClose={handleClose}>
       <Box className='m-auto mt-20 h-3/4 max-w-5xl bg-white p-4' sx={{ overflowY: 'scroll' }}>
         <Typography variant='h6'>通知欄</Typography>
         {RELEASE_NOTES.map(({ version, date, features }) => (

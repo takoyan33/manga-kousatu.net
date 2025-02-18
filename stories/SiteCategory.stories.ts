@@ -11,7 +11,17 @@ const meta: Meta<typeof SiteCategory> = {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {},
+  argTypes: {
+    text: {
+      description: 'カテゴリー名',
+    },
+    href: {
+      description: 'リンク先',
+    },
+    className: {
+      description: 'クラス名',
+    },
+  },
   args: {
     text: '呪術廻戦',
     href: '/aa/',

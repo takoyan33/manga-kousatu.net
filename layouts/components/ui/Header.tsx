@@ -92,7 +92,7 @@ export const Header = () => {
             </Link>
 
             <div className='flex'>
-              <NotificationModal open={notificationOpen} handleClose={handleNotificationClose} />
+              <NotificationModal isOpen={notificationOpen} handleClose={handleNotificationClose} />
 
               {/* 通知アイコン */}
               {user && (

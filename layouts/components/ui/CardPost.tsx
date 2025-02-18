@@ -34,7 +34,7 @@ export const CardPost = React.memo(
             <div className='cardPost-img'>
               <Image
                 className='cardPost-img rounded'
-                src={downloadURL}
+                src={downloadURL || '/images/no-image.jpg'}
                 alt={`${title}の画像`}
                 fill
                 sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
@@ -46,7 +46,7 @@ export const CardPost = React.memo(
             <h3 className='my-1 text-left text-lg font-semibold'>{title}</h3>
             <div className='flex'>
               <Category category={category} />
-              <SiteSpoil netabare={netabare} />
+              <SiteSpoil spoil={netabare} />
             </div>
             <div>
               <div className='m-auto flex items-center py-2'>
@@ -54,7 +54,7 @@ export const CardPost = React.memo(
                   className='border'
                   sx={{ width: 30, height: 30 }}
                   alt='投稿者プロフィール画像'
-                  src={users?.profileImage || 'images/avatar.svg'}
+                  src={users?.profileImage || '/images/no-image.jpg'}
                 />
                 <dl className='ml-1 text-sm'>
                   {users?.userName || 'ユーザー名未設定'}

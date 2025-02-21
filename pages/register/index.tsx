@@ -1,5 +1,5 @@
 import SignUp from 'layouts/api/auth/SignUp'
-import { CommonHead } from 'layouts/components/ui/CommonHead'
+import { CommonHead } from 'layouts/components/layout/CommonHead'
 
 export default function Register() {
   return (

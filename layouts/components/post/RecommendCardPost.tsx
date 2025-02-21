@@ -43,7 +43,7 @@ export const RecommendCardPost = React.memo(
               <dl>
                 <Avatar
                   className='max-w-sm border text-center'
-                  sx={{ width: 30, height: 30 }}
+                  sx={{ height: 30, width: 30 }}
                   alt='投稿者プロフィール'
                   src={users?.profileImage}
                 />

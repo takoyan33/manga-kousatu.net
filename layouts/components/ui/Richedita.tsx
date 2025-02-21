@@ -9,7 +9,7 @@ interface RicheditaProps {
   value: string
 }
 
-export const Richedita = ({ onChange, value }: RicheditaProps) => {
+const Richedita = ({ onChange, value }: RicheditaProps) => {
   const [editorState, setEditorState] = useState(value)
 
   useEffect(() => {
@@ -42,3 +42,5 @@ export const Richedita = ({ onChange, value }: RicheditaProps) => {
     </div>
   )
 }
+
+export default Richedita

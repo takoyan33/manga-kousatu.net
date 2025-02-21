@@ -4,7 +4,7 @@ import { doc, updateDoc, arrayUnion, arrayRemove } from 'firebase/firestore'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { database } from 'firebaseConfig'
-import { FavoriteIconAnim } from 'layouts/components/ui/FavoriteIconAnim'
+import { FavoriteIconAnim } from 'layouts/components/common/FavoriteIconAnim'
 import { useGetPost } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 

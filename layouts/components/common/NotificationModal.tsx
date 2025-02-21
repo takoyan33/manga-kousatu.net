@@ -1,6 +1,6 @@
 import { Modal, Typography, Box } from '@mui/material'
 import React, { DOMAttributes } from 'react'
-import { RELEASE_NOTES } from '../../../layouts/components/ui'
+import { RELEASE_NOTES } from '../../../lib/objects'
 
 interface ModalProps {
   isOpen?: boolean

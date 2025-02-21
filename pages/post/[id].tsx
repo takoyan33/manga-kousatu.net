@@ -32,8 +32,8 @@ import 'react-toastify/dist/ReactToastify.css'
 //   LineIcon,
 //   TwitterIcon,
 // } from 'react-share'
-import { TopPostComment } from 'layouts/components/ui/TopPostComment'
-import { TopPostLike } from 'layouts/components/ui/TopPostLike'
+import { TopPostComment } from 'layouts/components/post/TopPostComment'
+import { TopPostLike } from 'layouts/components/post/TopPostLike'
 import { useGetPost, useGetCategoryPosts, useGetOtherUser } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 

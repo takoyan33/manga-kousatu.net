@@ -20,11 +20,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { useLogOut } from '../../api/auth/useAuth'
+import { useAuth } from '../../api/auth/useAuth'
+import { useAuthContext } from '../../context/auth-context'
+import { useGetMyUser } from '../../hooks'
 import { SiteButton } from '../button'
 import { NotificationModal } from '../common/NotificationModal'
-import { useGetMyUser } from '../../hooks'
-import { useAuthContext } from '../../context/auth-context'
 import { GetUser } from 'types/user'
 
 const ACCOUNT_MENU_ITEMS = [
@@ -45,9 +45,9 @@ export const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const { user } = useAuthContext()
   const router = useRouter()
-  const { logout } = useLogOut()
   const [notificationOpen, setNotificationOpen] = useState<boolean>(false)
   const [users, setUsers] = useState<GetUser>()
+  const { logout } = useAuth()
 
   useEffect(() => {
     if (user) {

@@ -12,7 +12,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
-import { useSignup } from './useAuth'
+import { useAuth } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
 import { SiteLabel, successNotify, errorNotify } from 'layouts/components/text'
 import 'react-toastify/dist/ReactToastify.css'
@@ -46,13 +46,12 @@ export default function SignUp() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<RegisterUserFormInput>({
     resolver: yupResolver(schema),
   })
 
-  const { signup, error } = useSignup()
+  const { signup, error } = useAuth()
 
   const handleSignUp = async (data: RegisterUserFormInput) => {
     const { email, password } = data

@@ -12,7 +12,7 @@ import React, { useTransition, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ToastContainer } from 'react-toastify'
 import * as yup from 'yup'
-import { useLogin } from './useAuth'
+import { useAuth } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
 import 'react-toastify/dist/ReactToastify.css'
 import { successNotify, errorNotify, SiteLabel } from 'layouts/components/text'
@@ -38,7 +38,7 @@ export default function LoginAuth() {
     resolver: yupResolver(schema),
   })
 
-  const { login } = useLogin()
+  const { login } = useAuth()
 
   const handleSignIn = (data: LoginUserFormInput) => {
     startTransition(() => {

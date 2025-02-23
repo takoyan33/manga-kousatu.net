@@ -1,0 +1,22 @@
+import { render, fireEvent, screen } from '@testing-library/react'
+import { TopPostComment } from '../../layouts/components/post/TopPostComment'
+import '@testing-library/jest-dom'
+
+jest.mock('../../layouts/api/auth/useAuth')
+
+describe('TopPostComment Component', () => {
+  const mockProps = {
+    postId: '123',
+    comments: [{ id: '1', text: 'Test comment', userId: 'user1', createdAt: new Date() }],
+  }
+
+  it('renders comment section correctly', () => {
+    render(<TopPostComment {...mockProps} />)
+    expect(screen.getByText('コメント')).toBeInTheDocument()
+  })
+
+  it('displays comments correctly', () => {
+    render(<TopPostComment {...mockProps} />)
+    expect(screen.getByText('Test comment')).toBeInTheDocument()
+  })
+})

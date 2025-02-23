@@ -1,0 +1,19 @@
+import { render, fireEvent, screen } from '@testing-library/react'
+import RegisterProfile from '../../../pages/registerprofile'
+import '@testing-library/jest-dom'
+
+jest.mock('../../layouts/api/auth/useAuth')
+
+describe('RegisterProfile Page', () => {
+  it('renders profile registration form', () => {
+    render(<RegisterProfile />)
+    expect(screen.getByText('プロフィール登録')).toBeInTheDocument()
+  })
+
+  it('handles form inputs correctly', () => {
+    render(<RegisterProfile />)
+    const nameInput = screen.getByLabelText('ユーザー名')
+    fireEvent.change(nameInput, { target: { value: 'Test User' } })
+    expect(nameInput.value).toBe('Test User')
+  })
+})

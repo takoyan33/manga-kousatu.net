@@ -8,7 +8,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import Modal from 'react-modal'
 import * as yup from 'yup'
-import { database } from 'firebaseConfig'
+import { database } from '../../../firebaseConfig'
 import { successNotify, errorNotify } from 'layouts/components/text'
 import { deleteComment, getComments, useGetMyUser } from 'layouts/hooks'
 import { GetComment } from 'types/comment'
@@ -132,7 +132,7 @@ export const TopPostComment = React.memo(() => {
           {user?.email === comment.userEmail && (
             <div className='flex'>
               <button
-                      id='edit-comment'
+                id='edit-comment'
                 onClick={openCommentModal}
                 className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white'
               >
@@ -141,7 +141,7 @@ export const TopPostComment = React.memo(() => {
               <button
                 onClick={() => deleteComment(comment.id)}
                 className='mx-2 rounded-xl border bg-red-600 px-3 py-1 text-sm text-white'
-                      id='delete-comment'
+                id='delete-comment'
               >
                 削除
               </button>
@@ -158,7 +158,7 @@ export const TopPostComment = React.memo(() => {
                 コメント<span className='text-red-600'>*</span>
               </FormLabel>
               <input
-                  id='input-update-comment'
+                id='input-update-comment'
                 className='sm:text-md block w-full rounded-lg border border-gray-300 bg-gray-50 p-4 text-gray-900 focus:border-blue-500 focus:ring-blue-500'
                 defaultValue={comment.comment}
                 type='text'
@@ -167,8 +167,8 @@ export const TopPostComment = React.memo(() => {
               <div className='mt-4 flex justify-center'>
                 <button
                   onClick={() => updateComment(comment.id)}
-                    className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
-                    id='update-comment'
+                  className='mx-2 rounded-xl border bg-green-600 px-3 py-1 text-sm text-white '
+                  id='update-comment'
                 >
                   更新する
                 </button>
@@ -191,7 +191,7 @@ export const TopPostComment = React.memo(() => {
             <Link href='/login'>
               <span className='text-blue-500 underline'>ログイン</span>
             </Link>
-              or
+            or
             <Link href='/register'>
               <span className='text-blue-500 underline'>会員登録</span>
             </Link>

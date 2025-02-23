@@ -1,4 +1,6 @@
-import { COPY_WRITES, CommonHead, TopTitle } from '../../layouts/components/ui'
+import { CommonHead } from '../../layouts/components/layout/CommonHead'
+import { TopTitle } from '../../layouts/components/post/TopTitle'
+import { COPY_WRITES } from '../../lib/objects'
 
 export default function About() {
   return (

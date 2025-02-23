@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import About from '../../pages/about/index'
 import '@testing-library/jest-dom'
 

@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { Footer } from '../../layouts/components/ui/Footer'
+import { Footer } from '../../layouts/components/layout/Footer'
 import '@testing-library/jest-dom'
 
 describe('A1_Component > Footer', () => {

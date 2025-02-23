@@ -1,0 +1,28 @@
+import { render, fireEvent, screen } from '@testing-library/react'
+import { PostForm } from '../../layouts/components/post/PostForm'
+import '@testing-library/jest-dom'
+
+describe('PostForm Component', () => {
+  const mockProps = {
+    onSubmit: jest.fn(),
+    initialValues: {
+      title: '',
+      content: '',
+      category: '',
+    },
+  }
+
+  it('renders form fields correctly', () => {
+    render(<PostForm {...mockProps} />)
+    expect(screen.getByLabelText('タイトル')).toBeInTheDocument()
+    expect(screen.getByLabelText('本文')).toBeInTheDocument()
+  })
+
+  it('handles form submission', async () => {
+    render(<PostForm {...mockProps} />)
+    const titleInput = screen.getByLabelText('タイトル')
+    fireEvent.change(titleInput, { target: { value: 'Test Title' } })
+    fireEvent.submit(screen.getByRole('form'))
+    expect(mockProps.onSubmit).toHaveBeenCalled()
+  })
+})

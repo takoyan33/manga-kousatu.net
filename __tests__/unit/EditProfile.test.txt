@@ -1,0 +1,18 @@
+import { render, fireEvent, screen } from '@testing-library/react'
+import EditProfile from '../../../pages/profile/edit'
+import '@testing-library/jest-dom'
+
+jest.mock('../../layouts/api/auth/useAuth')
+
+describe('EditProfile Page', () => {
+  it('renders profile edit form', () => {
+    render(<EditProfile />)
+    expect(screen.getByText('プロフィール編集')).toBeInTheDocument()
+  })
+
+  it('displays current profile information', () => {
+    render(<EditProfile />)
+    expect(screen.getByLabelText('プロフィール画像')).toBeInTheDocument()
+    expect(screen.getByLabelText('ユーザー名')).toBeInTheDocument()
+  })
+}) 

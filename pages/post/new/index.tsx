@@ -144,7 +144,7 @@ export default function Post() {
           setTags([])
           // setUserId('')
           setTimeout(() => {
-            router.push('/')
+            router.push(`/post/${posts.length + 1}${randomSuffix}`)
           }, 2000)
         })
         .catch(() => {

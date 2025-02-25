@@ -93,11 +93,11 @@ export const Header = () => {
               <NotificationModal isOpen={notificationOpen} handleClose={handleNotificationClose} />
 
               {/* 通知アイコン */}
-              {user && (
+              {user && 
                 <button onClick={handleNotificationOpen}>
                   <NotificationsIcon fontSize='small' />
                 </button>
-              )}
+              }
 
               {/* ユーザーメニュー */}
               <IconButton
@@ -109,26 +109,26 @@ export const Header = () => {
                 aria-haspopup='true'
                 aria-expanded={open ? 'true' : undefined}
               >
-                {user && users?.profileImage && (
+                {user && users?.profileImage && 
                   <Avatar
                     sx={{ width: 32, height: 32 }}
                     src={users.profileImage}
                     className='border'
                     key={users?.id}
                   />
-                )}
-                {user && users?.profileImage === undefined && (
+                }
+                {user && users?.profileImage === undefined && 
                   <Avatar
                     sx={{ width: 32, height: 32 }}
                     src='/images/avater.svg'
                     className='border'
                   />
-                )}
+                }
                 {!user && <MenuIcon fontSize='small' />}
               </IconButton>
 
               {/* 投稿ボタン */}
-              {user && (
+              {user && 
                 <div className='ml-4 mr-6 text-center'>
                   <SiteButton
                     href='/post/new'
@@ -137,7 +137,7 @@ export const Header = () => {
                     id='add-post'
                   />
                 </div>
-              )}
+              }
             </div>
           </Toolbar>
         </div>
@@ -153,9 +153,9 @@ export const Header = () => {
         PaperProps={{
           elevation: 0,
           sx: {
-            overflow: 'visible',
-            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-            mt: 1.5,
+            "overflow": 'visible',
+            "filter": 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            "mt": 1.5,
             '& .MuiAvatar-root': { width: 32, height: 32, ml: -0.5, mr: 1 },
             '&:before': {
               content: '""',
@@ -174,7 +174,7 @@ export const Header = () => {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        {!user ? (
+        {!user ? 
           <div>
             <MenuItem component={Link} href='/login'>
               <ListItemIcon>
@@ -189,30 +189,30 @@ export const Header = () => {
               新規登録
             </MenuItem>
           </div>
-        ) : (
+         : 
           <div>
             <MenuItem>{user.displayName || users?.userName || 'ユーザー名未設定'}</MenuItem>
             <Divider />
-            {LOGIN_ADMIN_MENU_ITEMS.map((item) => (
+            {LOGIN_ADMIN_MENU_ITEMS.map((item) => 
               <MenuItem key={item.text} component={Link} href={item.href}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 {item.text}
               </MenuItem>
-            ))}
-            <MenuItem onClick={handleLogout}>
+            )}
+            <MenuItem onClick={handleLogout} id="logout">
               <ListItemIcon>
                 <Logout fontSize='small' />
               </ListItemIcon>
               ログアウト
             </MenuItem>
           </div>
-        )}
-        {ACCOUNT_MENU_ITEMS.map((item) => (
+        }
+        {ACCOUNT_MENU_ITEMS.map((item) => 
           <MenuItem key={item.text} component={Link} href={item.href}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             {item.text}
           </MenuItem>
-        ))}
+        )}
       </Menu>
     </AppBar>
   )

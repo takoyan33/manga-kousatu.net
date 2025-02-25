@@ -107,74 +107,66 @@ test('Account Delete Test', async ({ page }) => {
 // await page.pause()
 
 //投稿、編集
-test('Add Post Test', async ({ page }) => {
-  await test.setTimeout(120000)
+test.describe('Post Management', () => {
+  test('Post Test', async ({ page }) => {
+    let letUrl: string
+    await test.setTimeout(120000)
 
-  //ログイン
-  await login(page)
+    //ログイン
+    await login(page)
 
-  // トップページへ
-  await page.waitForTimeout(2000)
-  await page.locator('#add-post').click()
-  await page.waitForTimeout(2000)
+    // トップページへ
+    await page.waitForTimeout(2000)
+    await page.locator('#add-post').click()
+    await page.waitForTimeout(2000)
 
-  // 投稿
-  await page.locator('#thumbnail-input').setInputFiles(editTestProfile.image)
-  await page.waitForTimeout(3000)
-  await page.fill('#title', 'test title')
-  await page.check('input[name="categori"][value="ONEPIECE"]')
-  await page.waitForTimeout(1000)
-  await page.check('input[name="netabare"][value="spoil"]')
-  await page.waitForTimeout(1000)
-  await page.check('input[name="display"][value="true"]')
-  await page.waitForTimeout(1000)
-  await page.locator('#submit').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+    // 投稿
+    await page.locator('#thumbnail-input').setInputFiles(editTestProfile.image)
+    await page.waitForTimeout(3000)
+    await page.fill('#title', 'test title')
+    await page.check('input[name="categori"][value="ONEPIECE"]')
+    await page.waitForTimeout(1000)
+    await page.check('input[name="netabare"][value="spoil"]')
+    await page.waitForTimeout(1000)
+    await page.check('input[name="display"][value="true"]')
+    await page.waitForTimeout(1000)
+    await page.locator('#submit').click()
+    await page.waitForTimeout(5000)
 
-  // ログアウト
-  await page.waitForTimeout(1000)
-  await page.locator('#humbuger-menu').click()
-  await page.waitForTimeout(1000)
-  await page.locator('#logout').click()
-  await page.waitForURL(localhost + '/login/')
-  await page.waitForTimeout(3000)
-})
+    const url = page.url()
+    letUrl = url
+    await page.goto(letUrl)
+    // 記事詳細へ
+    await page.waitForTimeout(2000)
+    await page.locator('#edit-post').click()
 
-//編集と削除
-test('EditDelete Post Test', async ({ page }) => {
-  await test.setTimeout(120000)
+    // 投稿編集
+    await page.fill('#title', 'test title2')
+    await page.locator('#file-input').setInputFiles(editTestProfile.image)
+    await page.waitForTimeout(2000)
+    // await page.check('input[name="category"][value="ONEPIECE"]')
+    // await page.waitForTimeout(1000)
+    await page.check('input[name="netabare"][value="spoil"]')
+    await page.waitForTimeout(1000)
+    await page.check('input[name="display"][value="true"]')
+    await page.waitForTimeout(1000)
+    await page.locator('#submit').click()
+    await page.waitForTimeout(2000)
 
-  //ログイン
-  await login(page)
+    // 投稿削除
+    await page.waitForTimeout(2000)
+    await page.locator('#delete-post').click()
+    await page.waitForTimeout(2000)
+    await page.waitForURL(localhost)
 
-  // 記事詳細へ
-  await page.waitForTimeout(2000)
-  //ここのidを動的に
-  await page.goto(localhost + '/post/10')
-  await page.waitForTimeout(2000)
-  await page.locator('#edit-post').click()
-
-  // 投稿編集
-  await page.fill('#title', 'test title2')
-  await page.locator('#file-input').setInputFiles(editTestProfile.image)
-  await page.waitForTimeout(2000)
-  // await page.check('input[name="category"][value="ONEPIECE"]')
-  // await page.waitForTimeout(1000)
-  await page.check('input[name="netabare"][value="spoil"]')
-  await page.waitForTimeout(1000)
-  await page.check('input[name="display"][value="true"]')
-  await page.waitForTimeout(1000)
-  await page.locator('#submit').click()
-  await page.waitForTimeout(2000)
-
-  // 投稿削除
-  //ここのidを動的に
-  await page.goto(localhost + '/post/10')
-  await page.waitForTimeout(2000)
-  await page.locator('#delete-post').click()
-  await page.waitForTimeout(2000)
-  await page.waitForURL(localhost)
+    // ログアウト
+    await page.waitForTimeout(1000)
+    await page.locator('#humbuger-menu').click()
+    await page.waitForTimeout(1000)
+    await page.locator('#logout').click()
+    await page.waitForURL(localhost + '/login/')
+    await page.waitForTimeout(3000)
+  })
 })
 
 //コメントのテスト

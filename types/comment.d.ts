@@ -1,7 +1,7 @@
 //コメントの型定義
 export interface GetComment {
   comment: string
-  createTime: string
+  createdAt: string
   id: string
   postid: string
   userid: string

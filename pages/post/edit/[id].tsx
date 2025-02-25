@@ -83,7 +83,7 @@ const PostEdit = () => {
       netabare: netabare,
       categori: category,
       context: context,
-      edittime: newdate,
+      updatedAt: newdate,
       selected: selected,
       display: display,
     })

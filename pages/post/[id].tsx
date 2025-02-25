@@ -194,7 +194,7 @@ const Post = () => {
           <br />
           <div>
             <span className='text-sm text-gray-500 md:text-base'>
-              <AccessTimeIcon /> <span>{singlePost?.createTime}</span>
+              <AccessTimeIcon /> <span>{singlePost?.createdAt}</span>
             </span>
           </div>
           <Link href={`/profile/${users?.userid}`}>
@@ -216,10 +216,10 @@ const Post = () => {
             </div>
           </Link>
 
-          {singlePost?.editTime && (
+          {singlePost?.updatedAt && (
             <div>
               <AccessTimeIcon />
-              編集日時：{singlePost.editTime}
+              編集日時：{singlePost.updatedAt}
             </div>
           )}
           <div color='text.secondary'>
@@ -335,7 +335,7 @@ const Post = () => {
                 category={post.category}
                 netabare={post.netabare}
                 context={post.context}
-                createTime={post.createTime}
+                createdAt={post.createdAt}
                 id={post.id}
                 likes={post.likes}
                 userid={post.userid}

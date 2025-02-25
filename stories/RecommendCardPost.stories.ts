@@ -14,7 +14,7 @@ const meta: Meta<typeof RecommendCardPost> = {
     downloadURL: '/images/book-reading.png',
     title: '太郎',
     category: '呪術廻戦',
-    createTime: '2025-01-01',
+    createdAt: '2025-01-01',
   },
 }
 

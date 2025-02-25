@@ -30,7 +30,7 @@ const meta: Meta<typeof CardPost> = {
     netabare: {
       description: 'ネタバレがあるか',
     },
-    createTime: {
+    createdAt: {
       description: '投稿時間',
     },
     userid: {
@@ -44,7 +44,7 @@ const meta: Meta<typeof CardPost> = {
     title: 'タイトル',
     category: '呪術廻戦',
     netabare: 'spoil',
-    createTime: '2024-01-01T00:00:00.000Z',
+    createdAt: '2024-01-01T00:00:00.000Z',
     userid: 'ボタン',
   },
 }

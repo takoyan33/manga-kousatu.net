@@ -1,10 +1,8 @@
-export interface LoginUserFormInput {
+export type LoginUserFormInput = {
   email: string
   password: string
 }
 
-export interface RegisterUserFormInput {
-  email: string
-  password: string
+export type SignUpUserFormInput = LoginUserFormInput & {
   confirmPassword: string
 }

@@ -154,7 +154,7 @@ const Category = () => {
                     categori={post.categori}
                     netabare={post.netabare}
                     context={post.context}
-                    createtime={post.createtime}
+                    createdAt={post.createdAt}
                     displayname={post.displayname}
                     email={post.email}
                     id={post.id}

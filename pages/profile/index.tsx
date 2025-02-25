@@ -143,7 +143,7 @@ export default function Profile() {
                     <Link href={`/post/${post.id}`}>{post.title}</Link>
                   </th>
                   <td className='px-6 py-4'>{post.category}</td>
-                  <td className='px-6 py-4'> {post.createTime}</td>
+                  <td className='px-6 py-4'> {post.createdAt}</td>
                   <td className='px-6 py-4'> {post.likes}</td>
                   <td className='px-6 py-4'>{post.display ? <p>公開</p> : <p>下書き</p>}</td>
                   <td className='px-6 py-4 text-right font-medium text-blue-600 hover:underline'>

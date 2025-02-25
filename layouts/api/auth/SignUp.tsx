@@ -16,7 +16,7 @@ import { useAuth } from './useAuth'
 import { SiteButton } from 'layouts/components/button'
 import { SiteLabel, successNotify, errorNotify } from 'layouts/components/text'
 import 'react-toastify/dist/ReactToastify.css'
-import { RegisterUserFormInput } from 'types/auth'
+import { SignUpUserFormInput } from 'types/auth'
 
 // バリデーションルール
 const schema = yup.object({
@@ -47,13 +47,13 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterUserFormInput>({
+  } = useForm<SignUpUserFormInput>({
     resolver: yupResolver(schema),
   })
 
   const { signup, error } = useAuth()
 
-  const handleSignUp = async (data: RegisterUserFormInput) => {
+  const handleSignUp = async (data: SignUpUserFormInput) => {
     const { email, password } = data
     await signup(email, password)
     successNotify('ユーザー登録完了しました')

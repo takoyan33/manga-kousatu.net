@@ -8,8 +8,7 @@ import { getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React from 'react'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Image from 'react-image-resizer'
 import { database } from 'firebaseConfig'
 
@@ -20,7 +19,7 @@ const Post = () => {
   const [photoURL, setPhotoURL] = useState()
   const [title1, setTitle1] = useState('')
   const [displayName, setDisplayName] = useState('')
-  const [createtime, setCreatetime] = useState('')
+  const [createdAt, setcreatedAt] = useState('')
   const [isUpdate, setIsUpdate] = useState(false)
   const [posttitle, setPostTitle] = useState('')
   //データベースを取得
@@ -84,7 +83,7 @@ const Post = () => {
     setDownloadURL(downloadURL)
     setIsUpdate(true)
     setCategori(categori)
-    setCreatetime(cratetime)
+    setcreatedAt(cratetime)
     setNetabare(netabare)
     setPhotoURL(photoURL)
     setUserid(userid)
@@ -258,7 +257,7 @@ const Post = () => {
                     <div gutterBottom variant='h5' component='div'>
                       {data.title}
                     </div>
-                    投稿日時：{data.createtime}
+                    投稿日時：{data.createdAt}
                     {data.selected &&
                       data.selected.map((tag, i) => (
                         <span className='text-cyan-700' key={i}>

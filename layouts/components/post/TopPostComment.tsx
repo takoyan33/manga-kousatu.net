@@ -71,7 +71,7 @@ export const TopPostComment = React.memo(() => {
         userid: user?.uid,
         postid: routerid,
         username: myUser?.userName || 'ユーザー名未設定',
-        createTime: newDate,
+        createdAt: newDate,
         timestamp: serverTimestamp(),
         userEmail: user?.email,
         isEdit: false,
@@ -124,7 +124,7 @@ export const TopPostComment = React.memo(() => {
               <p className='mx-3 inline-flex items-center text-sm font-semibold text-gray-900'>
                 {comment.username}
               </p>
-              <p className='text-sm text-gray-600 dark:text-gray-400'>{comment.createTime}</p>
+              <p className='text-sm text-gray-600 dark:text-gray-400'>{comment.createdAt}</p>
             </div>
           </div>
 

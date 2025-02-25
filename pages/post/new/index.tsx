@@ -124,8 +124,8 @@ export default function Post() {
         email: user.email,
         displayName: user.displayName,
         category: data.categori,
-        createTime: newDate,
-        editTime: '',
+        createdAt: newDate,
+        updatedAt: '',
         id: `${posts.length + 1}${randomSuffix}`,
         netabare: data.netabare,
         photoURL: user.photoURL,
@@ -212,14 +212,14 @@ export default function Post() {
               rules={{
                 required: '必須項目です',
               }}
-              render={({ field }) => 
+              render={({ field }) => (
                 <RadioGroup
                   id='managa-name'
                   aria-labelledby='managa-name'
                   name={field.name}
                   value={field.value ?? ''}
                 >
-                  {FORM_CATEGORIES.map((category) => 
+                  {FORM_CATEGORIES.map((category) => (
                     <FormControlLabel
                       key={category.id}
                       value={category.value}
@@ -227,9 +227,9 @@ export default function Post() {
                       label={category.label}
                       {...register('categori')}
                     />
-                  )}
+                  ))}
                 </RadioGroup>
-              }
+              )}
             />
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
@@ -252,7 +252,7 @@ export default function Post() {
               name='netabare'
               control={control}
               rules={{ required: '必須項目です' }}
-              render={({ field }) => 
+              render={({ field }) => (
                 <FormControl component='fieldset' error={!!errors.netabare}>
                   <RadioGroup
                     aria-label='ネタバレ'
@@ -261,18 +261,18 @@ export default function Post() {
                     id='netabare'
                     onChange={(e) => field.onChange(e.target.value)}
                   >
-                    {FORM_NETABARE.map((netabare) => 
+                    {FORM_NETABARE.map((netabare) => (
                       <FormControlLabel
                         key={netabare.id}
                         value={netabare.value}
                         control={<Radio />}
                         label={netabare.label}
                       />
-                    )}
+                    ))}
                   </RadioGroup>
                   {errors.netabare && <FormHelperText>{errors.netabare.message}</FormHelperText>}
                 </FormControl>
-              }
+              )}
             />
           </div>
 
@@ -313,7 +313,7 @@ export default function Post() {
             rules={{
               required: '必須項目です',
             }}
-            render={({ field }) => 
+            render={({ field }) => (
               <RadioGroup
                 id='display'
                 aria-label='ネタバレ'
@@ -324,22 +324,22 @@ export default function Post() {
                   setDisplay(e.target.value)
                 }}
               >
-                {DISPLAY_DATA.map((display) => 
+                {DISPLAY_DATA.map((display) => (
                   <FormControlLabel
                     key={display.id}
                     value={display.value.toString()}
                     control={<Radio />}
                     label={display.label}
                   />
-                )}
+                ))}
               </RadioGroup>
-            }
+            )}
           />
-          {processing && 
+          {processing && (
             <div className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'>
               <p className='text-xl font-bold text-white'>投稿中...</p>
             </div>
-          }
+          )}
           <SiteButton
             id='submit'
             text='投稿する'

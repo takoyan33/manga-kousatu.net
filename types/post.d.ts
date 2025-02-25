@@ -1,13 +1,15 @@
+import { Timestamp } from 'firebase/firestore'
+
 //取得POSTの型
 export type GetPost = {
   category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
   context: string
   contextImage: string
-  createTime: string
+  createdAt: string
   display: boolean
   displayName: string | null
   downloadURL: string
-  editTime: string
+  updatedAt: string
   email: string
   id: string
   likes: number
@@ -29,7 +31,7 @@ export type CardPostParams = Pick<
   | 'category'
   | 'netabare'
   | 'context'
-  | 'createTime'
+  | 'createdAt'
   | 'likes'
   | 'userid'
 >

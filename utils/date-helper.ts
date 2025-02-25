@@ -1,6 +1,7 @@
+
 // 日付に変換
-export const FixDaysAgo = (createTime: string): string => {
-  const inputDate: any = new Date(createTime)
+export const FixDaysAgo = (createdAt: string): string => {
+  const inputDate: any = new Date(createdAt)
   const currentDate: any = new Date()
 
   // 時間の差をミリ秒単位で計算

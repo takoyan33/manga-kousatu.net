@@ -12,7 +12,7 @@ import { FixDaysAgo } from 'utils/date-helper'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
-  ({ downloadURL, id, likes, title, category, netabare, createTime, userid }: CardPostParams) => {
+  ({ downloadURL, id, likes, title, category, netabare, createdAt, userid }: CardPostParams) => {
     const [users, setUsers] = useState<GetUser>()
     // const [comments, setComments] = useState('')
 
@@ -55,7 +55,7 @@ export const RecommendCardPost = React.memo(
                 </span>
                 <span className='ml-1'>{likes}</span>
               </dl>
-              <dl className='ml-2 mt-1 text-gray-600'>{FixDaysAgo(createTime)}</dl>
+              <dl className='ml-2 mt-1 text-gray-600'>{FixDaysAgo(createdAt)}</dl>
             </div>
           </div>
         </div>

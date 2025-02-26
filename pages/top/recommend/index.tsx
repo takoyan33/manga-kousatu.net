@@ -2,6 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { SiteButton } from 'layouts/components/button'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'
 import { useFetchPosts } from 'layouts/hooks'
+import { usePagination } from 'layouts/hooks/usePagination'
 import { GetPost } from 'types/post'
 
 export default function Index() {
@@ -18,12 +19,12 @@ export default function Index() {
     return [...postData]
   }, [postData])
 
-  const totalPages = Math.ceil(sortedPosts.length / postsPerPage)
-
-  const paginatedPosts = useMemo(() => {
-    const startIndex = (currentPage - 1) * postsPerPage
-    return sortedPosts.slice(startIndex, startIndex + postsPerPage)
-  }, [sortedPosts, currentPage])
+  const { paginatedPosts, totalPages, totalPosts } = usePagination({
+    posts: postData,
+    currentPage,
+    postsPerPage,
+    sortType: 'recommend',
+  })
 
   return (
     <div className='m-auto w-11/12 md:w-full'>
@@ -31,7 +32,7 @@ export default function Index() {
       <Breadcrumbs secondTitle='おすすめ記事' />
       <TopTitle title='おすすめ記事' />
 
-      <p className='text-1xl mb-6 text-center'>投稿数 {postData.length}件</p>
+      <p className='text-1xl mb-6 text-center'>投稿数 {totalPosts}件</p>
 
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
         {postData.length === 0 ? (

@@ -65,7 +65,7 @@ export const DisplayChart = React.memo(() => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/register')
+      router.push('/login')
     } else {
       useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)

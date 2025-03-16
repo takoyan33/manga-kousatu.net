@@ -58,7 +58,7 @@ export default function Post() {
 
   useEffect(() => {
     if (!user) {
-      router.push('/register')
+      router.push('/login')
     } else {
       useFetchPosts()
     }

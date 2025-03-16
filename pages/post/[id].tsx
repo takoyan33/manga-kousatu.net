@@ -117,47 +117,32 @@ const Post = () => {
       <CommonHead title='Manga Study - 記事詳細' />
       <ToastContainer />
       <div className='m-auto my-4 w-11/12 md:w-full'>
-        {user && (
-          <>
-            {user.email === singlePost?.email && (
-              <>
-                <List
-                  sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper', zIndex: 0 }}
-                  component='nav'
-                  aria-labelledby='nested-list-subheader'
-                  subheader={
-                    <ListSubheader component='div' id='nested-list-subheader'>
-                      投稿編集
-                    </ListSubheader>
-                  }
-                >
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <SendIcon />
-                    </ListItemIcon>
-                    <Link
-                      id='edit-post'
-                      href={{
-                        pathname: `/post/edit/${singlePost.id}`,
-                      }}
-                    >
-                      記事を編集する
-                    </Link>
-                  </ListItemButton>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <SendIcon />
-                    </ListItemIcon>
-                    <button onClick={() => deletePost(routerid)} id='delete-post'>
-                      記事を削除する
-                    </button>
-                  </ListItemButton>
-                </List>
-              </>
-            )}
-          </>
+        {user && user.email === singlePost?.email && (
+          <List
+            sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper', zIndex: 0 }}
+            component='nav'
+            aria-labelledby='nested-list-subheader'
+            subheader={
+              <ListSubheader component='div' id='nested-list-subheader'>
+                投稿編集
+              </ListSubheader>
+            }
+          >
+            <ListItemButton>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <Link href={`/post/edit/${singlePost.id}`}>記事を編集する</Link>
+            </ListItemButton>
+            <ListItemButton>
+              <ListItemIcon>
+                <SendIcon />
+              </ListItemIcon>
+              <button onClick={deletePost}>記事を削除する</button>
+            </ListItemButton>
+          </List>
         )}
-        <div className='rounded-xl md:border md:p-10'>
+        <article className='rounded-xl md:border md:p-10'>
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
           <div className='my-6 flex justify-center'>
             <button onClick={toggleModal}>
@@ -318,7 +303,7 @@ const Post = () => {
               </div>
             </Link>
           </div>
-        </div>
+        </article>
 
         <TopPostComment />
       </div>

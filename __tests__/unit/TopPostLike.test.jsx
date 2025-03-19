@@ -8,11 +8,10 @@ jest.mock('@lottiefiles/react-lottie-player', () => ({
   Player: () => <div data-testid='mock-lottie-player' />,
 }))
 
-// `useRouter` をモック
 jest.mock('next/router', () => ({
   useRouter: () => ({
-    query: { id: 'test-post-id' }, // モックされたルータークエリ
-    push: jest.fn(), // `router.push` をダミー関数にする
+    query: { id: 'test-post-id' },
+    push: jest.fn(),
   }),
 }))
 

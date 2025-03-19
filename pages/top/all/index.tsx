@@ -1,6 +1,7 @@
 import TextField from '@mui/material/TextField'
 import Link from 'next/link'
 import React, { useEffect, useState, useMemo } from 'react'
+import { CategoryList } from 'layouts/components/text'
 import { POST_CATEGORIES, CommonHead, CardPost, Breadcrumbs, TopTitle } from 'layouts/components/ui'
 import { useFetchPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
@@ -34,18 +35,10 @@ export default function Index() {
       <Breadcrumbs secondTitle='投稿一覧' />
       <TopTitle title='投稿一覧' />
 
-      <h3 className='text-left text-xl font-semibold'>カテゴリ</h3>
-      {POST_CATEGORIES.map((category) => (
-        <span key={category.id}>
-          <span
-            className={`m-2 inline-block rounded border px-4 py-2 hover:text-white md:m-6 ${category.className}`}
-          >
-            <Link href={`/post/categories/${category.title}`}>#{category.title}</Link>
-          </span>
-        </span>
-      ))}
+      <h3 className='my-6 text-left text-xl font-semibold'>カテゴリ</h3>
+      <CategoryList />
 
-      <p className='text-1xl text-center'>
+      <p className='text-1xl mt-6 text-center'>
         {searchName === '' ? `投稿数 ${postData.length}件` : `検索結果 ${filteredPosts.length}件`}
       </p>
 

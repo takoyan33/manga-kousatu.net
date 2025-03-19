@@ -1,9 +1,9 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { POST_CATEGORIES, CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
+import { CategoryList } from 'layouts/components/text'
+import { CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
 import { useGetOldPosts, useGetNewPosts } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 import 'swiper/css'
@@ -41,20 +41,18 @@ export default function Index() {
 
       {/* カテゴリ一覧 */}
       <TopTitle title='カテゴリで探す' />
-      <div className='flex flex-wrap gap-2'>
+      {/* <div className='flex flex-wrap gap-4'>
         {POST_CATEGORIES.map((category) => (
-          <Link
-            key={category.id}
-            href={{ pathname: category.link, query: { id: category.id, title: category.title } }}
-          >
+          <Link key={category.id} href={'post/categories/' + category.title}>
             <span
-              className={`m-2 inline-block rounded border px-4 py-2 text-center font-bold hover:text-white md:m-6 ${category.className}`}
+              className={`inline-block rounded border px-4 py-2 text-center font-bold hover:opacity-50 ${category.className}`}
             >
-              #{category.title}
+              {category.title}
             </span>
           </Link>
         ))}
-      </div>
+      </div> */}
+      <CategoryList />
     </div>
   )
 }

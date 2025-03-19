@@ -9,7 +9,7 @@ interface CategoryParams {
 // スタイルと色をマッピング
 const categoryStyles: Record<CategoryParams['category'], { border: string; hover: string }> = {
   ONEPIECE: { border: 'border-cyan-500', hover: 'hover:bg-cyan-500 hover:text-white' },
-  呪術廻戦: { border: 'border-purple-500', hover: 'hover:bg-purple-700 hover:text-white' },
+  呪術廻戦: { border: 'border-purple-500', hover: 'hover:bg-purple-500 hover:text-white' },
   東京リベンジャーズ: { border: 'border-rose-500', hover: 'hover:bg-rose-500 hover:text-white' },
   キングダム: { border: 'border-yellow-500', hover: 'hover:bg-yellow-500 hover:text-white' },
 }

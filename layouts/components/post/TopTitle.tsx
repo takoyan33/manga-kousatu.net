@@ -14,7 +14,9 @@ export const TopTitle = React.memo(({ title, url }: TopTitleParams) => {
         {title}
         {url && (
           <span className='ml-4 text-sm text-gray-600'>
-            <Link href={url}>すべて見る</Link>
+            <Link href={url} className='hover:opacity-50'>
+              すべて見る
+            </Link>
           </span>
         )}
       </h2>

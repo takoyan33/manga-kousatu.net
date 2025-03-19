@@ -22,8 +22,8 @@ export default function About() {
               </a>
             </li>
           </ul>
-          <div className='my-8'>
-            <h2 className='my-2 text-xl font-semibold'>掲載漫画</h2>
+          <div className='my-6'>
+            <h3 className='my-2 text-xl font-semibold'>掲載漫画</h3>
             {COPY_WRITES.map((copyWrite, index) => (
               <p key={index}>{copyWrite}</p>
             ))}

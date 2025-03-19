@@ -167,7 +167,7 @@ export default function SignUp() {
           />
           <p className='my-8 text-center'>
             登録済みの方はこちら
-            <Link href='/login'>
+            <Link href='/login' className='hover:opacity-50'>
               <span className='text-blue-500 underline'>ログイン</span>
             </Link>
           </p>

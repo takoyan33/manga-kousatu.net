@@ -1,5 +1,6 @@
 export * from './CommonAvatar'
 export * from './Category'
+export * from './CategoryList'
 export * from './SiteCategory'
 export * from './SiteModal'
 export * from './SiteLabel'

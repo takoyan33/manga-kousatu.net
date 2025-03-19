@@ -188,11 +188,11 @@ export const TopPostComment = React.memo(() => {
         <div className='my-4 text-center'>
           <p className='text-gray-700'>
             コメントを投稿するには、
-            <Link href='/login'>
+            <Link href='/login' className='hover:opacity-50'>
               <span className='text-blue-500 underline'>ログイン</span>
             </Link>
             or
-            <Link href='/register'>
+            <Link href='/register' className='hover:opacity-50'>
               <span className='text-blue-500 underline'>会員登録</span>
             </Link>
             が必要です。

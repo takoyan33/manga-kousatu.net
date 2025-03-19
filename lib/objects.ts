@@ -35,25 +35,25 @@ type ReleaseNote = Readonly<{
 export const POST_CATEGORIES: readonly PostCategory[] = [
   {
     id: 1,
-    className: 'border-cyan-500 bg-cyan-100 hover:bg-cyan-500',
+    className: 'border-cyan-500',
     title: MangaCategory.ONEPIECE,
     link: '/post/categories/ONEPIECE',
   },
   {
     id: 2,
-    className: 'border-purple-500 bg-purple-100 hover:bg-purple-500',
+    className: 'border-purple-500',
     title: MangaCategory.JUJUTSU,
     link: '/post/categories/呪術廻戦',
   },
   {
     id: 3,
-    className: 'border-rose-500 bg-rose-100 hover:bg-rose-500',
+    className: 'border-rose-500',
     title: MangaCategory.TOKYO,
     link: '/post/categories/東京リベンジャーズ',
   },
   {
     id: 4,
-    className: 'border-yellow-500 bg-yellow-100 hover:bg-yellow-500',
+    className: 'border-yellow-500',
     title: MangaCategory.KINGDOM,
     link: '/post/categories/キングダム',
   },
@@ -149,8 +149,8 @@ export const RELEASE_NOTES: readonly ReleaseNote[] = [
 ] as const
 
 export const COPY_WRITES: readonly string[] = [
-  '© 尾田栄一郎／集英社・フジテレビ・東映アニメーション',
-  '© 和久井健・講談社／アニメ「東京リベンジャーズ」',
+  '©尾田栄一郎／集英社・フジテレビ・東映アニメーション',
+  '©和久井健・講談社／アニメ「東京リベンジャーズ」',
   '©原泰久／集英社・キングダム製作委員会',
   '©芥見下々／集英社・呪術廻戦製作委員会',
 ] as const

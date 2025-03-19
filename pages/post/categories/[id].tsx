@@ -4,10 +4,9 @@ import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
 import { getDocs, onSnapshot, query, orderBy } from 'firebase/firestore'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { CommonHead, CardPost } from 'layouts/components/ui'
+import { CommonHead, CardPost, Breadcrumbs } from 'layouts/components/ui'
 //import useGetCategoryPosts,
 // useGetCategoryOldPosts,
 // useGetCategoryLikePosts,
@@ -192,10 +191,8 @@ const Details = ({ post }) => {
 
   return (
     <>
-      <CommonHead title='Manga Study - 投稿記事カテゴリ' />
-      <p className='my-4'>
-        <Link href='/'>トップ</Link> ＞ 投稿記事 ＞ カテゴリ ＞{post.fields.title.stringValue}
-      </p>
+      <CommonHead title='Manga Study - 投稿記事 カテゴリ' />
+      <Breadcrumbs secondTitle='カテゴリ' thirdTitle={post.fields.title.stringValue} />
       <h1 className='my-12 text-left text-2xl font-semibold'>{post.fields.title.stringValue}</h1>
       <div className='m-auto my-10 flex justify-center'>
         <TextField

@@ -130,7 +130,7 @@ export default function LoginAuth() {
             />
             <span className='text-sm text-red-600'>{errors.password?.message}</span>
           </div>
-          <p className='pb-6 pt-6 text-center underline'>
+          <p className='cursor-pointer py-6 text-center text-blue-500 underline hover:opacity-50'>
             <Link href='/profile/edit/password'>パスワードをお忘れの方はこちら</Link>
           </p>
           <SiteButton
@@ -151,7 +151,7 @@ export default function LoginAuth() {
           />
           <p className='my-8 text-center'>
             ユーザー未登録の方はこちら
-            <span className='cursor-pointer text-blue-500 underline'>
+            <span className='cursor-pointer text-blue-500 underline hover:opacity-50'>
               <Link href='/register'>新規登録</Link>
             </span>
           </p>

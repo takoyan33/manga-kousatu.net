@@ -8,13 +8,13 @@ import { getStorage } from 'firebase/storage'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyCPeRaWhW7Wy-_o3JNz-RZrMV8BxyXW04U',
-  authDomain: 'next-auth-app-2aa40.firebaseapp.com',
-  projectId: 'next-auth-app-2aa40',
-  storageBucket: 'next-auth-app-2aa40.appspot.com',
-  messagingSenderId: '169902391099',
-  appId: '1:169902391099:web:686cd1adf94cc44653011e',
-  databaseURL: '<your-database-url>',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 }
 
 //https://firestore.googleapis.com/v1/projects/next-auth-app-2aa40/databases/(default)/documents/posts

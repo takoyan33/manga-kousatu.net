@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > SiteButton [A1_10_3] SiteButtonのスナップショット 1`] = `
+<div>
+  <div>
+    <a
+      href=""
+    >
+      <button
+        aria-label="site-button"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium incomplete css-lgsd8a-MuiButtonBase-root-MuiButton-root"
+        id=""
+        tabindex="0"
+        type="submit"
+      >
+        test
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </a>
+  </div>
+</div>
+`;

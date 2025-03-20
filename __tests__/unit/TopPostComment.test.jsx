@@ -15,7 +15,7 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-describe('TopPostComment Component', () => {
+describe('[A1_8] TopPostComment Component', () => {
   const mockProps = {
     postId: '123',
     comments: [
@@ -23,7 +23,7 @@ describe('TopPostComment Component', () => {
     ],
   }
 
-  it('renders comment section correctly', () => {
+  it('[A1_8_1] レンダリングされているか', () => {
     render(<TopPostComment {...mockProps} />)
     // expect(screen.getByText('コメント')).toBeInTheDocument()
   })

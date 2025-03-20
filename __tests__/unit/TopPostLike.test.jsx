@@ -15,14 +15,14 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-describe('TopPostLike Component', () => {
+describe('[A1_7] TopPostLike Component', () => {
   const mockProps = {
     postId: '123',
     likes: ['user1', 'user2'],
     userId: 'currentUser',
   }
 
-  it('renders like button correctly', () => {
+  it('[A1_7_1] ボタンがレンダリングされているか', () => {
     render(<TopPostLike {...mockProps} />)
     expect(screen.getByRole('button')).toBeInTheDocument()
   })

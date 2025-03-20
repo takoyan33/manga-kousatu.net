@@ -43,7 +43,7 @@ describe('A1_Component > ProfileId', () => {
     expect(favoriteElement).toBeInTheDocument()
   })
 
-  it('[A1_5_3] Pageのスナップショット', () => {
+  it('[A1_5_3] ProfileIdのスナップショット', () => {
     const { container } = render(
       <ProfileId id={1} profileImage='image' userName='aaaa' bio='aaaa' favorite={['onepiece']} />,
     )

@@ -11,7 +11,7 @@ describe('A1_Component > OpenButton', () => {
     fireEvent.click(screen.getByRole('button', { name: 'open-button' }))
   })
 
-  it('[A1_4_3] Pageのスナップショット', () => {
+  it('[A1_4_3] OpenButtonのスナップショット', () => {
     const { container } = render(<OpenButton text='test' />)
     expect(container).toMatchSnapshot()
   })

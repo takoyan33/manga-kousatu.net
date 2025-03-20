@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A1_Component > ProfileId [A1_5_3] Pageのスナップショット 1`] = `
+exports[`A1_Component > ProfileId [A1_5_3] ProfileIdのスナップショット 1`] = `
 <div>
   <div
     class="m-auto flex max-w-md"

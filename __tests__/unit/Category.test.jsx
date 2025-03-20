@@ -7,7 +7,7 @@ describe('A1_Component > Category', () => {
     render(<Category category='ONEPIECE' />)
   })
 
-  it('[A1_6_2] Pageのスナップショット', () => {
+  it('[A1_6_2] Categoryのスナップショット', () => {
     const { container } = render(<Category category='ONEPIECE' />)
     expect(container).toMatchSnapshot()
   })

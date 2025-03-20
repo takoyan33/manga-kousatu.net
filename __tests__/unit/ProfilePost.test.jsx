@@ -49,7 +49,7 @@ describe('A1_Component > ProfilePost', () => {
     expect(favoriteElement).toBeInTheDocument()
   })
 
-  it('[A1_4_3] Pageのスナップショット', () => {
+  it('[A1_4_3] ProfilePostのスナップショット', () => {
     const { container } = render(
       <ProfilePost
         id={1}

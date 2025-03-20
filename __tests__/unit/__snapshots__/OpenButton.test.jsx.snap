@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A1_Component > OpenButton [A1_4_3] Pageのスナップショット 1`] = `
+exports[`A1_Component > OpenButton [A1_4_3] OpenButtonのスナップショット 1`] = `
 <div>
   <button
     aria-label="open-button"

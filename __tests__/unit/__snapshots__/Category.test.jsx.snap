@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`A1_Component > Category [A1_6_2] Pageのスナップショット 1`] = `
+exports[`A1_Component > Category [A1_6_2] Categoryのスナップショット 1`] = `
 <div>
   <div
     class="my-1"

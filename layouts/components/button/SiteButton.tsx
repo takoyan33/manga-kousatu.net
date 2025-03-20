@@ -6,7 +6,7 @@ interface SiteButtonProps {
   id?: string
   href?: string
   onClick?: DOMAttributes<HTMLButtonElement>['onClick']
-  text?: string
+  text: string
   className?: string
   disabled?: boolean
   varient?: 'outlined' | 'contained'
@@ -31,6 +31,7 @@ export const SiteButton = ({
           variant={varient}
           onClick={onClick}
           disabled={disabled}
+          aria-label='site-button'
           type='submit'
           sx={{ textTransform: 'none' }}
           className={google ? 'google-btn' : 'incomplete'}

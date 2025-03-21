@@ -1,9 +1,9 @@
 import { render } from '@testing-library/react'
-import About from '../../pages/about/index'
+import About from '../../../pages/about/index'
 import '@testing-library/jest-dom'
 
 describe('A2_Page > About', () => {
-  it('[A2_1_1]レンダリングされているか', () => {
+  it('[A2_1_1] レンダリングされているか', () => {
     render(<About />)
   })
 })

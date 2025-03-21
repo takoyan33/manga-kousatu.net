@@ -1,0 +1,23 @@
+import { render, screen, fireEvent } from '@testing-library/react'
+import Register from '../../../pages/register'
+import '@testing-library/jest-dom'
+
+jest.mock('../../../layouts/api/auth/useAuth')
+
+jest.mock('@lottiefiles/react-lottie-player', () => ({
+  Player: () => <div data-testid='mock-lottie-player' />,
+}))
+
+jest.mock('next/router', () => ({
+  useRouter: () => ({
+    query: { id: 'test-post-id' },
+    push: jest.fn(),
+  }),
+}))
+
+describe('A2_Page > Register', () => {
+  it('[A5_1_1]レンダリングされているか', () => {
+    const { container, debug } = render(<Register />)
+    debug()
+  })
+})

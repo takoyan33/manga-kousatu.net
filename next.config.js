@@ -5,23 +5,12 @@ const nextConfig = {
   swcMinify: true,
   // ビルドの設定を追加
   webpack: (config, { isServer }) => {
-    // 循環参照の警告を無視
-    config.optimization.minimize = false
+    config.module.rules.push({
+      test: /\.(js|jsx|ts|tsx)$/,
+      exclude: /node_modules|__tests__|.*\.(test|spec)\.(js|jsx|ts|tsx)$/,
+    })
     return config
   },
-  // 不要なファイルを除外
-  exclude: [
-    /node_modules/,
-    '**/*.test.js',
-    '**/*.test.jsx',
-    '**/*.test.ts',
-    '**/*.test.tsx',
-    '**/*.spec.js',
-    '**/*.spec.jsx',
-    '**/*.spec.ts',
-    '**/*.spec.tsx',
-    '**/__tests__/**',
-  ],
   eslint: {
     ignoreDuringBuilds: true,
   },

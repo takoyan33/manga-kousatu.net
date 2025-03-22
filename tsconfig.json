@@ -59,8 +59,6 @@
     "tests/all.spec.tsx",
     "tests/example.spec.tsx",
     ".next/types/**/*.ts"
-    // "pages/post/new/preview.tsx",
-    // "layouts/components/ui/Richedita.tsx"
   ],
   "exclude": ["node_modules", "**/*.test.ts", "**/*.test.tsx", "**/__tests__/**"]
 }

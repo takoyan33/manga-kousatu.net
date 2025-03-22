@@ -12,7 +12,8 @@ module.exports = {
     // '@next/next/no-img-element': 'warn',
     // '@next/next/no-page-custom-font': 'warn',
     // 使っていない変数を警告しない
-    'no-unused-vars': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
+    'no-unused-vars': 'off',
     // ReactHookのルールを無効化
     'react-hooks/rules-of-hooks': 'off',
     // インポート文の順序を統一

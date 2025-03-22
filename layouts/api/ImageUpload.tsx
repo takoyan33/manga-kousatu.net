@@ -5,7 +5,7 @@ export default function UploadImage() {
   const [image, setImage] = useState(null)
   const [createObjectURL, setCreateObjectURL] = useState<any>()
 
-  const uploadToClient = (event) => {
+  const uploadToClient = (event: any) => {
     if (event.target.files && event.target.files[0]) {
       //fileが１つセットされていたら
       const file = event.target.files[0]

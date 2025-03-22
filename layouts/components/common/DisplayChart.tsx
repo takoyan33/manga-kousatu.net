@@ -12,7 +12,7 @@ import { GetUser } from 'types/user'
 // eslint-disable-next-line react/display-name
 export const DisplayChart = React.memo(() => {
   const router = useRouter()
-  const { user } = useAuthContext()
+  const { user }: any = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
   const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [mangaData, setMangaData] = useState<any[]>([

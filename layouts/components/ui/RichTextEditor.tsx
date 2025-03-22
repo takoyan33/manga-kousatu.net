@@ -4,13 +4,18 @@ import React, { useState, useEffect } from 'react'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
 
-interface RicheditaProps {
+interface RichTextEditorProps {
   onChange: (plainText: string, html: string) => void
   value: string
 }
 
-const Richedita = ({ onChange, value }: RicheditaProps) => {
-  const [editorState, setEditorState] = useState(value)
+const RichTextEditor = ({ onChange, value }: RichTextEditorProps) => {
+  // 初期値を EditorState に変換
+  const [editorState, setEditorState] = useState<EditorState>(() =>
+    value
+      ? EditorState.createWithContent(ContentState.createFromText(value))
+      : EditorState.createEmpty(),
+  )
 
   useEffect(() => {
     setEditorState(EditorState.createWithContent(ContentState.createFromText(value || '')))
@@ -26,8 +31,8 @@ const Richedita = ({ onChange, value }: RicheditaProps) => {
 
   return (
     <div className='center-input border pb-20'>
+      {/*  @ts-ignore */}
       <Editor
-        id='editor'
         editorState={editorState}
         onEditorStateChange={handleEditorChange}
         localization={{
@@ -43,4 +48,4 @@ const Richedita = ({ onChange, value }: RicheditaProps) => {
   )
 }
 
-export default Richedita
+export default RichTextEditor

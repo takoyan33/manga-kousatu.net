@@ -12,7 +12,7 @@ import { database } from '../../firebaseConfig'
 import { successNotify, errorNotify } from '../../layouts/components/text'
 
 //特定の投稿のコメントを全て取得
-export const getComments = async (setComments, routerId: string): Promise<void> => {
+export const getComments = async (setComments: any, routerId: string): Promise<void> => {
   const commentsRef = collection(database, 'comments')
   const postComments = await query(commentsRef, where('postid', '==', routerId))
   onSnapshot(postComments, (querySnapshot) => {

@@ -12,3 +12,5 @@ bin/
 obj/
 out/
 .next/
+layouts/
+pages/

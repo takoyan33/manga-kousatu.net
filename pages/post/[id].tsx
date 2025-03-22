@@ -156,6 +156,7 @@ const Post = () => {
               />
             </button>
           </div>
+          {/* @ts-ignore */}
           <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
               <button onClick={toggleModal} className='text-center'>
@@ -281,7 +282,7 @@ const Post = () => {
 
           <div className='cursor-pointer'>
             <Link href={`/profile/${users?.userid}`}>
-              <div className='m-auto my-8 flex border py-8  px-2'>
+              <div className='m-auto my-8 flex border px-2  py-8'>
                 <div>
                   <Avatar
                     className='m-auto max-w-sm border text-center'

@@ -1,11 +1,11 @@
 type CommonSelectViewProps = {} & CommonSelectProps
 
-const CommonSelectView = (props) => {
+const CommonSelectView = (props: any) => {
   return null
 }
 
 type CommonSelectProps = {}
 
-export const CommonSelect = (props) => {
+export const CommonSelect = (props: any) => {
   return <CommonSelectView {...props} />
 }

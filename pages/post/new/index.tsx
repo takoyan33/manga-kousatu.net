@@ -51,7 +51,7 @@ export default function Post() {
   // const [photoURL, setPhotoURL] = useState<string>('')
   const [posts, setPosts] = useState<any[]>([])
   const [lengthData, setPostsLength] = useState<number | null>(null)
-  const { user } = useAuthContext()
+  const { user }: any = useAuthContext()
   const [display, setDisplay] = useState<string>('')
   const router = useRouter()
 
@@ -153,9 +153,9 @@ export default function Post() {
   }
 
   // リッチエディタの追加
-  const Richedita = React.useMemo(
+  const RichTextEditor = React.useMemo(
     () =>
-      dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+      dynamic(() => import('../../../layouts/components/ui/RichTextEditor'), {
         loading: () => <p>リッチエディタ is loading</p>,
         ssr: false,
       }),
@@ -188,7 +188,7 @@ export default function Post() {
             createcontextObjectURL=''
           />
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='タイトル（最大20文字）' required htmlFor='title' />
             </div>
             <TextField
@@ -202,7 +202,7 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='作品名' required htmlFor='label-managa-name' />
             </div>
             <Controller
@@ -233,7 +233,7 @@ export default function Post() {
             {errors.categori && <p>{errors.categori.message}</p>}
           </div>
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='タグ' required htmlFor='tags' />
             </div>
             <TagsInput
@@ -244,7 +244,7 @@ export default function Post() {
             />
           </div>
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
             </div>
             <Controller
@@ -276,15 +276,15 @@ export default function Post() {
           </div>
 
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
             </div>
 
-            <Richedita onChange={handleEditorChange} value='' />
+            <RichTextEditor onChange={handleEditorChange} value='' />
             <p className='my-4 text-right'>現在の文字数：{lengthData && lengthData}</p>
           </div>
           <div className='my-8'>
-            <div className='mt-6 mb-2'>
+            <div className='mb-2 mt-6'>
               <SiteLabel name='他の写真（最大1枚）' htmlFor='label-content' />
             </div>
 

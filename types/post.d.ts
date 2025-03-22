@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore'
-
 //取得POSTの型
 export type GetPost = {
   category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'

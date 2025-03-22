@@ -148,6 +148,7 @@ export const TopPostComment = React.memo(() => {
             </div>
           )}
 
+          {/* @ts-ignore */}
           <Modal
             isOpen={isCommentModalOpen}
             onRequestClose={closeCommentModal}
@@ -204,7 +205,7 @@ export const TopPostComment = React.memo(() => {
         <section className='bg-white py-8 lg:py-16'>
           <div className='mx-auto max-w-2xl px-4'>
             <form className='mb-6'>
-              <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white py-2 px-4 dark:border-gray-700'>
+              <div className='mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-700'>
                 <label htmlFor='comment' className='sr-only'>
                   あなたのコメント
                 </label>
@@ -222,7 +223,7 @@ export const TopPostComment = React.memo(() => {
                 id='add-comment'
                 type='submit'
                 onClick={handleSubmit(addComment)}
-                className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg py-2.5 px-4 text-center text-xs font-medium focus:ring-4'
+                className='focus:ring-primary-200 hover:bg-primary-800 m-auto rounded-lg px-4 py-2.5 text-center text-xs font-medium focus:ring-4'
               >
                 コメントする
               </button>

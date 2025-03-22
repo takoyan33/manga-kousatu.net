@@ -6,7 +6,7 @@ import { postsRef } from '../../utils/post'
 // import { GetPost } from 'types/post'
 
 //新しいpostを取得
-export const useFetchPosts = async (setPostData) => {
+export const useFetchPosts = async (setPostData: any) => {
   onSnapshot(postsRef, (querySnapshot) => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
@@ -82,7 +82,7 @@ export const useGetMyPosts = async (setPostData: any, myEmail: string): Promise<
 }
 
 //自分がいいねした投稿データを取得
-export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<void> => {
+export const useGetLikedPosts = async (setLikedPosts: any, myEmail: string): Promise<void> => {
   const myLikedPosts = query(postsRef, where('likes_email', 'array-contains', myEmail))
 
   onSnapshot(myLikedPosts, (querySnapshot) => {

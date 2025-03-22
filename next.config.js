@@ -3,6 +3,25 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // ビルドの設定を追加
+  webpack: (config, { isServer }) => {
+    // 循環参照の警告を無視
+    config.optimization.minimize = false
+    return config
+  },
+  // 不要なファイルを除外
+  exclude: [
+    /node_modules/,
+    '**/*.test.js',
+    '**/*.test.jsx',
+    '**/*.test.ts',
+    '**/*.test.tsx',
+    '**/*.spec.js',
+    '**/*.spec.jsx',
+    '**/*.spec.ts',
+    '**/*.spec.tsx',
+    '**/__tests__/**',
+  ],
   eslint: {
     ignoreDuringBuilds: true,
   },

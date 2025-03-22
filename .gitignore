@@ -41,3 +41,4 @@ node_modules/
 .env
 # キャッシュ
 .cache/
+__tests__/

@@ -254,9 +254,7 @@ const Post = () => {
                   </p>
                   <div>
                     {data.id}
-                    <div gutterBottom variant='h5' component='div'>
-                      {data.title}
-                    </div>
+                    <div>{data.title}</div>
                     投稿日時：{data.createdAt}
                     {data.selected &&
                       data.selected.map((tag, i) => (
@@ -264,7 +262,7 @@ const Post = () => {
                           #{tag}
                         </span>
                       ))}
-                    <div variant='body2' color='text.secondary'>
+                    <div color='text.secondary'>
                       {data.categori === 'ONEPIECE' && (
                         <span className='inline-block bg-blue-500 p-2 text-center text-white'>
                           <Link href={`/post/category/${data.categori}`}>{data.categori}</Link>

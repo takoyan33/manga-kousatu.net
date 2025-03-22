@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import LoginAuth from '../../../layouts/api/auth/LoginAuth'
+import LoginAuth from '../../layouts/api/auth/LoginAuth'
 import '@testing-library/jest-dom'
 
 // Firebaseのモック
@@ -12,7 +12,7 @@ jest.mock('firebase/auth', () => ({
 }))
 
 // useAuthのモック
-jest.mock('../../../layouts/api/auth/useAuth', () => ({
+jest.mock('../../layouts/api/auth/useAuth', () => ({
   useAuth: () => ({
     login: jest.fn(),
     loading: false,

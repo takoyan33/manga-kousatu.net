@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Top from '../../../pages/top/index'
+import Top from '../../pages/top/index'
 import '@testing-library/jest-dom'
 import { getAuth } from 'firebase/auth'
 

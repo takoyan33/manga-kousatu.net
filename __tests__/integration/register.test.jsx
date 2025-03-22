@@ -1,8 +1,24 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import Register from '../../../pages/register'
+import Register from '../../pages/register'
 import '@testing-library/jest-dom'
 
-jest.mock('../../../layouts/api/auth/useAuth')
+// Firebaseのモック
+jest.mock('firebase/auth', () => ({
+  getAuth: () => ({
+    currentUser: null,
+  }),
+  GoogleAuthProvider: jest.fn(() => ({})),
+  signInWithPopup: jest.fn(),
+}))
+
+// useAuthのモック
+jest.mock('../../layouts/api/auth/useAuth', () => ({
+  useAuth: () => ({
+    signup: jest.fn(),
+    loading: false,
+    error: null,
+  }),
+}))
 
 jest.mock('@lottiefiles/react-lottie-player', () => ({
   Player: () => <div data-testid='mock-lottie-player' />,
@@ -18,6 +34,6 @@ jest.mock('next/router', () => ({
 describe('A2_Page > Register', () => {
   it('[A5_1_1]レンダリングされているか', () => {
     const { container, debug } = render(<Register />)
-    debug()
+    // debug()
   })
 })

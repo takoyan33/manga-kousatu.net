@@ -15,8 +15,11 @@ describe('[A1_9] Breadcrumbs Component', () => {
     expect(screen.getByText('詳細')).toBeInTheDocument()
   })
 
-  // it('[A1_9_2] リンクが正しく機能する', () => {
-  //   render(<Breadcrumbs secondTitle='テスト' />)
-  //   expect(screen.getByRole('link', { name: 'ホーム' })).toHaveAttribute('href', '/')
-  // })
+  it('[A1_9_2] リンクが正しく機能する', () => {
+    render(<Breadcrumbs secondTitle='テスト' secondUrl='https://manga-study-net.vercel.app/' />)
+    expect(screen.getByRole('link', { name: 'テスト' })).toHaveAttribute(
+      'href',
+      'https://manga-study-net.vercel.app/',
+    )
+  })
 })

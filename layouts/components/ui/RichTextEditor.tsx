@@ -4,12 +4,12 @@ import React, { useState, useEffect } from 'react'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { Editor } from 'react-draft-wysiwyg'
 
-interface RicheditaProps {
+interface RichTextEditorProps {
   onChange: (plainText: string, html: string) => void
   value: string
 }
 
-const Richedita = ({ onChange, value }: RicheditaProps) => {
+const RichTextEditor = ({ onChange, value }: RichTextEditorProps) => {
   const [editorState, setEditorState] = useState(value)
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const Richedita = ({ onChange, value }: RicheditaProps) => {
   )
 }
 
-export default Richedita
+export default RichTextEditor

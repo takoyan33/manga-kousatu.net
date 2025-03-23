@@ -102,9 +102,9 @@ const PostEdit = () => {
   }
 
   // TODO: リッチエディタの導入
-  // const Richedita = React.useMemo(
+  // const RichTextEditor = React.useMemo(
   //   () =>
-  //     dynamic(() => import('../../../layouts/components/ui/Richedita'), {
+  //     dynamic(() => import('../../../layouts/components/ui/RichTextEditor'), {
   //       loading: () => <p>リッチエディタ is loading</p>,
   //       ssr: false,
   //     }),
@@ -263,7 +263,7 @@ const PostEdit = () => {
                   defaultValue={post?.context}
                   onChange={(event) => setContext(event.target.value)}
                 />
-                {/* <Richedita onChange={handleEditorChange} value={post?.context} /> */}
+                {/* <RichTextEditor onChange={handleEditorChange} value={post?.context} /> */}
 
                 <div className='mb-2'>
                   <SiteLabel name='公開について' required htmlFor='label-display' />

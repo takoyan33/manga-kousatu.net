@@ -92,28 +92,23 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<
 }
 
 //特定のpostを取得
-export const useGetPost = async (routerId: string): Promise<GetPost | null> => {
+export const useGetPost = async (routerId: string): Promise<GetPost | undefined> => {
   try {
     const ref = doc(database, 'posts', routerId)
     const snap = await getDoc(ref)
-
-    if (!snap.exists()) {
-      console.log('記事が存在しません')
-      return null // ドキュメントが存在しない場合はnullを返す
-    }
 
     const postData = snap.data()
     console.log(postData)
 
     if (!postData || typeof postData !== 'object') {
       console.error('取得したデータの形式が不正です', postData)
-      return null // データの形式が不正な場合はnullを返す
+      return undefined
     }
 
     return postData as GetPost
   } catch (error) {
     console.error('Error fetching post:', error)
-    return null // エラーが発生した場合はnullを返す
+    return undefined
   }
 }
 //特定ユーザーのpostsを取得

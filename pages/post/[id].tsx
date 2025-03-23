@@ -43,7 +43,7 @@ const schema = yup.object({
 })
 
 const Post = () => {
-  const [users, setUsers] = useState<any>(null)
+  const [users, setUsers] = useState<Awaited<any>>(null)
   const [singlePost, setSinglePost] = useState<GetPost>()
   const [categoryPosts, setCategoryPosts] = useState<any>([])
   const router = useRouter()
@@ -281,7 +281,7 @@ const Post = () => {
 
           <div className='cursor-pointer'>
             <Link href={`/profile/${users?.userid}`}>
-              <div className='m-auto my-8 flex border py-8  px-2'>
+              <div className='m-auto my-8 flex border px-2  py-8'>
                 <div>
                   <Avatar
                     className='m-auto max-w-sm border text-center'

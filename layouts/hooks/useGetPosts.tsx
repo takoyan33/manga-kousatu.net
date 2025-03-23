@@ -3,6 +3,7 @@ import { onSnapshot, query, orderBy, where, doc, getDoc, getDocs } from 'firebas
 // import useSWR from 'swr'
 import { database } from '../../firebaseConfig'
 import { postsRef } from '../../utils/post'
+import { GetPost } from 'types/post'
 // import { GetPost } from 'types/post'
 
 //新しいpostを取得
@@ -91,7 +92,7 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<
 }
 
 //特定のpostを取得
-export const useGetPost = async (routerId: string): Promise<any | null> => {
+export const useGetPost = async (routerId: string): Promise<GetPost | null> => {
   try {
     const ref = doc(database, 'posts', routerId)
     const snap = await getDoc(ref)
@@ -109,7 +110,7 @@ export const useGetPost = async (routerId: string): Promise<any | null> => {
       return null // データの形式が不正な場合はnullを返す
     }
 
-    return postData as any // 型アサーションでGetPost型として返す
+    return postData as GetPost
   } catch (error) {
     console.error('Error fetching post:', error)
     return null // エラーが発生した場合はnullを返す

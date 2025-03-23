@@ -1,0 +1,7 @@
+node_modules
+.next
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+__tests__/

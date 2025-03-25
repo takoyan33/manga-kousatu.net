@@ -17,6 +17,7 @@ const config: Config = {
   moduleNameMapper: {
     '^layouts/(.*)$': '<rootDir>/layouts/$1',
     '^utils/(.*)$': '<rootDir>/utils/$1',
+    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
 }
 

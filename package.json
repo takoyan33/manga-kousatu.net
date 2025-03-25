@@ -14,7 +14,8 @@
     "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch",
-    "commitmsg": "commitlint --edit"
+    "commitmsg": "commitlint --edit",
+    "chromatic": "npx chromatic --project-token=chpt_844ae202db38173"
   },
   "dependencies": {
     "@commitlint/cli": "^19.4.0",
@@ -32,6 +33,7 @@
     "@mui/icons-material": "^6.1.6",
     "@mui/material": "^5.11.16",
     "@mui/styled-engine-sc": "^5.0.0-rc.1",
+    "@storybook/jest": "^0.2.3",
     "@tanstack/react-query": "^4.16.1",
     "@vercel/node": "3.2.8",
     "draft-js": "^0.11.7",

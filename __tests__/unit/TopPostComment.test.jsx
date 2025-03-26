@@ -25,11 +25,11 @@ describe('[A1_8] TopPostComment Component', () => {
 
   it('[A1_8_1] レンダリングされているか', () => {
     render(<TopPostComment {...mockProps} />)
-    // expect(screen.getByText('コメント')).toBeInTheDocument()
+    // expect(screen.getByText('コメント')).toBeVisible()
   })
 
   // it('displays comments correctly', () => {
   //   render(<TopPostComment {...mockProps} />)
-  //   expect(screen.getByText('Test comment')).toBeInTheDocument()
+  //   expect(screen.getByText('Test comment')).toBeVisible()
   // })
 })

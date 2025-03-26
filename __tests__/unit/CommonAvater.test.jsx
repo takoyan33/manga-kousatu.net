@@ -32,7 +32,7 @@ describe('CommonAvatar Component', () => {
 
   it('表示名が正しく表示される', () => {
     render(<CommonAvatar {...mockProps} />)
-    expect(screen.getByText(mockProps.displayname)).toBeInTheDocument()
+    expect(screen.getByText(mockProps.displayname)).toBeVisible()
   })
 
   // it('デフォルト画像が表示される（画像URLが無い場合）', () => {

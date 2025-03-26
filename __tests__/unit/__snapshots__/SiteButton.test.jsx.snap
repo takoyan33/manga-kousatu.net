@@ -8,7 +8,7 @@ exports[`A1_Component > SiteButton [A1_10_3] SiteButtonのスナップショッ�
     >
       <button
         aria-label="site-button"
-        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-colorPrimary incomplete css-lgsd8a-MuiButtonBase-root-MuiButton-root"
+        class="MuiButtonBase-root MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium incomplete css-lgsd8a-MuiButtonBase-root-MuiButton-root"
         id=""
         tabindex="0"
         type="submit"

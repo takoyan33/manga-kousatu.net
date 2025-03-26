@@ -24,10 +24,8 @@ describe('Top Page', () => {
 
     // 新規登録ボタンの確認
     expect(screen.getByRole('link', { name: '新規登録' })).toHaveAttribute('href', '/register')
-
     // ログインボタンの確認
     expect(screen.getByRole('link', { name: 'ログイン' })).toHaveAttribute('href', '/login')
-
     // 記事を見るボタンの確認
     expect(screen.getByRole('link', { name: '記事を見る' })).toHaveAttribute('href', '/')
   })
@@ -46,10 +44,8 @@ describe('Top Page', () => {
 
     // 新規登録ボタンが表示されないことを確認
     expect(screen.queryByRole('link', { name: '新規登録' })).not.toBeInTheDocument()
-
     // ログインボタンが表示されないことを確認
     expect(screen.queryByRole('link', { name: 'ログイン' })).not.toBeInTheDocument()
-
     // 記事を見るボタンは表示されることを確認
     expect(screen.getByRole('link', { name: '記事を見る' })).toBeInTheDocument()
   })
@@ -60,7 +56,7 @@ describe('Top Page', () => {
     }))
 
     render(<Top />)
-    expect(screen.getByText('Manga Study')).toBeInTheDocument()
+    expect(screen.getByText('Manga Study')).toBeVisible()
   })
 
   it('機能説明セクションが表示される', () => {
@@ -69,9 +65,9 @@ describe('Top Page', () => {
     }))
 
     render(<Top />)
-    expect(screen.getByText('機能')).toBeInTheDocument()
-    expect(screen.getByText('記事の投稿')).toBeInTheDocument()
-    expect(screen.getByText('記事の閲覧')).toBeInTheDocument()
-    expect(screen.getByText('コメント機能')).toBeInTheDocument()
+    expect(screen.getByText('機能')).toBeVisible()
+    expect(screen.getByText('記事の投稿')).toBeVisible()
+    expect(screen.getByText('記事の閲覧')).toBeVisible()
+    expect(screen.getByText('コメント機能')).toBeVisible()
   })
 })

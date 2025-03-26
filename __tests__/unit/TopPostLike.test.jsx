@@ -24,11 +24,11 @@ describe('[A1_7] TopPostLike Component', () => {
 
   it('[A1_7_1] ボタンがレンダリングされているか', () => {
     render(<TopPostLike {...mockProps} />)
-    expect(screen.getByRole('button')).toBeInTheDocument()
+    expect(screen.getByRole('button')).toBeVisible()
   })
 
   // it('displays correct number of likes', () => {
   //   render(<TopPostLike {...mockProps} />)
-  //   // expect(screen.getByText('2')).toBeInTheDocument()
+  //   // expect(screen.getByText('2')).toBeVisible()
   // })
 })

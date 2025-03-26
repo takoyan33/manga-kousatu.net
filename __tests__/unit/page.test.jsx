@@ -10,6 +10,6 @@ describe('Page', () => {
     // h1要素が存在するか確認
     const heading = screen.getByRole('heading', { level: 1 })
 
-    expect(heading).toBeInTheDocument()
+    expect(heading).toBeVisible()
   })
 })

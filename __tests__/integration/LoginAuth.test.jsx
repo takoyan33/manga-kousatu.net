@@ -41,9 +41,9 @@ describe('LoginAuth Component', () => {
     render(<LoginAuth />)
 
     // 必須フィールドの存在確認
-    expect(screen.getByLabelText(/メールアドレス/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/パスワード/i)).toBeInTheDocument()
-    //expect(screen.getByRole('button', { name: /ログイン/i })).toBeInTheDocument()
+    expect(screen.getByLabelText(/メールアドレス/i)).toBeVisible()
+    expect(screen.getByLabelText(/パスワード/i)).toBeVisible()
+    //expect(screen.getByRole('button', { name: /ログイン/i })).toBeVisible()
   })
 
   // it('バリデーションエラーが正しく表示される', async () => {
@@ -54,12 +54,12 @@ describe('LoginAuth Component', () => {
   //   fireEvent.click(submitButton)
 
   //   // エラーメッセージの確認
-  //   expect(await screen.findByText('必須です')).toBeInTheDocument()
+  //   expect(await screen.findByText('必須です')).toBeVisible()
   // })
 
   // it('Googleログインボタンが表示される', () => {
   //   render(<LoginAuth />)
-  //   expect(screen.getByRole('button', { name: /Googleでログイン/i })).toBeInTheDocument()
+  //   expect(screen.getByRole('button', { name: /Googleでログイン/i })).toBeVisible()
   // })
 
   // it('パスワードの表示/非表示が切り替えられる', () => {
@@ -76,6 +76,6 @@ describe('LoginAuth Component', () => {
 
   // it('パスワードリセットリンクが表示される', () => {
   //   render(<LoginAuth />)
-  //   expect(screen.getByText(/パスワードを忘れた方/i)).toBeInTheDocument()
+  //   expect(screen.getByText(/パスワードを忘れた方/i)).toBeVisible()
   // })
 })

@@ -35,12 +35,12 @@ describe('A1_Component > ProfileId', () => {
 
     // プロフィールがレンダリングされているか確認
     const bioElement = screen.getByLabelText('profile-text')
-    expect(bioElement).toBeInTheDocument()
+    expect(bioElement).toBeVisible()
     expect(bioElement).toHaveTextContent(bio)
 
     // 好きな漫画がレンダリングされているか確認
     const favoriteElement = screen.getByLabelText('liked-text')
-    expect(favoriteElement).toBeInTheDocument()
+    expect(favoriteElement).toBeVisible()
   })
 
   it('[A1_5_3] ProfileIdのスナップショット', () => {

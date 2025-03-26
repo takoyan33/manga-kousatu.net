@@ -31,7 +31,7 @@ const meta: Meta<typeof SiteButton> = {
       control: { type: 'boolean' },
       // description: 'id',
     },
-    varient: {
+    variant: {
       description: 'ボタンのスタイルを枠線ボタン(outlined), 塗りボタン(contained)で選べます',
     },
     google: {
@@ -47,7 +47,7 @@ type Story = StoryObj<typeof SiteButton>
 export const outlinedButton: Story = {}
 export const containedButton: Story = {
   args: {
-    varient: 'contained',
+    variant: 'contained',
   },
 }
 export const disabledButton: Story = {

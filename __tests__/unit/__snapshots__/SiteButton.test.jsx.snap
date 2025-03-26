@@ -2,7 +2,9 @@
 
 exports[`A1_Component > SiteButton [A1_10_3] SiteButtonのスナップショット 1`] = `
 <div>
-  <div>
+  <div
+    class=""
+  >
     <a
       href=""
     >

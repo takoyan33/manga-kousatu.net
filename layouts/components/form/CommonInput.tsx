@@ -15,7 +15,17 @@ interface InputParams {
 
 // eslint-disable-next-line react/display-name
 export const CommonInput = React.memo(
-  ({ onChange, error, text, type, helperText, label, id, className, variant }: InputParams) => {
+  ({
+    onChange,
+    error,
+    text,
+    type,
+    helperText,
+    label,
+    id,
+    className,
+    variant = 'standard',
+  }: InputParams) => {
     return (
       <>
         <div>

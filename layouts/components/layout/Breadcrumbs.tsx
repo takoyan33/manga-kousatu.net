@@ -11,7 +11,7 @@ interface BreadcrumbsParams {
 
 // eslint-disable-next-line react/display-name
 export const Breadcrumbs = React.memo(
-  ({ secondTitle, secondUrl, thirdTitle, thirdUrl }: BreadcrumbsParams) => {
+  ({ secondTitle, secondUrl = '', thirdTitle = '', thirdUrl = '' }: BreadcrumbsParams) => {
     return (
       <div className='flex'>
         <Link href='/' className='hover:text-sky-500'>

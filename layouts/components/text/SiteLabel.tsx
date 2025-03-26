@@ -7,7 +7,7 @@ interface LabelParams {
 }
 
 // eslint-disable-next-line react/display-name
-export const SiteLabel = memo(({ name, required, htmlFor }: LabelParams) => {
+export const SiteLabel = memo(({ name, required = false, htmlFor }: LabelParams) => {
   return (
     <label className='my-4 text-center' htmlFor={htmlFor}>
       {name}

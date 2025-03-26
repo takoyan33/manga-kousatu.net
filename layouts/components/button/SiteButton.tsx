@@ -9,7 +9,7 @@ interface SiteButtonProps {
   text: string
   className?: string
   disabled?: boolean
-  varient?: 'outlined' | 'contained'
+  variant?: 'outlined' | 'contained'
   google?: boolean
 }
 
@@ -17,18 +17,18 @@ export const SiteButton = ({
   id = '',
   href = '',
   onClick,
-  text = 'ボタン',
-  className,
-  disabled,
-  varient = 'outlined',
-  google,
+  text = '',
+  className = '',
+  disabled = false,
+  variant = 'outlined',
+  google = false,
 }: SiteButtonProps) => {
   return (
     <div className={className}>
       <Link href={href}>
         <Button
           id={id}
-          variant={varient}
+          variant={variant}
           onClick={onClick}
           disabled={disabled}
           aria-label='site-button'

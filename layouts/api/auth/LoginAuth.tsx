@@ -138,7 +138,7 @@ export default function LoginAuth() {
             id='login'
             text='ログイン'
             className='m-auto my-4 w-80 text-center'
-            varient='contained'
+            variant='contained'
             disabled={isPending}
           />
           <p className='text-center'>または</p>

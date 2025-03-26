@@ -113,7 +113,7 @@ export default function Top() {
               id='go-index'
               href='/'
               text='記事を見る'
-              varient='contained'
+              variant='contained'
               className='w-50 text-lef m-auto my-2 inline-block'
             />
           </div>

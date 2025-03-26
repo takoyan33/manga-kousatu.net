@@ -155,7 +155,7 @@ export default function SignUp() {
             onClick={handleSubmit(handleSignUp)}
             text='新規登録'
             className='my-4 w-80 text-center'
-            varient='contained'
+            variant='contained'
           />
           <p className='text-center'>または</p>
           <SiteButton

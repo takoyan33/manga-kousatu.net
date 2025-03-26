@@ -7,11 +7,12 @@ interface CommonHeadParams {
 
 // eslint-disable-next-line react/display-name
 export const CommonHead = React.memo(({ title }: CommonHeadParams) => {
-  const description = 'Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。'
-  const url = 'https://manga-kousatu-net.vercel.app/'
-  const imgUrl = '/images/logo.png'
-  const imgWidth = 1280
-  const imgHeight = 640
+  const description: string =
+    'Manga Studyでは、漫画の考察などを自由に投稿・閲覧できる web サイトです。'
+  const url: string = 'https://manga-kousatu-net.vercel.app/'
+  const imgUrl: string = '/images/logo.png'
+  const imgWidth: number = 1280
+  const imgHeight: number = 640
   return (
     <Head>
       <title>{title}</title>

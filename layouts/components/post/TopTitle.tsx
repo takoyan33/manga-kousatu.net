@@ -7,7 +7,7 @@ interface TopTitleParams {
 }
 
 // eslint-disable-next-line react/display-name
-export const TopTitle = React.memo(({ title, url }: TopTitleParams) => {
+export const TopTitle = React.memo(({ title, url = '' }: TopTitleParams) => {
   return (
     <div className='my-12'>
       <h2 className='text-left text-2xl font-semibold'>

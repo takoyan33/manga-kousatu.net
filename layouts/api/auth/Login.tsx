@@ -24,7 +24,7 @@ const schema = yup.object({
   password: yup.string().required('必須です').min(8, '文字数が足りません'),
 })
 
-export default function LoginAuth() {
+export default function Login() {
   const auth = getAuth()
   const router = useRouter()
   const googleProvider = new GoogleAuthProvider()
@@ -70,7 +70,7 @@ export default function LoginAuth() {
     })
   }
 
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -95,6 +95,7 @@ export default function LoginAuth() {
               id='email'
               placeholder='sample@gmail.com'
               className='m-auto mb-6 w-80'
+              aria-label='input-email'
               variant='outlined'
               {...register('email')}
               error={'email' in errors}
@@ -115,7 +116,7 @@ export default function LoginAuth() {
               error={Boolean(errors.password)}
               type={showPassword ? 'text' : 'password'}
               endAdornment={
-                <InputAdornment position='end'>
+                <InputAdornment position='end' aria-label='input-password'>
                   <IconButton
                     aria-label={showPassword ? 'hide the password' : 'display the password'}
                     onClick={handleClickShowPassword}

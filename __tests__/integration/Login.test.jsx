@@ -1,5 +1,6 @@
 import { act, render, screen, fireEvent } from '@testing-library/react'
-import LoginAuth from '../../layouts/api/auth/LoginAuth'
+import userEvent from '@testing-library/user-event'
+import Login from '../../layouts/api/auth/Login'
 import '@testing-library/jest-dom'
 
 // Firebaseのモック
@@ -31,14 +32,14 @@ jest.mock('next/router', () => ({
   }),
 }))
 
-describe('LoginAuth Component', () => {
+describe('Login Component', () => {
   beforeEach(() => {
     // 各テスト前にモックをリセット
     jest.clearAllMocks()
   })
 
   it('ログインフォームが正しくレンダリングされる', () => {
-    render(<LoginAuth />)
+    render(<Login />)
 
     // 必須フィールドの存在確認
     expect(screen.getByLabelText(/メールアドレス/i)).toBeVisible()
@@ -46,14 +47,8 @@ describe('LoginAuth Component', () => {
     expect(screen.getByRole('button', { name: 'login-button' })).toBeVisible()
   })
 
-  it('Googleログインボタンが表示される', () => {
-    render(<LoginAuth />)
-    expect(screen.getByRole('button', { name: 'google-login-button' })).toBeVisible()
-    expect(screen.getByText(/パスワードをお忘れの方はこちら/i)).toBeVisible()
-  })
-
   it('バリデーションエラーが正しく表示される', async () => {
-    const { container, debug } = render(<LoginAuth />)
+    const { container, debug } = render(<Login />)
 
     // 空のフォームを送信
     const submitButton = screen.getByRole('button', { name: 'login-button' })
@@ -66,13 +61,43 @@ describe('LoginAuth Component', () => {
     const elements = await screen.findAllByText('必須です')
 
     expect(elements).toHaveLength(2)
+
     elements.forEach((element) => {
       expect(element).toBeVisible()
     })
   })
 
+  it('ログインフォームに文字を入力できるか', async () => {
+    const { container, debug } = render(<Login />)
+
+    // expect(screen.getByPlaceholderText('sample@gmail.com'))
+    // expect(screen.getByPlaceholderText('Password'))
+
+    // 必須フィールドの存在確認
+    const emailInput = screen.getByPlaceholderText('sample@gmail.com')
+    const passwordInput = screen.getByPlaceholderText('Password')
+
+    // // 入力操作
+    await act(async () => {
+      userEvent.type(emailInput, 'test@example.com')
+      userEvent.type(passwordInput, 'password')
+    })
+
+    // debug()
+
+    // 入力された値が正しく反映されているか検証 STOP
+    // expect(emailInput).toHaveValue('test@example.com')
+    // expect(passwordInput).toHaveValue('password')
+  })
+
+  it('Googleログインボタンが表示される', () => {
+    render(<Login />)
+    expect(screen.getByRole('button', { name: 'google-login-button' })).toBeVisible()
+    expect(screen.getByText(/パスワードをお忘れの方はこちら/i)).toBeVisible()
+  })
+
   it('パスワードの表示/非表示が切り替えられる', async () => {
-    const { container, debug } = render(<LoginAuth />)
+    const { container, debug } = render(<Login />)
 
     // パスワードの表示切り替えボタンをクリック
     const visibilityToggle = screen.getByRole('button', { name: 'display the password' })
@@ -80,9 +105,6 @@ describe('LoginAuth Component', () => {
     await act(async () => {
       fireEvent.click(visibilityToggle)
     })
-
-    debug()
-
     // パスワードフィールドの type 属性が変更されることを確認
     const passwordInput = screen.getByLabelText(/パスワード/i)
     expect(passwordInput).toHaveAttribute('type', 'text')

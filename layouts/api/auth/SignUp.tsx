@@ -29,7 +29,7 @@ const schema = yup.object({
 })
 
 export default function SignUp() {
-  const [showPassword, setShowPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState<boolean>(false)
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
@@ -138,7 +138,7 @@ export default function SignUp() {
             endAdornment={
               <InputAdornment position='end'>
                 <IconButton
-                  aria-label={showPassword ? 'hide the password' : 'display the password'}
+                  aria-label={showPassword ? 'hide the password2' : 'display the password2'}
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                   onMouseUp={handleMouseUpPassword}
@@ -154,6 +154,7 @@ export default function SignUp() {
             id='signUp'
             onClick={handleSubmit(handleSignUp)}
             text='新規登録'
+            ariaLabel='signup-button'
             className='my-4 w-80 text-center'
             variant='contained'
           />
@@ -162,6 +163,7 @@ export default function SignUp() {
             id='googleSignUp'
             text='Googleで新規登録'
             onClick={SignUpWithGoogle}
+            ariaLabel='google-signup-button'
             className='my-4 w-80 text-center'
             google
           />

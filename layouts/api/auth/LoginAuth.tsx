@@ -139,6 +139,7 @@ export default function LoginAuth() {
             text='ログイン'
             className='m-auto my-4 w-80 text-center'
             variant='contained'
+            ariaLabel='login-button'
             disabled={isPending}
           />
           <p className='text-center'>または</p>
@@ -147,6 +148,7 @@ export default function LoginAuth() {
             onClick={SignInWithGoogle}
             className='m-auto my-4 w-80 text-center'
             google
+            ariaLabel='google-login-button'
             disabled={isPending}
           />
           <p className='my-8 text-center'>

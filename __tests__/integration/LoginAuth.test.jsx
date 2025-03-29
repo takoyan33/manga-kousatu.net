@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react'
+import { act, render, screen, fireEvent } from '@testing-library/react'
 import LoginAuth from '../../layouts/api/auth/LoginAuth'
 import '@testing-library/jest-dom'
 
@@ -43,39 +43,48 @@ describe('LoginAuth Component', () => {
     // 必須フィールドの存在確認
     expect(screen.getByLabelText(/メールアドレス/i)).toBeVisible()
     expect(screen.getByLabelText(/パスワード/i)).toBeVisible()
-    //expect(screen.getByRole('button', { name: /ログイン/i })).toBeVisible()
+    expect(screen.getByRole('button', { name: 'login-button' })).toBeVisible()
   })
 
-  // it('バリデーションエラーが正しく表示される', async () => {
-  //   render(<LoginAuth />)
+  it('Googleログインボタンが表示される', () => {
+    render(<LoginAuth />)
+    expect(screen.getByRole('button', { name: 'google-login-button' })).toBeVisible()
+    expect(screen.getByText(/パスワードをお忘れの方はこちら/i)).toBeVisible()
+  })
 
-  //   // 空のフォームを送信
-  //   const submitButton = screen.getByRole('button', { name: /ログイン/i })
-  //   fireEvent.click(submitButton)
+  it('バリデーションエラーが正しく表示される', async () => {
+    const { container, debug } = render(<LoginAuth />)
 
-  //   // エラーメッセージの確認
-  //   expect(await screen.findByText('必須です')).toBeVisible()
-  // })
+    // 空のフォームを送信
+    const submitButton = screen.getByRole('button', { name: 'login-button' })
 
-  // it('Googleログインボタンが表示される', () => {
-  //   render(<LoginAuth />)
-  //   expect(screen.getByRole('button', { name: /Googleでログイン/i })).toBeVisible()
-  // })
+    await act(async () => {
+      fireEvent.click(submitButton)
+    })
 
-  // it('パスワードの表示/非表示が切り替えられる', () => {
-  //   render(<LoginAuth />)
+    // エラーメッセージが表示されるのを待つ
+    const elements = await screen.findAllByText('必須です')
 
-  //   // パスワードの表示切り替えボタンをクリック
-  //   const visibilityToggle = screen.getByRole('button', { name: /toggle password visibility/i })
-  //   fireEvent.click(visibilityToggle)
+    expect(elements).toHaveLength(2)
+    elements.forEach((element) => {
+      expect(element).toBeVisible()
+    })
+  })
 
-  //   // パスワードフィールドの type 属性が変更されることを確認
-  //   const passwordInput = screen.getByLabelText(/パスワード/i)
-  //   expect(passwordInput).toHaveAttribute('type', 'text')
-  // })
+  it('パスワードの表示/非表示が切り替えられる', async () => {
+    const { container, debug } = render(<LoginAuth />)
 
-  // it('パスワードリセットリンクが表示される', () => {
-  //   render(<LoginAuth />)
-  //   expect(screen.getByText(/パスワードを忘れた方/i)).toBeVisible()
-  // })
+    // パスワードの表示切り替えボタンをクリック
+    const visibilityToggle = screen.getByRole('button', { name: 'display the password' })
+
+    await act(async () => {
+      fireEvent.click(visibilityToggle)
+    })
+
+    debug()
+
+    // パスワードフィールドの type 属性が変更されることを確認
+    const passwordInput = screen.getByLabelText(/パスワード/i)
+    expect(passwordInput).toHaveAttribute('type', 'text')
+  })
 })

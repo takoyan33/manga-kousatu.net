@@ -43,7 +43,7 @@ export const thirdBreadcrumbs: Story = {
     const canvas = within(canvasElement)
 
     // タイトルが表示されているかチェック
-    expect(canvas.getByText('呪術廻戦')).toBeInTheDocument()
+    expect(canvas.getByText('呪術廻戦')).toBeVisible()
 
     // リンクが正しく設定されているかチェック
     const link = canvas.getByRole('link', { name: '呪術廻戦' })

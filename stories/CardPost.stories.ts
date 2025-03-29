@@ -1,5 +1,7 @@
+import { expect } from '@storybook/jest'
 import type { Meta, StoryObj } from '@storybook/react'
 import { fn } from '@storybook/test'
+import { userEvent, within } from '@storybook/testing-library'
 
 import { CardPost } from './components/CardPost'
 
@@ -52,7 +54,33 @@ const meta: Meta<typeof CardPost> = {
 export default meta
 type Story = StoryObj<typeof CardPost>
 
-export const normalCardPost: Story = {}
+export const normalCardPost: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+
+    // タイトルが表示されているかチェック
+    expect(canvas.getByText('タイトル')).toBeVisible()
+
+    // いいねの数が表示されているか
+    expect(canvas.getByText('10')).toBeVisible()
+
+    // ユーザー名が表示されているか
+    expect(canvas.getByText('ユーザー名未設定')).toBeVisible()
+
+    // カテゴリが表示されているか
+    expect(canvas.getByText('#呪術廻戦')).toBeVisible()
+
+    // ネタバレタグが表示されているか
+    expect(canvas.getByText('ネタバレ有')).toBeVisible()
+
+    // 投稿日が表示されているか
+    expect(canvas.getByText('453日前')).toBeVisible()
+
+    // アバター画像が表示されているか
+    const avatar = canvas.getByAltText('投稿者プロフィール画像')
+    expect(avatar).toBeVisible()
+  },
+}
 
 export const noImageCardPost: Story = {
   args: {

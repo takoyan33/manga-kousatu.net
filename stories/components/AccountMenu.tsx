@@ -26,7 +26,7 @@ export const AccountMenu = ({ onClick }: SiteButtonProps) => (
       <ListItemIcon>
         <SendIcon />
       </ListItemIcon>
-      <Link href='/profile/edit'> プロフィールを変更する</Link>
+      <Link href='/profile/edit'>プロフィールを変更する</Link>
     </ListItemButton>
     {/* <button className="m-5">
           <Link href="/profile/emailedit">メールアドレスを変更する</Link>

@@ -11,6 +11,7 @@ interface SiteButtonProps {
   disabled?: boolean
   variant?: 'outlined' | 'contained'
   google?: boolean
+  ariaLabel?: string
 }
 
 export const SiteButton = ({
@@ -22,6 +23,7 @@ export const SiteButton = ({
   disabled = false,
   variant = 'outlined',
   google = false,
+  ariaLabel = 'site-button',
 }: SiteButtonProps) => {
   return (
     <div className={className}>
@@ -31,7 +33,7 @@ export const SiteButton = ({
           variant={variant}
           onClick={onClick}
           disabled={disabled}
-          aria-label='site-button'
+          aria-label={ariaLabel}
           type='submit'
           sx={{ textTransform: 'none' }}
           className={google ? 'google-btn' : 'incomplete'}

@@ -1,26 +1,22 @@
-import React, { useEffect, useState, useMemo } from 'react'
-import { SiteButton } from 'layouts/components/button'
-import { CommonHead, CardPost, TopTitle, Breadcrumbs } from 'layouts/components/ui'
-import { useFetchPosts } from 'layouts/hooks'
+import React, { useState } from 'react'
+import { CommonHead, CardPost, TopTitle, Breadcrumbs, Pagination } from 'layouts/components/ui'
+import { useFetchPost } from 'layouts/hooks'
 import { usePagination } from 'layouts/hooks/usePagination'
 import { GetPost } from 'types/post'
 
 export default function Index() {
-  const [postData, setPostData] = useState<Array<GetPost>>([])
   const [currentPage, setCurrentPage] = useState<number>(1)
   const postsPerPage = 8 // 1ページあたりの表示数を8に設定
 
-  useEffect(() => {
-    useFetchPosts(setPostData)
-  }, [])
+  const postData = useFetchPost()
 
   // 投稿を人気順（いいねの数順）にソート
-  const sortedPosts = useMemo(() => {
-    return [...postData]
-  }, [postData])
+  // const sortedPosts = useMemo(() => {
+  //   return [...postData]
+  // }, [postData])
 
   const { paginatedPosts, totalPages, totalPosts } = usePagination({
-    posts: postData,
+    posts: postData || [],
     currentPage,
     postsPerPage,
     sortType: 'recommend',
@@ -35,7 +31,7 @@ export default function Index() {
       <p className='text-1xl mb-6 text-center'>投稿数 {totalPosts}件</p>
 
       <div className='m-auto flex flex-col flex-wrap justify-start md:flex-row'>
-        {postData.length === 0 ? (
+        {paginatedPosts.length === 0 ? (
           <p className='my-2 text-center'>記事がありません。</p>
         ) : (
           paginatedPosts.map((post) => (
@@ -46,27 +42,7 @@ export default function Index() {
         )}
       </div>
 
-      {totalPages > 1 && (
-        <div className='my-6 flex justify-center'>
-          <button
-            className='mx-2 rounded border px-4 py-2 disabled:opacity-50'
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-          >
-            前へ
-          </button>
-          <span className='mx-4 text-lg'>
-            {currentPage} / {totalPages}
-          </span>
-          <button
-            className='mx-2 rounded border px-4 py-2 disabled:opacity-50'
-            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-            disabled={currentPage === totalPages}
-          >
-            次へ
-          </button>
-        </div>
-      )}
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </div>
   )
 }

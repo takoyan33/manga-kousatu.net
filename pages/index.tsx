@@ -41,17 +41,6 @@ export default function Index() {
 
       {/* カテゴリ一覧 */}
       <TopTitle title='カテゴリで探す' />
-      {/* <div className='flex flex-wrap gap-4'>
-        {POST_CATEGORIES.map((category) => (
-          <Link key={category.id} href={'post/categories/' + category.title}>
-            <span
-              className={`inline-block rounded border px-4 py-2 text-center font-bold hover:opacity-50 ${category.className}`}
-            >
-              {category.title}
-            </span>
-          </Link>
-        ))}
-      </div> */}
       <CategoryList />
     </div>
   )

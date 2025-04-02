@@ -1,20 +1,15 @@
 import TextField from '@mui/material/TextField'
-import Link from 'next/link'
-import React, { useEffect, useState, useMemo } from 'react'
+import React, { useState, useMemo } from 'react'
 import { CategoryList } from 'layouts/components/text'
-import { POST_CATEGORIES, CommonHead, CardPost, Breadcrumbs, TopTitle } from 'layouts/components/ui'
-import { useFetchPosts } from 'layouts/hooks'
-import { GetPost } from 'types/post'
+import { CommonHead, CardPost, Breadcrumbs, TopTitle } from 'layouts/components/ui'
+import { useFetchPost } from 'layouts/hooks'
 
 export default function Index() {
-  const [postData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
   const [currentPage, setCurrentPage] = useState<number>(1)
   const postsPerPage = 6
 
-  useEffect(() => {
-    useFetchPosts(setPostData)
-  }, [])
+  const postData = useFetchPost()
 
   const filteredPosts = useMemo(() => {
     return postData.filter(

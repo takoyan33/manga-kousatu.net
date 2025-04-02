@@ -1,20 +1,16 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs, Pagination } from 'layouts/components/ui'
-import { useFetchPosts } from 'layouts/hooks'
+import { useFetchPost } from 'layouts/hooks'
 import { usePagination } from 'layouts/hooks/usePagination'
-import { GetPost } from 'types/post'
 
 export default function Index() {
-  const [postData, setPostData] = useState<Array<GetPost>>([])
   const [currentPage, setCurrentPage] = useState(1)
   const postsPerPage = 8
 
-  useEffect(() => {
-    useFetchPosts(setPostData)
-  }, [])
+  const postData = useFetchPost()
 
   const { paginatedPosts, totalPages, totalPosts } = usePagination({
-    posts: postData,
+    posts: postData || [],
     currentPage,
     postsPerPage,
     sortType: 'new',

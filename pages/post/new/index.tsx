@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio, FormControl, FormHelperText } from '@material-ui/core'
 import { TextField, Box } from '@mui/material'
-import { onSnapshot, setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
+import { setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
@@ -20,6 +20,7 @@ import ImageUpload from 'utils/image-upload'
 import ImageUploadContext from 'utils/image-upload-context'
 import 'react-toastify/dist/ReactToastify.css'
 import { postsRef } from 'utils/post'
+import { useFetchPost } from 'layouts/hooks'
 
 // フォームの型
 interface RegisterPostParams {
@@ -59,11 +60,11 @@ export default function Post() {
   useEffect(() => {
     if (!user) {
       router.push('/login')
-    } else {
-      useFetchPosts()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const postData = useFetchPost()
 
   const {
     register,
@@ -74,12 +75,6 @@ export default function Post() {
     resolver: yupResolver(schema),
   })
 
-  //投稿の取得
-  const useFetchPosts = async (): Promise<void> => {
-    await onSnapshot(q, (querySnapshot) => {
-      setPosts(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-  }
   //画像のアップロード
   const uploadImage = (event: React.ChangeEvent<HTMLInputElement>): void => {
     if (event.target.files && event.target.files[0]) {
@@ -115,7 +110,7 @@ export default function Post() {
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
       const randomSuffix = Math.floor(Math.random() * 1000)
-      const postRef = await doc(database, 'posts', `${posts.length + 1}${randomSuffix}`)
+      const postRef = await doc(database, 'posts', `${postData.length + 1}${randomSuffix}`)
       await setDoc(postRef, {
         title: data.title,
         context: html,
@@ -126,7 +121,7 @@ export default function Post() {
         category: data.categori,
         createdAt: newDate,
         updatedAt: '',
-        id: `${posts.length + 1}${randomSuffix}`,
+        id: `${postData.length + 1}${randomSuffix}`,
         netabare: data.netabare,
         photoURL: user.photoURL,
         userid: user.uid,
@@ -144,7 +139,7 @@ export default function Post() {
           setTags([])
           // setUserId('')
           setTimeout(() => {
-            router.push(`/post/${posts.length + 1}${randomSuffix}`)
+            router.push(`/post/${postData.length + 1}${randomSuffix}`)
           }, 2000)
         })
         .catch(() => {

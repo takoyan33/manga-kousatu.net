@@ -11,7 +11,10 @@ import {
 import { database } from '../../firebaseConfig'
 import { successNotify, errorNotify } from '../../layouts/components/text'
 
-//特定の投稿のコメントを全て取得
+/**
+ * 特定の投稿のコメントを全て取得
+ * @returns postData
+ */
 export const getComments = async (setComments, routerId: string): Promise<void> => {
   const commentsRef = collection(database, 'comments')
   const postComments = await query(commentsRef, where('postid', '==', routerId))
@@ -24,7 +27,9 @@ export const getComments = async (setComments, routerId: string): Promise<void> 
 
 //コメントの投稿
 
-//コメントの削除
+/**
+ * コメントの削除
+ */
 export const deleteComment = async (commentId: string): Promise<void> => {
   const deleteComment = doc(database, 'comments', commentId)
   deleteDoc(deleteComment)

@@ -1,20 +1,15 @@
 import { onSnapshot, query, orderBy, where, doc, getDoc, getDocs } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
-// import useSWR from 'swr'
 import { database } from '../../firebaseConfig'
 import { postsRef } from '../../utils/post'
 import { GetPost } from 'types/post'
 // import { GetPost } from 'types/post'
 
-//新しいpostを取得
-export const useFetchPosts = async (setPostData) => {
-  onSnapshot(postsRef, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
-}
-
-//新しいpostを取得
-export const useFetchPost = () => {
+/**
+ * 新しいpostを取得
+ * @returns postData
+ */
+export const useFetchPost = (): Array<GetPost> | [] => {
   const [postData, setPostData] = useState<Array<GetPost> | []>([])
 
   useEffect(() => {
@@ -29,7 +24,10 @@ export const useFetchPost = () => {
   return postData
 }
 
-//古いpostを取得
+/**
+ * 古いpostを取得
+ * @returns oldPostData
+ */
 export const useGetOldPosts = async (setPostData: any): Promise<void> => {
   const oldPost = query(postsRef, orderBy('timestamp', 'asc'))
 
@@ -38,7 +36,10 @@ export const useGetOldPosts = async (setPostData: any): Promise<void> => {
   })
 }
 
-//新しいpostを取得
+/**
+ * 新しいpostを取得
+ * @returns oldPostData
+ */
 export const useGetNewPosts = async (setPostData: any): Promise<void> => {
   const oldPost = query(postsRef, orderBy('timestamp', 'desc'))
 
@@ -46,7 +47,11 @@ export const useGetNewPosts = async (setPostData: any): Promise<void> => {
     setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
   })
 }
-//いいね順でpostを取得
+
+/**
+ * いいね順でpostを取得
+ * @returns postData
+ */
 export const useGetLikePosts = async (setPostData: any): Promise<void> => {
   const likePost = query(postsRef, orderBy('likes', 'desc'))
 
@@ -55,7 +60,10 @@ export const useGetLikePosts = async (setPostData: any): Promise<void> => {
   })
 }
 
-//ネタバレ有りでpostを取得
+/**
+ * ネタバレ有りでpostを取得
+ * @returns postData
+ */
 export const useGetNetabrePosts = async (setPostData: any): Promise<void> => {
   const netabarePost = query(postsRef, where('netabare', '==', 'spoil'))
 
@@ -64,7 +72,10 @@ export const useGetNetabrePosts = async (setPostData: any): Promise<void> => {
   })
 }
 
-//ネタバレなしでpostを取得
+/**
+ * ネタバレなしでpostを取得
+ * @returns postData
+ */
 export const useGetNoNetabrePosts = async (setPostData: any): Promise<void> => {
   const noNetabarePost = query(postsRef, where('netabare', '==', 'notSpoil'))
 
@@ -73,7 +84,10 @@ export const useGetNoNetabrePosts = async (setPostData: any): Promise<void> => {
   })
 }
 
-//ユーザーの投稿データを取得
+/**
+ * ユーザーの投稿データを取得
+ * @returns postData
+ */
 export const useGetMyPosts = async (setPostData: any, myEmail: string): Promise<void> => {
   const myPosts = query(postsRef, where('email', '==', myEmail))
 
@@ -82,7 +96,10 @@ export const useGetMyPosts = async (setPostData: any, myEmail: string): Promise<
   })
 }
 
-//自分がいいねした投稿データを取得
+/**
+ * 自分がいいねした投稿データを取得
+ * @returns postData
+ */
 export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<void> => {
   const myLikedPosts = query(postsRef, where('likes_email', 'array-contains', myEmail))
 
@@ -91,7 +108,10 @@ export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<
   })
 }
 
-//特定のpostを取得
+/**
+ * 特定のpostを取得
+ * @returns postData
+ */
 export const useGetPost = async (routerId: string): Promise<GetPost | undefined> => {
   try {
     const ref = doc(database, 'posts', routerId)
@@ -111,7 +131,11 @@ export const useGetPost = async (routerId: string): Promise<GetPost | undefined>
     return undefined
   }
 }
-//特定ユーザーのpostsを取得
+
+/**
+ * 特定ユーザーのpostsを取得
+ * @returns postData
+ */
 export const useGetUsersPosts = async (setPostData, userId: string): Promise<void> => {
   const userPosts = query(postsRef, where('userid', '==', userId))
 
@@ -136,7 +160,10 @@ export const useGetUsersPosts = async (setPostData, userId: string): Promise<voi
 //   })
 // }
 
-//カテゴリの新しい投稿を取得（自分の記事以外）
+/**
+ * カテゴリの新しい投稿を取得（自分の記事以外）
+ * @returns postData
+ */
 export const useGetCategoryPosts = async (
   setPostData,
   postCategory: string,
@@ -153,7 +180,10 @@ export const useGetCategoryPosts = async (
   })
 }
 
-//特定カテゴリの古い投稿を取得
+/**
+ * 特定カテゴリの古い投稿を取得
+ * @returns postData
+ */
 export const useGetCategoryOldPosts = async (setPostData, postCategory: string): Promise<void> => {
   const categoryPosts = query(postsRef, where('category', '==', postCategory), orderBy('timestamp'))
 
@@ -162,7 +192,10 @@ export const useGetCategoryOldPosts = async (setPostData, postCategory: string):
   })
 }
 
-//特定カテゴリのいいね順の投稿を取得
+/**
+ * 特定カテゴリのいいね順の投稿を取得
+ * @returns postData
+ */
 export const useGetCategoryLikePosts = async (setPostData, postCategory: string): Promise<void> => {
   const categoryPosts = query(
     postsRef,

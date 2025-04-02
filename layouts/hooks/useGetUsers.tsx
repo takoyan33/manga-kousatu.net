@@ -2,7 +2,10 @@ import { getDocs, doc, getDoc } from 'firebase/firestore'
 import { database } from '../../firebaseConfig'
 import { usersRef } from '../../utils/post'
 
-//自分のuserを取得
+/**
+ * 自分のuserを取得
+ * @returns user
+ */
 export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> => {
   try {
     const ref = await doc(database, 'users', uid)
@@ -13,7 +16,10 @@ export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> =>
   }
 }
 
-//他のuserを取得
+/**
+ * 他のuserを取得
+ * @returns user
+ */
 export const useGetOtherUser = async (setUsers: any, uid: string): Promise<void> => {
   try {
     const ref = await doc(database, 'users', uid)
@@ -24,7 +30,10 @@ export const useGetOtherUser = async (setUsers: any, uid: string): Promise<void>
   }
 }
 
-//user全体を取得
+/**
+ * user全体を取得
+ * @returns users
+ */
 export const useGetUsers = async (setUsers: any): Promise<void> => {
   await getDocs(usersRef).then((response) => {
     //コレクションのドキュメントを取得

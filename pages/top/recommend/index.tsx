@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { CommonHead, CardPost, TopTitle, Breadcrumbs, Pagination } from 'layouts/components/ui'
 import { useFetchPost } from 'layouts/hooks'
 import { usePagination } from 'layouts/hooks/usePagination'
-import { GetPost } from 'types/post'
 
 export default function Index() {
   const [currentPage, setCurrentPage] = useState<number>(1)

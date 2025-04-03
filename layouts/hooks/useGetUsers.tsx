@@ -1,10 +1,12 @@
-import { getDocs, doc, getDoc } from 'firebase/firestore'
+import { getDocs, doc, getDoc, collection, query, where, onSnapshot } from 'firebase/firestore'
+import { useState, useEffect } from 'react'
 import { database } from '../../firebaseConfig'
 import { usersRef } from '../../utils/post'
+import { GetPost } from 'types/post'
 
 /**
  * 自分のuserを取得
- * @returns user
+ * @returns myUser
  */
 export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> => {
   try {
@@ -16,6 +18,34 @@ export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> =>
   }
 }
 
+// export const useGetMyUser = (uid: string): GetPost[] => {
+//   const [myUser, setMyUser] = useState<GetPost[]>([])
+
+//   useEffect(() => {
+//     if (!uid) {
+//       return
+//     }
+
+//     const postsRef = collection(database, 'posts')
+//     const myPostsQuery = query(postsRef, where('email', '==', uid))
+
+//     const unsubscribe = onSnapshot(myPostsQuery, (querySnapshot) => {
+//       const posts = querySnapshot.docs.map(
+//         (doc) =>
+//           ({
+//             ...doc.data(),
+//             id: doc.id,
+//           } as GetPost),
+//       )
+
+//       setMyUser(posts)
+//     })
+
+//     return () => unsubscribe()
+//   }, [uid])
+
+//   return myUser
+// }
 /**
  * 他のuserを取得
  * @returns user

@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { database } from '../../firebaseConfig'
 import { postsRef } from '../../utils/post'
 import { GetPost } from 'types/post'
-// import { GetPost } from 'types/post'
 
 /**
  * 新しいpostを取得
@@ -28,24 +27,20 @@ export const useFetchPost = (): Array<GetPost> | [] => {
  * 古いpostを取得
  * @returns oldPostData
  */
-export const useGetOldPosts = async (setPostData: any): Promise<void> => {
+export const useGetOldPosts = (): Array<GetPost> | [] => {
   const oldPost = query(postsRef, orderBy('timestamp', 'asc'))
+  const [oldPostData, setOldPostData] = useState<Array<GetPost> | []>([])
 
-  onSnapshot(oldPost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
-}
+  useEffect(() => {
+    const unsubscribe = onSnapshot(oldPost, (querySnapshot) => {
+      const posts = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as GetPost))
+      setOldPostData(posts)
+    })
 
-/**
- * 新しいpostを取得
- * @returns oldPostData
- */
-export const useGetNewPosts = async (setPostData: any): Promise<void> => {
-  const oldPost = query(postsRef, orderBy('timestamp', 'desc'))
+    return () => unsubscribe()
+  }, [])
 
-  onSnapshot(oldPost, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+  return oldPostData
 }
 
 /**
@@ -88,12 +83,21 @@ export const useGetNoNetabrePosts = async (setPostData: any): Promise<void> => {
  * ユーザーの投稿データを取得
  * @returns postData
  */
-export const useGetMyPosts = async (setPostData: any, myEmail: string): Promise<void> => {
+export const useGetMyPosts = (myEmail: string): Array<GetPost> | [] => {
   const myPosts = query(postsRef, where('email', '==', myEmail))
 
-  onSnapshot(myPosts, (querySnapshot) => {
-    setPostData(querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  })
+  const [postData, setPostData] = useState<Array<GetPost> | []>([])
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(myPosts, (querySnapshot) => {
+      const posts = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id } as GetPost))
+      setPostData(posts)
+    })
+
+    return () => unsubscribe()
+  }, [])
+
+  return postData
 }
 
 /**

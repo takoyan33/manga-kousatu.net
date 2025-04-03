@@ -4,20 +4,15 @@ import { Navigation } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { CategoryList } from 'layouts/components/text'
 import { CommonHead, CardPost, TopTitle } from 'layouts/components/ui'
-import { useGetOldPosts, useGetNewPosts } from 'layouts/hooks'
+import { useGetOldPosts, useFetchPost } from 'layouts/hooks'
 import { GetPost } from 'types/post'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 export default function Index() {
-  const [postData, setPostData] = useState<GetPost[]>([])
-  const [oldPostData, setOldPostData] = useState<GetPost[]>([])
-
-  useEffect(() => {
-    useGetOldPosts(setOldPostData)
-    useGetNewPosts(setPostData)
-  }, [])
+  const oldPostData = useGetOldPosts()
+  const postData = useFetchPost()
 
   return (
     <div className='m-auto w-11/12 md:w-full'>

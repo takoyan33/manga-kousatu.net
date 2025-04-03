@@ -4,17 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { Legend, PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 import { postsRef } from '../../../utils/post'
 import { useAuthContext } from '../../context/auth-context'
-import { useGetMyPosts, useGetMyUser } from '../../hooks'
 import { COLORS } from '../ui'
-import { GetPost } from 'types/post'
-import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
 export const DisplayChart = React.memo(() => {
   const router = useRouter()
   const { user } = useAuthContext()
-  const [users, setUsers] = useState<GetUser>()
-  const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [mangaData, setMangaData] = useState<any[]>([
     { name: 'ONEPIECE', value: 0 },
     { name: '呪術廻戦', value: 0 },
@@ -53,7 +48,7 @@ export const DisplayChart = React.memo(() => {
   const fetchPosts = async (categoryQuery: any, categoryName: string) => {
     const querySnapshot = await getDocs(categoryQuery)
     const posts = querySnapshot.docs.map((doc) => {
-      const data = doc.data() as any // Explicitly cast the data to the correct type
+      const data = doc.data() as any
       return { ...data, id: doc.id }
     })
     setMangaData((prevData) =>
@@ -67,8 +62,6 @@ export const DisplayChart = React.memo(() => {
     if (!user) {
       router.push('/login')
     } else {
-      useGetMyPosts(setPostData, user.email)
-      useGetMyUser(setUsers, user.uid)
       mangaCategories.forEach(({ query, name }) => fetchPosts(query, name))
     }
   }, [user, router])
@@ -104,7 +97,7 @@ export const DisplayChart = React.memo(() => {
 
   return (
     <ResponsiveContainer height={256}>
-      <PieChart margin={{ top: 0, left: 0, right: 0, bottom: 0 }}>
+      <PieChart>
         <Pie
           dataKey='value'
           data={mangaData}
@@ -115,7 +108,7 @@ export const DisplayChart = React.memo(() => {
           label={renderCustomizedLabel}
           isAnimationActive={true}
         >
-          {mangaData.map((entry, index) => (
+          {mangaData.map((_entry, index) => (
             <Cell fill={COLORS[index % COLORS.length]} key={index} />
           ))}
         </Pie>

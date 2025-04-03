@@ -14,28 +14,21 @@ export default function Profile() {
   const router = useRouter()
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
-  const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [searchName, setSearchName] = useState<string>('')
 
   useEffect(() => {
     if (!user) {
-      router.push('/')
-    }
-  }, [user])
-
-  useEffect(() => {
-    if (!user) {
-      router.push('/register')
+      router.push('/login')
     } else {
-      useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)
-      console.log(users)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const postData = useGetMyPosts(user.email)
+
   const filterPostData = (): any => {
-    return postsData.filter((post) => {
+    return postData.filter((post) => {
       if (searchName === '' || post.title.toLowerCase().includes(searchName.toLowerCase())) {
         return true
       }
@@ -125,7 +118,7 @@ export default function Profile() {
             </tr>
           </thead>
           <tbody>
-            {postsData.length === 0 ? (
+            {postData.length === 0 ? (
               <tr className='my-2 text-center'>
                 <td>記事がありません。</td>
               </tr>

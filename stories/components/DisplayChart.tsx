@@ -8,7 +8,6 @@ import { useAuthContext } from '../../layouts/context/auth-context'
 import { useGetMyPosts, useGetMyUser } from '../../layouts/hooks'
 import { postsRef } from '../../utils/post'
 // import { SiteButton } from 'layouts/components/button'
-import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
 // eslint-disable-next-line react/display-name
@@ -16,7 +15,6 @@ export const DisplayChart = React.memo(() => {
   const router = useRouter()
   const { user } = useAuthContext()
   const [users, setUsers] = useState<GetUser>()
-  const [postsData, setPostData] = useState<Array<GetPost>>([])
   const [onePiece, setOnePiece] = useState<any>([])
   const [kingdom, setKingdom] = useState<any>([])
   const [tokyo, setTokyo] = useState<any>([])
@@ -55,7 +53,6 @@ export const DisplayChart = React.memo(() => {
           //スプレッド構文で展開して、新しい配列を作成
         }),
       )
-      console.log(onePiece)
     })
   }
 
@@ -106,11 +103,9 @@ export const DisplayChart = React.memo(() => {
 
   useEffect(() => {
     if (!user) {
-      router.push('/register')
+      router.push('/login')
     } else {
-      useGetMyPosts(setPostData, user.email)
       useGetMyUser(setUsers, user.uid)
-      console.log(users)
       getOnePosts()
       getKaisenPosts()
       getTokyoPosts()
@@ -120,7 +115,6 @@ export const DisplayChart = React.memo(() => {
   }, [])
 
   // userの削除
-
   type MangaData = {
     name: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
     value: number

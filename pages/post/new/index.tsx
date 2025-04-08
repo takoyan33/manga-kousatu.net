@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { RadioGroup, FormControlLabel, Radio, FormControl, FormHelperText } from '@material-ui/core'
 import { TextField, Box } from '@mui/material'
-import { setDoc, doc, serverTimestamp, query, orderBy } from 'firebase/firestore'
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
@@ -19,7 +19,6 @@ import { useAuthContext } from 'layouts/context/auth-context'
 import ImageUpload from 'utils/image-upload'
 import ImageUploadContext from 'utils/image-upload-context'
 import 'react-toastify/dist/ReactToastify.css'
-import { postsRef } from 'utils/post'
 import { useFetchPost } from 'layouts/hooks'
 
 // フォームの型
@@ -31,10 +30,6 @@ interface RegisterPostParams {
   display: boolean
 }
 
-// interface addPost {
-//   toLocaleString(timeZone): string
-// }
-
 // バリデーションルール
 const schema = yup.object({
   title: yup.string().required('必須です'),
@@ -43,15 +38,10 @@ const schema = yup.object({
 export default function Post() {
   const [processing, setProcessing] = useState<boolean>(false)
   const [tags, setTags] = useState<string[]>(['最終回'])
-  // const [context, setContext] = useState<string>('')
-  const q = query(postsRef, orderBy('timestamp', 'desc'))
   const [image, setImage] = useState<File | null>(null)
   const [contextImage, setContextImage] = useState<File | null>(null)
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [createContextObjectURL, setCreateContextObjectURL] = useState<string>('')
-  // const [userid, setUserId] = useState<string | null>(null)
-  // const [photoURL, setPhotoURL] = useState<string>('')
-  const [posts, setPosts] = useState<any[]>([])
   const [lengthData, setPostsLength] = useState<number | null>(null)
   const { user } = useAuthContext()
   const [display, setDisplay] = useState<string>('')
@@ -61,7 +51,6 @@ export default function Post() {
     if (!user) {
       router.push('/login')
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const postData = useFetchPost()
@@ -106,7 +95,6 @@ export default function Post() {
       const topImage: string = await postImage(image)
       //写真のurlをセットする
       const contextSetImage: string = await postContextImage(contextImage)
-      // console.log('contextSetImage', contextSetImage)
       //日本時間を代入
       const newDate: string = new Date().toLocaleString('ja-JP')
       const randomSuffix = Math.floor(Math.random() * 1000)
@@ -134,10 +122,7 @@ export default function Post() {
         .then(() => {
           successNotify('記事投稿ができました！')
           setProcessing(false)
-          // setContext('')
-          // setPhotoURL('')
           setTags([])
-          // setUserId('')
           setTimeout(() => {
             router.push(`/post/${postData.length + 1}${randomSuffix}`)
           }, 2000)
@@ -163,6 +148,13 @@ export default function Post() {
   const handleEditorChange = (plainText: string, html: string): void => {
     setHtml(html)
     setPostsLength(plainText.length)
+  }
+
+  const moveBack = () => {
+    const confirmResult = confirm('記入した内容は破棄されますが、よろしいですか？')
+    if (confirmResult) {
+      router.push('/')
+    }
   }
   return (
     <div>
@@ -199,7 +191,7 @@ export default function Post() {
           </div>
           <div className='my-8'>
             <div className='mb-2 mt-6'>
-              <SiteLabel name='作品名' required htmlFor='label-managa-name' />
+              <SiteLabel name='作品名' required htmlFor='label-manga-name' />
             </div>
             <Controller
               name='categori'
@@ -209,8 +201,8 @@ export default function Post() {
               }}
               render={({ field }) => (
                 <RadioGroup
-                  id='managa-name'
-                  aria-labelledby='managa-name'
+                  id='manga-name'
+                  aria-labelledby='manga-name'
                   name={field.name}
                   value={field.value ?? ''}
                 >
@@ -335,13 +327,15 @@ export default function Post() {
               <p className='text-xl font-bold text-white'>投稿中...</p>
             </div>
           )}
-          <SiteButton
-            id='submit'
-            text='投稿する'
-            className='m-auto my-10 text-center'
-            onClick={handleSubmit(addPost)}
-            disabled={processing}
-          />
+          <div className='m-auto flex justify-center gap-4'>
+            <button onClick={moveBack}>戻る</button>
+            <SiteButton
+              text='投稿する'
+              variant='contained'
+              onClick={handleSubmit(addPost)}
+              disabled={processing}
+            />
+          </div>
         </div>
       </Box>
     </div>

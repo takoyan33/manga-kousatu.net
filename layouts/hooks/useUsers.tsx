@@ -46,6 +46,8 @@ export const useGetMyUser = async (setUsers: any, uid: string): Promise<void> =>
 
 //   return myUser
 // }
+
+
 /**
  * 他のuserを取得
  * @returns user

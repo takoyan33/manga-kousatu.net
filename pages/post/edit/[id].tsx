@@ -120,6 +120,13 @@ const PostEdit = () => {
   //   setPostsLength(plainText.length)
   // }
 
+  const moveBack = () => {
+    const confirmResult = confirm('記入した内容は破棄されますが、よろしいですか？')
+    if (confirmResult) {
+      router.push(`/post/${routerid}`)
+    }
+  }
+
   return (
     <>
       <NoIndexHead />
@@ -322,13 +329,24 @@ const PostEdit = () => {
                     <p className='text-xl font-bold text-white'>投稿中...</p>
                   </div>
                 )}
-                <SiteButton
-                  onClick={updatePost}
-                  text='更新する'
-                  className='text-center'
-                  id='submit'
-                  disabled={processing}
-                />
+
+                <div className='m-auto flex justify-center gap-4'>
+                  <SiteButton
+                    id='submit'
+                    text='戻る'
+                    className=''
+                    onClick={moveBack}
+                    disabled={processing}
+                  />
+                  <SiteButton
+                    id='submit'
+                    text='投稿する'
+                    className=''
+                    variant='contained'
+                    onClick={updatePost}
+                    disabled={processing}
+                  />
+                </div>
               </Stack>
             </div>
           </div>

@@ -1,2 +1,2 @@
 export * from './ProfileId'
-export * from './ProfilePost' 
+export * from './ProfilePost'

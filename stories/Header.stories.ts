@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
+import type { Meta, StoryObj } from '@storybook/react'
+import { fn } from '@storybook/test'
 
-import { Header } from './Header';
+import { Header } from './Header'
 
 const meta: Meta<typeof Header> = {
   title: 'Example/Header',
@@ -17,10 +17,10 @@ const meta: Meta<typeof Header> = {
     onLogout: fn(),
     onCreateAccount: fn(),
   },
-};
+}
 
-export default meta;
-type Story = StoryObj<typeof Header>;
+export default meta
+type Story = StoryObj<typeof Header>
 
 export const LoggedIn: Story = {
   args: {
@@ -28,6 +28,6 @@ export const LoggedIn: Story = {
       name: 'Jane Doe',
     },
   },
-};
+}
 
-export const LoggedOut: Story = {};
+export const LoggedOut: Story = {}

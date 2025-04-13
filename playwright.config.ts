@@ -22,7 +22,7 @@ export default defineConfig({
     trace: 'on-first-retry',
     /* 動画を撮る */
     video: 'on',
-    
+
     actionTimeout: 0,
   },
 

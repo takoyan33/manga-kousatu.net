@@ -34,4 +34,3 @@ export const editTestProfile = {
   image:
     '/Users/abeshmupeii/Desktop/01_engineer💻/01_React系/02_Next/01_開発物/manga-kousatu.net/public/images/book-reading.png',
 }
-

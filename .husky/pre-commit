@@ -1,5 +1,11 @@
-. "$(dirname -- "$0")/_/husky.sh"
-# npm run format
+#!/usr/bin/env sh
+
+echo "----- start pre-commit -------"
+
+npm run format
+
 # npm run test
 # npm run build
 # npm run commitmsg
+
+echo "----- end pre-commit -------"

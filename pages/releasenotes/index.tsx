@@ -12,7 +12,7 @@ export default function ReleaseNotes() {
           <p>{date}</p>
           <h4 className='my-2 text-lg'>変更点</h4>
           {features.map((feature, index) => (
-            <p key={index}>{feature}</p>
+            <p key={date + index}>{feature}</p>
           ))}
         </div>
       ))}

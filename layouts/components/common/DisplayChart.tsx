@@ -108,8 +108,8 @@ export const DisplayChart = React.memo(() => {
           label={renderCustomizedLabel}
           isAnimationActive={true}
         >
-          {mangaData.map((_entry, index) => (
-            <Cell fill={COLORS[index % COLORS.length]} key={index} />
+          {mangaData.map((entry, index) => (
+            <Cell fill={COLORS[index % COLORS.length]} key={entry.name + index} />
           ))}
         </Pie>
         <Legend verticalAlign='bottom' wrapperStyle={{ bottom: 18 }} />

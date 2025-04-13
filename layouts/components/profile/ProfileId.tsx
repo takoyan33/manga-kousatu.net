@@ -29,7 +29,7 @@ export const ProfileId = React.memo(
             <div className='m-5' aria-label='liked-text'>
               {favorite &&
                 favorite.map((favorite, index) => (
-                  <p className='my-2 text-cyan-700' key={index}>
+                  <p className='my-2 text-cyan-700' key={favorite + index}>
                     #{favorite}
                   </p>
                 ))}

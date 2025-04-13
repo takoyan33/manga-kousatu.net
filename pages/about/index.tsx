@@ -25,7 +25,7 @@ export default function About() {
           <div className='my-6'>
             <h3 className='my-2 text-xl font-semibold'>掲載漫画</h3>
             {COPY_WRITES.map((copyWrite, index) => (
-              <p key={index}>{copyWrite}</p>
+              <p key={copyWrite + index}>{copyWrite}</p>
             ))}
           </div>
         </div>

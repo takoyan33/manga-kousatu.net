@@ -1,23 +1,23 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface countState {
+interface UserState {
   token: string
-  login: () => void
+  login: (token: string) => void
   logout: () => void
-  isTokenCheck: () => void
+  isTokenCheck: () => boolean
 }
 
-const useUserStore = create(
+const useUserStore = create<UserState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       token: '',
-      login: () => set((state) => ({ token: state.token })),
+      login: (token: string) => set({ token }),
       logout: () => set({ token: '' }),
-      // isTokenCheck: () => set((state) => ({ state.token})),
+      isTokenCheck: () => !!get().token,
     }),
     {
-      name: 'token',
+      name: 'user-token', // localStorageのkey名
     },
   ),
 )

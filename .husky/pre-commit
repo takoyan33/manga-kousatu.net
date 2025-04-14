@@ -4,8 +4,10 @@ echo "----- start pre-commit -------"
 
 npm run format
 
-# npm run test
-# npm run build
+npm run test
+
+npm run build
+
 # npm run commitmsg
 
 echo "----- end pre-commit -------"

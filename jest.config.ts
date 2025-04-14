@@ -19,6 +19,7 @@ const config: Config = {
     '^utils/(.*)$': '<rootDir>/utils/$1',
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
   },
+  transformIgnorePatterns: ['/node_modules/(?!(react-scan|@preact/.*|preact)/)'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

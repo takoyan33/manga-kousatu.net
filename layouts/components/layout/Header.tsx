@@ -115,6 +115,7 @@ export const Header = () => {
                     src={users.profileImage}
                     className='border'
                     key={users?.id}
+                    alt='ユーザー画像'
                   />
                 )}
                 {user && users?.profileImage === undefined && (
@@ -122,6 +123,7 @@ export const Header = () => {
                     sx={{ width: 32, height: 32 }}
                     src='/images/avater.svg'
                     className='border'
+                    alt='ユーザー画像'
                   />
                 )}
                 {!user && <MenuIcon fontSize='small' />}

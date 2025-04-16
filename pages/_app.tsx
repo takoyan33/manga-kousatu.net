@@ -4,10 +4,9 @@ import { Header, Footer } from 'layouts/components/ui'
 import { AuthProvider } from 'layouts/context/auth-context'
 
 export default function MyApp({ Component, pageProps }) {
-  console.log('test')
   return (
     <AuthProvider>
-      <>
+      <html lang='ja'>
         <head>{/* <script src='https://unpkg.com/react-scan/dist/auto.global.js' /> */}</head>
         {/* <ReactScan /> */}
         <Header />
@@ -15,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
         <Footer />
-      </>
+      </html>
     </AuthProvider>
   )
 }

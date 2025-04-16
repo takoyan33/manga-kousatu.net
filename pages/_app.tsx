@@ -4,6 +4,7 @@ import { Header, Footer } from 'layouts/components/ui'
 import { AuthProvider } from 'layouts/context/auth-context'
 
 export default function MyApp({ Component, pageProps }) {
+  console.log('test')
   return (
     <AuthProvider>
       <>
@@ -14,7 +15,6 @@ export default function MyApp({ Component, pageProps }) {
           <Component {...pageProps} />
         </div>
         <Footer />
-        
       </>
     </AuthProvider>
   )

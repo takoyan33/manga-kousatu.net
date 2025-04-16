@@ -83,7 +83,7 @@ export const useGetNoNetabrePosts = async (setPostData: any): Promise<void> => {
  * ユーザーの投稿データを取得
  * @returns postData
  */
-export const useGetMyPosts = (myEmail: string): Array<GetPost> | [] => {
+export const useGetMyPosts = (myEmail: string): Array<GetPost> => {
   const myPosts = query(postsRef, where('email', '==', myEmail))
 
   const [postData, setPostData] = useState<Array<GetPost> | []>([])

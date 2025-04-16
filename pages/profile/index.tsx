@@ -7,7 +7,6 @@ import { SiteButton } from '../../layouts/components/button'
 import { ProfileId, DisplayChart, NoIndexHead, AccountMenu } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/auth-context'
 import { useGetMyPosts, useGetMyUser } from 'layouts/hooks'
-import { GetPost } from 'types/post'
 import { GetUser } from 'types/user'
 
 export default function Profile() {

@@ -34,9 +34,11 @@ export const CardPost = React.memo(
                 className='cardPost-img rounded'
                 src={downloadURL || '/images/no-image.jpg'}
                 alt={`${title}の画像`}
-                fill
-                sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+                height={144}
+                width={232}
                 priority
+                sizes='(max-width: 768px) 100vw, 232px'
+                quality={20}
               />
             </div>
           </Link>

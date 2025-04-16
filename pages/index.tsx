@@ -55,14 +55,15 @@ function SwiperSection({
     768: { slidesPerView: 3.5 },
   }
   return (
-    <div className='m-auto flex items-center justify-center md:flex-row'>
-      <div className={`${prevClass} mr-0 w-48 cursor-pointer md:w-20`}>
+    <div className='m-auto flex min-h-[300px] items-center justify-center md:flex-row'>
+      <div className={`${prevClass} w-[60px] cursor-pointer`}>
         <Image
           src='/images/prev-arrow.svg'
           width={60}
           height={60}
           className='cursor-pointer'
-          alt='スライドショーのナビゲーション'
+          alt='戻る'
+          quality={20}
         />
       </div>
       <Swiper
@@ -84,13 +85,14 @@ function SwiperSection({
           ))
         )}
       </Swiper>
-      <div className={`${nextClass} w-48 cursor-pointer md:ml-10 md:w-20`}>
+      <div className={`${prevClass} w-[60px] cursor-pointer`}>
         <Image
           src='/images/next-arrow.svg'
           width={60}
           height={60}
           className='cursor-pointer'
-          alt='スライドショーのナビゲーション'
+          alt='進む'
+          quality={20}
         />
       </div>
     </div>

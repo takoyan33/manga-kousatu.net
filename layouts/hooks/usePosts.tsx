@@ -8,7 +8,7 @@ import { GetPost } from 'types/post'
  * 新しいpostを取得
  * @returns postData
  */
-export const useFetchPost = (): Array<GetPost> | [] => {
+export const useFetchPost = (): Array<GetPost> => {
   const [postData, setPostData] = useState<Array<GetPost> | []>([])
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export const useFetchPost = (): Array<GetPost> | [] => {
  * 古いpostを取得
  * @returns oldPostData
  */
-export const useGetOldPosts = (): Array<GetPost> | [] => {
+export const useGetOldPosts = (): Array<GetPost> => {
   const oldPost = query(postsRef, orderBy('timestamp', 'asc'))
   const [oldPostData, setOldPostData] = useState<Array<GetPost> | []>([])
 

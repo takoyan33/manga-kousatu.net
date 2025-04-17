@@ -10,12 +10,16 @@ import {
 } from 'firebase/firestore'
 import { database } from '../../firebaseConfig'
 import { successNotify, errorNotify } from '../components/text'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 
 /**
  * 特定の投稿のコメントを全て取得
  * @returns postData
  */
-export const getComments = async (setComments, routerId: string): Promise<void> => {
+export const getComments = async (
+  setComments: Dispatch<SetStateAction<any>>,
+  routerId: string,
+): Promise<void> => {
   const commentsRef = collection(database, 'comments')
   const postComments = await query(commentsRef, where('postid', '==', routerId))
   onSnapshot(postComments, (querySnapshot) => {

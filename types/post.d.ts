@@ -6,7 +6,7 @@ export type GetPost = {
   context: string
   contextImage: string
   createdAt: string
-  display: boolean
+  display: 'true' | 'false'
   displayName: string | null
   downloadURL: string
   updatedAt: string

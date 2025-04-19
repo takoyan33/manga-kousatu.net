@@ -3,7 +3,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import BorderColorIcon from '@mui/icons-material/BorderColor'
 import SendIcon from '@mui/icons-material/Send'
-import { Avatar } from '@mui/material'
+import { Avatar, Chip, Stack, Typography } from '@mui/material'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -112,6 +112,13 @@ const Post = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const toggleModal = () => setIsModalOpen((prev) => !prev)
 
+  const categoryColorMap = {
+    ONEPIECE: '#06b6d4', // cyan-500
+    呪術廻戦: '#a855f7', // purple-500
+    東京リベンジャーズ: '#f43f5e', // rose-500
+    キングダム: '#eab308', // yellow-500
+  } as const
+
   return (
     <>
       <CommonHead title='Manga Study - 記事詳細' />
@@ -144,6 +151,22 @@ const Post = () => {
         )}
         <article className='rounded-xl md:border md:p-10'>
           <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
+          {/* 公開or下書きラベル */}
+          <div className='mt-2'>
+            {user && user.email === singlePost?.email && (
+              <>
+                <Chip
+                  label={singlePost.display === 'true' ? '公開中' : '下書き'}
+                  color={singlePost.display === 'true' ? 'primary' : 'default'}
+                  variant='outlined'
+                  size='small'
+                  sx={{ mb: 2 }}
+                />
+              </>
+            )}
+          </div>
+
+          {/* サムネイル */}
           <div className='my-6 flex justify-center'>
             <button onClick={toggleModal}>
               <Image
@@ -156,6 +179,8 @@ const Post = () => {
               />
             </button>
           </div>
+
+          {/* サムネイルモーダル */}
           <Modal isOpen={isModalOpen} onRequestClose={toggleModal} contentLabel='Image Modal'>
             <div className='my-6 flex justify-center'>
               <button onClick={toggleModal} className='text-center'>
@@ -173,15 +198,37 @@ const Post = () => {
               />
             </div>
           </Modal>
+
+          {/* タイトル */}
           <div className='my-0 text-left text-2xl font-semibold md:my-4 md:text-center'>
             {singlePost?.title}
           </div>
           <br />
-          <div>
-            <span className='text-sm text-gray-500 md:text-base'>
-              <AccessTimeIcon /> <span>{singlePost?.createdAt}</span>
-            </span>
-          </div>
+          {/* 投稿時刻 */}
+          {singlePost?.updatedAt && (
+            <Stack
+              direction='row'
+              spacing={1}
+              alignItems='center'
+              sx={{ color: 'text.secondary', my: 2 }}
+            >
+              <AccessTimeIcon fontSize='small' />
+              <Typography variant='body2'>投稿日時：{singlePost.createdAt}</Typography>
+            </Stack>
+          )}
+          {/* 編集時刻 */}
+          {singlePost?.updatedAt && (
+            <Stack
+              direction='row'
+              spacing={1}
+              alignItems='center'
+              sx={{ color: 'text.secondary', my: 2 }}
+            >
+              <AccessTimeIcon fontSize='small' />
+              <Typography variant='body2'>編集日時：{singlePost.updatedAt}</Typography>
+            </Stack>
+          )}
+          {/* プロフィール */}
           <Link href={`/profile/${users?.userid}`}>
             <div className='m-auto my-4 flex  px-2'>
               <div key={users?.id}>
@@ -201,43 +248,37 @@ const Post = () => {
             </div>
           </Link>
 
-          {singlePost?.updatedAt && (
-            <div>
-              <AccessTimeIcon />
-              編集日時：{singlePost.updatedAt}
-            </div>
-          )}
+          {/* 漫画カテゴリ */}
           <div color='text.secondary'>
             {singlePost?.category && (
-              <SiteCategory
-                className={`border border-${
-                  {
-                    ONEPIECE: 'cyan',
-                    呪術廻戦: 'purple',
-                    東京リベンジャーズ: 'rose',
-                    キングダム: 'yellow',
-                  }[singlePost?.category]
-                }-500 hover:bg-${
-                  {
-                    ONEPIECE: 'cyan',
-                    呪術廻戦: 'purple',
-                    東京リベンジャーズ: 'rose',
-                    キングダム: 'yellow',
-                  }[singlePost?.category]
-                }-500 span-1 my-4 hover:text-white`}
-                text={singlePost.category}
-                href={`/post/categories/${singlePost.category}`}
-              />
+              <Link href={`/post/categories/${singlePost.category}`} passHref>
+                <Chip
+                  component='a'
+                  clickable
+                  label={`#${singlePost.category}`}
+                  variant='outlined'
+                  sx={{
+                    borderColor: categoryColorMap[singlePost.category],
+                    color: categoryColorMap[singlePost.category],
+                    '&:hover': {
+                      backgroundColor: categoryColorMap[singlePost.category],
+                      color: 'white',
+                    },
+                    my: 2,
+                  }}
+                />
+              </Link>
+            )}
+            {/* ネタバレラベル */}
+            {singlePost?.netabare === 'spoil' && (
+              <Chip label='ネタバレ有' variant='outlined' color='error' sx={{ mx: 1 }} />
             )}
 
-            <span
-              className={`span-1 mx-1 mt-1 inline-block rounded border text-center text-sm ${
-                singlePost?.netabare === 'spoil' ? 'border-red-500' : 'border-gray-700'
-              }`}
-            >
-              ネタバレ有
-            </span>
+            {singlePost?.netabare === 'notSpoil' && (
+              <Chip label='ネタバレ無し' variant='outlined' color='default' sx={{ mx: 1 }} />
+            )}
 
+            {/* SNSシェア */}
             {/* <div className='mt-2 mb-8'>
                   <FacebookShareButton url={URL} quote={QUOTE}>
                     <FacebookIcon size={24} round />
@@ -250,6 +291,7 @@ const Post = () => {
                   </LineShareButton>
                 </div> */}
 
+            {/* 内容 */}
             {singlePost?.context && (
               <span className='text-left' style={{ whiteSpace: 'pre-line' }}>
                 {parse(singlePost.context)}
@@ -268,17 +310,22 @@ const Post = () => {
               />
             </div>
           )} */}
+
+          {/* いいね */}
           <TopPostLike />
 
+          {/* タグ */}
           {singlePost?.selected.map((tag, i) => (
-            <span
-              className='rounded border border-black  px-4 py-2 text-center text-cyan-700'
+            <Chip
               key={i}
-            >
-              #{tag}
-            </span>
+              label={`#${tag}`}
+              variant='outlined'
+              color='primary'
+              sx={{ mr: 1, mb: 1 }}
+            />
           ))}
 
+          {/* プロフィール */}
           <div className='cursor-pointer'>
             <Link href={`/profile/${users?.userid}`}>
               <div className='m-auto my-8 flex border px-2  py-8'>
@@ -305,9 +352,11 @@ const Post = () => {
           </div>
         </article>
 
+        {/* コメント */}
         <TopPostComment />
       </div>
 
+      {/* おすすめ記事 */}
       <h2 className='my-4 text-xl'>こちらもおすすめ</h2>
       <div className='m-auto mt-8 max-w-7xl'>
         <div>

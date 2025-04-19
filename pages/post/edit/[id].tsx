@@ -31,7 +31,7 @@ const PostEdit = () => {
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [post, setPost] = useState<any>()
   const [netabare, setNetabare] = useState<string>('')
-  const [display, setDisplay] = useState<string>('')
+  const [display, setDisplay] = useState<string>()
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const router = useRouter()
@@ -47,7 +47,7 @@ const PostEdit = () => {
     defaultValues: {
       category: post?.category || 'ONEPIECE',
       netabare: post?.netabare || 'spoil',
-      display: post?.display?.toString() || 'true',
+      display: post?.display || 'true',
     },
   })
 
@@ -57,12 +57,15 @@ const PostEdit = () => {
     }
     if (post?.category) {
       setValue('category', post.category)
+      setCategory(post.category)
     }
     if (post?.netabare) {
       setValue('netabare', post.netabare)
+      setNetabare(post.netabare)
     }
-    if (post?.display.toString()) {
-      setValue('display', post.display.toString())
+    if (post?.display) {
+      setValue('display', post.display)
+      setDisplay(post.display)
     }
   }, [post, setValue])
 
@@ -110,7 +113,7 @@ const PostEdit = () => {
       context: context,
       updatedAt: newdate,
       selected: selected,
-      display: display,
+      display: JSON.parse(display),
     })
       .then(() => {
         successNotify('記事を更新しました')
@@ -202,35 +205,6 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='作品名' required htmlFor='category' />
                 </div>
-                {/* {post && (
-                  <Controller
-                    name='category'
-                    control={control}
-                    rules={{
-                      required: '必須項目です',
-                    }}
-                    render={({ field }) => (
-                      <RadioGroup
-                        id='managa-name'
-                        aria-labelledby='managa-name'
-                        defaultValue={post?.category}
-                        onChange={(e) => {
-                          field.onChange(e)
-                          setCategory(e.target.value)
-                        }}
-                      >
-                        {FORM_CATEGORIES.map((category) => (
-                          <FormControlLabel
-                            key={category.id}
-                            value={category.value}
-                            control={<Radio />}
-                            label={category.label}
-                          />
-                        ))}
-                      </RadioGroup>
-                    )}
-                  />
-                )} */}
 
                 {post && (
                   <Controller
@@ -279,37 +253,6 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
                 </div>
-                {/* {post && (
-                  <Controller
-                    name='netabare'
-                    control={control}
-                    rules={{
-                      required: '必須項目です',
-                    }}
-                    render={({ field }) => (
-                      <RadioGroup
-                        aria-label='ネタバレ'
-                        name={field.name}
-                        value={field.value}
-                        defaultValue={post?.netabare}
-                        onChange={(e) => {
-                          field.onChange(e)
-                          setNetabare(e.target.value)
-                        }}
-                      >
-                        {FORM_NETABARE.map((netabare) => (
-                          <FormControlLabel
-                            key={netabare.id}
-                            value={netabare.value}
-                            control={<Radio />}
-                            label={netabare.label}
-                            {...register('netabare')}
-                          />
-                        ))}
-                      </RadioGroup>
-                    )}
-                  />
-                )} */}
                 {post && (
                   <Controller
                     name='netabare'
@@ -357,36 +300,6 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='公開について' required htmlFor='label-display' />
                 </div>
-                {/* {post && (
-                  <Controller
-                    name='display'
-                    control={control}
-                    rules={{
-                      required: '必須項目です',
-                    }}
-                    render={({ field }) => (
-                      <RadioGroup
-                        aria-label='公開'
-                        name={field.name}
-                        value={field.value}
-                        defaultValue={post?.display.toString()}
-                        onChange={(e) => {
-                          field.onChange(e)
-                          setDisplay(e.target.value)
-                        }}
-                      >
-                        {DISPLAY_DATA.map((display) => (
-                          <FormControlLabel
-                            key={display.id}
-                            value={display.value.toString()}
-                            control={<Radio />}
-                            label={display.label}
-                          />
-                        ))}
-                      </RadioGroup>
-                    )}
-                  />
-                )} */}
                 {post && (
                   <Controller
                     name='display'

@@ -1,3 +1,4 @@
+import { Chip } from '@mui/material'
 import { memo } from 'react'
 
 interface SpoilParams {
@@ -6,13 +7,19 @@ interface SpoilParams {
 
 // eslint-disable-next-line react/display-name
 export const SiteSpoil = memo(({ spoil }: SpoilParams) => {
+  if (spoil !== 'spoil') {
+    return null
+  }
+
   return (
-    <div>
-      {spoil === 'spoil' && (
-        <span className='mx-1 mt-1 inline-block rounded border border-red-500 py-1 px-2 text-center text-sm'>
-          ネタバレ有
-        </span>
-      )}
-    </div>
+    <Chip
+      label='ネタバレ有'
+      color='error'
+      variant='outlined'
+      sx={{
+        marginX: 0.5,
+        marginTop: 0.5,
+      }}
+    />
   )
 })

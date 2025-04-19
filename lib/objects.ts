@@ -21,7 +21,7 @@ type HexColor = `#${string}`
 type DisplayData = Readonly<{
   id: number
   label: '公開' | '下書き'
-  value: boolean
+  value: string
 }>
 
 // リリースノートの型定義
@@ -73,12 +73,12 @@ export const DISPLAY_DATA: readonly DisplayData[] = [
   {
     id: 1,
     label: '公開',
-    value: true,
+    value: 'true',
   },
   {
     id: 2,
     label: '下書き',
-    value: false,
+    value: 'false',
   },
 ] as const
 

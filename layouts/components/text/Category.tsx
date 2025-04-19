@@ -1,30 +1,45 @@
 /* eslint-disable react/display-name */
+import { Chip } from '@mui/material'
+import Link from 'next/link'
 import React from 'react'
-import { SiteCategory } from './SiteCategory'
 
 interface CategoryParams {
   category: 'ONEPIECE' | '呪術廻戦' | '東京リベンジャーズ' | 'キングダム'
 }
 
-// スタイルと色をマッピング
-const categoryStyles: Record<CategoryParams['category'], { border: string; hover: string }> = {
-  ONEPIECE: { border: 'border-cyan-500', hover: 'hover:opacity-50' },
-  呪術廻戦: { border: 'border-purple-500', hover: 'hover:opacity-50' },
-  東京リベンジャーズ: { border: 'border-rose-500', hover: 'hover:opacity-50' },
-  キングダム: { border: 'border-yellow-500', hover: 'hover:opacity-50' },
+// MUI用の色・スタイルマッピング
+const categoryStyles: Record<CategoryParams['category'], { color: string; borderColor: string }> = {
+  ONEPIECE: { color: '#06b6d4', borderColor: '#06b6d4' }, // cyan-500
+  呪術廻戦: { color: '#a855f7', borderColor: '#a855f7' }, // purple-500
+  東京リベンジャーズ: { color: '#f43f5e', borderColor: '#f43f5e' }, // rose-500
+  キングダム: { color: '#eab308', borderColor: '#eab308' }, // yellow-500
 }
 
-// React.memo化
 export const Category = React.memo(({ category }: CategoryParams) => {
-  const { border } = categoryStyles[category]
+  const style = categoryStyles[category]
+
+  if (!style) {
+    console.warn(`Unknown category: ${category}`)
+    return null
+  }
 
   return (
     <div className='my-1'>
-      <SiteCategory
-        className={`border ${border} p-1 hover:opacity-50`}
-        text={category}
-        href={`/post/categories/${category}`}
-      />
+      <Link href={`/post/categories/${category}`} passHref>
+        <Chip
+          label={category}
+          clickable
+          variant='outlined'
+          sx={{
+            color: style.color,
+            borderColor: style.borderColor,
+            '&:hover': {
+              opacity: 0.5,
+            },
+            cursor: 'pointer',
+          }}
+        />
+      </Link>
     </div>
   )
 })

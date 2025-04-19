@@ -1,5 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Stack } from '@mui/material'
 import { doc, updateDoc } from 'firebase/firestore'
 // import dynamic from 'next/dynamic'
@@ -202,35 +200,6 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='作品名' required htmlFor='category' />
                 </div>
-                {/* {post && (
-                  <Controller
-                    name='category'
-                    control={control}
-                    rules={{
-                      required: '必須項目です',
-                    }}
-                    render={({ field }) => (
-                      <RadioGroup
-                        id='managa-name'
-                        aria-labelledby='managa-name'
-                        defaultValue={post?.category}
-                        onChange={(e) => {
-                          field.onChange(e)
-                          setCategory(e.target.value)
-                        }}
-                      >
-                        {FORM_CATEGORIES.map((category) => (
-                          <FormControlLabel
-                            key={category.id}
-                            value={category.value}
-                            control={<Radio />}
-                            label={category.label}
-                          />
-                        ))}
-                      </RadioGroup>
-                    )}
-                  />
-                )} */}
 
                 {post && (
                   <Controller
@@ -357,36 +326,6 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='公開について' required htmlFor='label-display' />
                 </div>
-                {/* {post && (
-                  <Controller
-                    name='display'
-                    control={control}
-                    rules={{
-                      required: '必須項目です',
-                    }}
-                    render={({ field }) => (
-                      <RadioGroup
-                        aria-label='公開'
-                        name={field.name}
-                        value={field.value}
-                        defaultValue={post?.display.toString()}
-                        onChange={(e) => {
-                          field.onChange(e)
-                          setDisplay(e.target.value)
-                        }}
-                      >
-                        {DISPLAY_DATA.map((display) => (
-                          <FormControlLabel
-                            key={display.id}
-                            value={display.value.toString()}
-                            control={<Radio />}
-                            label={display.label}
-                          />
-                        ))}
-                      </RadioGroup>
-                    )}
-                  />
-                )} */}
                 {post && (
                   <Controller
                     name='display'

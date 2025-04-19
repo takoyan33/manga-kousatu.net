@@ -1,5 +1,3 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 import { Stack } from '@mui/material'
 import { doc, updateDoc } from 'firebase/firestore'
 // import dynamic from 'next/dynamic'
@@ -31,7 +29,7 @@ const PostEdit = () => {
   const [createObjectURL, setCreateObjectURL] = useState<string>('')
   const [post, setPost] = useState<any>()
   const [netabare, setNetabare] = useState<string>('')
-  const [display, setDisplay] = useState<string>()
+  const [display, setDisplay] = useState<string>('')
   const [selected, setSelected] = useState<string[]>(['最終回'])
 
   const router = useRouter()
@@ -47,7 +45,7 @@ const PostEdit = () => {
     defaultValues: {
       category: post?.category || 'ONEPIECE',
       netabare: post?.netabare || 'spoil',
-      display: post?.display || 'true',
+      display: post?.display?.toString() || 'true',
     },
   })
 
@@ -57,15 +55,12 @@ const PostEdit = () => {
     }
     if (post?.category) {
       setValue('category', post.category)
-      setCategory(post.category)
     }
     if (post?.netabare) {
       setValue('netabare', post.netabare)
-      setNetabare(post.netabare)
     }
-    if (post?.display) {
-      setValue('display', post.display)
-      setDisplay(post.display)
+    if (post?.display.toString()) {
+      setValue('display', post.display.toString())
     }
   }, [post, setValue])
 
@@ -113,7 +108,7 @@ const PostEdit = () => {
       context: context,
       updatedAt: newdate,
       selected: selected,
-      display: JSON.parse(display),
+      display: display,
     })
       .then(() => {
         successNotify('記事を更新しました')
@@ -253,6 +248,37 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
                 </div>
+                {/* {post && (
+                  <Controller
+                    name='netabare'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <RadioGroup
+                        aria-label='ネタバレ'
+                        name={field.name}
+                        value={field.value}
+                        defaultValue={post?.netabare}
+                        onChange={(e) => {
+                          field.onChange(e)
+                          setNetabare(e.target.value)
+                        }}
+                      >
+                        {FORM_NETABARE.map((netabare) => (
+                          <FormControlLabel
+                            key={netabare.id}
+                            value={netabare.value}
+                            control={<Radio />}
+                            label={netabare.label}
+                            {...register('netabare')}
+                          />
+                        ))}
+                      </RadioGroup>
+                    )}
+                  />
+                )} */}
                 {post && (
                   <Controller
                     name='netabare'

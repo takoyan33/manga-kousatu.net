@@ -14,7 +14,7 @@ export const LikeAdd = async (routerId: string, likes: number, email: string): P
       // setOn((prev) => !prev)
       // setLikecount(0)
       // setTimeout(() => {
-      //   useGetPost(setSinglePost, routerid)
+      //   useGetPost(setSinglePost, routerId)
       // }, 2000)
     })
     .catch((err) => {
@@ -25,8 +25,8 @@ export const LikeAdd = async (routerId: string, likes: number, email: string): P
 /**
  * いいねの削除
  */
-export const LikeDelete = async (routerid: string, likes: number, email: string): Promise<void> => {
-  const post = doc(database, 'posts', routerid)
+export const LikeDelete = async (routerId: string, likes: number, email: string): Promise<void> => {
+  const post = doc(database, 'posts', routerId)
   updateDoc(post, {
     likes: likes - 1,
     likesEmail: arrayRemove(email),

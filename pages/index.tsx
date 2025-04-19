@@ -85,7 +85,7 @@ function SwiperSection({
           ))
         )}
       </Swiper>
-      <div className={`${prevClass} w-[60px] cursor-pointer`}>
+      <div className={`${nextClass} w-[60px] cursor-pointer`}>
         <Image
           src='/images/next-arrow.svg'
           width={60}

@@ -89,8 +89,6 @@ const Post = () => {
     setUserid(userid)
     setLikes(likes)
     setSelected(selected)
-    console.log(title)
-    console.log(context)
   }
 
   useEffect(() => {
@@ -152,7 +150,6 @@ const Post = () => {
 
   const handleClick = (id, likes) => {
     // setLikecount(likes + 1);
-    console.log(likes)
 
     const fieldToEdit = doc(database, 'posts', id)
     updateDoc(fieldToEdit, {
@@ -160,7 +157,6 @@ const Post = () => {
     })
       .then(() => {
         alert('いいねしました')
-        console.log(likecount)
         setLikecount(0)
         getallPost()
       })

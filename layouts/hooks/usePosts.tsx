@@ -1,5 +1,5 @@
 import { onSnapshot, query, orderBy, where, doc, getDoc, getDocs } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { database } from '../../firebaseConfig'
 import { postsRef } from '../../utils/post'
 import { GetPost } from 'types/post'
@@ -47,7 +47,9 @@ export const useGetOldPosts = (): Array<GetPost> => {
  * いいね順でpostを取得
  * @returns postData
  */
-export const useGetLikePosts = async (setPostData: any): Promise<void> => {
+export const useGetLikePosts = async (
+  setPostData: Dispatch<SetStateAction<any>>,
+): Promise<void> => {
   const likePost = query(postsRef, orderBy('likes', 'desc'))
 
   onSnapshot(likePost, (querySnapshot) => {
@@ -59,7 +61,9 @@ export const useGetLikePosts = async (setPostData: any): Promise<void> => {
  * ネタバレ有りでpostを取得
  * @returns postData
  */
-export const useGetNetabrePosts = async (setPostData: any): Promise<void> => {
+export const useGetNetabrePosts = async (
+  setPostData: Dispatch<SetStateAction<any>>,
+): Promise<void> => {
   const netabarePost = query(postsRef, where('netabare', '==', 'spoil'))
 
   onSnapshot(netabarePost, (querySnapshot) => {
@@ -71,7 +75,9 @@ export const useGetNetabrePosts = async (setPostData: any): Promise<void> => {
  * ネタバレなしでpostを取得
  * @returns postData
  */
-export const useGetNoNetabrePosts = async (setPostData: any): Promise<void> => {
+export const useGetNoNetabrePosts = async (
+  setPostData: Dispatch<SetStateAction<any>>,
+): Promise<void> => {
   const noNetabarePost = query(postsRef, where('netabare', '==', 'notSpoil'))
 
   onSnapshot(noNetabarePost, (querySnapshot) => {
@@ -104,7 +110,10 @@ export const useGetMyPosts = (myEmail: string): Array<GetPost> => {
  * 自分がいいねした投稿データを取得
  * @returns postData
  */
-export const useGetLikedPosts = async (setLikedPosts, myEmail: string): Promise<void> => {
+export const useGetLikedPosts = async (
+  setLikedPosts: Dispatch<SetStateAction<any>>,
+  myEmail: string,
+): Promise<void> => {
   const myLikedPosts = query(postsRef, where('likes_email', 'array-contains', myEmail))
 
   onSnapshot(myLikedPosts, (querySnapshot) => {
@@ -122,7 +131,6 @@ export const useGetPost = async (routerId: string): Promise<GetPost | undefined>
     const snap = await getDoc(ref)
 
     const postData = snap.data()
-    console.log(postData)
 
     if (!postData || typeof postData !== 'object') {
       console.error('取得したデータの形式が不正です', postData)
@@ -140,7 +148,10 @@ export const useGetPost = async (routerId: string): Promise<GetPost | undefined>
  * 特定ユーザーのpostsを取得
  * @returns postData
  */
-export const useGetUsersPosts = async (setPostData, userId: string): Promise<void> => {
+export const useGetUsersPosts = async (
+  setPostData: Dispatch<SetStateAction<any>>,
+  userId: string,
+): Promise<void> => {
   const userPosts = query(postsRef, where('userid', '==', userId))
 
   onSnapshot(userPosts, (querySnapshot) => {

@@ -6,7 +6,6 @@ interface buttonParams {
   onClick?: () => void
 }
 
-//React.memo化
 export const OpenButton = React.memo(({ text, onClick }: buttonParams) => {
   return (
     <button

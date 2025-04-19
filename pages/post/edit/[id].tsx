@@ -253,7 +253,6 @@ const PostEdit = () => {
                               onChange={(e) => {
                                 field.onChange(e.target.value)
                                 setCategory(e.target.value)
-                                console.log(category)
                               }}
                               className='form-radio text-blue-600'
                             />
@@ -332,7 +331,6 @@ const PostEdit = () => {
                               onChange={(e) => {
                                 field.onChange(e.target.value)
                                 setNetabare(e.target.value)
-                                console.log(netabare)
                               }}
                               className='text-pink-500 focus:ring-pink-500'
                             />

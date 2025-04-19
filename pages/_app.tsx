@@ -6,15 +6,15 @@ import { AuthProvider } from 'layouts/context/auth-context'
 export default function MyApp({ Component, pageProps }) {
   return (
     <AuthProvider>
-      <html lang='ja'>
-        <head>{/* <script src='https://unpkg.com/react-scan/dist/auto.global.js' /> */}</head>
-        {/* <ReactScan /> */}
-        <Header />
-        <div className='m-auto mt-10 max-w-5xl'>
-          <Component {...pageProps} />
-        </div>
-        <Footer />
-      </html>
+      {/* <head> */}
+      {/* <script src='https://unpkg.com/react-scan/dist/auto.global.js' /> */}
+      {/* </head> */}
+      {/* <ReactScan /> */}
+      <Header />
+      <div className='m-auto mt-10 max-w-5xl'>
+        <Component {...pageProps} />
+      </div>
+      <Footer />
     </AuthProvider>
   )
 }

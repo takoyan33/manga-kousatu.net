@@ -37,9 +37,34 @@ const PostEdit = () => {
   const router = useRouter()
   const routerid = router.query.id as string
 
-  const { register, control } = useForm({
-    resolver: yupResolver(schema),
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      category: post?.category || 'ONEPIECE',
+      netabare: post?.netabare || 'spoil',
+      display: post?.display?.toString() || 'true',
+    },
   })
+
+  useEffect(() => {
+    if (post?.downloadURL) {
+      setCreateObjectURL(post.downloadURL)
+    }
+    if (post?.category) {
+      setValue('category', post.category)
+    }
+    if (post?.netabare) {
+      setValue('netabare', post.netabare)
+    }
+    if (post?.display.toString()) {
+      setValue('display', post.display.toString())
+    }
+  }, [post, setValue])
 
   //画像の取得
   const uploadImage = (event): void => {
@@ -78,10 +103,10 @@ const PostEdit = () => {
     const fieldToEdit = doc(database, 'posts', routerid)
     const newdate = new Date().toLocaleString('ja-JP')
     updateDoc(fieldToEdit, {
-      downloadURL: result,
+      category: category,
+      downloadURL: createObjectURL ? createObjectURL : result,
       title: postTitle,
       netabare: netabare,
-      categori: category,
       context: context,
       updatedAt: newdate,
       selected: selected,
@@ -150,15 +175,6 @@ const PostEdit = () => {
                 <div>
                   <h2 className='my-12 text-center text-2xl font-semibold'>考察記事の編集</h2>
                   <div>
-                    <p>現在のサムネイル</p>
-                    <img
-                      className='m-auto max-w-sm text-center'
-                      height={400}
-                      width={400}
-                      src={post?.downloadURL}
-                      alt='サムネイル'
-                    />
-                    {!post?.downloadURL && <p className='text-center'>サムネイルがありません</p>}
                     <ImageUpload onChange={uploadImage} createObjectURL={createObjectURL} />
                     <input
                       id='file-input'
@@ -186,7 +202,7 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='作品名' required htmlFor='category' />
                 </div>
-                {post && (
+                {/* {post && (
                   <Controller
                     name='category'
                     control={control}
@@ -214,6 +230,42 @@ const PostEdit = () => {
                       </RadioGroup>
                     )}
                   />
+                )} */}
+
+                {post && (
+                  <Controller
+                    name='category'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <div id='manga-name' className='space-y-2'>
+                        {FORM_CATEGORIES.map((category) => (
+                          <label
+                            key={category.id}
+                            className='flex cursor-pointer items-center space-x-2'
+                          >
+                            <input
+                              type='radio'
+                              value={category.value}
+                              checked={field.value === category?.value}
+                              onChange={(e) => {
+                                field.onChange(e.target.value)
+                                setCategory(e.target.value)
+                                console.log(category)
+                              }}
+                              className='form-radio text-blue-600'
+                            />
+                            <span className='text-sm'>{category.label}</span>
+                          </label>
+                        ))}
+                        {/* {errors.category && (
+                          <p className='text-sm text-red-500'>{errors.category.message}</p>
+                        )} */}
+                      </div>
+                    )}
+                  />
                 )}
 
                 <div className='mb-2'>
@@ -228,7 +280,7 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='ネタバレについて' required htmlFor='netabare' />
                 </div>
-                {post && (
+                {/* {post && (
                   <Controller
                     name='netabare'
                     control={control}
@@ -258,6 +310,38 @@ const PostEdit = () => {
                       </RadioGroup>
                     )}
                   />
+                )} */}
+                {post && (
+                  <Controller
+                    name='netabare'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <div className='flex flex-col gap-2'>
+                        {FORM_NETABARE.map((netabare) => (
+                          <label
+                            key={netabare.id}
+                            className='inline-flex items-center gap-2 text-sm text-gray-800'
+                          >
+                            <input
+                              type='radio'
+                              value={netabare.value}
+                              checked={field.value === netabare.value}
+                              onChange={(e) => {
+                                field.onChange(e.target.value)
+                                setNetabare(e.target.value)
+                                console.log(netabare)
+                              }}
+                              className='text-pink-500 focus:ring-pink-500'
+                            />
+                            {netabare.label}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  />
                 )}
                 <div className='mb-2'>
                   <SiteLabel name='内容（最大500文字）' required htmlFor='label-content' />
@@ -275,7 +359,7 @@ const PostEdit = () => {
                 <div className='mb-2'>
                   <SiteLabel name='公開について' required htmlFor='label-display' />
                 </div>
-                {post && (
+                {/* {post && (
                   <Controller
                     name='display'
                     control={control}
@@ -304,7 +388,40 @@ const PostEdit = () => {
                       </RadioGroup>
                     )}
                   />
+                )} */}
+                {post && (
+                  <Controller
+                    name='display'
+                    control={control}
+                    rules={{
+                      required: '必須項目です',
+                    }}
+                    render={({ field }) => (
+                      <div className='flex flex-col gap-2'>
+                        {DISPLAY_DATA.map((display) => (
+                          <label
+                            key={display.id}
+                            className='inline-flex items-center gap-2 text-sm text-gray-800'
+                          >
+                            <input
+                              type='radio'
+                              value={display.value.toString()}
+                              checked={field.value === display.value.toString()}
+                              onChange={(e) => {
+                                const value = e.target.value
+                                field.onChange(value)
+                                setDisplay(value)
+                              }}
+                              className='text-blue-600 focus:ring-blue-500'
+                            />
+                            {display.label}
+                          </label>
+                        ))}
+                      </div>
+                    )}
+                  />
                 )}
+
                 {/* 
                 <div className='my-8'>
                   <label htmlFor='file-input'>他の写真（最大1枚）</label> */}

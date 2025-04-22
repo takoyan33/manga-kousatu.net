@@ -5,7 +5,7 @@ import '@testing-library/jest-dom'
 describe('[A1_9] Breadcrumbs Component', () => {
   it('正しくレンダリングされる', () => {
     render(<Breadcrumbs items={[{ title: 'カテゴリ', url: '/top/all' }]} />)
-    expect(screen.getByText('カテゴリ')).toBeInTheDocument()
+    expect(screen.getByText('カテゴリ')).toBeVisible()
   })
 
   // it('[A1_9_1] すべてのタイトルが表示される', () => {
@@ -18,9 +18,9 @@ describe('[A1_9] Breadcrumbs Component', () => {
   //       ]}
   //     />,
   //   )
-  //   expect(screen.getByText('トップ')).toBeInTheDocument()
-  //   expect(screen.getByText('テスト')).toBeInTheDocument()
-  //   expect(screen.getByText('詳細')).toBeInTheDocument()
+  //   expect(screen.getByText('トップ')).toBeVisible()
+  //   expect(screen.getByText('テスト')).toBeVisible()
+  //   expect(screen.getByText('詳細')).toBeVisible()
   // })
 
   it('[A1_9_2] リンクが正しく機能する', () => {

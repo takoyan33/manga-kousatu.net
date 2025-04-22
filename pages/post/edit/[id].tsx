@@ -11,7 +11,7 @@ import { database } from 'firebaseConfig'
 import { postImage } from 'layouts/api'
 import { SiteButton } from 'layouts/components/button'
 import { SiteLabel, successNotify, errorNotify } from 'layouts/components/text'
-import { FORM_CATEGORIES, FORM_NETABARE, NoIndexHead, DISPLAY_DATA } from 'layouts/components/ui'
+import { FORM_CATEGORIES, FORM_NETABARE, CommonHead, DISPLAY_DATA } from 'layouts/components/ui'
 import { useGetPost } from 'layouts/hooks'
 import ImageUpload from 'utils/image-upload'
 // import { GetPost } from 'types/post'
@@ -152,7 +152,7 @@ const PostEdit = () => {
 
   return (
     <>
-      <NoIndexHead />
+      <CommonHead title='投稿の編集' isNoIndex />
 
       <div className='m-auto max-w-5xl'>
         <div>

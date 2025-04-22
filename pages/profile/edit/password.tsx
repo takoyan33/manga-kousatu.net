@@ -3,7 +3,7 @@ import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
 import React, { useState } from 'react'
 import { useAuth } from 'layouts/api/auth/useAuth'
-import { NoIndexHead } from 'layouts/components/ui'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function Password() {
   const [email, setEmail] = useState('')
@@ -22,7 +22,7 @@ export default function Password() {
 
   return (
     <div style={{ height: '750px' }}>
-      <NoIndexHead />
+      <CommonHead title='パスワード再設定' isNoIndex />
       <div style={{ maxWidth: '320px', margin: '0 auto' }}>
         <h1 className='m-5 my-12 text-center text-2xl font-semibold'>パスワード再設定</h1>
         <form onSubmit={handleSubmit}>

@@ -8,7 +8,7 @@ import { useGetOtherUser } from '../../layouts/hooks'
 import { SiteSpoil } from 'layouts/components/text'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
-import { FixDaysAgo } from 'utils/date-helper'
+import { formatTimeAgo } from 'utils/date-helper'
 
 export const CardPost = React.memo(
   ({ downloadURL, id, likes, title, category, netabare, createdAt, userid }: CardPostParams) => {
@@ -23,7 +23,7 @@ export const CardPost = React.memo(
       fetchUser()
     }, [fetchUser])
 
-    const formattedDate = useMemo(() => FixDaysAgo(createdAt), [createdAt])
+    const formattedDate = useMemo(() => formatTimeAgo(createdAt), [createdAt])
 
     return (
       <article className='m-auto my-2 mx-4 hover:opacity-80'>

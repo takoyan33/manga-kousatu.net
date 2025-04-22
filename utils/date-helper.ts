@@ -1,21 +1,27 @@
-// 日付に変換
-export const FixDaysAgo = (createdAt: string): string => {
-  const inputDate: any = new Date(createdAt)
-  const currentDate: any = new Date()
+// 定数の定義
+const MILLISECONDS_PER_MINUTE = 1000 * 60
+const MILLISECONDS_PER_HOUR = MILLISECONDS_PER_MINUTE * 60
+const MILLISECONDS_PER_DAY = MILLISECONDS_PER_HOUR * 24
 
-  // 時間の差をミリ秒単位で計算
-  const diffTime = currentDate - inputDate
+/**
+ * 指定された日付から現在までの経過時間を文字列で返します
+ * @param createdAt - 日付文字列
+ * @returns 経過時間を表す文字列（例: "2日前", "3時間前", "5分前"）
+ */
+export const formatTimeAgo = (createdAt: string): string => {
+  const inputDate = new Date(createdAt)
+  const currentDate = new Date()
+  const diffTime = currentDate.getTime() - inputDate.getTime()
 
-  // ミリ秒から時間、分に変換
-  const diffHours = Math.floor(diffTime / (1000 * 60 * 60))
-  const diffMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60))
-  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24))
+  const diffDays = Math.floor(diffTime / MILLISECONDS_PER_DAY)
+  const diffHours = Math.floor(diffTime / MILLISECONDS_PER_HOUR)
+  const diffMinutes = Math.floor(diffTime / MILLISECONDS_PER_MINUTE)
 
   if (diffDays > 0) {
     return `${diffDays}日前`
-  } else if (diffHours > 0) {
-    return `${diffHours}時間前`
-  } else {
-    return `${diffMinutes}分前`
   }
+  if (diffHours > 0) {
+    return `${diffHours}時間前`
+  }
+  return `${diffMinutes}分前`
 }

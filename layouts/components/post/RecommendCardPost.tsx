@@ -8,7 +8,7 @@ import { Category } from '../text/Category'
 import { SiteSpoil } from 'layouts/components/text'
 import { CardPostParams } from 'types/post'
 import { GetUser } from 'types/user'
-import { FixDaysAgo } from 'utils/date-helper'
+import { formatTimeAgo } from 'utils/date-helper'
 
 // eslint-disable-next-line react/display-name
 export const RecommendCardPost = React.memo(
@@ -55,7 +55,7 @@ export const RecommendCardPost = React.memo(
                 </span>
                 <span className='ml-1'>{likes}</span>
               </dl>
-              <dl className='ml-2 mt-1 text-gray-600'>{FixDaysAgo(createdAt)}</dl>
+              <dl className='ml-2 mt-1 text-gray-600'>{formatTimeAgo(createdAt)}</dl>
             </div>
           </div>
         </div>

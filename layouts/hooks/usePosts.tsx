@@ -133,13 +133,11 @@ export const useGetPost = async (routerId: string): Promise<GetPost | undefined>
     const postData = snap.data()
 
     if (!postData || typeof postData !== 'object') {
-      console.error('取得したデータの形式が不正です', postData)
       return undefined
     }
 
     return postData as GetPost
   } catch (error) {
-    console.error('Error fetching post:', error)
     return undefined
   }
 }
@@ -160,8 +158,7 @@ export const useGetUsersPosts = async (
 }
 
 //同じカテゴリの投稿を取得
-
-// export const categoriPost = async (setSinglePost) => {
+// export const categoryPost = async (setSinglePost) => {
 //   //firestoreからデータ取得
 //   await getDocs(q).then((querySnapshot) => {
 //     //コレクションのドキュメントを取得

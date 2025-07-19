@@ -55,7 +55,9 @@ export const RecommendCardPost = React.memo(
                 </span>
                 <span className='ml-1'>{likes}</span>
               </dl>
-              <dl className='ml-2 mt-1 text-gray-600'>{formatTimeAgo(createdAt)}</dl>
+              <dl className='ml-2 mt-1 text-gray-600'>
+                <time>{formatTimeAgo(createdAt)}</time>
+              </dl>
             </div>
           </div>
         </div>

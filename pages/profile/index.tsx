@@ -58,7 +58,7 @@ export default function Profile() {
     <>
       <CommonHead title='プロフィール' isNoIndex />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
-      <AccountMenu onClick={onDeleteUser} />
+      <AccountMenu onDeleteAccount={onDeleteUser} />
       <ProfileId
         key={users?.id}
         profileImage={users?.profileImage ?? ''}

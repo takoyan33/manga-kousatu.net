@@ -63,7 +63,7 @@ export const CardPost = React.memo(
                   </span>
                   <span className='ml-1 text-sm'>{likes}</span>
                 </dl>
-                <span className='ml-2 text-sm text-gray-600'>{formattedDate}</span>
+                <time className='ml-2 text-sm text-gray-600'>{formattedDate}</time>
               </div>
             </div>
           </div>

@@ -5,45 +5,90 @@ import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListSubheader from '@mui/material/ListSubheader'
 import Link from 'next/link'
+import React from 'react'
 
-interface AccountMenuParams {
-  onClick?: () => void
+// メニュー項目の定義
+const MENU_ITEMS = [
+  {
+    id: 'profile-edit',
+    label: 'プロフィールを変更する',
+    href: '/profile/edit',
+    icon: SendIcon,
+  },
+  {
+    id: 'password-change',
+    label: 'パスワードを変更する',
+    href: '/profile/edit/password',
+    icon: SendIcon,
+  },
+  {
+    id: 'account-delete',
+    label: 'アカウントを退会する',
+    icon: DraftsIcon,
+  },
+] as const
+
+interface AccountMenuProps {
+  onDeleteAccount?: () => void
 }
 
-export const AccountMenu = ({ onClick }: AccountMenuParams) => (
-  <List
-    sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
-    component='nav'
-    aria-labelledby='nested-list-subheader'
-    subheader={
-      <ListSubheader component='div' id='nested-list-subheader'>
-        アカウントメニュー
-      </ListSubheader>
-    }
-  >
-    <ListItemButton>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link id='profile-edit' href='/profile/edit' aria-label='profile-edit'>
-        プロフィールを変更する
+/**
+ * メニュー項目コンポーネント
+ */
+const MenuItem = ({
+  id,
+  label,
+  href,
+  icon: Icon,
+  onClick,
+}: {
+  id: string
+  label: string
+  href?: string
+  icon: React.ElementType
+  onClick?: () => void
+}) => (
+  <ListItemButton>
+    <ListItemIcon>
+      <Icon />
+    </ListItemIcon>
+    {href ? (
+      <Link id={id} href={href} aria-label={id}>
+        {label}
       </Link>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <SendIcon />
-      </ListItemIcon>
-      <Link id='password-change' href='/profile/edit/password' aria-label='password-change'>
-        パスワードを変更する
-      </Link>
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <DraftsIcon />
-      </ListItemIcon>
-      <button id='account-delete' aria-label='account-delete' onClick={onClick}>
-        アカウントを退会する
+    ) : (
+      <button id={id} aria-label={id} onClick={onClick}>
+        {label}
       </button>
-    </ListItemButton>
-  </List>
+    )}
+  </ListItemButton>
 )
+
+/**
+ * アカウントメニューコンポーネント
+ * @param onDeleteAccount - アカウント削除ボタンクリック時のコールバック
+ */
+export const AccountMenu = React.memo(({ onDeleteAccount }: AccountMenuProps) => {
+  return (
+    <List
+      sx={{ width: '100%', maxWidth: 300, bgcolor: 'background.paper' }}
+      component='nav'
+      aria-labelledby='account-menu-subheader'
+      subheader={
+        <ListSubheader component='div' id='account-menu-subheader'>
+          アカウントメニュー
+        </ListSubheader>
+      }
+    >
+      {MENU_ITEMS.map((item) => (
+        <MenuItem
+          key={item.id}
+          {...item}
+          onClick={item.id === 'account-delete' ? onDeleteAccount : undefined}
+        />
+      ))}
+    </List>
+  )
+})
+
+AccountMenu.displayName = 'AccountMenu'

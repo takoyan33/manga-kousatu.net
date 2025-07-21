@@ -192,7 +192,12 @@ const Details = ({ post }) => {
   return (
     <>
       <CommonHead title='Manga Study - 投稿記事 カテゴリ' />
-      <Breadcrumbs secondTitle='カテゴリ' thirdTitle={post.fields.title.stringValue} />
+      <Breadcrumbs
+        items={[
+          { title: 'カテゴリ', url: '/category' },
+          { title: post.fields.title.stringValue, url: '/category/article' },
+        ]}
+      />
       <h1 className='my-12 text-left text-2xl font-semibold'>{post.fields.title.stringValue}</h1>
       <div className='m-auto my-10 flex justify-center'>
         <TextField

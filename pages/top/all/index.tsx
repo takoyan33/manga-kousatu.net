@@ -27,7 +27,7 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead title='Manga Study - 全ての記事' />
-      <Breadcrumbs secondTitle='投稿一覧' />
+      <Breadcrumbs items={[{ title: '投稿一覧', url: '/top/all' }]} />
       <TopTitle title='投稿一覧' />
 
       <h3 className='my-6 text-left text-xl font-semibold'>カテゴリ</h3>

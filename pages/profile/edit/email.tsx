@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField'
 import { getAuth, sendEmailVerification } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
-import { NoIndexHead } from 'layouts/components/ui'
+import { CommonHead } from 'layouts/components/ui'
 
 export default function Emaildedit() {
   const [email, setEmail] = useState<string>('')
@@ -33,7 +33,7 @@ export default function Emaildedit() {
 
   return (
     <div>
-      <NoIndexHead />
+      <CommonHead title='プロフィールの編集' isNoIndex />
       <h2 className='my-5'>メールアドレスの編集</h2>
 
       <p className='my-5'>メールアドレス： {user && <span>{user.email}</span>}</p>

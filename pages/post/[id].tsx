@@ -150,7 +150,12 @@ const Post = () => {
           </List>
         )}
         <article className='rounded-xl md:border md:p-10'>
-          <Breadcrumbs secondTitle='投稿記事' thirdTitle={singlePost?.title} />
+          <Breadcrumbs
+            items={[
+              { title: '投稿記事', url: '/post/recommend' },
+              { title: singlePost?.title, url: '/post/recommend' },
+            ]}
+          />
           {/* 公開or下書きラベル */}
           <div className='mt-2'>
             {user && user.email === singlePost?.email && (

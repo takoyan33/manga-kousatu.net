@@ -19,7 +19,7 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead title='Manga Study - 新着記事' />
-      <Breadcrumbs secondTitle='新着記事' />
+      <Breadcrumbs items={[{ title: '新着記事', url: '/top/new' }]} />
       <TopTitle title='新着記事' />
 
       <p className='text-1xl mb-6 text-center'>投稿数 {totalPosts}件</p>

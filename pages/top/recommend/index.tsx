@@ -24,7 +24,7 @@ export default function Index() {
   return (
     <div className='m-auto w-11/12 md:w-full'>
       <CommonHead title='Manga Study - おすすめの記事' />
-      <Breadcrumbs secondTitle='おすすめ記事' />
+      <Breadcrumbs items={[{ title: 'おすすめ記事', url: '/top/recommend' }]} />
       <TopTitle title='おすすめ記事' />
 
       <p className='text-1xl mb-6 text-center'>投稿数 {totalPosts}件</p>

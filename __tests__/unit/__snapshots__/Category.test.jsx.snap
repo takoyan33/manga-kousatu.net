@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`A1_Component > Category [A1_6_2] Categoryのスナップショット 1`] = `
+<div>
+  <div
+    class="my-1"
+  >
+    <a
+      href="/post/categories/ONEPIECE"
+    >
+      <div
+        class="MuiButtonBase-root MuiChip-root MuiChip-outlined MuiChip-sizeMedium MuiChip-colorDefault MuiChip-clickable MuiChip-clickableColorDefault MuiChip-outlinedDefault css-n6newz-MuiButtonBase-root-MuiChip-root"
+        role="button"
+        tabindex="0"
+      >
+        <span
+          class="MuiChip-label MuiChip-labelMedium css-6od3lo-MuiChip-label"
+        >
+          ONEPIECE
+        </span>
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </div>
+    </a>
+  </div>
+</div>
+`;

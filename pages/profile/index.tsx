@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { SiteButton } from '../../layouts/components/button'
-import { ProfileId, DisplayChart, NoIndexHead, AccountMenu } from 'layouts/components/ui'
+import { ProfileId, DisplayChart, CommonHead, AccountMenu } from 'layouts/components/ui'
 import { useAuthContext } from 'layouts/context/auth-context'
 import { useGetMyPosts, useGetMyUser } from 'layouts/hooks'
 import { GetUser } from 'types/user'
@@ -56,9 +56,9 @@ export default function Profile() {
 
   return (
     <>
-      <NoIndexHead />
+      <CommonHead title='プロフィール' isNoIndex />
       <h2 className='m-5 my-12 text-center text-2xl font-semibold'>プロフィール</h2>
-      <AccountMenu onClick={onDeleteUser} />
+      <AccountMenu onDeleteAccount={onDeleteUser} />
       <ProfileId
         key={users?.id}
         profileImage={users?.profileImage ?? ''}
